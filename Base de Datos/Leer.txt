@@ -1,0 +1,4 @@
+BD name: vida_silvestre
+------------------------
+Usuario Alumno: correo@ejemplo.com
+Contraseña: 123456

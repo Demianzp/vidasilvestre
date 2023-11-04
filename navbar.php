@@ -1,0 +1,138 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <style>
+    #salir a{
+      background-color: #98c343;
+    }
+    #salir a:hover{
+      background-color: #10801c;
+    }    
+    body{
+      background: linear-gradient(135deg,#98c343,#10801c);
+      position: relative;
+      padding-bottom:10px;
+      min-height:100vh;
+    }    
+  </style>
+  <!-- <div class="header">
+          <h2>Instituto Vida Silvestre</h2>
+          <h5>Usuario:  <?php echo $_SESSION["username"] ?></h5>
+  </div> -->
+<div style="height:60px">  
+  <nav  class="navbar fixed-top navbar-expand-lg  navbar-dark bg-dark" >
+      <div class="container">
+        <a 
+          href="inicio.view.php" 
+          class="navbar-brand mb-0 h1 ">       
+          <img 
+          class="d-line-block align-top"
+          src="img/vida-silvestre.png" 
+          width="170px" 
+          style="margin-right:30px"
+          >       
+        </a>
+        <!-- Toggle Btn-->
+        <button 
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          class="navbar-toggler shadow-none border-0 bg-dark"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"          
+          >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- SideBar -->
+        <div class="collapse navbar-collapse " id="navbarNav">
+          <ul class="navbar-nav">
+            <!-- ------------------------------------------------------- -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Alumno
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="alumnos.view.php">Registro de Alumnos</a></li>
+                <li><a class="dropdown-item" href="listadoalumnos.view.php">Listado de Alumnos</a></li>
+                <!-- busqueda por:  id-din
+                listado por: id, nombre,telefono, buton de ver mas informacion. -->
+              </ul>
+            </li>
+            <!-- ------------------------------------------------------- -->
+            <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Notas
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="notas.view.php">Registro de Notas</a></li> 
+                <li><a class="dropdown-item" href="listadonotas.view.php">Consulta de Notas</a></li>                          
+              </ul>
+            </li>
+            <!-- ------------------------------------------------------- -->
+            <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Profesor
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="registrarprofe.php">Registro de Profesor</a></li>
+                <li><a class="dropdown-item" href="#">Asignar Profesor</a></li>            
+              </ul>
+            </li>
+            <!-- ------------------------------------------------------- -->
+            <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle active me-3" 
+                href="#" role="button" 
+                data-bs-toggle="dropdown" 
+                aria-expanded="false">
+                Materias
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="registromateria.php">Registro Materia</a></li>
+                <!-- nombre,id,correlatividad(10 espacios), -->
+                <li><a class="dropdown-item" href="listado_materia.php">Listado Materia</a></li>            
+              </ul>
+            </li>
+            <!-- ------------------------------------------------------- -->    
+            <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Cursado
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Listado de Cursos</a></li>
+                           
+              </ul>
+            </li>
+            <!-- ------------------------------------------------------- --> 
+            <li class="nav-item dropdown "> 
+              <!-- Nueva parte de agregar notas  -->
+              <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Mesa y Acta
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="mesa_examen_add.php">Mesa de Examen</a></li>
+                <li><a class="dropdown-item" href="#">Acta</a></li>
+                           
+              </ul>
+            </li>
+            <!-- ------------------------------------------------------- -->        
+          </ul>
+          <div class="ml-auto" id="salir">
+              <a class="btn text-white text-decoration-none  py-1 px-3  rounded-1 fw-semibold" 
+                 role="button"
+                 href="logout.php"                  
+                  >Salir</a>
+          </div>              
+        </div>        
+      </div>
+  </nav>    
+</div>
+
+  
+
+
+
