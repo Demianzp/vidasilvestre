@@ -23,7 +23,8 @@
             die("Conexión fallida: " . $conn->connect_error);
         }
 
-        // Consulta para obtener las mesas de examen disponibles
+        // Consulta para obtener las mesas de examen disponibles 
+        // hola
         $sql_mesas = "SELECT id_mesa, nombre_mesa, tipo FROM mesa_examen";
         $result_mesas = $conn->query($sql_mesas);
 
