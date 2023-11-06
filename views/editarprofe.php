@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dni = $_POST['dni'];
         $email = $_POST['email'];
         $celular = $_POST['celular'];
-        $contrasena = $_POST['contrasena']; // Nuevo campo de contraseña---
+        $contrasena = $_POST['contrasena']; // Nuevo campo de contraseña-----
 
         $consulta_actualizar = $db->prepare("UPDATE persona SET nombre = :nombre, apellido = :apellido, DNI = :dni, email_correo = :email, celular = :celular, contraseña = :contrasena WHERE id_persona = :id");
 

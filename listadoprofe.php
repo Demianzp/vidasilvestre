@@ -30,7 +30,7 @@
 
                     </div>
                     <div class="card-body table-responsive">
-                        <!-- <button type="submit" class="btn btn-primary">Buscar</button> ----->
+                        <!-- <button type="submit" class="btn btn-primary">Buscar</button> ------->
                         <table class="table table-bordered table-striped table_id">
                             <thead class="thead-dark">
                                 <th>#</th>
