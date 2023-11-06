@@ -1,5 +1,5 @@
 <?php
-session_start(); // Asegúrate de incluir esto al principio del archivo
+session_start(); // Asegúrate de incluir esto al principio del archivo...
 
 if (isset($_SESSION['message'])) {
     $message = $_SESSION['message'];

@@ -39,7 +39,7 @@ if (isset($_GET['id'])) {
 <div class="body">
     <div class="panel">
         <h4>Desactivar Profesor</h4>
-        <!-- Muestra mensajes de éxito o error -->
+        <!-- Muestra mensajes de éxito o error ----->
         <?php
         if (!empty($infoMessage)) {
             echo '<div class="alert alert-primary" role="alert">' .$infoMessage. '</div>';
