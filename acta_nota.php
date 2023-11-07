@@ -12,7 +12,7 @@
         // Conexión a la base de datos
         $servername = "localhost";
         $username = "root";
-        $password = "44061051";
+        $password = "";
         $database = "vida_silvestre";
 
         // Crear conexión
