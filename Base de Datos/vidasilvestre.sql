@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-11-2023 a las 04:33:16
+-- Tiempo de generación: 07-11-2023 a las 23:05:15
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -34,6 +34,14 @@ CREATE TABLE `acta` (
   `nota` varchar(10) DEFAULT NULL,
   `estado` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `acta`
+--
+
+INSERT INTO `acta` (`id_acta`, `id_persona`, `id_mesa`, `nota`, `estado`) VALUES
+(1, NULL, NULL, NULL, ''),
+(2, 2, 1, '1', '');
 
 -- --------------------------------------------------------
 
@@ -108,15 +116,17 @@ CREATE TABLE `mesa_examen` (
   `fecha` date NOT NULL,
   `hora` int(11) NOT NULL,
   `tipo` varchar(20) DEFAULT NULL,
-  `estado` varchar(11) NOT NULL
+  `estado` varchar(11) NOT NULL,
+  `nombre_mesa` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `mesa_examen`
 --
 
-INSERT INTO `mesa_examen` (`id_mesa`, `id_materia`, `fecha`, `hora`, `tipo`, `estado`) VALUES
-(1, 1, '2023-10-17', 19, 'Regular', '');
+INSERT INTO `mesa_examen` (`id_mesa`, `id_materia`, `fecha`, `hora`, `tipo`, `estado`, `nombre_mesa`) VALUES
+(1, 1, '2023-10-17', 19, 'Regular', '', ''),
+(2, 1, '2023-03-23', 7, 'Regular', '', '');
 
 -- --------------------------------------------------------
 
@@ -254,7 +264,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `acta`
 --
 ALTER TABLE `acta`
-  MODIFY `id_acta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_acta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `correlativa`
@@ -278,7 +288,7 @@ ALTER TABLE `materia`
 -- AUTO_INCREMENT de la tabla `mesa_examen`
 --
 ALTER TABLE `mesa_examen`
-  MODIFY `id_mesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_mesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
