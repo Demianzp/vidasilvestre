@@ -2,7 +2,7 @@
 // Datos de conexión a la base de datos
 $servername = "localhost";
 $username = "root";
-$password = "44061051";
+$password = "";
 $database = "vida_silvestre";
 
 // Recibir datos del formulario
