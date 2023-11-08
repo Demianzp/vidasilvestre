@@ -76,6 +76,7 @@
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="mesa_examen_add.php">Mesa de Examen</a></li>
+              <li><a class="dropdown-item" href="listadomesa.php">Listado de Mesa de Examen</a></li>
               <li><a class="dropdown-item" href="acta_nota.php">Acta</a></li>
 
             </ul>
