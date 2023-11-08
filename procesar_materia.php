@@ -1,65 +1,51 @@
 <?php
-// Conexión a la base de datos (debes proporcionar tus propios datos de conexión)
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "vidasilvestre";
-
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Verificar la conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
-
+require 'conn/connection.php';
 // Variables para mensajes
 $mensaje = "";
 $error = "";
 
-// Procesar el formulario cuando se envíe
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = $conn->real_escape_string($_POST["nombre"]);
-    $descripcion = $conn->real_escape_string($_POST["descripcion"]);
-    $horas = $conn->real_escape_string($_POST["horas"]);
-    $año = $conn->real_escape_string($_POST["año"]);
-    $num_resolucion = $conn->real_escape_string($_POST["num_resolucion"]);
-    $plan_estudio = $conn->real_escape_string($_POST["plan_estudio"]);
-    $tipo = $conn->real_escape_string($_POST["tipo"]);
+try {
+    // Procesar el formulario cuando se envíe
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $conn = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Inserción de datos en la tabla 'materia' (usando sentencia preparada)
-    $sql = "INSERT INTO materia (nombre, descripcion, horas, año, num_resolucion, plan_estudio, TIPO) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssiiiss", $nombre, $descripcion, $horas, $año, $num_resolucion, $plan_estudio, $tipo);
+        $nombre = $conn->quote($_POST["nombre"]);
+        $descripcion = $conn->quote($_POST["descripcion"]);
+        $horas = (int)$_POST["horas"];
+        $año = (int)$_POST["año"];
+        $num_resolucion = (int)$_POST["num_resolucion"];
+        $plan_estudio = $conn->quote($_POST["plan_estudio"]);
+        $tipo = $conn->quote($_POST["tipo"]);
+        $estado = 'Activo'; // Valor predeterminado para el estado ,  estado es si esta activo o inactivo.
 
-    if ($stmt->execute()) {
-        $mensaje = "Materia ingresada con éxito.";
-    } else {
-        $error = "Error al ingresar la materia: " . $stmt->error;
+        // Inserción de datos en la tabla 'materia' (usando sentencia preparada)
+        $sql = "INSERT INTO materia (nombre, descripcion, horas, año, num_resolucion, plan_estudio, tipo, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(1, $nombre);
+        $stmt->bindParam(2, $descripcion);
+        $stmt->bindParam(3, $horas, PDO::PARAM_INT);
+        $stmt->bindParam(4, $año, PDO::PARAM_INT);
+        $stmt->bindParam(5, $num_resolucion, PDO::PARAM_INT);
+        $stmt->bindParam(6, $plan_estudio);
+        $stmt->bindParam(7, $tipo);
+        $stmt->bindParam(8, $estado);
+
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            $mensaje = "Materia ingresada con éxito.";
+        } else {
+            $error = "Error al ingresar Materia: " . $stmt->errorInfo()[2];
+        }
+
+        // Cerrar la conexión y la declaración preparada
+        $stmt->closeCursor();
+        $conn = null;
     }
-    
-    $stmt->close();
-    
-    // Redirigir a la página "registrar_materia.php" con los mensajes en la URL
-    header("Location: listado_materia.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
-    exit();
-     
+} catch (PDOException $e) {
+    $error = "Error en la conexión o consulta: " . $e->getMessage();
 }
 
-// Cerrar la conexión a la base de datos
-$conn->close();
-?>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Procesar Materia</title>
-    <!-- Agrega aquí tus enlaces a CSS u otras bibliotecas -->
-</head>
-<body>
-
-</body>
-</html>
-
-
+// Redirigir a la página "listado_materia.php" con los mensajes en la URL
+header("Location: listado_materia.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
+exit();?>
