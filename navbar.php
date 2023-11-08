@@ -21,10 +21,7 @@
     min-height: 100vh;
   }
 </style>
-<!-- <div class="header">
-          <h2>Instituto Vida Silvestre</h2>
-          <h5>Usuario:  <?php echo $_SESSION["username"] ?></h5>
-  </div> -->
+
 <div style="height:60px">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid ">

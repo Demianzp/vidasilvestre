@@ -11,11 +11,22 @@
             <div class="card rounded-2 border-0">
                 <div class="card-header bg-dark text-white pb-0">
                     <h5 class="d-inline-block ">Listado de Materias y Correlativas</h5>
+                    
                     <a class="btn btn-primary float-right" href="registromateria.php">Registro de Materia</a>
                     <form class="form-group mx-sm-3 d-inline-block">
                         <input class="form-control  light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">                       
                     </form>
+
                 </div>
+                <!-- Mensaje de carga o erro de materia modificar -->
+                <?php
+                        if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
+                            echo '<div class="alert alert-success">' . htmlspecialchars($_GET['mensaje']) . '</div>';
+                        }
+                        if (isset($_GET['error']) && !empty($_GET['error'])) {
+                            echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['error']) . '</div>';
+                        }
+                    ?>
                 <div class="card-body table-responsive">
                     <!-- <button type="submit" class="btn btn-primary">Buscar</button> -->
                     <table class="table table-bordered table-striped table_id">

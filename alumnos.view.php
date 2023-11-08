@@ -184,12 +184,6 @@ if (isset($_SESSION['message'])) {
                         <button type="button" class="btn btn-success" id="confirmarBtn">Sí</button>
                         <button type="button" class="btn btn-danger" id="cancelarBtn">No</button>
                     </div>
-                    <?php
-                    if (isset($_SESSION['message'])) {
-                        echo '<div class="alert alert-success" role="alert">' . $_SESSION['message'] . '</div>';
-                        unset($_SESSION['message']); // Borra el mensaje después de mostrarlo
-                    }
-                    ?>
                 </form>
             </div>
         </div>
