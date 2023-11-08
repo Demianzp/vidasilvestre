@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Tabla de Materias y Correlativas</title>
+    <title>Tabla de Materias y Correlativass</title>
 </head>
 
 <body>
@@ -26,8 +26,6 @@
                         $mensajeCancelacion = htmlspecialchars($_GET['mensajeCancelacion']);
                         echo '<div class="alert alert-warning">' . $mensajeCancelacion . '</div>';
                     }
-
-            
                         if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
                             echo '<div class="alert alert-success " role="alert">' . htmlspecialchars($_GET['mensaje']) . '</div>';
                         }
