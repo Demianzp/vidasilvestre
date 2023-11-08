@@ -1,5 +1,5 @@
 <?php
-require '../conn/connection.php';
+require 'conn/connection.php';
 
 // Inicializar variables de mensaje
 $infoMessage = '';
@@ -60,6 +60,6 @@ if (isset($_GET['id'])) {
         <?php } ?>
     </div>
 </div>
-<?php require '../footer.php'; ?>
+<?php require 'footer.php'; ?>
 </body>
 </html>

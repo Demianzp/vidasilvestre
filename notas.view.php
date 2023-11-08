@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <?php
-require 'functions.php';
-//arreglo de permisos
-$permisos = ['Administrador','Profesor'];
-permisos($permisos);
-//consulta las materias
-$materias = $conn->prepare("select * from materias");
-$materias->execute();
-$materias = $materias->fetchAll();
-//consulta de grados
-$grados = $conn->prepare("select * from grados");
-$grados->execute();
-$grados = $grados->fetchAll();
-//consulta las secciones
-$secciones = $conn->prepare("select * from secciones");
-$secciones->execute();
-$secciones = $secciones->fetchAll();
+// require 'functions.php';
+// //arreglo de permisos
+// $permisos = ['Administrador','Profesor'];
+// permisos($permisos);
+// //consulta las materias
+// $materias = $conn->prepare("select * from materias");
+// $materias->execute();
+// $materias = $materias->fetchAll();
+// //consulta de grados
+// $grados = $conn->prepare("select * from grados");
+// $grados->execute();
+// $grados = $grados->fetchAll();
+// //consulta las secciones
+// $secciones = $conn->prepare("select * from secciones");
+// $secciones->execute();
+// $secciones = $secciones->fetchAll();
 ?>
 <html>
 <head>
@@ -80,7 +80,7 @@ $secciones = $secciones->fetchAll();
                     <?php
                     }
                     ?>
-                    <!-- --------------------------Segundo Recuadro Notas.view.php-------------------------------------------------- -->
+                    <!-- --------------------------SEGUNDO RECUADRO NOTAS.VIEW-------------------------------------------------- -->
                 <?php
                 if(isset($_GET['revisar'])){
                     $id_materia = $_GET['materia'];
@@ -174,14 +174,9 @@ $secciones = $secciones->fetchAll();
                                     }
                                     ?>
                                 </tr>
-                                <!-- ---------------------------------------------------------------------------- -->
                             <?php endforeach;?>
-                            
                         </table>
-                        
-                        
                     </form>
-                    
                 <?php } ?>
                         <!--mostrando los mensajes que recibe a traves de los parametros en la url-->
                         <?php
@@ -196,19 +191,10 @@ $secciones = $secciones->fetchAll();
                     echo '<span class="error">Error al guardar</span>';
                 ?>                
         </div><!-- Fin card body -->
-        
-        
-        <!-- ---------------------------------------------------------------------------- -->
-              
-        <!-- ---------------------------------------------------------------------------- -->
         </div> <!-- Fin card -->
     </div>
      </div>
-    
-
-
 </div>
-
 <?php require 'footer.php'; ?>
 </body>
 </html>

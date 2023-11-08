@@ -17,17 +17,15 @@
             <div class="col-sm">
                 <div class="card rounded-2 border-0">
 
-                    <div class="card-header bg-dark text-white">
+                    <div class="card-header pb-0 bg-dark text-white ">
 
-                        <h5 class="d-inline-block">Listado de Alumnos</h5>
+                        <h5 class="d-inline-block ">Listado de Alumnos</h5>
 
                         <a class="btn btn-primary float-right" href="alumnos.view.php">Agregar Alumno</a>
-                        <form class="form-group mx-sm-3 d-inline-block">
-                            <input class="form-control me-2 light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">
-                            <hr>
+                        <form class="form-group mx-3 d-inline-block">
+                            <input class="form-control  light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">
+                           
                         </form>
-
-
                     </div>
                     <div class="card-body table-responsive">
                         <!-- <button type="submit" class="btn btn-primary">Buscar</button> -->

@@ -6,14 +6,14 @@
 <body>
     <?php require 'navbar.php'; ?>
 
-    <div class="container mt-3">
+    <div class="container mt-2 " style="width: 40rem">
         <div class="row m-auto">
-            <div class="col"></div>
-            <div class="col-sm">
+            
+            <div class="col " >
                 <div class="card rounded-2 border-0">
                     <h5 class="card-header bg-dark text-white ">Registro de Materias</h5>
                     <div class="card-body">
-                    <?php
+                        <?php
                         if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
                             echo '<div class="alert alert-success">' . htmlspecialchars($_GET['mensaje']) . '</div>';
                         }
@@ -89,7 +89,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col"></div>
+            
         </div>
     </div>
     <?php require 'footer.php'; ?>
