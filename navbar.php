@@ -26,10 +26,10 @@
           <h5>Usuario:  <?php echo $_SESSION["username"] ?></h5>
   </div> -->
 <div style="height:60px">
-  <nav class="navbar fixed-top navbar-expand-lg  navbar-dark bg-dark">
-    <div class="container">
-      <a href="inicio.view.php" class="navbar-brand mb-0 h1 ">
-        <img class="d-line-block align-top" src="img/vida-silvestre.png" width="170px" style="margin-right:30px">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid ">
+      <a href="inicio.view.php" class="navbar-brand mb-0 pr-3 ">
+        <img class="d-line-block align-top " src="img/vida-silvestre.png" width="150px" style="margin-right:10px">
       </a>
       <!-- Toggle Btn-->
       <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" class="navbar-toggler shadow-none border-0 bg-dark" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,21 +37,13 @@
       </button>
       <!-- SideBar -->
       <div class="collapse navbar-collapse " id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav ">
           <!-- ------------------------------------------------------- -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Alumno
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="alumnos.view.php">Registro de Alumnos</a></li>
-              <li><a class="dropdown-item" href="listadoalumnos.view.php">Listado de Alumnos</a></li>
-              <!-- busqueda por:  id-din
-                listado por: id, nombre,telefono, buton de ver mas informacion. -->
-            </ul>
+          <li class="nav-item active pr-3">
+            <a class="nav-link" href="listadoalumnos.view.php">Alumnos <span class="sr-only">(current)</span></a>
           </li>
           <!-- ------------------------------------------------------- -->
-          <!-- <li class="nav-item dropdown ">
+          <li class="nav-item dropdown pr-3">
             <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Notas
             </a>
@@ -59,41 +51,26 @@
               <li><a class="dropdown-item" href="notas.view.php">Registro de Notas</a></li>
               <li><a class="dropdown-item" href="listadonotas.view.php">Consulta de Notas</a></li>
             </ul>
-          </li> -->
-          <!-- ------------------------------------------------------- -->
-          <li class="nav-item dropdown ">
-            <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Profesor
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="profesor.php">Registro de Profesor</a></li>
-              <li><a class="dropdown-item" href="#">Asignar Profesor</a></li>
-              <li><a class="dropdown-item" href="listadoprofe.php">Listado de Profesor</a></li>
-            </ul>
           </li>
           <!-- ------------------------------------------------------- -->
-          <li class="nav-item dropdown ">
-            <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Materias
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="registromateria.php">Registro Materia</a></li>
-              <!-- nombre,id,correlatividad(10 espacios), -->
-              <li><a class="dropdown-item" href="listado_materia.php">Listado Materia</a></li>
-            </ul>
+          <li class="nav-item active pr-3">
+            <a class="nav-link" href="listadoprofe.php">Profesor <span class="sr-only">(current)</span></a>
           </li>
           <!-- ------------------------------------------------------- -->
-          <li class="nav-item dropdown ">
+          <li class="nav-item active pr-3">
+            <a class="nav-link" href="listado_materia.php">Materias <span class="sr-only">(current)</span></a>
+          </li>
+          <!-- ------------------------------------------------------- -->
+          <li class="nav-item dropdown pr-3 ">
             <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Cursado
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">Listado de Cursos</a></li>
-
             </ul>
           </li>
           <!-- ------------------------------------------------------- -->
-          <li class="nav-item dropdown ">
+          <li class="nav-item dropdown pr-3 ">
             <!-- Nueva parte de agregar notas  -->
 
             <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -1,5 +1,5 @@
 <?php
-require '../conn/connection.php';
+require 'conn/connection.php';
 
 $infoMessage = '';
 $errorMessage = '';
@@ -62,7 +62,8 @@ if (isset($_GET['id'])) {
 </head>
 
 <body>
-    <?php require '../navbar.php'; ?>
+    <?php require 'navbar.php'; ?>
+    
     <div class="container mt-3">
         <div class="row m-auto">
             <div class="col-sm">
@@ -92,23 +93,22 @@ if (isset($_GET['id'])) {
                             <input type="tel" class="form-control" required name="celular" id="celular" autocomplete="off" value="<?php echo htmlspecialchars($profesor['celular']); ?>" maxlength="10">
                             <span id="celularOK"></span>
                             <br>
-                            <!-------------------------------------------------------------->
-                            <!-- Agregar un campo para la contraseña -->
+                            <!-------------------------------------------------------------->                           
                             <label>Contraseña:</label>
-                            <input class="form-control bg-light" type="password" name="contrasena" id="password" required value="<?php echo htmlspecialchars($profesor['contraseña']); ?>" maxlength="10">
-                            <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
-                                <i class="fas fa-eye p-1"></i>
-                            </button>
-                            <!-------------------------------------------------------------->
-                            <br>
-
-                            <!-------------------------------------------------------------->
-
-
-                            <div class="mt-3">
-                                <button type="submit" class="btn btn-primary" name="modificar" onclick="return confirm('¿Estás seguro de guardar los cambios?')">Guardar Cambios</button>
-                                <a class="btn btn-warning" href="../listadoprofe.php">Ver Listado</a>
+                            <div class="input-group">
+                                <input class="form-control bg-light" type="password" name="contrasena" id="password" required value="<?php echo htmlspecialchars($profesor['contraseña']); ?>" maxlength="10">
+                                <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
+                                    <i class="fas fa-eye p-1"></i>
+                                </button>
                             </div>
+                           
+                            <!-------------------------------------------------------------->
+                            
+                            <div class="mt-3 mb-2">
+                                <button type="submit" class="btn btn-primary" name="modificar" onclick="return confirm('¿Estás seguro de guardar los cambios?')">Guardar Cambios</button>
+                                <a class="btn btn-warning" href="listadoprofe.php">Ver Listado</a>
+                            </div>
+                            
 
                             <?php
                             if (!empty($infoMessage)) {
@@ -124,7 +124,7 @@ if (isset($_GET['id'])) {
             </div>
         </div>
     </div>
-    <?php require '../footer.php'; ?>
+    <?php require 'footer.php'; ?>
     <script src="js/contraseña.js"></script>
     <script src="js/validacion.js"></script>
     <script src="js/validacion2.js"></script>

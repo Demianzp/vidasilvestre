@@ -17,16 +17,14 @@
             <div class="col-sm">
                 <div class="card rounded-2 border-0">
 
-                    <div class="card-header bg-dark text-white">
+                    <div class="card-header bg-dark text-white pb-0">
 
                         <h5 class="d-inline-block">Listado de Profesores</h5>
 
                         <a class="btn btn-primary float-right" href="profesor.php">Agregar Profesor</a>
                         <form class="form-group mx-sm-3 d-inline-block">
-                            <input class="form-control me-2 light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">
-                            <hr>
+                            <input class="form-control  light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">
                         </form>
-
 
                     </div>
                     <div class="card-body table-responsive">
@@ -42,17 +40,16 @@
                                 <th>Fecha de Nacimiento</th>
                                 <th>Celular</th>
                                 <th>Departamento</th>
+                                <th>Asignar</th>
                                 <th>Editar</th>
                                 <th>Eliminar</th>
                             </thead>
                             <tbody>
                                 <?php
                                 require 'conn/connection.php';
-
                                 try {
                                     $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
                                     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
 
                                     $query = "SELECT * FROM persona WHERE id_rol = 2 AND estado = 'Activo'";
                                     $stmt = $db->prepare($query);
@@ -70,11 +67,11 @@
                                             <td><?php echo $profesor['fecha_ingreso'] ?></td>
                                             <td><?php echo $profesor['fecha_nacimiento'] ?></td>
                                             <td><?php echo $profesor['celular'] ?></td>
+                                            
                                             <td><?php echo $profesor['ciudad'] ?></td>
-                                            <!-- <td><?php //echo $profesor['estado'] 
-                                                        ?></td> -->
-                                            <td><a href="views/editarprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning" role="button">Editar</a></td>
-                                            <td><a href="views/deletprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
+                                            <td><a href="##Asignar##?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-info" role="button">Asignar</a></td>
+                                            <td><a href="editarprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning" role="button">Editar</a></td>
+                                            <td><a href="deletprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
                                         </tr>
                                 <?php
                                     }

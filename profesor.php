@@ -63,13 +63,13 @@ if (isset($_SESSION['message'])) {
                             </div>
                         </div>
                         <div class="col">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="celular">Celular:</label>
-                                    <input type="tel" class="form-control" name="celular" placeholder="Ingrese Teléfono" id="celular" autocomplete="off" required>
-                                    <span id="celularOK"></span>
-                                </div>
+                            
+                            <div class="form-group">
+                                <label for="celular">Celular:</label>
+                                <input type="tel" class="form-control" name="celular" placeholder="Ingrese Teléfono" id="celular" autocomplete="off" required>
+                                <span id="celularOK"></span>
                             </div>
+                            
                         </div>
                     </div>
                     <!-- --------------------------------- -->
@@ -123,7 +123,6 @@ if (isset($_SESSION['message'])) {
                                     <option value="Femenino">Femenino</option>
                                     <option value="Otros">Otros</option>
                                 </select>
-
                             </div>
                         </div>
                         <div class="col">
@@ -166,15 +165,15 @@ if (isset($_SESSION['message'])) {
 
                         <div class="col">
                             <div class="form-group">
-                                <label for="contraseña">Contraseña:</label>
+                                <label for="contraseña">Contraseña:</label>                                
+                                <div class="input-group">
                                 <input class="form-control bg-light" type="password" placeholder="Contraseña" name="contrasena" id="password" autocomplete="off" required />
                                 <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
                                     <i class="fas fa-eye p-1"></i>
-                                </button>
+                                </button>                                
+                                </div>                                
                             </div>
                         </div>
-
-
                     </div>
                     <!-- --------------------------------- -->
                     <!-- Agregamos un botón para guardar con un evento JavaScript -->
