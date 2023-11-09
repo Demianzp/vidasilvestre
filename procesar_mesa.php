@@ -8,7 +8,7 @@ $nombre_mesa = isset($_POST['nombre_mesa']) ? $_POST['nombre_mesa'] : '';
 $fecha = $_POST['fecha'];
 $fecha_fin = $_POST['fecha_fin'];
 $hora = $_POST['hora'];
-// $tipo = $_POST['tipo'];
+$id_tipo = $_POST['id_tipo'];
 $ciclo_lectivo = $_POST['ciclo_lectivo'];
 $estado = "Activo";
 
@@ -20,8 +20,7 @@ if (empty($nombre_mesa)) {
 
 // Inserta la mesa de examen en la base de datos
 try {
-    // Utiliza una declaración preparada para evitar problemas de seguridad y facilitar la lectura
-    $stmt = $db->prepare("INSERT INTO mesa_examen (nombre_mesa, id_materia, id_ciclo_lectivo, fecha, fecha_fin, hora, estado) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $db->prepare("INSERT INTO mesa_examen (nombre_mesa, id_materia, id_ciclo_lectivo, fecha, fecha_fin, hora, estado , id_tipo) VALUES (?, ?, ?, ?, ?, ?, ? , ?)");
     $stmt->bindParam(1, $nombre_mesa);
     $stmt->bindParam(2, $id_materia);
     $stmt->bindParam(3, $ciclo_lectivo);
@@ -29,8 +28,7 @@ try {
     $stmt->bindParam(5, $fecha_fin);
     $stmt->bindParam(6, $hora);
     $stmt->bindParam(7, $estado);
-    // $stmt->bindParam(7, $tipo);
-    
+    $stmt->bindParam(8, $id_tipo);  // Corregido a 8
 
     // Ejecuta la consulta preparada
     $stmt->execute();
@@ -39,4 +37,3 @@ try {
 } catch (PDOException $e) {
     echo "Error al agregar la mesa de examen: " . $e->getMessage();
 }
-?>

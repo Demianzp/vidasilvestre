@@ -36,16 +36,27 @@ $result_ciclos = $db->query($query_ciclos);
                     </select>
                     <br>
                     <label for="nombre_mesa">Nombre de Mesa:</label>
-                    <input type="text" name="nombre_mesa" autocomplete="off"   placeholder="Ingrese Nombre" required>
+                    <input type="text" name="nombre_mesa" autocomplete="off" placeholder="Ingrese Nombre" required>
                     <br>
                     <label for="fecha">Fecha Inicio:</label>
-                    <input type="date" name="fecha" autocomplete="off"  required>
+                    <input type="date" name="fecha" autocomplete="off" required>
                     <br>
                     <label for="fecha_fin">Fecha Fin:</label>
-                    <input type="date" name="fecha_fin" autocomplete="off"  required>
+                    <input type="date" name="fecha_fin" autocomplete="off" required>
                     <br>
                     <label for="hora">Hora:</label>
-                    <input type="time" name="hora" autocomplete="off"  required>
+                    <input type="time" name="hora" autocomplete="off" required>
+                    <br>
+                    <div class="form-group">
+                        <label for="id_tipo">Tipo de Materia:</label>
+                        <select name="id_tipo" class="form-control" autocomplete="off" required>
+                            <option value="" disabled selected>Seleccione su Tipo</option>
+                            <option value="1">Regular</option>
+                            <option value="2">Promocional</option>
+                            <option value="3">Libre</option>
+                        </select>
+                    </div>
+
                     <br>
                     <label for="ciclo_lectivo">Ciclo Lectivo:</label>
                     <select name="ciclo_lectivo" id="ciclo_lectivo" class="form-control" autocomplete="off" required>
