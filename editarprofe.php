@@ -27,10 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($consulta_actualizar->execute()) {
             $infoMessage = 'Registro modificado correctamente';
         } else {
-            $errorMessage = 'Error al editar el registro: ' . implode(', ', $consulta_actualizar->errorInfo());
+            $errorMessage = 'Error al editar el registro: ' . implode(', '. $consulta_actualizar->errorInfo());
         }
     } else {
-        die('Falta el ID del profesor en el formulario.');
+        $errorMessage = 'Falta el ID del profesor en el formulario.';
     }
 }
 
@@ -46,6 +46,12 @@ if (isset($_GET['id'])) {
     }
 } else {
     die('Ha ocurrido un error');
+}
+
+// Redirigir solo si hay mensajes para enviar
+if ($infoMessage || $errorMessage) {
+    header("Location: listadoprofe.php?mensaje=" . urlencode($infoMessage) . "&error=" . urlencode($errorMessage));
+    exit();
 }
 ?>
 
@@ -77,7 +83,7 @@ if (isset($_GET['id'])) {
                             <input type="text" class="form-control" required name="nombre" autocomplete="off" value="<?php echo htmlspecialchars($profesor['nombre']); ?>" maxlength="45">
                             <!-------------------------------------------------------------->
                             <label>Apellidos:</label>
-                            <input type text="text" class ="form-control" required name="apellido" autocomplete="off" value="<?php echo htmlspecialchars($profesor['apellido']); ?>" maxlength="45">
+                            <input type="text" class="form-control" required name="apellido" autocomplete="off" value="<?php echo htmlspecialchars($profesor['apellido']); ?>" maxlength="45">
                             <!-------------------------------------------------------------->
                             <label>DNI:</label>
                             <input type="text" class="form-control" required name="dni" id="dni" autocomplete="off" value="<?php echo htmlspecialchars($profesor['DNI']); ?>" maxlength="8">
@@ -131,6 +137,3 @@ if (isset($_GET['id'])) {
 </body>
 
 </html>
-
-
-
