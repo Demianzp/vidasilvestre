@@ -1,6 +1,19 @@
 <?php
-require 'conn/connection.php';
+
 session_start();
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "vidasilvestre";
+
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Verificar la conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+$mensaje = "";
+$error = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : '';
@@ -23,35 +36,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $sql = "INSERT INTO persona (nombre, apellido, fecha_nacimiento, DNI, celular, email_correo, direccion, fecha_ingreso, pais, ciudad, contraseña, id_rol, genero, estado) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $db->prepare($sql);
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssiiiiiiissss", $nombre, $apellido, $fecha_nacimiento, $dni, $celular ,$email, $direccion,$fecha_ingreso,$pais,$ciudad,$contrasena,$id_rol, $genero, $estado);
     
-    if ($stmt) {
-        $stmt->bindParam(1, $nombre, PDO::PARAM_STR);
-        $stmt->bindParam(2, $apellido, PDO::PARAM_STR);
-        $stmt->bindParam(3, $fecha_nacimiento, PDO::PARAM_STR);
-        $stmt->bindParam(4, $dni, PDO::PARAM_STR);
-        $stmt->bindParam(5, $celular, PDO::PARAM_STR);
-        $stmt->bindParam(6, $email, PDO::PARAM_STR);
-        $stmt->bindParam(7, $direccion, PDO::PARAM_STR);
-        $stmt->bindParam(8, $fecha_ingreso, PDO::PARAM_STR);
-        $stmt->bindParam(9, $pais, PDO::PARAM_STR);
-        $stmt->bindParam(10, $ciudad, PDO::PARAM_STR);
-        $stmt->bindParam(11, $contrasena, PDO::PARAM_STR);
-        $stmt->bindParam(12, $id_rol, PDO::PARAM_STR);
-        $stmt->bindParam(13, $genero, PDO::PARAM_STR);
-        $stmt->bindParam(14, $estado, PDO::PARAM_STR);
-
-        if ($stmt->execute()) {
-            // Mensaje de éxito
-            $_SESSION['message'] = "Los datos se han cargado con éxito.";
-            header('Location: alumnos.view.php'); // Redirige a alumnos.view.php
+    if ($stmt->execute()) {
+        $mensaje = "Alumno ingresado con éxito.";
         } else {
-            // Mensaje de error
-            $_SESSION['message'] = "Error al cargar los datos.";
-            header('Location: alumnos.view.php'); // Redirige a alumnos.view.php
+            $error = "Error al ingresar Alumno: " . $stmt->error;
         }
-             
-
-}
-
-}
+        
+        $stmt->close();
+    
+        // Redirigir a la página "registrar_materia.php" con los mensajes en la URL
+        header("Location: listadoalumnos.view.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
+        exit();
+    }
+$conn->close();
+?>
