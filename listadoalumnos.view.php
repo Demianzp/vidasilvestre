@@ -1,3 +1,6 @@
+<?php
+session_start(); // Asegúrate de incluir esto al principio del archivo
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -13,6 +16,7 @@
     <?php require 'navbar.php'; ?>
 
     <section class="content mt-3">
+       
         <div class="row m-auto">
             <div class="col-sm">
                 <div class="card rounded-2 border-0">
@@ -20,13 +24,21 @@
                     <div class="card-header pb-0 bg-dark text-white ">
 
                         <h5 class="d-inline-block ">Listado de Alumnos</h5>
-
                         <a class="btn btn-primary float-right" href="alumnos.view.php">Agregar Alumno</a>
                         <form class="form-group mx-3 d-inline-block">
                             <input class="form-control  light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">
-                           
+
                         </form>
                     </div>
+                     <!-- Mensaje de carga o erro de alumno modificar -->
+                    <?php
+                        if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
+                            echo '<div class="alert alert-success">' . htmlspecialchars($_GET['mensaje']) . '</div>';
+                        }
+                        if (isset($_GET['error']) && !empty($_GET['error'])) {
+                            echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['error']) . '</div>';
+                        }
+                    ?>
                     <div class="card-body table-responsive">
                         <!-- <button type="submit" class="btn btn-primary">Buscar</button> -->
                         <table class="table table-bordered table-striped table_id">

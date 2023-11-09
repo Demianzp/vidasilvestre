@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
     
     // Redirigir a la página "registrar_materia.php" con los mensajes en la URL
-    header("Location: registromateria.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
+    header("Location: listado_materia.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
     exit();
      
 }
