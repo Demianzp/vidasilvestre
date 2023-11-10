@@ -32,7 +32,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="horas">Horas de cursada:</label>
-                                <input type="text" class="form-control" data-name="Horas de cursada" name "horas" id="horas" required placeholder="Ingrese las horas" autocomplete="off">
+                                <input type="text" class="form-control" data-name="Horas de cursada" name="horas" id="horas" required placeholder="Ingrese las horas" autocomplete="off">
                             </div>
                             <div class="form-group">
                                 <label for="anio">Año de Cursado:</label>
@@ -48,26 +48,24 @@
                             </div>
                             <div class="form-group">
                                 <label for="tipo">Tipo de Materia:</label>
-                                <input type="text" class="form-control" data-name="Tipo de Materia" id="tipo" name="tipo" placeholder="Escriba el tipo de materia" autocomplete="off" required>
+                                <select class="form-control" name="tipo" id="tipo" required>
+                                    <option value="" disabled selected>Seleccione el Tipo</option>
+                                    <option value="Anual">Anual</option>
+                                    <option value="Cuatrimestral">Cuatrimestral</option>
+                                    <option value="Trimestral">Trimestral</option>
+                                </select>
+                                
                             </div>
                             <div class="form-group">
                                 <label for="ciclo">Seleccione su Año:</label>
-                                <select name="ciclo" class="form-control" autocomplete="off" required>
+                                <select name="ciclo" id="ciclo" class="form-control" autocomplete="off" required>
                                     <option value="" disabled selected>Seleccione su Año</option>
                                     <option value="1">Primero</option>
                                     <option value="2">Segundo</option>
                                     <option value="3">Tercero</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="estado">Estado:</label>
-                                <select class="form-control" name="estado" required>
-                                    <option value="" disabled selected>Seleccione el Estado</option>
-                                    <option value="Anual">Anual</option>
-                                    <option value="Cuatrimestral">Cuatrimestral</option>
-                                    <option value="Trimestral">Trimestral</option>
-                                </select>
-                            </div>
+                           
                             <button type="button" class="btn btn-primary" onclick="validarCampos()">Continuar</button>
                         </form>
 
