@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Tabla de Materias y Correlativas</title>
+    <title>Tabla de Materias y Correlativass</title>
 </head>
-
 <body>
     <?php require 'navbar.php'; ?>
     <section class="content mt-2">
@@ -26,8 +24,6 @@
                         $mensajeCancelacion = htmlspecialchars($_GET['mensajeCancelacion']);
                         echo '<div class="alert alert-warning">' . $mensajeCancelacion . '</div>';
                     }
-
-            
                         if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
                             echo '<div class="alert alert-success " role="alert">' . htmlspecialchars($_GET['mensaje']) . '</div>';
                         }
@@ -101,3 +97,4 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 </html>
+

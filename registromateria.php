@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
+    
     <!-- ... (tu código actual) ... -->
 </head>
-
 <body>
     <?php require 'navbar.php'; ?>
 
     <div class="container mt-2 " style="width: 40rem">
         <div class="row m-auto">
-
             <div class="col ">
                 <div class="card rounded-2 border-0">
                     <h5 class="card-header bg-dark text-white ">Registro de Materias</h5>
                     <div class="card-body">
                         
                         <form action="procesar_materia.php" method="post" id="materiaForm">
-                            <!-- ... (tu código actual) ... -->
+                      
                             <div class="form-group">
                                 <label for="nombre">Nombre:</label>
                                 <input type="text" class="form-control" data-name="Nombre" name="nombre" id="nombre" placeholder="Ingrese el Nombre" required autocomplete="off">
