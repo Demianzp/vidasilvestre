@@ -1,27 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <!-- ... (tu código actual) ... -->
 </head>
+
 <body>
     <?php require 'navbar.php'; ?>
 
     <div class="container mt-2 " style="width: 40rem">
         <div class="row m-auto">
-            
-            <div class="col " >
+
+            <div class="col ">
                 <div class="card rounded-2 border-0">
                     <h5 class="card-header bg-dark text-white ">Registro de Materias</h5>
                     <div class="card-body">
-                        <?php
-                        if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
-                            echo '<div class="alert alert-success">' . htmlspecialchars($_GET['mensaje']) . '</div>';
-                        }
-                        if (isset($_GET['error']) && !empty($_GET['error'])) {
-                            echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['error']) . '</div>';
-                        }
-                        ?>
+                        
                         <form action="procesar_materia.php" method="post" id="materiaForm">
+                            <!-- ... (tu código actual) ... -->
                             <div class="form-group">
                                 <label for="nombre">Nombre:</label>
                                 <input type="text" class="form-control" data-name="Nombre" name="nombre" id="nombre" placeholder="Ingrese el Nombre" required autocomplete="off">
@@ -72,15 +68,16 @@
                                 </tbody>
                             </table>
                             <button type="button" class="btn btn-success" onclick="registrarMateria()">Registrar</button>
+                            <a href="listado_materia.php?mensajeCancelacion=<?= urlencode('Se canceló la carga de materia') ?>" class="btn btn-secondary">Cancelar</a>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
     <?php require 'footer.php'; ?>
-    <script src="js/materia.js" ></script>
+    <script src="js/materia.js"></script>
 </body>
-</html>
 
+</html>

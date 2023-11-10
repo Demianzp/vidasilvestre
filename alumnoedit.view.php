@@ -27,10 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($consulta_actualizar->execute()) {
             $infoMessage = 'Registro modificado correctamente';
         } else {
-            $errorMessage = 'Error al editar el registro: ' . implode(', ', $consulta_actualizar->errorInfo());
+            $errorMessage = 'Error al editar el registro: ' . implode(', '. $consulta_actualizar->errorInfo());
         }
     } else {
-        die('Falta el ID del alumno en el formulario.');
+        $errorMessage = 'Falta el ID del alumno en el formulario.';
     }
 }
 
@@ -47,7 +47,14 @@ if (isset($_GET['id'])) {
 } else {
     die('Ha ocurrido un error');
 }
+
+// Redirigir solo si hay mensajes para enviar
+if ($infoMessage || $errorMessage) {
+    header("Location: listadoalumnos.view.php?mensaje=" . urlencode($infoMessage) . "&error=" . urlencode($errorMessage));
+    exit();
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -58,7 +65,9 @@ if (isset($_GET['id'])) {
     <title>Edición de Alumnos</title>
     <meta name="description" content="Registro de Notas del Centro Escolar Profesor Lennin" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoI6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
 </head>
 
 <body>
@@ -101,23 +110,13 @@ if (isset($_GET['id'])) {
                             </button>
                             <!-------------------------------------------------------------->
                             <br>
-
-                            <!-------------------------------------------------------------->
-
-
+                            
                             <div class="mt-3">
+
                                 <button type="submit" class="btn btn-primary" name="modificar" onclick="return confirm('¿Estás seguro de guardar los cambios?')">Guardar Cambios</button>
                                 <a class="btn btn-warning" href="listadoalumnos.view.php">Ver Listado</a>
-                            </div>
-
-                            <?php
-                            if (!empty($infoMessage)) {
-                                echo '<div class="alert alert-success" role="alert">' . $infoMessage . '</div>';
-                            }
-                            if (!empty($errorMessage)) {
-                                echo '<div class="alert alert-danger" role="alert">' . $errorMessage . '</div>';
-                            }
-                            ?>
+                            
+                            </div>  
                         </form>
                     </div>
                 </div>
@@ -125,12 +124,12 @@ if (isset($_GET['id'])) {
         </div>
     </div>
     <?php require 'footer.php'; ?>
+
     <script src="js/contraseña.js"></script>
+
     <script src="js/validacion.js"></script>
+
     <script src="js/validacion2.js"></script>
+
 </body>
-
 </html>
-
-
-

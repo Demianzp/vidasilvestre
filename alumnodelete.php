@@ -2,8 +2,8 @@
 require 'conn/connection.php';
 
 // Inicializar variables de mensaje
-$infoMessage = '';
-$errorMessage = '';
+$inMessage = '';
+$errMessage = '';
 
 if (isset($_GET['id'])) {
     $id_alumno = $_GET['id'];
@@ -14,15 +14,22 @@ if (isset($_GET['id'])) {
         $consulta_desactivar->bindParam(':id', $id_alumno, PDO::PARAM_INT);
 
         if ($consulta_desactivar->execute()) {
-            $infoMessage = 'Registro desactivado correctamente';
+            $inMessage = '!!Registro desactivado correctamente !!';
         } else {
-            $errorMessage = 'Error al desactivar el registro: ' . implode(', ', $consulta_desactivar->errorInfo());
+            $errMessage = '!!Error al desactivar el registro!!: ' . implode(', '. $consulta_desactivar->errorInfo());
         }
     }
 } else {
-    $errorMessage = 'Ha ocurrido un error: Falta el ID del alumno en la URL.';
+    $errMessage = 'Ha ocurrido un error: Falta el ID del alumno en la URL.';
+}
+
+// Redirigir solo si hay mensajes para enviar
+if ($inMessage || $errMessage) {
+    header("Location: listadoalumnos.view.php?mensaje=" . urlencode($inMessage) . "&error=" . urlencode($errMessage));
+    exit();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
