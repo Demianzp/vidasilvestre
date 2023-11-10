@@ -16,7 +16,7 @@ if (isset($_GET['id'])) {
         if ($consulta_desactivar->execute()) {
             $infoMessage = 'Registro desactivado correctamente';
         } else {
-            $errorMessage = 'Error al desactivar el registro: ' . implode(', ', $consulta_desactivar->errorInfo());
+            $errorMessage = 'Error al desactivar el registro: ' . implode(', '.$consulta_desactivar->errorInfo());
         }
     }
 } else {

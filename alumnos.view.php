@@ -1,13 +1,3 @@
-<?php
-session_start(); // Asegúrate de incluir esto al principio del archivo
-
-if (isset($_SESSION['message'])) {
-    $message = $_SESSION['message'];
-    unset($_SESSION['message']); // Borra el mensaje después de mostrarlo
-} else {
-    $message = ""; // Inicializa la variable de mensaje si no hay un mensaje en la sesión
-}
-?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -184,12 +174,6 @@ if (isset($_SESSION['message'])) {
                         <button type="button" class="btn btn-success" id="confirmarBtn">Sí</button>
                         <button type="button" class="btn btn-danger" id="cancelarBtn">No</button>
                     </div>
-                    <?php
-                    if (isset($_SESSION['message'])) {
-                        echo '<div class="alert alert-success" role="alert">' . $_SESSION['message'] . '</div>';
-                        unset($_SESSION['message']); // Borra el mensaje después de mostrarlo
-                    }
-                    ?>
                 </form>
             </div>
         </div>
