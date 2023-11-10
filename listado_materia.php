@@ -19,7 +19,7 @@
 
                     </div>
                     <?php
-                    // Verificar si hay un mensaje en la URL
+                    // Verificar si hay un mensaje en la URsL
                     if (isset($_GET['mensajeCancelacion']) && !empty($_GET['mensajeCancelacion'])) {
                         $mensajeCancelacion = htmlspecialchars($_GET['mensajeCancelacion']);
                         echo '<div class="alert alert-warning">' . $mensajeCancelacion . '</div>';
