@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     
-    <!-- ... (tu código actsual) ... -->
+
 </head>
 <body>
     <?php require 'navbar.php'; ?>
