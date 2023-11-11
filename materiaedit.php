@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($consulta_actualizar->execute()) {
             $infoMessage = 'Registro modificado correctamente';
         } else {
-            $errorMessage = 'Error al editar el registro: ' . implode(', ', $consulta_actualizar->errorInfo());
+            $errorMessage = 'Error al editar el registro: ' . implode(', '. $consulta_actualizar->errorInfo());
         }
     } else {
         die('Falta el ID del materia en el formulario.');
