@@ -26,7 +26,3 @@ document.getElementById('confirmarBtn').addEventListener('click', function() {
     // Enviar el formulario cuando se confirme
     document.getElementById('formulario').submit();
 });
-
-  
-
-

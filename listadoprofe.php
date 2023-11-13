@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,25 +10,20 @@
 
 <body>
     <?php require 'navbar.php'; ?>
-
     <section class="content mt-3">
         <div class="row m-auto">
             <div class="col-sm">
-                <div class="card rounded-2 border-0">
-
+                <div class="card rounded-2 border-0" >
                     <div class="card-header bg-dark text-white pb-0">
-
                         <h5 class="d-inline-block">Listado de Profesores</h5>
-
-                        <a class="btn btn-primary float-right" href="profesor.php">Agregar Profesor</a>
-                        <form class="form-group mx-sm-3 d-inline-block">
+                        <a class="btn btn-primary float-right mb-2" href="profesor.php">Agregar Profesor</a>
+                        <!-- <form class="form-group mx-sm-3 d-inline-block">
                             <input class="form-control  light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">
-                        </form>
-
+                        </form> -->
                     </div>
                     <div class="card-body table-responsive">
                         <!-- <button type="submit" class="btn btn-primary">Buscar</button> ------->
-                        <table class="table table-bordered table-striped table_id">
+                        <table id="example" class="table table-striped" style="width:100%">
                             <thead class="thead-dark">
                                 <th>#</th>
                                 <th>Apellidos</th>
@@ -97,10 +91,8 @@
             </div>
         </div>
     </section>
-
     <?php require 'footer.php'; ?>
-
 </body>
-<script src="js/buscador.js"></script>
+<!-- <script src="js/buscador.js"></script> -->
 
 </html>
