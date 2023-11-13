@@ -12,11 +12,10 @@
                     <div class="card-header bg-dark text-white pb-0">
                         <h5 class="d-inline-block ">Listado de Materias y Correlativas</h5>
 
-                        <a class="btn btn-primary float-right" href="registromateria.php">Registro de Materia</a>
-                        <form class="form-group mx-sm-3 d-inline-block">
+                        <a class="btn btn-primary float-right mb-2" href="registromateria.php">Registro de Materia</a>
+                        <!-- <form class="form-group mx-sm-3 d-inline-block">
                             <input class="form-control  light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">
-                        </form>
-
+                        </form> -->
                     </div>
                     <?php
                     if (isset($_GET['mensajeCancelacion']) && !empty($_GET['mensajeCancelacion'])) {
@@ -31,11 +30,9 @@
                         }
                     ?>
                     
-
-
                     <div class="card-body table-responsive">
                         <!-- <button type="submit" class="btn btn-primary">Buscar</button> -->
-                        <table class="table table-bordered table-striped table_id">
+                        <table id="example" class="table table-striped bg-dark" style="width:100%">
                             <thead class="thead-dark">
                                 <th>ID Materia</th>
                                 <th>Materia</th>
@@ -91,7 +88,7 @@
     </section>
     <?php require 'footer.php'; ?>
 </body>
-<script src="js/buscador.js"></script>
+<!-- <script src="js/buscador.js"></script> -->
 <script src="js/mensaje_hidden.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 

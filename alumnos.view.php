@@ -170,7 +170,7 @@
                     <button type="button" class="btn btn-primary float-right" id="guardarBtn" onclick="validarFormulario()">Guardar</button>
                     <!-- Agregamos un div para mostrar un mensaje de confirmación -->
                     <div id="confirmacion" style="display: none;">
-                        <p>¿Estás seguro de que deseas guardar los datos?</p>
+                        <p>¿Seguro desea guardar los datos?</p>
                         <button type="button" class="btn btn-success" id="confirmarBtn">Sí</button>
                         <button type="button" class="btn btn-danger" id="cancelarBtn">No</button>
                     </div>

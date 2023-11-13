@@ -109,11 +109,9 @@ if ($infoMessage || $errorMessage) {
                                 <i class="fas fa-eye p-1"></i>
                             </button>
                             <!-------------------------------------------------------------->
-                            <br>
-                            
+                            <br>                            
                             <div class="mt-3">
-
-                                <button type="submit" class="btn btn-primary" name="modificar" onclick="return confirm('¿Estás seguro de guardar los cambios?')">Guardar Cambios</button>
+                                <button type="submit" class="btn btn-primary" name="modificar" onclick="return confirm('¿Seguro desea guardar los cambios?')">Guardar Cambios</button>
                                 <a class="btn btn-warning" href="listadoalumnos.view.php">Ver Listado</a>
                             
                             </div>  
