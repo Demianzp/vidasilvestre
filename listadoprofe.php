@@ -63,7 +63,7 @@
                                             <td><?php echo $profesor['celular'] ?></td>
                                             
                                             <td><?php echo $profesor['ciudad'] ?></td>
-                                            <td><a href="##Asignar##?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-info" role="button">Asignar</a></td>
+                                            <td><a href="asignar_F.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-info" role="button">Asignar</a></td>
                                             <td><a href="editarprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning" role="button">Editar</a></td>
                                             <td><a href="deletprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
                                         </tr>
