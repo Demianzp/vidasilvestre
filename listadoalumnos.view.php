@@ -22,11 +22,10 @@
                     <div class="card-header pb-0 bg-dark text-white ">
 
                         <h5 class="d-inline-block ">Listado de Alumnos</h5>
-                        <a class="btn btn-primary float-right" href="alumnos.view.php">Agregar Alumno</a>
-                        <form class="form-group mx-3 d-inline-block">
+                        <a class="btn btn-primary float-right mb-2" href="alumnos.view.php">Agregar Alumno</a>
+                        <!-- <form class="form-group mx-sm-3 d-inline-block">
                             <input class="form-control  light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">
-
-                        </form>
+                        </form> -->
                     </div>
                     <!-- Mensaje de carga o error de alumno Cargar -->
                     <?php
@@ -46,7 +45,6 @@
                         echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['errorMessage'])  . '</div>';
                     }
                     ?>
-
                     <!---------------Mensaje de Persona desactiva o error --------------------------------->
                     <?php
                     if (isset($_GET['inMessage']) && !empty($_GET['inMessage'])) {
@@ -60,7 +58,7 @@
                     <!-- -------------------- -->
                     <div class="card-body table-responsive">
                         <!-- <button type="submit" class="btn btn-primary">Buscar</button> -->
-                        <table class="table table-bordered table-striped table_id">
+                        <table id="example" class="table table-striped" style="width:100%">
                             <thead class="thead-dark">
                                 <th>#</th>
                                 <th>Apellidos</th>
@@ -77,11 +75,9 @@
                             <tbody>
                                 <?php
                                 require 'conn/connection.php';
-
                                 try {
                                     $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
                                     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
 
                                     $query = "SELECT * FROM persona WHERE id_rol = 1 AND estado = 'Activo'";
                                     $stmt = $db->prepare($query);
@@ -116,18 +112,15 @@
                         </table>
                         <br>
                         <br><br>
-
-
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
     <?php require 'footer.php'; ?>
-
 </body>
-<script src="js/buscador.js"></script>
+<!-- <script src="js/buscador.js"></script> -->
+
 <script src="js/mensaje_hidden.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </html>
