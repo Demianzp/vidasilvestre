@@ -55,15 +55,15 @@
                                         LEFT JOIN correlativa c ON m.id_materia = c.id_materia";
                                     $stmt = $db->prepare($query);
                                     $stmt->execute();
-                                    $alumnos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                    foreach ($alumnos as $alumno) {
+                                    $materias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                    foreach ($materias as $materia) {
                                 ?>
                                         <tr>
-                                            <th scope="row"><?php echo $alumno['id_materia'] ?></th>
-                                            <td><?php echo $alumno['Materia'] ?></td>
-                                            <td><?php echo $alumno['id_correlativa'] ?></td>
-                                            <td><a href="##editarmateria##?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning" role="button">Editar</a></td>
-                                            <td><a href="##eliminarmateria##?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
+                                            <th scope="row"><?php echo $materia['id_materia'] ?></th>
+                                            <td><?php echo $materia['Materia'] ?></td>
+                                            <td><?php echo $materia['id_correlativa'] ?></td>
+                                            <td><a href="materiaedit.php?id=<?php echo $materia['id_materia'] ?>" class="btn btn-warning" role="button">Editar</a></td>
+                                            <td><a href="materiadelet.php?id=<?php echo $materia['id_materia'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
                                         </tr>
                                 <?php
                                     }
