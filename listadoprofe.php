@@ -22,36 +22,35 @@
                             <input class="form-control  light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">
                         </form> -->
                     </div>
-                    <?php
-                    // Revisa si hay mensajes de éxito y los muestra
+                   <!-- Mensaje de carga o error de alumno Cargar -->
+                   <?php
                     if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
-                        echo '<div class="alert alert-success" role="alert">' . htmlspecialchars($_GET['mensaje']) . '</div>';
+                        echo '<div class="alert alert-success">' . htmlspecialchars($_GET['mensaje']) . '</div>';
                     }
-
-                    // Revisa si hay mensajes de error y los muestra
                     if (isset($_GET['error']) && !empty($_GET['error'])) {
-                        echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['error']) . '</div>';
+                        echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['error']) . '</div>';
                     }
                     ?>
-                    <!-- Mnesaje si se ha editado correctamente o hay error -->
+
+                    <!-- Mensaje de carga o error de alumno Modificar -->
                     <?php
                     if (!empty($infoMessage)) {
-                        echo '<div class="alert alert-success" role="alert">' . htmlspecialchars($_GET['infoMessage ']) . '</div>';
+                        echo '<div class="alert alert-success">' . htmlspecialchars($infoMessage) . '</div>';
                     }
                     if (!empty($errorMessage)) {
-                        echo '<div class="alert alert-danger" >' . htmlspecialchars($_GET['errorMessage'])  . '</div>';
-                    }
-                    ?>
-                    <!-- Mensaje de desactivar registro-->
-                    <?php
-                    if (!empty($inMessage)) {
-                        echo '<div class="alert alert-primary" >' . $infoMessage . '</div>';
-                    }
-                    if (!empty($errMessage)) {
-                        echo '<div class="alert alert-primary">' . $errorMessage . '</div>';
+                        echo '<div class="alert alert-danger">' . htmlspecialchars($errorMessage) . '</div>';
                     }
                     ?>
 
+                    <!---------------Mensaje de Persona desactiva o error --------------------------------->
+                    <?php
+                    if (isset($_GET['inMessage']) && !empty($_GET['inMessage'])) {
+                        echo '<div class="alert alert-success">' . htmlspecialchars($_GET['inMessage']) . '</div>';
+                    }
+                    if (isset($_GET['errMessage']) && !empty($_GET['errMessage'])) {
+                        echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['errMessage']) . '</div>';
+                    }
+                    ?>
                     <div class="card-body table-responsive">
                         <!-- <button type="submit" class="btn btn-primary">Buscar</button> ------->
                         <table id="example" class="table table-striped" style="width:100%">
@@ -125,6 +124,6 @@
     <?php require 'footer.php'; ?>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="js/mensaje_hidden.js"></script>
+<script  src="js/ocultarMensaje.js"></script>
 <!-- <script src="js/buscador.js"></script> -->
 </html>

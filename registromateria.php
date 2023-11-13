@@ -39,8 +39,8 @@
                                 <input type="text" class="form-control" data-name="Plan de Estudio" id="plan_estudio" name="plan_estudio" placeholder="Ingrese Plan de estudio" autocomplete="off" required>
                             </div>
                             <div class="form-group">
-                                <label for="tipo">Tipo de Materia:</label>
-                                <select name="tipo" class="form-control" autocomplete="off" required>
+                                <label for="id_tipo">Tipo de Materia:</label>
+                                <select name="id_tipo" class="form-control" autocomplete="off" required>
                                     <option value="" disabled selected>Seleccione su Tipo</option>
                                     <option value="1">Promocional</option>
                                     <option value="2">Regular</option>
