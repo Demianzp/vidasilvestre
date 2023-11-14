@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <title>Tabla de Materias y Correlativass</title>
 </head>
@@ -11,27 +11,42 @@
                 <div class="card rounded-2 border-0">
                     <div class="card-header bg-dark text-white pb-0">
                         <h5 class="d-inline-block ">Listado de Materias y Correlativas</h5>
-
                         <a class="btn btn-primary float-right mb-2" href="registromateria.php">Registro de Materia</a>
-                        <!-- <form class="form-group mx-sm-3 d-inline-block">
-                            <input class="form-control  light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">
-                        </form> -->
                     </div>
+                    <!-- Mensaje de Cancrelacion -->
                     <?php
                     if (isset($_GET['mensajeCancelacion']) && !empty($_GET['mensajeCancelacion'])) {
                         $mensajeCancelacion = htmlspecialchars($_GET['mensajeCancelacion']);
-                        echo '<div class="alert alert-warning">' . $mensajeCancelacion . '</div>';
+                        echo '<div class="alert alert-warning" role="alert">' . $mensajeCancelacion . '</div>';
                     }
-                        if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
-                            echo '<div class="alert alert-success " role="alert">' . htmlspecialchars($_GET['mensaje']) . '</div>';
-                        }
-                        if (isset($_GET['error']) && !empty($_GET['error'])) {
-                            echo '<div class="alert alert-danger"> role="alert"' . htmlspecialchars($_GET['error']) . '</div>';
-                        }
+                    if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
+                        echo '<div class="alert alert-success " role="alert">' . htmlspecialchars($_GET['mensaje']) . '</div>';
+                    }
+                    if (isset($_GET['error']) && !empty($_GET['error'])) {
+                        echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['error']) . '</div>';
+                    }
                     ?>
-                    
+                    <!-- Mensaje de materia editada  -->
+                    <?php
+                    if (isset($_GET['infoMessage']) && !empty($_GET['infoMessage'])) {
+                        echo '<div class="alert alert-success" role="alert">>' . htmlspecialchars($_GET['infoMessage']) . '</div>';
+                    }
+                    if (isset($_GET['errorMessage']) && !empty($_GET['errorMessage'])) {
+                        echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['errorMessage']) . '</div>';
+                    }
+                    ?>
+
+                    <!---------------Mensaje de materia desactiva o error --------------------------------->
+                    <?php
+                    if (isset($_GET['inMessage']) && !empty($_GET['inMessage'])) {
+                        echo '<div class="alert alert-success">' . htmlspecialchars($_GET['inMessage']) . '</div>';
+                    }
+                    if (isset($_GET['errMessage']) && !empty($_GET['errMessage'])) {
+                        echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['errMessage']) . '</div>';
+                    }
+                    ?>
+
                     <div class="card-body table-responsive">
-                        <!-- <button type="submit" class="btn btn-primary">Buscar</button> -->
                         <table id="example" class="table table-striped bg-dark" style="width:100%">
                             <thead class="thead-dark">
                                 <th>ID Materia</th>
@@ -47,9 +62,10 @@
                                     $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
                                     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                                    $query = "SELECT m.id_materia, m.nombre AS 'Materia', c.id_correlativa, c.id_materia AS 'Correlativa'
+                                    $query = "SELECT m.id_materia, m.Nombre AS 'Materia', c.id_correlativa, c.id_materia AS 'Correlativa'
                                         FROM materia m
-                                        LEFT JOIN correlativa c ON m.id_materia = c.id_materia";
+                                        LEFT JOIN correlativa c ON m.id_materia = c.id_materia
+                                        WHERE m.estado = 'Activo'";
                                     $stmt = $db->prepare($query);
                                     $stmt->execute();
                                     $materias = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -70,9 +86,6 @@
                                 ?>
                             </tbody>
                         </table>
-                        <br>
-                        <br><br>
-                        <!-- Mostrar mensajes que se reciben a través de los parámetros en la URL -->
                         <?php
                         if (isset($_GET['err'])) {
                             echo '<span class="error">Error al almacenar el registro</span>';
@@ -87,10 +100,8 @@
         </div>
     </section>
     <?php require 'footer.php'; ?>
+    
 </body>
-<!-- <script src="js/buscador.js"></script> -->
-<script src="js/mensaje_hidden.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
+<script  src="js/ocultarMensaje.js"></script>
 </html>
-

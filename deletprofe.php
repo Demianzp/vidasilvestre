@@ -2,8 +2,8 @@
 require 'conn/connection.php';
 
 // Inicializar variables de mensaje
-$infoMessage = '';
-$errorMessage = '';
+$inMessage = '';
+$errMessage = '';
 
 if (isset($_GET['id'])) {
     $id_profe = $_GET['id'];
@@ -14,15 +14,22 @@ if (isset($_GET['id'])) {
         $consulta_desactivar->bindParam(':id', $id_profe, PDO::PARAM_INT);
 
         if ($consulta_desactivar->execute()) {
-            $infoMessage = 'Registro desactivado correctamente';
+            $inMessage = '!!Registro desactivado correctamente !!';
         } else {
-            $errorMessage = 'Error al desactivar el registro: ' . implode(', '.$consulta_desactivar->errorInfo());
+            $errMessage = '!!Error al desactivar el registro!!: ' . implode(', '. $consulta_desactivar->errorInfo());
         }
     }
 } else {
-    $errorMessage = 'Ha ocurrido un error: Falta el ID del alumno en la URL.';
+    $errMessage = 'Ha ocurrido un error: Falta el ID del alumno en la URL.';
+}
+
+// Redirigir solo si hay mensajes para enviar
+if ($inMessage || $errMessage) {
+    header("Location: listadoprofe.php?mensaje=" . urlencode($inMessage) . "&error=" . urlencode($errMessage));
+    exit();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -40,17 +47,7 @@ if (isset($_GET['id'])) {
     <div class="panel">
         <h4>Desactivar Profesor</h4>
         <!-- Muestra mensajes de éxito o error ------->
-        <?php
-        if (!empty($infoMessage)) {
-            echo '<div class="alert alert-primary" role="alert">' .$infoMessage. '</div>';
-            
-        }
-        if (!empty($errorMessage)) {
-            echo '<div class="alert alert-primary" role="alert">' . $errorMessage . '</div>';
-        }
-        ?>
         <br><br>
-        
         <?php if (empty($errorMessage)) { // Mostrar confirmación solo si no hay un error ?>
             <p>¿Está seguro de que desea desactivar este registro?</p>
             <a class="btn btn-danger" href="?id=<?php echo $id_profe; ?>&confirm=yes">Sí</a>

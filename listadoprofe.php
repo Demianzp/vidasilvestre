@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +14,7 @@
     <section class="content mt-3">
         <div class="row m-auto">
             <div class="col-sm">
-                <div class="card rounded-2 border-0" >
+                <div class="card rounded-2 border-0">
                     <div class="card-header bg-dark text-white pb-0">
                         <h5 class="d-inline-block">Listado de Profesores</h5>
                         <a class="btn btn-primary float-right mb-2" href="profesor.php">Agregar Profesor</a>
@@ -21,6 +22,35 @@
                             <input class="form-control  light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">
                         </form> -->
                     </div>
+                   <!-- Mensaje de carga o error de alumno Cargar -->
+                   <?php
+                    if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
+                        echo '<div class="alert alert-success">' . htmlspecialchars($_GET['mensaje']) . '</div>';
+                    }
+                    if (isset($_GET['error']) && !empty($_GET['error'])) {
+                        echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['error']) . '</div>';
+                    }
+                    ?>
+
+                    <!-- Mensaje de carga o error de alumno Modificar -->
+                    <?php
+                    if (!empty($infoMessage)) {
+                        echo '<div class="alert alert-success">' . htmlspecialchars($infoMessage) . '</div>';
+                    }
+                    if (!empty($errorMessage)) {
+                        echo '<div class="alert alert-danger">' . htmlspecialchars($errorMessage) . '</div>';
+                    }
+                    ?>
+
+                    <!---------------Mensaje de Persona desactiva o error --------------------------------->
+                    <?php
+                    if (isset($_GET['inMessage']) && !empty($_GET['inMessage'])) {
+                        echo '<div class="alert alert-success">' . htmlspecialchars($_GET['inMessage']) . '</div>';
+                    }
+                    if (isset($_GET['errMessage']) && !empty($_GET['errMessage'])) {
+                        echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['errMessage']) . '</div>';
+                    }
+                    ?>
                     <div class="card-body table-responsive">
                         <!-- <button type="submit" class="btn btn-primary">Buscar</button> ------->
                         <table id="example" class="table table-striped" style="width:100%">
@@ -61,7 +91,7 @@
                                             <td><?php echo $profesor['fecha_ingreso'] ?></td>
                                             <td><?php echo $profesor['fecha_nacimiento'] ?></td>
                                             <td><?php echo $profesor['celular'] ?></td>
-                                            
+
                                             <td><?php echo $profesor['ciudad'] ?></td>
                                             <td><a href="asignar_F.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-info" role="button">Asignar</a></td>
                                             <td><a href="editarprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning" role="button">Editar</a></td>
@@ -93,6 +123,7 @@
     </section>
     <?php require 'footer.php'; ?>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script  src="js/ocultarMensaje.js"></script>
 <!-- <script src="js/buscador.js"></script> -->
-
 </html>
