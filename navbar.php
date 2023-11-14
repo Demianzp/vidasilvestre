@@ -42,6 +42,7 @@
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="notas.view.php">Registro de Notas</a></li>
               <li><a class="dropdown-item" href="listadonotas.view.php">Consulta de Notas</a></li>
+              <li><a class="dropdown-item" href="inscripcion.php">Inscripcion Alumno</a></li>
             </ul>
           </li>
           <!-- ------------------------------------------------------- -->

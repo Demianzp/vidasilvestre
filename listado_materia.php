@@ -13,6 +13,7 @@
                         <h5 class="d-inline-block ">Listado de Materias y Correlativas</h5>
                         <a class="btn btn-primary float-right mb-2" href="registromateria.php">Registro de Materia</a>
                     </div>
+                    <!-- Mensaje de Cancrelacion -->
                     <?php
                     if (isset($_GET['mensajeCancelacion']) && !empty($_GET['mensajeCancelacion'])) {
                         $mensajeCancelacion = htmlspecialchars($_GET['mensajeCancelacion']);
@@ -25,6 +26,26 @@
                         echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['error']) . '</div>';
                     }
                     ?>
+                    <!-- Mensaje de materia editada  -->
+                    <?php
+                    if (isset($_GET['infoMessage']) && !empty($_GET['infoMessage'])) {
+                        echo '<div class="alert alert-success" role="alert">>' . htmlspecialchars($_GET['infoMessage']) . '</div>';
+                    }
+                    if (isset($_GET['errorMessage']) && !empty($_GET['errorMessage'])) {
+                        echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['errorMessage']) . '</div>';
+                    }
+                    ?>
+
+                    <!---------------Mensaje de materia desactiva o error --------------------------------->
+                    <?php
+                    if (isset($_GET['inMessage']) && !empty($_GET['inMessage'])) {
+                        echo '<div class="alert alert-success">' . htmlspecialchars($_GET['inMessage']) . '</div>';
+                    }
+                    if (isset($_GET['errMessage']) && !empty($_GET['errMessage'])) {
+                        echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['errMessage']) . '</div>';
+                    }
+                    ?>
+
                     <div class="card-body table-responsive">
                         <table id="example" class="table table-striped bg-dark" style="width:100%">
                             <thead class="thead-dark">
@@ -41,7 +62,7 @@
                                     $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
                                     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                                    $query = "SELECT m.id_materia, m.nombre AS 'Materia', c.id_correlativa, c.id_materia AS 'Correlativa'
+                                    $query = "SELECT m.id_materia, m.Nombre AS 'Materia', c.id_correlativa, c.id_materia AS 'Correlativa'
                                         FROM materia m
                                         LEFT JOIN correlativa c ON m.id_materia = c.id_materia
                                         WHERE m.estado = 'Activo'";
@@ -79,7 +100,8 @@
         </div>
     </section>
     <?php require 'footer.php'; ?>
-    <script src="js/mensaje_hidden.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    
 </body>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script  src="js/ocultarMensaje.js"></script>
 </html>

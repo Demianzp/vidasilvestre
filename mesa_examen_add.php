@@ -2,11 +2,11 @@
 require 'conn/connection.php';
 
 // Realizar la consulta SQL para obtener las materias
-$query = "SELECT id_materia, nombre FROM materia";
+$query = "SELECT id_materia, Nombre FROM materia";
 $result = $db->query($query);
 
 // Consulta SQL para obtener los ciclos lectivos
-$query_ciclos = "SELECT id_ciclo_lectivo, nombre_ciclo_lectivo FROM ciclo_lectivo";
+$query_ciclos = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo";
 $result_ciclos = $db->query($query_ciclos);
 ?>
 
@@ -30,7 +30,7 @@ $result_ciclos = $db->query($query_ciclos);
                         <option value="" disabled selected>Elija la materia</option>
                         <?php
                         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                            echo "<option value='" . $row['id_materia'] . "'>" . $row['nombre'] . "</option>";
+                            echo "<option value='" . $row['id_materia'] . "'>" . $row['Nombre'] . "</option>";
                         }
                         ?>
                     </select>
@@ -63,7 +63,7 @@ $result_ciclos = $db->query($query_ciclos);
                         <option value="" disabled selected>Seleccione el ciclo lectivo</option>
                         <?php
                         while ($row_ciclo = $result_ciclos->fetch(PDO::FETCH_ASSOC)) {
-                            echo "<option value='" . $row_ciclo['id_ciclo_lectivo'] . "'>" . $row_ciclo['nombre_ciclo_lectivo'] . "</option>";
+                            echo "<option value='" . $row_ciclo['id_ciclo'] . "'>" . $row_ciclo['nombre_ciclo'] . "</option>";
                         }
                         ?>
                     </select>

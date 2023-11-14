@@ -20,27 +20,27 @@ if (isset($_GET['revisar'])) {
     $id_materia = $_GET['materia'];
     $id_ciclo = $_GET['ciclo'];
 
-    $sqlAlumnos = $db->prepare("SELECT a.id_persona, a.apellido, a.nombre, b.nota, AVG(b.nota) AS promedio
-    FROM persona AS a
-    LEFT JOIN acta AS b ON a.id_persona = b.id_persona
-    LEFT JOIN mesa_examen AS me ON b.id_mesa = me.id_mesa
-    WHERE a.id_rol = 1 AND a.id_ciclo_lectivo = :id_ciclo
-    GROUP BY a.id_persona, a.apellido, a.nombre");
+    // Validar datos del formulario
+    if (!is_numeric($id_materia) || !is_numeric($id_ciclo)) {
+        die('Error: Los datos del formulario no son válidos.');
+    }
 
-    $id_ciclo = 1; // Reemplaza con el valor que necesites
-    $id_materia = 1; // Reemplaza con el valor que necesites
+    // Consulta SQL con consultas preparadas
+    $sqlAlumnos = $db->prepare("SELECT a.id_persona, CONCAT(a.apellido, ', ', a.nombre) AS nombre_completo, b.nota1, b.nota2, b.nota, AVG(b.nota) AS promedio
+    FROM persona AS a
+    LEFT JOIN estadoalumno AS b ON a.id_persona = b.id_persona
+    WHERE a.id_rol = 1 AND b.id_ciclo = :id_ciclo
+    AND b.id_materia = :id_materia
+    GROUP BY a.id_persona, a.apellido, a.nombre");
 
     try {
         $sqlAlumnos->bindParam(':id_ciclo', $id_ciclo, PDO::PARAM_INT);
         $sqlAlumnos->bindParam(':id_materia', $id_materia, PDO::PARAM_INT);
         $sqlAlumnos->execute();
 
+        // Almacenar los resultados en la variable $alumnos
         $alumnos = $sqlAlumnos->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($alumnos as $alumno) {
-            echo $alumno['apellido'] . ', ' . $alumno['nombre'] . '<br>';
-            // Puedes imprimir más detalles sobre el alumno, como la nota y el promedio
-        }
     } catch (PDOException $e) {
         echo 'Error al ejecutar la consulta: ' . $e->getMessage();
     }
@@ -78,7 +78,7 @@ if (isset($_GET['revisar'])) {
                                         <label class="font-weight-bold">Seleccione la Materia</label><br>
                                         <select class="form-select" name="materia" required>
                                             <?php foreach ($materias as $materia) : ?>
-                                                <option value="<?php echo $materia['id_materia'] ?>"><?php echo $materia['nombre'] ?></option>
+                                                <option value="<?php echo $materia['id_materia'] ?>"><?php echo $materia['Nombre'] ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </li>
@@ -86,7 +86,7 @@ if (isset($_GET['revisar'])) {
                                         <label for="ciclo">Ciclo Lectivo:</label>
                                         <select class="form-select" name="ciclo" required>
                                             <?php foreach ($ciclos as $ciclo) : ?>
-                                                <option value="<?php echo $ciclo['id_ciclo_lectivo'] ?>"><?php echo $ciclo['nombre_ciclo_lectivo'] ?></option>
+                                                <option value="<?php echo $ciclo['id_ciclo'] ?>"><?php echo $ciclo['nombre_ciclo'] ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </li>
@@ -119,18 +119,20 @@ if (isset($_GET['revisar'])) {
                                 <table class="table table-bordered table-striped">
                                     <thead class="thead-dark">
                                         <th>#</th>
-                                        <th>Apellidos</th>
-                                        <th>Nombres</th>
-                                        <th>Nota</th>
+                                        <th>Apellido y Nombre</th>
+                                        <th>2° Cuatrimestre</th>
+                                        <th></th>
+                                        <th></th>
                                         <th>Promedio</th>
                                     </thead>
 
                                     <?php foreach ($alumnos as $index => $alumno) : ?>
                                         <tr>
                                             <td scope="row"><?php echo $alumno['id_persona'] ?></td>
-                                            <td><?php echo $alumno['apellido'] ?></td>
-                                            <td><?php echo $alumno['nombre'] ?></td>
-                                            <td><input type="text" class="form-control" name="nota_<?php echo $index ?>" value="<?php echo $alumno['nota'] ?>"></td>
+                                            <td><?php echo $alumno['nombre_completo'] ?></td>
+                                            <td><input type="text" class="form-control" name="nota1_<?php echo $index ?>" value="<?php echo $alumno['nota1'] ?>"></td>
+                                            <td><input type="text" class="form-control" name="nota2_<?php echo $index ?>" value="<?php echo $alumno['nota2'] ?>"></td>
+                                            <td><input type="text" class="form-control" name="nota_final_<?php echo $index ?>" value="<?php echo $alumno['nota'] ?>"></td>
                                             <td><?php echo number_format($alumno['promedio'], 2) ?></td>
                                         </tr>
                                     <?php endforeach; ?>
