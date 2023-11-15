@@ -15,8 +15,6 @@
 <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
 <script defer src="js/tabla.js"></script>
 <!-- ------------FIN-DATATABLES----- -->
-
-
 <div style="height:60px">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid ">
@@ -31,8 +29,15 @@
       <div class="collapse navbar-collapse " id="navbarNav">
         <ul class="navbar-nav ">
           <!-- ------------------------------------------------------- -->
-          <li class="nav-item active pr-3">
-            <a class="nav-link" href="listadoalumnos.view.php">Alumnos <span class="sr-only">(current)</span></a>
+          <li class="nav-item dropdown pr-3">
+            <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Alumnos
+            </a>
+            <ul class="dropdown-menu">
+              <!-- <li><a class="dropdown-item" href="inscripcion_alumno.php">Inscripcion Alumno</a></li> -->
+              <li><a class="dropdown-item" href="seleccionar_alumnos.php">Inscripcion</a></li>
+              <li><a class="nav-link" href="listadoalumnos.view.php">Alumnos <span class="sr-only"></span></a></li>
+            </ul>
           </li>
           <!-- ------------------------------------------------------- -->
           <li class="nav-item dropdown pr-3">
@@ -42,7 +47,6 @@
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="notas.view.php">Registro de Notas</a></li>
               <li><a class="dropdown-item" href="listadonotas.view.php">Consulta de Notas</a></li>
-              <li><a class="dropdown-item" href="inscripcion.php">Inscripcion Alumno</a></li>
             </ul>
           </li>
           <!-- ------------------------------------------------------- -->
@@ -65,16 +69,13 @@
           <!-- ------------------------------------------------------- -->
           <li class="nav-item dropdown pr-3 ">
             <!-- Nueva parte de agregar notas  -->
-
             <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
-        Mesa y Acta
+              Mesa y Acta
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="mesa_examen_add.php">Mesa de Examen</a></li>
               <li><a class="dropdown-item" href="listadomesa.php">Listado de Mesa de Examen</a></li>
               <li><a class="dropdown-item" href="acta_nota.php">Acta</a></li>
-
             </ul>
           </li>
           <!-- ------------------------------------------------------- -->

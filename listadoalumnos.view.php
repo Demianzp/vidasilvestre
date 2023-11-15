@@ -1,5 +1,3 @@
-<!-- alumnos.php -->
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -13,7 +11,6 @@
 
 <body>
     <?php require 'navbar.php'; ?>
-
     <section class="content mt-3">
         <div class="row m-auto">
             <div class="col-sm">
@@ -50,8 +47,7 @@
                     ?>
                     <!-- -------------------- -->
                     <div class="card-body table-responsive">
-                        <form id="inscripcionForm" action="procesar_inscripcion.php" method="post">
-                            <button type="submit" class="btn btn-primary mb-2">Procesar Inscripción</button>
+                        <form id="inscripcionForm" action="" method="post">
 
                             <table id="example" class="table table-striped" style="width:100%">
                                 <thead class="thead-dark">
@@ -66,7 +62,7 @@
                                     <th>Departamento</th>
                                     <th>Editar</th>
                                     <th>Eliminar</th>
-                                    <th>Inscripcion</th>
+                                   
                                 </thead>
                                 <tbody>
                                     <?php
@@ -94,7 +90,6 @@
                                                 <td><?php echo $alumno['ciudad'] ?></td>
                                                 <td><a href="alumnoedit.view.php?id=<?php echo $alumno['id_persona'] ?>" class="btn btn-warning" role="button">Editar</a></td>
                                                 <td><a href="alumnodelete.php?id=<?php echo $alumno['id_persona'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
-                                                <td><input type="checkbox" name="alumnos[]" value="<?php echo $alumno['id_persona'] ?>"></td>
                                             </tr>
                                     <?php
                                         }
@@ -113,7 +108,7 @@
         </div>
     </section>
     <?php require 'footer.php'; ?>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="js/ocultarMensaje.js"></script>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="js/ocultarMensaje.js"></script>
 </html>
