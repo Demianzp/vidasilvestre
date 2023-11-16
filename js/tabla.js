@@ -10,15 +10,3 @@ $(document).ready(function(){
         }    
     });
     });
-
-$(document).ready(function(){   
-    var table = $('#example2').DataTable( {
-        oderCellsTop: true,
-        fixedHeader: true,
-        "columnDefs": [ {
-            "targets": 0,
-            "searchable": false
-            
-          } ]
-      } );
-    });
