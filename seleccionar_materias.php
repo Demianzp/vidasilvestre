@@ -91,8 +91,9 @@
                                 echo "</table>";
                                 // -----------------------------------
                                 echo "<input type='hidden' name='id_persona' value='" . implode(",", $id_personas) . "'>";
-                                echo "<input type='submit' class='btn btn-primary mt-3 mr-2 px-4' value='Inscribir'>";
-                                echo "<input type='submit' class='btn btn-danger mt-3 px-4' name='accion' value='Cancelar'>";
+                                
+                                echo "<a href='seleccionar_alumnos.php' class='btn btn-danger mt-3 mr-2  px-4'>Cancelar</a>";
+                                echo "<input type='submit' class='btn btn-primary mt-3 px-4' value='Inscribir'>";
                                 // -----------------------------------
                                 echo "</form>";  // Cierre del formulario
                                 // Cerrar la conexión
@@ -105,6 +106,7 @@
                         </form>
                     </div>
                 </div>
+                
             </div>
         </div>
     </section>
