@@ -4,7 +4,8 @@ require 'conn/connection.php';
 
 // Realiza la consulta para obtener las mesas de examen
 $query = "SELECT mesa_examen.*, 
-                 materia.nombre AS nombre_materia, 
+
+                 materia.Nombre AS nombre_materia, 
                  ciclo_lectivo.nombre_ciclo,
                  nombre_tipo AS nombre_tipo
           FROM mesa_examen 
@@ -48,7 +49,7 @@ $result = $db->query($query);
                             echo "<td>" . $row['hora'] . "</td>";
                             echo "<td>" . $row['fecha'] . "</td>";
                             echo "<td>" . $row['fecha_fin'] . "</td>";
-                            echo "<td>" . $row['nombre_ciclo_lectivo'] . "</td>";
+                            echo "<td>" . $row['nombre_ciclo'] . "</td>";
                             echo "<td>" . $row['nombre_tipo'] . "</td>";
                             echo "</tr>";
                         }

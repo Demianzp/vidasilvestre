@@ -20,7 +20,7 @@ if (empty($nombre_mesa)) {
 
 // Inserta la mesa de examen en la base de datos
 try {
-    $stmt = $db->prepare("INSERT INTO mesa_examen (nombre_mesa, id_materia, id_ciclo_lectivo, fecha, fecha_fin, hora, estado , id_tipo) VALUES (?, ?, ?, ?, ?, ?, ? , ?)");
+    $stmt = $db->prepare("INSERT INTO mesa_examen (nombre_mesa, id_materia, id_ciclo, fecha, fecha_fin, hora, estado , id_tipo) VALUES (?, ?, ?, ?, ?, ?, ? , ?)");
     $stmt->bindParam(1, $nombre_mesa);
     $stmt->bindParam(2, $id_materia);
     $stmt->bindParam(3, $ciclo_lectivo);
