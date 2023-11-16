@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <title>Tabla de Materias y Correlativass</title>
-</head>
+<?php require 'navbar.php'; ?>
 <body>
-    <?php require 'navbar.php'; ?>
+    
     <section class="content mt-2">
         <div class="row m-auto ">
             <div class="col-sm">

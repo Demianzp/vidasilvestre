@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-</head>
+
 <body>
     <?php require 'navbar.php'; ?>
 
@@ -48,6 +45,7 @@
                                 </select>
                             </div>
                             <button type="button" class="btn btn-primary" onclick="validarCampos()">Continuar</button>
+                            <a type="button" class="btn btn-danger" href="listado_materia.php">Cancelar</a>
                         </form>
 
                         <div id="datosIngresados" style="display: none;">
@@ -76,4 +74,4 @@
     <script src="js/materia.js"></script>
 </body>
 
-</html>
+

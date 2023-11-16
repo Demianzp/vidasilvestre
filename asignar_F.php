@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -7,11 +7,9 @@
     <meta name="description" content="Registro de Notas del Centro Escolar Profesor Lennin" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoI6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-</head>
-
-<body>
-    <?php require 'navbar.php'; ?>
-
+</head> -->
+<?php require 'navbar.php'; ?>
+<body>    
     <div class="container mt-3">
         <div class="row m-auto">
             <div class="col-sm">
@@ -33,7 +31,6 @@
                                     ?>
                                 </select>
                             </div>
-
                             <!-- --------------------------------- -->
                             <div class="form-group">
                                 <label for="materia">Materia:</label>
@@ -48,20 +45,15 @@
                                     ?>
                                 </select>
                             </div>
-
                             <!-- --------------------------------- -->
                             <div class="form-group">
                                 <input type="hidden" class="form-control" name="Estado" value="Activo" disabled>
-
                             </div>
                             <!-------------------------------------------------------------->
-
                             <div class="mt-3 mb-2">
                                 <button type="submit" class="btn btn-primary">Guardar </button>
                                 <a class="btn btn-warning" href="lista_A.php">Ver Listado</a>
                             </div>
-
-
                             <?php
                             if (!empty($infoMessage)) {
                                 echo '<div class="alert alert-success" role="alert">' . $infoMessage . '</div>';

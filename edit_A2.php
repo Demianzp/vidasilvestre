@@ -5,7 +5,7 @@ $profesor = $_POST['profesor'];
 $materia = $_POST['materia'];
 
 $sql = "UPDATE asignar SET
-id_profesor='".$profesor."',
+id_persona='".$profesor."',
 id_materia ='".$materia."' WHERE id_asignar =".$id."";
 
 

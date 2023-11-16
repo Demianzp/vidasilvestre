@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -7,10 +7,10 @@
     <title>Asignación </title>
     <meta name="description" content="Registro de Notas del Centro Escolar">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
-
+</head> -->
+<?php require 'navbar.php'; ?>
 <body>
-    <?php require 'navbar.php'; ?>
+    
 
     <section class="content mt-3">
         <div class="row m-auto">
@@ -50,12 +50,12 @@
                                             <th scope="row"><?php echo $resultado['id_asignar'] ?></th>
                                             <td scope="row"><?php echo $resultado['nombre']?> <?php echo $resultado['apellido']?> </td>
                                             <td scope="row"><?php echo $resultado['Nombre'] ?></td> <!--Lo cambie en la BD materia-->
-                                            <td scope="row"><?php echo $resultado['Estado'] ?></td> <!--Lo cambie en la BD asignar-->
+                                             <!--Lo cambie en la BD asignar-->
                                           <!--cambie los nombre en BD x q al tener el mismo nombre se mezclan las conexiones-->
                                           
                                          <!-------BOTONES--->
                                             <td><a href="edit_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-warning" role="button">Editar</a></td>
-                                            <td><a href="deletprofe.php?id=<?php echo $resultado['id_persona'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
+                                            <td><a href="delet_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
                                         </tr>
                                 <?php
                                  

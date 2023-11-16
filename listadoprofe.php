@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-<html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Profesores | Editar y Eliminar</title>
-    <meta name="description" content="Registro de Notas del Centro Escolar">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
-
+<?php require 'navbar.php'; ?>
 <body>
-    <?php require 'navbar.php'; ?>
+    
     <section class="content mt-3">
         <div class="row m-auto">
             <div class="col-sm">
@@ -121,9 +112,9 @@
             </div>
         </div>
     </section>
-    <?php require 'footer.php'; ?>
+    
 </body>
+<?php require 'footer.php'; ?>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script  src="js/ocultarMensaje.js"></script>
 <!-- <script src="js/buscador.js"></script> -->
-</html>
