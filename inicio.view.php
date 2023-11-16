@@ -2,19 +2,10 @@
 
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Registro de Notas del Centro Escolar" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <title>Inicio | Registro de Notas</title>
-</head>
 
-
+<?php require 'navbar.php'; ?>
 <body>
-    <?php require 'navbar.php'; ?>
+  
     <div class="body">
         <div class="panel">
         <?php

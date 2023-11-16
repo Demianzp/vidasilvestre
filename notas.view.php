@@ -47,32 +47,31 @@ if (isset($_GET['revisar'])) {
 }
 ?>
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
     <title>Notas | Registro de Notas</title>
     <meta name="description" content="Registro de Notas del Centro Escolar" />
-</head>
-
-<body>
-    <?php require 'navbar.php'; ?>
-
-    <div class="container m-2 mt-3">
-        <div class="row m-auto d-flex justify-content-center">
-            <div class="col-auto">
+</head> -->
+<?php require 'navbar.php'; ?>
+<body>   
+    <div class="container mt-3" >
+        <div class="row d-flex justify-content-center ">
+            <div class="col-auto " >
                 <div class="card rounded-2 border-0">
                     <div class="card-header bg-dark text-white">
-                        <div class="d-inline-block">
-                            <h5>Registro y Modificación Notas</h5>
+                        <div class="content">
+                            <h5 class="d-inline-block">Registro y Modificación Notas</h5>                            
                         </div>
+                          (Mostrar las notas en el input)                      
                     </div>
-
+                
                     <div class="card-body table-responsive-xl mb-1">
                         <?php
                         if (!isset($_GET['revisar'])) {
                         ?>
-                            <form method="get" action="notas.view.php">
+                            <form method="get" action="notas.view.php" >
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
                                         <label class="font-weight-bold">Seleccione la Materia</label><br>
@@ -91,10 +90,7 @@ if (isset($_GET['revisar'])) {
                                         </select>
                                     </li>
                                 </ul>
-
-                                <br />
-
-                                <div class="d-inline-block d-flex justify-content-center">
+                                <div class="d-inline-block d-flex justify-content-center mt-3">
                                     <button type="submit" name="revisar" class="btn btn-primary" value="1">Ingresar Notas</button>
                                     <a class="btn btn-warning ml-3" href="listadonotas.view.php">Consultar Notas</a>
                                 </div>
@@ -102,42 +98,47 @@ if (isset($_GET['revisar'])) {
                         <?php
                         }
                         ?>
-
                         <?php
                         if (isset($_GET['revisar'])) {
-                        ?>
-                            <a class="btn btn-primary mb-2" href="notas.view.php"><strong>&lt;&lt; Volver</strong></a>
-                            <div class="ml-3 mb-3" style="float: right">
-                                <!-- Aquí deberías colocar la acción y el método correctos para el formulario -->
-                                <form action="procesarnota.php" method="post">
-                                    <button type="submit" class="btn btn-primary mr-2" name="insertar">Guardar</button>
-                                    <a class="btn btn-warning" href="listadonotas.view.php">Consultar Notas</a>
-                                </form>
-                            </div>
 
+                        ?>
+                            <!-- ------------------------------------------------- -->
                             <form action="procesarnota.php" method="post">
-                                <table class="table table-bordered table-striped">
+                                <table id="example" class="table table-bordered table-striped">
                                     <thead class="thead-dark">
                                         <th>#</th>
                                         <th>Apellido y Nombre</th>
-                                        <th>2° Cuatrimestre</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th>Promedio</th>
+                                        <th>Nota1</th>
+                                        <th>Nota2</th>
+                                        <th>Nota3</th>
+                                        <th>Nota4</th>
+                                        <th>Calif. Regularidad</th>
+                                        <th>Calif. Final</th>
                                     </thead>
-
                                     <?php foreach ($alumnos as $index => $alumno) : ?>
                                         <tr>
                                             <td scope="row"><?php echo $alumno['id_persona'] ?></td>
                                             <td><?php echo $alumno['nombre_completo'] ?></td>
                                             <td><input type="text" class="form-control" name="nota1_<?php echo $index ?>" value="<?php echo $alumno['nota1'] ?>"></td>
                                             <td><input type="text" class="form-control" name="nota2_<?php echo $index ?>" value="<?php echo $alumno['nota2'] ?>"></td>
-                                            <td><input type="text" class="form-control" name="nota_final_<?php echo $index ?>" value="<?php echo $alumno['nota'] ?>"></td>
+                                            <td><input type="text" class="form-control" name="nota3_" value=""></td>
+                                            <td><input type="text" class="form-control" name="nota4_" value=""></td>
                                             <td><?php echo number_format($alumno['promedio'], 2) ?></td>
+                                            <td><input type="text" class="form-control" name="nota_final_<?php echo $index ?>" value="<?php echo $alumno['nota'] ?>"></td>  
                                         </tr>
                                     <?php endforeach; ?>
                                 </table>
                             </form>
+                            <div class="content mt-3 ">
+                                <a class="btn btn-danger mb-2" href="notas.view.php"><strong>&lt;&lt; Volver</strong></a>
+                                <div class="ml-3 " style="float: right">
+                                    <!-- Aquí deberías colocar la acción y el método correctos para el formulario -->
+                                    <form action="procesarnota.php" method="post">
+                                        <button type="submit" class="btn btn-primary mr-2" name="insertar">Guardar</button>
+                                        <a class="btn btn-warning" href="listadonotas.view.php">Consultar Notas</a>
+                                    </form>
+                                </div>                            
+                            </div>
                         <?php
                         }
                         ?>
@@ -146,8 +147,7 @@ if (isset($_GET['revisar'])) {
             </div>
         </div>
     </div>
-
-    <?php require 'footer.php'; ?>
 </body>
+<?php require 'footer.php'; ?>
 
-</html>
+

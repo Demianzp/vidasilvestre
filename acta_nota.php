@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Formulario para Acta</title>
-</head>
+<?php require 'navbar.php'; ?>
 <body>
-    <?php require 'navbar.php'; ?>
+   
     <div class="container mt-2 " style="width: 40rem">
         <div class="row m-auto">
             <div class="col">
