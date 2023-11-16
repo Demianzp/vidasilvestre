@@ -1,7 +1,6 @@
 <?php
 // Incluye el archivo de conexión
 require 'conn/connection.php';
-
 // Realiza la consulta para obtener las mesas de examen
 $query = "SELECT mesa_examen.*, 
                  materia.Nombre AS nombre_materia, 
@@ -12,22 +11,15 @@ $query = "SELECT mesa_examen.*,
           LEFT JOIN ciclo_lectivo ON mesa_examen.id_ciclo = ciclo_lectivo.id_ciclo
           LEFT JOIN tipo ON mesa_examen.id_tipo = tipo.id_tipo";
 $result = $db->query($query);
-
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Listar Mesas de Examen</title>
-</head>
-<body>
-    <?php require 'navbar.php'; ?>
-    
+<!-- --------------------------------------------------- -->
+<?php require 'navbar.php'; ?>
+<body>      
     <div class="container mt-3">
         <div class="card rounded-2 border-0">
             <h5 class="card-header bg-dark text-white">Listar Mesas de Examen</h5>
             <div class="card-body bg-light">
-                <table class="table">
+                <table class="table table-striped" id="example" style="width:100%">
                     <thead>
                         <tr>
                             <th>Nombre de Mesa</th>
@@ -59,4 +51,4 @@ $result = $db->query($query);
         </div>
     </div>
 </body>
-</html>
+

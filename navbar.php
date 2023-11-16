@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instituto Superior Vida Silvestre</title>
+  <link rel="shortcut icon" href="img/LOGO.png" />
+</head>
+
 <!-- -----------ARCHIVO CSS----------- -->
 <link rel="stylesheet" href="css/style.css">
 <!-- ---------FIN ARCHIVO CSS----------- -->
@@ -15,6 +24,12 @@
 <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
 <script defer src="js/tabla.js"></script>
 <!-- ------------FIN-DATATABLES----- -->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Roboto&display=swap');
+</style>
+<!-- ----------------------------- -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<!-- ----------------------------- -->    
 <div style="height:60px">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid ">
@@ -35,27 +50,9 @@
             </a>
             <ul class="dropdown-menu">
               <!-- <li><a class="dropdown-item" href="inscripcion_alumno.php">Inscripcion Alumno</a></li> -->
-              <li><a class="dropdown-item" href="seleccionar_alumnos.php">Inscripcion</a></li>
-              <li><a class="nav-link" href="listadoalumnos.view.php">Alumnos <span class="sr-only"></span></a></li>
+              <li><a class="dropdown-item" href="seleccionar_alumnos.php">Inscripcion a Materia</a></li>
+              <li><a class="dropdown-item" href="listadoalumnos.view.php">Listar Alumnos </a></li>
             </ul>
-          </li>
-          <!-- ------------------------------------------------------- -->
-          <li class="nav-item dropdown pr-3">
-            <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Notas
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="notas.view.php">Registro de Notas</a></li>
-              <li><a class="dropdown-item" href="listadonotas.view.php">Consulta de Notas</a></li>
-            </ul>
-          </li>
-          <!-- ------------------------------------------------------- -->
-          <li class="nav-item active pr-3">
-            <a class="nav-link" href="listadoprofe.php">Profesor <span class="sr-only">(current)</span></a>
-          </li>
-          <!-- ------------------------------------------------------- -->
-          <li class="nav-item active pr-3">
-            <a class="nav-link" href="listado_materia.php">Materias <span class="sr-only">(current)</span></a>
           </li>
           <!-- ------------------------------------------------------- -->
           <li class="nav-item dropdown pr-3 ">
@@ -63,10 +60,21 @@
               Cursado
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Listado de Cursos</a></li>
+              <li><a class="dropdown-item" href="#">Listado de Cursos Activos y profe(falta)</a></li>
+              <li><a class="dropdown-item" href="notas.view.php">Notas</a></li>
+              <!-- <li><a class="dropdown-item" href="listadonotas.view.php">Consulta de Notas</a></li> -->
             </ul>
+          </li>            
+          <!-- ------------------------------------------------------- -->
+          <li class="nav-item active pr-3">
+            <a class="nav-link" href="listadoprofe.php">Profesor </a>
           </li>
           <!-- ------------------------------------------------------- -->
+          <li class="nav-item active pr-3">
+            <a class="nav-link" href="listado_materia.php">Materias </a>
+          </li>
+          <!-- ------------------------------------------------------- -->
+         
           <li class="nav-item dropdown pr-3 ">
             <!-- Nueva parte de agregar notas  -->
             <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -77,6 +85,10 @@
               <li><a class="dropdown-item" href="listadomesa.php">Listado de Mesa de Examen</a></li>
               <li><a class="dropdown-item" href="acta_nota.php">Acta</a></li>
             </ul>
+          </li>
+          <!-- ------------------------------------------------------- -->
+          <li class="nav-item active pr-3">
+            <a class="nav-link" href="">Cliclo lectivo (crear) </span></a>
           </li>
           <!-- ------------------------------------------------------- -->
         </ul>

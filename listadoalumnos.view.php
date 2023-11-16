@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -7,10 +7,9 @@
     <title>Listado de Alumnos | Editar y Eliminar</title>
     <meta name="description" content="Registro de Notas del Centro Escolar">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
-
-<body>
-    <?php require 'navbar.php'; ?>
+</head> -->
+<?php require 'navbar.php'; ?>
+<body>    
     <section class="content mt-3">
         <div class="row m-auto">
             <div class="col-sm">
@@ -48,7 +47,6 @@
                     <!-- -------------------- -->
                     <div class="card-body table-responsive">
                         <form id="inscripcionForm" action="" method="post">
-
                             <table id="example" class="table table-striped" style="width:100%">
                                 <thead class="thead-dark">
                                     <th>#</th>
@@ -60,9 +58,10 @@
                                     <th>Fecha de Nacimiento</th>
                                     <th>Celular</th>
                                     <th>Departamento</th>
+                                    <th>Perfil</th>
+                                    <th>Historial</th>                                    
                                     <th>Editar</th>
-                                    <th>Eliminar</th>
-                                   
+                                    <th>Eliminar</th>                                   
                                 </thead>
                                 <tbody>
                                     <?php
@@ -70,12 +69,10 @@
                                     try {
                                         $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
                                         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
                                         $query = "SELECT * FROM persona WHERE id_rol = 1 AND estado = 'Activo'";
                                         $stmt = $db->prepare($query);
                                         $stmt->execute();
                                         $alumnos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
                                         foreach ($alumnos as $alumno) {
                                     ?>
                                             <tr>
@@ -88,6 +85,8 @@
                                                 <td><?php echo $alumno['fecha_nacimiento'] ?></td>
                                                 <td><?php echo $alumno['celular'] ?></td>
                                                 <td><?php echo $alumno['ciudad'] ?></td>
+                                                <td><a href="" class="link-primary" role="button">Perfil</a></td>
+                                                <td><a href="" class="btn btn-info" role="button">Historial</a></td>
                                                 <td><a href="alumnoedit.view.php?id=<?php echo $alumno['id_persona'] ?>" class="btn btn-warning" role="button">Editar</a></td>
                                                 <td><a href="alumnodelete.php?id=<?php echo $alumno['id_persona'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
                                             </tr>

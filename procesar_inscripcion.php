@@ -14,18 +14,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $materias->execute();
         $materias = $materias->fetchAll();
         ?>
-        <!DOCTYPE html>
-        <html lang="es">
-
+        <!-- <!DOCTYPE html>
+        <html lang="es"> -->
+<!-- 
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Elegir Materia y Ciclo Lectivo</title>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        </head>
-
+        </head> -->
+        <?php require 'navbar.php'; ?>
         <body>
-            <?php require 'navbar.php'; ?>
+            
 
             <section class="content mt-3">
                 <div class="row m-auto">
@@ -62,8 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </section>
             <?php require 'footer.php'; ?>
         </body>
-
-        </html>
         <?php
         exit();
     }

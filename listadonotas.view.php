@@ -20,15 +20,9 @@ $secciones->execute();
 $secciones = $secciones->fetchAll();
 ?>
 <html>
-<head>
-    <title>Notas | Registro de Notas</title>
-    <meta name="description" content="Registro de Notas del Centro Escolar Profesor Lennin" />
-    
-</head>
-<body>
 
 <?php require 'navbar.php';?>
-
+<body>
 
 <div class="body" >
     <div class="panel">
