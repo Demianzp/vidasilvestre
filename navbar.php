@@ -55,19 +55,21 @@
             </ul>
           </li>
           <!-- ------------------------------------------------------- -->
+          <li class="nav-item active pr-3">
+            <a class="nav-link" href="notas.view.php">Notas </a>
+          </li>
+          
+
           <li class="nav-item dropdown pr-3 ">
+            <!-- Nueva parte de agregar notas  -->
             <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Cursado
+            Profesor
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Listado de Cursos Activos y profe(falta)</a></li>
-              <li><a class="dropdown-item" href="notas.view.php">Notas</a></li>
-              <!-- <li><a class="dropdown-item" href="listadonotas.view.php">Consulta de Notas</a></li> -->
+              <li><a class="dropdown-item" href="listadoprofe.php">Listado Profesor</a></li>
+              <li><a class="dropdown-item" href="lista_A.php">Listado de Asignaciones</a></li>
+              
             </ul>
-          </li>            
-          <!-- ------------------------------------------------------- -->
-          <li class="nav-item active pr-3">
-            <a class="nav-link" href="listadoprofe.php">Profesor </a>
           </li>
           <!-- ------------------------------------------------------- -->
           <li class="nav-item active pr-3">
