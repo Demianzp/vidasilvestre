@@ -1,17 +1,15 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asignación </title>
-    <meta name="description" content="Registro de Notas del Centro Escolar">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head> -->
+</head>
 <?php require 'navbar.php'; ?>
-<body>
-   
 
+<body>
     <section class="content mt-3">
         <div class="row m-auto">
             <div class="col-sm">
@@ -27,6 +25,24 @@
                         </form>
 
                     </div>
+                    <!-- Mensaje de asignar exitosamente o error  -->
+                    <?php
+                    if (!empty($mensj)) {
+                        echo '<div class="alert alert-success">' . htmlspecialchars($mensj) . '</div>';
+                    }
+                    if (!empty($danger)) {
+                        echo '<div class="alert alert-danger">' . htmlspecialchars($danger) . '</div>';
+                    }
+                    ?>
+                    <!-- Mensaje de eliminar asignar -->
+                    <?php
+                    if (!empty($inMessage)) {
+                        echo '<div class="alert alert-success">' . htmlspecialchars($inMessage) . '</div>';
+                    }
+                    if (!empty($errMessage)) {
+                        echo '<div class="alert alert-danger">' . htmlspecialchars($errMessage) . '</div>';
+                    }
+                    ?>
                     <div class="card-body table-responsive">
                         <table class="table table-bordered table-striped table_id">
                             <thead class="thead-dark">
@@ -38,28 +54,28 @@
                             </thead>
                             <tbody>
                                 <?php
-                                require ("conn/conexion.php");
-                                    $sql = $conexion -> query ("SELECT * FROM asignar
+                                require("conn/conexion.php");
+                                $sql = $conexion->query("SELECT * FROM asignar
                                     INNER JOIN persona ON asignar.id_persona = persona.id_persona
                                     INNER JOIN materia ON asignar.id_materia = materia.id_materia");
-                                     
-                                     while ($resultado = $sql -> fetch_assoc()) {
+
+                                while ($resultado = $sql->fetch_assoc()) {
                                 ?>
-                                        <tr>
-                                            <th scope="row"><?php echo $resultado['id_asignar'] ?></th>
-                                            <td scope="row"><?php echo $resultado['nombre']?> <?php echo $resultado['apellido']?> </td>
-                                            <td scope="row"><?php echo $resultado['Nombre'] ?></td> <!--Lo cambie en la BD materia-->
-                                             <!--Lo cambie en la BD asignar----->
-                                          <!--cambie los nombre en BD x q al tener el mismo nombre se mezclan las conexiones-->
-                                          
-                                         <!-------BOTONES--->
-                                            <td><a href="edit_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-warning" role="button">Editar</a></td>
-                                            <td><a href="delet_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
-                                        </tr>
+                                    <tr>
+                                        <th scope="row"><?php echo $resultado['id_asignar'] ?></th>
+                                        <td scope="row"><?php echo $resultado['nombre'] ?> <?php echo $resultado['apellido'] ?> </td>
+                                        <td scope="row"><?php echo $resultado['Nombre'] ?></td> <!--Lo cambie en la BD materia-->
+                                        <!--Lo cambie en la BD asignar----->
+                                        <!--cambie los nombre en BD x q al tener el mismo nombre se mezclan las conexiones-->
+
+                                        <!-------BOTONES--->
+                                        <td><a href="edit_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-warning" role="button">Editar</a></td>
+                                        <td><a href="delet_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
+                                    </tr>
                                 <?php
-                                 
-                                 } 
-                                
+
+                                }
+
                                 ?>
                             </tbody>
                         </table>
@@ -84,5 +100,7 @@
 
 </body>
 <script src="js/buscador.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="js/ocultarMensaje.js"></script>
 
 </html>

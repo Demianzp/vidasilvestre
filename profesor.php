@@ -24,14 +24,15 @@ if (isset($_SESSION['message'])) {
     </style>
 </head> -->
 <?php require 'navbar.php'; ?>
+
 <body>
-    
+
     <!-- "content" es diferente que "container" -->
     <div class="container mt-3">
         <div class="card rounded-2 border-0">
             <h5 class="card-header bg-dark text-white">Formulario de Inscripción de Profesor</h5>
             <div class="card-body bg-light">
-            <?php
+                <?php
                 if (!empty($message)) {
                     echo '<div class="alert alert-success" role="alert">' . $message . '</div>';
                 }
@@ -58,18 +59,18 @@ if (isset($_SESSION['message'])) {
                         <div class="col">
                             <div class="form-group">
                                 <label for="dni">DNI:</label>
-                                <input type="text" class="form-control" name="dni" id="dniOK" placeholder="Ingrese DNI" autocomplete="off" required>
+                                <input type="text" class="form-control" name="dni" id="dni" placeholder="Ingrese DNI" autocomplete="off" required>
                                 <span id="dniOK"></span>
                             </div>
                         </div>
                         <div class="col">
-                            
+
                             <div class="form-group">
                                 <label for="celular">Celular:</label>
                                 <input type="tel" class="form-control" name="celular" placeholder="Ingrese Teléfono" id="celular" autocomplete="off" required>
                                 <span id="celularOK"></span>
                             </div>
-                            
+
                         </div>
                     </div>
                     <!-- --------------------------------- -->
@@ -165,13 +166,13 @@ if (isset($_SESSION['message'])) {
 
                         <div class="col">
                             <div class="form-group">
-                                <label for="contraseña">Contraseña:</label>                                
+                                <label for="contraseña">Contraseña:</label>
                                 <div class="input-group">
-                                <input class="form-control bg-light" type="password" placeholder="Contraseña" name="contrasena" id="password" autocomplete="off" required />
-                                <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
-                                    <i class="fas fa-eye p-1"></i>
-                                </button>                                
-                                </div>                                
+                                    <input class="form-control bg-light" type="password" placeholder="Contraseña" name="contrasena" id="password" autocomplete="off" required />
+                                    <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
+                                        <i class="fas fa-eye p-1"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -1,3 +1,21 @@
+<?php
+include('conn/conexion.php');
+if (isset($_POST['profesor']) && isset($_POST['materia'])) {
+    $profesor = $_POST['profesor'];
+    $materia = $_POST['materia'];
+    $estado = 'Activo';
+
+    $sql = "INSERT INTO asignar (id_persona, id_materia, Estado) 
+    VALUES ('$profesor', '$materia',' $estado')";
+
+    $resultado = mysqli_query($conexion, $sql);
+    if ($resultado === TRUE) {
+        header("location: listadoprofe.php?mensaje=");
+    } else {
+        header("location: listadoprofe.php?mensaje=error");
+    }
+}
+?>
 <!-- <!DOCTYPE html>
 <html lang="es">
 
@@ -9,19 +27,21 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoI6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head> -->
 <?php require 'navbar.php'; ?>
-<body>    
+
+<body>
     <div class="container mt-3">
         <div class="row m-auto">
             <div class="col-sm">
                 <div class="card rounded-2 border-0">
                     <h5 class="card-header bg-dark text-white">Asignar materia</h5>
                     <div class="card-body bg-light">
-                        <form method="post" class="form" action="asignar_i.php">
+                        <form method="post" class="form" action="">
 
                             <!-- ---------------El get trae el id del profesor q quiere asignar la materia------------------ -->
                             <div class="form-group">
                                 <label for="profesor">Profesor:</label>
                                 <select name="profesor" class="form-control" required>
+                                    <option disabled selected hidden>Seleccione Profesor</option>
                                     <?php
                                     include('conn/conexion.php');
                                     $sql = $conexion->query("SELECT * FROM persona WHERE id_rol = 2 AND estado = 'Activo' AND id_persona=" . $_GET['id']);
@@ -38,7 +58,7 @@
                                     <option disabled selected hidden>Seleccione la materia</option>
                                     <?php
                                     include('conn/conexion.php');
-                                    $sql = $conexion->query("SELECT * FROM materia");
+                                    $sql = $conexion->query("SELECT * FROM materia WHERE  estado = 'Activo'");
                                     while ($resultado = $sql->fetch_assoc()) {
                                         echo "<option value='" . $resultado["id_materia"] . "'>" . $resultado["Nombre"] . " </option>";
                                     }

@@ -1,7 +1,7 @@
-
 <?php require 'navbar.php'; ?>
+
 <body>
-    
+
     <section class="content mt-3">
         <div class="row m-auto">
             <div class="col-sm">
@@ -13,8 +13,8 @@
                             <input class="form-control  light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">
                         </form> -->
                     </div>
-                   <!-- Mensaje de carga o error de alumno Cargar -->
-                   <?php
+                    <!-- Mensaje de carga o error de  Cargar -->
+                    <?php
                     if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
                         echo '<div class="alert alert-success">' . htmlspecialchars($_GET['mensaje']) . '</div>';
                     }
@@ -23,7 +23,7 @@
                     }
                     ?>
 
-                    <!-- Mensaje de carga o error de alumno Modificar -->
+                    <!-- Mensaje de carga o error de  Modificar -->
                     <?php
                     if (!empty($infoMessage)) {
                         echo '<div class="alert alert-success">' . htmlspecialchars($infoMessage) . '</div>';
@@ -112,9 +112,9 @@
             </div>
         </div>
     </section>
-    
+
 </body>
 <?php require 'footer.php'; ?>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script  src="js/ocultarMensaje.js"></script>
+<script src="js/ocultarMensaje.js"></script>
 <!-- <script src="js/buscador.js"></script> -->
