@@ -17,6 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("Conexión fallida: " . $conn->connect_error);
         }
 
+        // Definir el valor por defecto para id_ciclo (en este caso, 2)
+        $id_ciclo = 2;
+
         // Recibir datos del formulario
         $id_personas = explode(",", $_POST['id_persona']);
         $id_materias = $_POST['id_materia'];
@@ -24,26 +27,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Procesar la inserción en la base de datos
         foreach ($id_personas as $id_persona) {
             foreach ($id_materias as $id_materia) {
-                // Verificar si la materia existe antes de insertar en estadoalumno
-                $verificar_materia = "SELECT id_materia FROM materia WHERE id_materia = '$id_materia'";
-                $result_verificar_materia = $conn->query($verificar_materia);
+                // Query de inserción en estadoalumno con id_ciclo por defecto
+                $sql = "INSERT INTO estadoalumno (id_persona, id_materia, id_ciclo) VALUES ('$id_persona', '$id_materia', '$id_ciclo')";
 
-                if ($result_verificar_materia->num_rows > 0) {
-                    // Query de inserción en estadoalumno
-                    $sql = "INSERT INTO estadoalumno (id_persona, id_materia) VALUES ('$id_persona', '$id_materia')";
-
-                    // Ejecutar la consulta
-                    if ($conn->query($sql) === TRUE) {
-                        $mensaje = "Carga exitosa";
-                        header("Location: seleccionar_alumnos.php?mensaje=" . urlencode($mensaje));
-                        exit();
-                    } else {
-                        $error = "Error: " . $conn->error;
-                        header("Location: seleccionar_alumnos.php?error=" . urlencode($error));
-                        exit();
-                    }
+                // Ejecutar la consulta
+                if ($conn->query($sql) === TRUE) {
+                    $mensaje = "Carga exitosa";
+                    header("Location: seleccionar_alumnos.php?mensaje=" . urlencode($mensaje));
+                    exit();
                 } else {
-                    $error = "Error: La materia con id_materia = $id_materia no existe en la tabla materia.";
+                    $error = "Error: " . $conn->error;
                     header("Location: seleccionar_alumnos.php?error=" . urlencode($error));
                     exit();
                 }
@@ -63,4 +56,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: seleccionar_alumnos.php?error=" . urlencode($error));
     exit();
 }
-?>
