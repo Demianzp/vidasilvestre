@@ -40,6 +40,7 @@
                             echo "<option value='".$resultado3["id_persona"]."'>".$resultado3["nombre"]." ".$resultado3["apellido"]."</option>";
 
                         }
+                        
                         ?>
                                 </select>
                             </div>

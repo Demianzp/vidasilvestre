@@ -4,6 +4,7 @@ require 'conn/connection.php';
 
 // Realiza la consulta para obtener las mesas de examen
 $query = "SELECT mesa_examen.*, 
+
                  materia.Nombre AS nombre_materia, 
                  ciclo_lectivo.nombre_ciclo,
                  nombre_tipo AS nombre_tipo
