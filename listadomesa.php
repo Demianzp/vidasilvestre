@@ -5,11 +5,11 @@ require 'conn/connection.php';
 // Realiza la consulta para obtener las mesas de examen
 $query = "SELECT mesa_examen.*, 
                  materia.nombre AS nombre_materia, 
-                 ciclo_lectivo.nombre_ciclo_lectivo,
+                 ciclo_lectivo.nombre_ciclo,
                  nombre_tipo AS nombre_tipo
           FROM mesa_examen 
           INNER JOIN materia ON mesa_examen.id_materia = materia.id_materia
-          LEFT JOIN ciclo_lectivo ON mesa_examen.id_ciclo_lectivo = ciclo_lectivo.id_ciclo_lectivo
+          LEFT JOIN ciclo_lectivo ON mesa_examen.id_ciclo = ciclo_lectivo.id_ciclo
           LEFT JOIN tipo ON mesa_examen.id_tipo = tipo.id_tipo";
 $result = $db->query($query);
 

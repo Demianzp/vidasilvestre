@@ -6,7 +6,7 @@ $query = "SELECT id_materia, nombre FROM materia";
 $result = $db->query($query);
 
 // Consulta SQL para obtener los ciclos lectivos
-$query_ciclos = "SELECT id_ciclo_lectivo, nombre_ciclo_lectivo FROM ciclo_lectivo";
+$query_ciclos = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo";
 $result_ciclos = $db->query($query_ciclos);
 ?>
 
