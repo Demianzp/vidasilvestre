@@ -10,7 +10,7 @@
 </head> -->
 <?php require 'navbar.php'; ?>
 <body>
-    
+   
 
     <section class="content mt-3">
         <div class="row m-auto">
@@ -21,7 +21,7 @@
 
                         <h5 class="d-inline-block">Listado de Profesores</h5>
 
-                        <a class="btn btn-primary float-right" href="asignar_F.php">Agregar Profesor</a>
+                        <a class="btn btn-primary float-right" href="listadoprofe.php">Volver</a>
                         <form class="form-group mx-sm-3 d-inline-block">
                             <input class="form-control  light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">
                         </form>
@@ -33,7 +33,6 @@
                                 <th>#</th>
                                 <th>Profesor</th>
                                 <th>Materia</th>
-                                <th>Estado</th>
                                 <th>Editar</th>
                                 <th>Eliminar</th>
                             </thead>
@@ -50,7 +49,7 @@
                                             <th scope="row"><?php echo $resultado['id_asignar'] ?></th>
                                             <td scope="row"><?php echo $resultado['nombre']?> <?php echo $resultado['apellido']?> </td>
                                             <td scope="row"><?php echo $resultado['Nombre'] ?></td> <!--Lo cambie en la BD materia-->
-                                             <!--Lo cambie en la BD asignar-->
+                                             <!--Lo cambie en la BD asignar----->
                                           <!--cambie los nombre en BD x q al tener el mismo nombre se mezclan las conexiones-->
                                           
                                          <!-------BOTONES--->
