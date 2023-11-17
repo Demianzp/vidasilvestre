@@ -1,8 +1,8 @@
 <?php
 include_once('conn/connection.php');
 // Inicializar variables de mensaje
-$mensj = '';
-$danger = '';
+$mensj2 = '';
+$error2 = '';
 if (isset($_POST['profesor']) && isset($_POST['materia']) && isset($_POST['Id'])) {
     $id = $_POST['Id'];
     $profesor = $_POST['profesor'];
@@ -13,15 +13,17 @@ if (isset($_POST['profesor']) && isset($_POST['materia']) && isset($_POST['Id'])
     $stmt->bindParam(":profesor", $profesor, PDO::PARAM_INT);
     $stmt->bindParam(":materia", $materia, PDO::PARAM_INT);
     $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+    
     if ($stmt->execute()) {
-        $mensj = '!!Registro Actualizado correctamente!!';
+        $mensj2 = 'Registro actualizado correctamente.';
     } else {
-        $danger = '!!Error al Actualizar el registro!!: ' . implode(', ' . $stmt->errorInfo());
+        $error2 = 'Error al a actualizar el registro: ' . implode(', ', $consulta_desactivar->errorInfo());
     }
-    if ($mensj || $danger) {
-        header("Location: lista_A.php?mensaje=" . urlencode($mensj) . "&error=" . urlencode($danger));
-        exit();
-    }
+}
+// Redirigir solo si hay mensajes para enviar
+if ($mensj2|| $error2) {
+header("Location: lista_A.php?mensaje2=" . urlencode($mensj2) . "&error2=" . urlencode($error2));
+exit();
 }
 ?>
 
@@ -76,20 +78,13 @@ if (isset($_POST['profesor']) && isset($_POST['materia']) && isset($_POST['Id'])
                             <div class="form-group">
                                 <label for="materia">Materia:</label>
                                 <select name="materia" class="form-control" required>
+                                <option disabled selected hidden>Seleccione la materia</option>
                                     <?php
                                     include('conn/conexion.php');
-                                    $sql = $conexion->query("SELECT * FROM materia WHERE estado = 'Activo'");
-                                    while ($resultado1 = $sql->fetch_assoc()) {
-                                        echo "<option selected value='" . $resultado1["id_materia"] . "'>" . $resultado1["Nombre"] . "</option>";
+                                    $sql = $conexion->query("SELECT * FROM materia WHERE  estado = 'Activo'");
+                                    while ($resultado = $sql->fetch_assoc()) {
+                                        echo "<option value='" . $resultado["id_materia"] . "'>" . $resultado["Nombre"] . " </option>";
                                     }
-                                    $sql2 = "SELECT * FROM materia";
-
-                                    $resultado2 = $conexion->query($sql2);
-
-                                    while ($Fila = $resultado2->fetch_array()) {
-
-                                        echo "<option value='" . $Fila['id_materia'] . "'>" . $Fila['Nombre'] . "</option>";
-                                    };
                                     ?>
                                 </select>
                             </div>
