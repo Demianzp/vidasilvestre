@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($consulta_actualizar->execute([$nombre, $descripcion, $horas, $año, $num_resolucion, $plan_estudio, $id_tipo, $id_materia])) {
             $infoMessage = 'Registro modificado correctamente';
         } else {
-            $errorMessage = 'Error al editar el registro: ' . implode(', '. $consulta_actualizar->errorInfo());
+            $errorMessage = 'Error al editar el registro: ' . implode(', ' . $consulta_actualizar->errorInfo());
         }
     } else {
         // Si el campo 'id' no está presente en el formulario
@@ -54,15 +54,6 @@ if ($infoMessage || $errorMessage) {
     exit();
 }
 ?>
-
-<!-- El resto del código HTML permanece sin cambios -->
-
-
-
-<!-- El resto del código HTML permanece sin cambios -->
-
-
-
 <!DOCTYPE html>
 <html lang="es">
 
