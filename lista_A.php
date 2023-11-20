@@ -10,25 +10,19 @@
 </head> -->
 <?php require 'navbar.php'; ?>
 <body>
-   
-
     <section class="content mt-3">
         <div class="row m-auto">
             <div class="col-sm">
                 <div class="card rounded-2 border-0">
-
                     <div class="card-header bg-dark text-white pb-0">
-
                         <h5 class="d-inline-block">Listado de Profesores</h5>
-
-                        <a class="btn btn-primary float-right" href="listadoprofe.php">Volver</a>
-                        <form class="form-group mx-sm-3 d-inline-block">
+                        <a class="btn btn-primary float-right mb-2" href="listadoprofe.php">Volver</a>
+                        <!-- <form class="form-group mx-sm-3 d-inline-block">
                             <input class="form-control  light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">
-                        </form>
-
+                        </form> -->
                     </div>
                     <div class="card-body table-responsive">
-                        <table class="table table-bordered table-striped table_id">
+                        <table id="example" class="table table-bordered table-striped table_id">
                             <thead class="thead-dark">
                                 <th>#</th>
                                 <th>Profesor</th>
@@ -38,11 +32,10 @@
                             </thead>
                             <tbody>
                                 <?php
-                                require ("conn/conexion.php");
+                                    require ("conn/conexion.php");
                                     $sql = $conexion -> query ("SELECT * FROM asignar
                                     INNER JOIN persona ON asignar.id_persona = persona.id_persona
-                                    INNER JOIN materia ON asignar.id_materia = materia.id_materia");
-                                     
+                                    INNER JOIN materia ON asignar.id_materia = materia.id_materia");                                     
                                      while ($resultado = $sql -> fetch_assoc()) {
                                 ?>
                                         <tr>
@@ -50,8 +43,7 @@
                                             <td scope="row"><?php echo $resultado['nombre']?> <?php echo $resultado['apellido']?> </td>
                                             <td scope="row"><?php echo $resultado['Nombre'] ?></td> <!--Lo cambie en la BD materia-->
                                              <!--Lo cambie en la BD asignar----->
-                                          <!--cambie los nombre en BD x q al tener el mismo nombre se mezclan las conexiones-->
-                                          
+                                          <!--cambie los nombre en BD x q al tener el mismo nombre se mezclan las conexiones-->                                          
                                          <!-------BOTONES--->
                                             <td><a href="edit_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-warning" role="button">Editar</a></td>
                                             <td><a href="delet_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
