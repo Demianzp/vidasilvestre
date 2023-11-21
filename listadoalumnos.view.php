@@ -84,6 +84,13 @@
                                                 <td><?php echo $alumno['fecha_ingreso'] ?></td>
                                                 <td><?php echo $alumno['fecha_nacimiento'] ?></td>
                                                 <td><?php echo $alumno['celular'] ?></td>
+
+                                                <td><?php echo $alumno['ciudad'] ?></td>
+                                                <td><a href="" class="link-primary" role="button">Perfil</a></td>
+                                                <td><a href="hist_alum.php" class="btn btn-info" role="button">Historial</a></td>
+                                                <td><a href="alumnoedit.view.php?id=<?php echo $alumno['id_persona'] ?>" class="btn btn-warning" role="button">Editar</a></td>
+                                                <td><a href="alumnodelete.php?id=<?php echo $alumno['id_persona'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
+
                                                 <td><?php echo $alumno['ciudad'] ?></td>                                                
                                                 <td><a href="" class="btn btn-info" type="button">Historial</a></td>
                                                 <td class="text-center">
@@ -102,6 +109,7 @@
                                                     </div>  
 
                                                 </td>
+
                                             </tr>
                                     <?php
                                         }
