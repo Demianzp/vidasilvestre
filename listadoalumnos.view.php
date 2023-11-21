@@ -58,10 +58,10 @@
                                     <th>Fecha de Nacimiento</th>
                                     <th>Celular</th>
                                     <th>Departamento</th>
-                                    <th>Perfil</th>
-                                    <th>Historial</th>                                    
-                                    <th>Editar</th>
-                                    <th>Eliminar</th>                                   
+                                    <th>Historial</th>
+                                    <th>Acciones</th>
+                                                                        
+                                                                       
                                 </thead>
                                 <tbody>
                                     <?php
@@ -84,11 +84,28 @@
                                                 <td><?php echo $alumno['fecha_ingreso'] ?></td>
                                                 <td><?php echo $alumno['fecha_nacimiento'] ?></td>
                                                 <td><?php echo $alumno['celular'] ?></td>
-                                                <td><?php echo $alumno['ciudad'] ?></td>
-                                                <td><a href="" class="link-primary" role="button">Perfil</a></td>
-                                                <td><a href="" class="btn btn-info" role="button">Historial</a></td>
-                                                <td><a href="alumnoedit.view.php?id=<?php echo $alumno['id_persona'] ?>" class="btn btn-warning" role="button">Editar</a></td>
-                                                <td><a href="alumnodelete.php?id=<?php echo $alumno['id_persona'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
+
+                                                
+                                                
+                                                <td><?php echo $alumno['ciudad'] ?></td>                                                
+                                                <td><a href="" class="btn btn-info" type="button">Historial</a></td>
+                                                <td class="text-center">
+                                                    <div class="btn-group">
+                                                        <a href="" class="btn btn-primary btn-flat view_result" type="button">
+                                                            <i class="fas fa-eye"></i>                                                        
+                                                        </a>                                                
+                                                    
+                                                        <a href="alumnoedit.view.php?id=<?php echo $alumno['id_persona'] ?>" class="btn btn-warning " type="button">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>                                                
+                                                    
+                                                        <a href="alumnodelete.php?id=<?php echo $alumno['id_persona'] ?>" class="btn btn-danger " type="button">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a> 
+                                                    </div>  
+
+                                                </td>
+
                                             </tr>
                                     <?php
                                         }

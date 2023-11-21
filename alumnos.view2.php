@@ -1,4 +1,5 @@
 <?php
+
 // Incluye el archivo de conexión
 include 'conn/connection.php';
 $mensaje = "";
@@ -57,3 +58,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Redirigir a la página "listadoalumnos.view.php" con los mensajes en la URL
 header("Location: listadoalumnos.view.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
 exit();
+

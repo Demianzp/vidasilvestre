@@ -59,17 +59,17 @@ if (isset($_GET['revisar'])) {
     }
 }
 ?>
-
+<!-- 
 <!DOCTYPE html>
-<html>
+<html> -->
 
 <!-- <head>
     <title>Notas | Registro de Notas</title>
     <meta name="description" content="Registro de Notas del Centro Escolar" />
 </head> -->
-
+<?php require 'navbar.php'; ?>
 <body>
-    <?php require 'navbar.php'; ?>
+    
     <div class="container mt-3">
         <div class="row d-flex justify-content-center">
             <div class="col-auto">
@@ -78,7 +78,7 @@ if (isset($_GET['revisar'])) {
                         <div class="content">
                             <h5 class="d-inline-block">Registro y Modificación Notas</h5>
                         </div>
-                        (Mostrar las notas en el input)
+                        
                     </div>
                     <div class="card-body table-responsive-xl mb-1">
                         <?php if (!isset($_GET['revisar'])) { ?>
@@ -97,26 +97,26 @@ if (isset($_GET['revisar'])) {
                         <?php } ?>
 
                         <?php if (isset($_GET['revisar'])) { ?>
-                            <form action="procesarnota.php" method="post">
+                            <form action="procesarnota.php" method="post">                                
                                 <table id="example" class="table table-bordered table-striped">
-                                    <thead class="thead-dark">
-                                        <th>#</th>
-                                        <th>Apellido y Nombre</th>
-                                        <th>Nota1</th>
-                                        <th>Nota2</th>
-                                        <th>Nota3</th>
-                                        <th>Nota4</th>
-                                        <th>Calif. Regularidad</th>
+                                    <thead class="thead-dark" >
+                                        <th width="20px">#</th>
+                                        <th >Apellido y Nombre</th>
+                                        <th width="20px">Nota1</th>
+                                        <th width="20px">Nota2</th>
+                                        <th width="20px">Nota3</th>
+                                        <th width="20px">Nota4</th>
+                                        <th >Calif. Regularidad</th>
                                     </thead>
                                     <?php foreach ($alumnos as $index => $alumno) : ?>
-                                        <tr>
-                                            <td scope="row"><?php echo $alumno['id_persona'] ?></td>
-                                            <td><?php echo $alumno['nombre'] ?></td>
-                                            <td><input type="text" class="form-control" name="nota1_<?php echo $alumno['id_persona'] ?>" value="<?php echo $alumno['nota1'] ?>"></td>
-                                            <td><input type="text" class="form-control" name="nota2_<?php echo $alumno['id_persona'] ?>" value="<?php echo $alumno['nota2'] ?>"></td>
-                                            <td><input type="text" class="form-control" name="nota3_<?php echo $alumno['id_persona'] ?>" value="<?php echo $alumno['nota3'] ?>"></td>
-                                            <td><input type="text" class="form-control" name="nota4_<?php echo $alumno['id_persona'] ?>" value="<?php echo $alumno['nota4'] ?>"></td>
-                                            <td><?php echo number_format($alumno['promedio'], 2) ?></td>
+                                        <tr >
+                                            <td scope="row" width="20px"><?php echo $alumno['id_persona'] ?></td>
+                                            <td ><?php echo $alumno['nombre'] ?></td>
+                                            <td><input type="text" width="20px" class="form-control" placeholder="00.00" name="nota1_<?php echo $alumno['id_persona'] ?>" value="<?php echo $alumno['nota1'] ?>"></td>
+                                            <td><input type="text" width="20px" class="form-control" placeholder="00.00" name="nota2_<?php echo $alumno['id_persona'] ?>" value="<?php echo $alumno['nota2'] ?>"></td>
+                                            <td><input type="text" width="20px" class="form-control" placeholder="00.00" name="nota3_<?php echo $alumno['id_persona'] ?>" value="<?php echo $alumno['nota3'] ?>"></td>
+                                            <td><input type="text" width="20px" class="form-control" placeholder="00.00" name="nota4_<?php echo $alumno['id_persona'] ?>" value="<?php echo $alumno['nota4'] ?>"></td>
+                                            <td ><?php echo number_format($alumno['promedio'], 2) ?></td>
                                             <input type="hidden" name="id_persona_<?php echo $alumno['id_persona'] ?>" value="<?php echo $alumno['id_persona'] ?>">
                                         </tr>
                                     <?php endforeach; ?>
@@ -137,5 +137,4 @@ if (isset($_GET['revisar'])) {
     </div>
     <?php require 'footer.php'; ?>
 </body>
-
 </html>

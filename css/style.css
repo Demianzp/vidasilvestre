@@ -21,7 +21,7 @@ select {
   border-width: 1px !important;
 }
 input[type=checkbox]{
-  border-color:  #0d6efd  !important;
+  border-color:  #6c757d  !important;
   border-style:  solid  !important;
   border-width: 2px !important;
   width: 20px;
@@ -31,5 +31,10 @@ input[type=checkbox]{
   border-style:  solid  !important;
   border-color:  #6c757d  !important;
   border-width: 1px !important;
+
+}
+th {
+  text-align: center !important;
+  vertical-align: middle !important;
 
 }
