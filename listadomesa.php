@@ -24,13 +24,17 @@ $result = $db->query($query);
        
   <div class="container mt-3">
         <div class="card rounded-2 border-0">
-            <h5 class="card-header bg-dark text-white"> Mesas de Examen <a href="fpdf/rep-mesa.php" tanget="_blank" class="btn btn-outline-danger  float-right mb-2" > <i class="fas fa-file-excel"></i>PDF</a>
-          <a href="fpdf/excel.php" tanget="_blank" class="btn btn-outline-success float-right mb-2" > <i class="fas fa-file-excel"></i>EXCEL</a></h5>
+        <div class="card-header pb-0 bg-dark text-white ">
+            <h5 class="card-header bg-dark text-white"> Mesas de Examen <a href="fpdf/rep-mesa.php" tanget="_blank" class="btn btn-danger  float-right mb-2 " > <i class="fa-solid fa-file-pdf"></i></a>
+            <a href="fpdf/excel.php" tanget="_blank" class="btn btn-success float-right mb-2 mr-2" > <i class="fas fa-file-excel"></i></a></h5>
+        </div>
+
+            
          
-            <div class="card-body bg-light">
+            <div class="card-body table-responsive">
            
-            <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                            <thead>
+            <table id="example" class="table table-striped table-bordered  " cellspacing="0" width="100%">
+                            <thead class="thead-dark">
                                 <tr>
                                     <th>Nombre de Mesa</th>
                                     <th>Materia</th>
