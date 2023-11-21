@@ -27,8 +27,7 @@
                                 <th>#</th>
                                 <th>Profesor</th>
                                 <th>Materia</th>
-                                <th>Editar</th>
-                                <th>Eliminar</th>
+                                <th>Acciones</th>
                             </thead>
                             <tbody>
                                 <?php
@@ -45,8 +44,20 @@
                                              <!--Lo cambie en la BD asignar----->
                                           <!--cambie los nombre en BD x q al tener el mismo nombre se mezclan las conexiones-->                                          
                                          <!-------BOTONES--->
-                                            <td><a href="edit_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-warning" role="button">Editar</a></td>
-                                            <td><a href="delet_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
+
+                                         <td class="text-center">
+                                                <div class="btn-group">
+                                                    <a href="edit_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-warning" role="button">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>                                                
+                                                    
+                                                    <a href="delet_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-danger" role="button">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a> 
+                                                </div>
+                                            </td>
+
+                                            
                                         </tr>
                                 <?php
                                  

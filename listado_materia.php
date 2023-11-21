@@ -48,8 +48,7 @@
                                 <th>ID Materia</th>
                                 <th>Materia</th>
                                 <th>ID Correlativa</th>
-                                <th>Editar</th>
-                                <th>Eliminar</th>
+                                <th>Acciones</th>
                             </thead>
                             <tbody>
                                 <?php
@@ -71,8 +70,18 @@
                                             <th scope="row"><?php echo $materia['id_materia'] ?></th>
                                             <td><?php echo $materia['Materia'] ?></td>
                                             <td><?php echo $materia['id_correlativa'] ?></td>
-                                            <td><a href="materiaedit.php?id=<?php echo $materia['id_materia'] ?>" class="btn btn-warning" role="button">Editar</a></td>
-                                            <td><a href="materiadelet.php?id=<?php echo $materia['id_materia'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
+
+                                            <td class="text-center">
+                                                <div class="btn-group">
+                                                    <a href="materiaedit.php?id=<?php echo $materia['id_materia'] ?>" class="btn btn-warning" role="button">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>                                                
+                                                    
+                                                    <a href="materiadelet.php?id=<?php echo $materia['id_materia'] ?>" class="btn btn-danger" role="button">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a> 
+                                                </div>
+                                            </td>
                                         </tr>
                                 <?php
                                     }
