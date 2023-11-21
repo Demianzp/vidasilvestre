@@ -56,8 +56,7 @@
                                 <th>Celular</th>
                                 <th>Departamento</th>
                                 <th>Asignar</th>
-                                <th>Editar</th>
-                                <th>Eliminar</th>
+                                <th>Acciones</th>
                             </thead>
                             <tbody>
                                 <?php
@@ -65,12 +64,10 @@
                                 try {
                                     $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
                                     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
                                     $query = "SELECT * FROM persona WHERE id_rol = 2 AND estado = 'Activo'";
                                     $stmt = $db->prepare($query);
                                     $stmt->execute();
                                     $profesores = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
                                     foreach ($profesores as $profesor) {
                                 ?>
                                         <tr>
@@ -85,9 +82,22 @@
 
                                             <td><?php echo $profesor['ciudad'] ?></td>
                                             <td><a href="asignar_F.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-info" role="button">Asignar</a></td>
-                                            <td><a href="editarprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning" role="button">Editar</a></td>
-                                            <td><a href="deletprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
-                                        </tr>
+                                            
+                                            <td class="text-center">
+                                                    <div class="btn-group">
+                                                        <a href="" class="btn btn-primary btn-flat view_result" type="button">
+                                                            <i class="fas fa-eye"></i>                                                        
+                                                        </a>                                                
+                                                    
+                                                        <a href="editarprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning" type="button">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>                                                
+                                                    
+                                                        <a href="deletprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-danger" type="button">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a> 
+                                                    </div>
+                                            </tr>
                                 <?php
                                     }
                                 } catch (PDOException $e) {
