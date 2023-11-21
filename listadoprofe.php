@@ -1,7 +1,7 @@
-
 <?php require 'navbar.php'; ?>
+
 <body>
-    
+
     <section class="content mt-3">
         <div class="row m-auto">
             <div class="col-sm">
@@ -13,8 +13,8 @@
                             <input class="form-control  light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">
                         </form> -->
                     </div>
-                   <!-- Mensaje de carga o error de alumno Cargar -->
-                   <?php
+                    <!-- Mensaje de carga o error de  Cargar -->
+                    <?php
                     if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
                         echo '<div class="alert alert-success">' . htmlspecialchars($_GET['mensaje']) . '</div>';
                     }
@@ -23,7 +23,7 @@
                     }
                     ?>
 
-                    <!-- Mensaje de carga o error de alumno Modificar -->
+                    <!-- Mensaje de carga o error de  Modificar -->
                     <?php
                     if (!empty($infoMessage)) {
                         echo '<div class="alert alert-success">' . htmlspecialchars($infoMessage) . '</div>';
@@ -56,7 +56,8 @@
                                 <th>Celular</th>
                                 <th>Departamento</th>
                                 <th>Asignar</th>
-                                <th>Acciones</th>
+                                <th>Editar</th>
+                                <th>Eliminar</th>
                             </thead>
                             <tbody>
                                 <?php
@@ -64,10 +65,12 @@
                                 try {
                                     $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
                                     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
                                     $query = "SELECT * FROM persona WHERE id_rol = 2 AND estado = 'Activo'";
                                     $stmt = $db->prepare($query);
                                     $stmt->execute();
                                     $profesores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
                                     foreach ($profesores as $profesor) {
                                 ?>
                                         <tr>
@@ -82,22 +85,9 @@
 
                                             <td><?php echo $profesor['ciudad'] ?></td>
                                             <td><a href="asignar_F.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-info" role="button">Asignar</a></td>
-                                            
-                                            <td class="text-center">
-                                                    <div class="btn-group">
-                                                        <a href="" class="btn btn-primary btn-flat view_result" type="button">
-                                                            <i class="fas fa-eye"></i>                                                        
-                                                        </a>                                                
-                                                    
-                                                        <a href="editarprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning" type="button">
-                                                            <i class="fas fa-edit"></i>
-                                                        </a>                                                
-                                                    
-                                                        <a href="deletprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-danger" type="button">
-                                                            <i class="fas fa-trash"></i>
-                                                        </a> 
-                                                    </div>
-                                            </tr>
+                                            <td><a href="editarprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning" role="button">Editar</a></td>
+                                            <td><a href="deletprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
+                                        </tr>
                                 <?php
                                     }
                                 } catch (PDOException $e) {
@@ -122,9 +112,9 @@
             </div>
         </div>
     </section>
-    
+
 </body>
 <?php require 'footer.php'; ?>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script  src="js/ocultarMensaje.js"></script>
+<script src="js/ocultarMensaje.js"></script>
 <!-- <script src="js/buscador.js"></script> -->
