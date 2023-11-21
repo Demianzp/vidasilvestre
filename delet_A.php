@@ -2,27 +2,28 @@
 require 'conn/connection.php';
 
 // Inicializar variables de mensaje
-$mensj1 = '';
-$danger2 = '';
+$inMessage = '';
+$errMessage = '';
 
-if (isset($_GET['id'])) {
-    $id_asignar = $_GET['id'];
+if (isset($_GET['id_asignar'])) {
+    $id_asignar = $_GET['id_asignar'];
 
     if (isset($_GET['confirm']) && $_GET['confirm'] === 'yes') {
         // El usuario confirmó la desactivación, proceder con la actualización del estado
-        $consulta_desactivar = $db->prepare("DELETE FROM asignar WHERE id_asignar= :id");
-        $consulta_desactivar->bindParam(':id', $id_asignar, PDO::PARAM_INT);
+        $consulta_desactivar = $db->prepare("UPDATE  asignar SET Estado = 'Activo'  WHERE id_asignar = :id_asignar");
+        $consulta_desactivar->bindParam(':id_asignar', $id_asignar, PDO::PARAM_INT);
 
         if ($consulta_desactivar->execute()) {
-            $mensj1 = '!!Registro Actualizado correctamente!!';
+            $inMessage = '!!Registro desactivado correctamente !!';
+        } else {
+            $errMessage = '!!Error al desactivar el registro!!: ' . implode(', ' . $consulta_desactivar->errorInfo());
         }
-    } else {
-        $danger1 = '!!Error al Actualizar el registro!!: ' . implode(', ' . $stmt->errorInfo());
     }
-    if ($mensj1  || $danger1) {
-        header("Location: lista_A.php?mensaje=" . urlencode($mensj) . "&error=" . urlencode($danger));
-        exit();
-    }
+}
+// Redirigir solo si hay mensajes para enviar
+if ($inMessage || $errMessage) {
+    header("Location: lista_A.php?mensaje=" . urlencode($inMessage) . "&error=" . urlencode($errMessage));
+    exit();
 }
 ?>
 

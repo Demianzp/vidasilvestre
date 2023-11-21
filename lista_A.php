@@ -28,19 +28,20 @@
                     <!-- Mensaje de asignar exitosamente o error  -->
                     <?php
                     if (!empty($mensj)) {
-                        echo '<div class="alert alert-success">' . htmlspecialchars($mensj) . '</div>';
+                        echo '<div class="alert alert-success" role="alert">' . htmlspecialchars($mensj) . '</div>';
                     }
                     if (!empty($danger)) {
-                        echo '<div class="alert alert-danger">' . htmlspecialchars($danger) . '</div>';
+                        echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($danger)  . '</div>';
                     }
                     ?>
                     <!-- Mensaje de eliminar asignar -->
+
                     <?php
-                    if (!empty($inMessage)) {
-                        echo '<div class="alert alert-success">' . htmlspecialchars($inMessage) . '</div>';
+                    if (isset($_GET['mensj1']) && !empty($_GET['mensj1'])) {
+                        echo '<div class="alert alert-success">' . htmlspecialchars($_GET['mensj1']) . '</div>';
                     }
-                    if (!empty($errMessage)) {
-                        echo '<div class="alert alert-danger">' . htmlspecialchars($errMessage) . '</div>';
+                    if (isset($_GET['danger1']) && !empty($_GET['danger1'])) {
+                        echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['danger1']) . '</div>';
                     }
                     ?>
                     <div class="card-body table-responsive">
@@ -55,9 +56,10 @@
                             <tbody>
                                 <?php
                                 require("conn/conexion.php");
-                                $sql = $conexion->query("SELECT * FROM asignar
-                                    INNER JOIN persona ON asignar.id_persona = persona.id_persona
-                                    INNER JOIN materia ON asignar.id_materia = materia.id_materia");
+                                $sql = $conexion->query("SELECT * FROM asignar 
+                                INNER JOIN persona ON asignar.id_persona = persona.id_persona AND persona.estado = 'Activo'
+                                INNER JOIN materia ON asignar.id_materia = materia.id_materia AND materia.estado = 'Activo'
+                                WHERE asignar.Estado = 'Activo'");
 
                                 while ($resultado = $sql->fetch_assoc()) {
                                 ?>
