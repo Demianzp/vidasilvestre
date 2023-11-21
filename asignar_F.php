@@ -1,21 +1,36 @@
 <?php
-include('conn/conexion.php');
-if (isset($_POST['profesor']) && isset($_POST['materia'])) {
-    $profesor = $_POST['profesor'];
-    $materia = $_POST['materia'];
+include('conn/connection.php');
+$Message1 = '';
+$Message2 = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $profesor = isset($_POST["profesor"]) ? $_POST["profesor"] : '';
+    $materia = isset($_POST["materia"]) ? $_POST["materia"] : '';
     $estado = 'Activo';
+    try {
+        $sql = $db->prepare("INSERT INTO asignar (id_persona, id_materia, Estado)");
+        //VALUES(':profesor,:materia, :Estado');
 
-    $sql = "INSERT INTO asignar (id_persona, id_materia, Estado) 
-    VALUES ('$profesor', '$materia',' $estado')";
 
-    $resultado = mysqli_query($conexion, $sql);
-    if ($resultado === TRUE) {
-        header("location: listadoprofe.php?mensaje=");
-    } else {
-        header("location: listadoprofe.php?mensaje=error");
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':profesor', $profesor);
+        $stmt->bindParam(':materia', $materia);
+        if ($stmt->execute()) {
+            $mensaje1 = "Ingresada con éxito.";
+        } else {
+            $error1 = "Error al ingresar: " . $stmt->errorInfo()[2];
+        }
+    } catch (PDOException $e) {
+        $error1 = "Error en la consulta: " . $e->getMessage();
     }
 }
+
+// Redirigir a la página "listadoalumnos.view.php" con los mensajes en la URL
+header("Location: lista_A.php?mensaje=" . urlencode($mensaje1) . "&error=" . urlencode($error1));
+exit();
+
 ?>
+
 <!-- <!DOCTYPE html>
 <html lang="es">
 
@@ -35,7 +50,7 @@ if (isset($_POST['profesor']) && isset($_POST['materia'])) {
                 <div class="card rounded-2 border-0">
                     <h5 class="card-header bg-dark text-white">Asignar materia</h5>
                     <div class="card-body bg-light">
-                        <form method="post" class="form" action="">
+                        <form method="$_POST" class="form" action="">
 
                             <!-- ---------------El get trae el id del profesor q quiere asignar la materia------------------ -->
                             <div class="form-group">
