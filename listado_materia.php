@@ -43,7 +43,7 @@
                     ?>
 
                     <div class="card-body table-responsive">
-                        <table id="example" class="table table-striped bg-dark" style="width:100%">
+                        <table id="example" class="table table-striped " style="width:100%">
                             <thead class="thead-dark">
                                 <th>ID Materia</th>
                                 <th>Materia</th>
