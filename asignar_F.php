@@ -1,46 +1,41 @@
 <?php
-include('conn/connection.php');
-$Message1 = '';
-$Message2 = '';
+include_once('conn/connection.php');
+// Inicializar variables de mensaje
+$mensj1 = '';
+$error1 = '';
+if (isset($_POST['profesor']) && isset($_POST['materia'])) {
+    $profesor = $_POST['profesor'];
+    $materia = $_POST['materia'];
+    $estado = "Activo";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $profesor = isset($_POST["profesor"]) ? $_POST["profesor"] : '';
-    $materia = isset($_POST["materia"]) ? $_POST["materia"] : '';
-    $estado = 'Activo';
-    try {
-        $sql = $db->prepare("INSERT INTO asignar (id_persona, id_materia, Estado)");
-        //VALUES(':profesor,:materia, :Estado');
-
-
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam(':profesor', $profesor);
-        $stmt->bindParam(':materia', $materia);
-        if ($stmt->execute()) {
-            $mensaje1 = "Ingresada con éxito.";
-        } else {
-            $error1 = "Error al ingresar: " . $stmt->errorInfo()[2];
-        }
-    } catch (PDOException $e) {
-        $error1 = "Error en la consulta: " . $e->getMessage();
+    $sql = "INSERT INTO asignar (id_persona, id_materia, Estado) VALUES (:profesor, :materia, :estado)";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(":profesor", $profesor, PDO::PARAM_INT);
+    $stmt->bindParam(":materia", $materia, PDO::PARAM_INT);
+    $stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
+    if ($stmt->execute()) {
+        $mensj1 = 'Registro cargado correctamente.';
+    } else {
+        $error1 = 'Error al a cargar el registro: ' . implode(', ', $consulta_desactivar->errorInfo());
     }
 }
-
-// Redirigir a la página "listadoalumnos.view.php" con los mensajes en la URL
-header("Location: lista_A.php?mensaje=" . urlencode($mensaje1) . "&error=" . urlencode($error1));
+// Redirigir solo si hay mensajes para enviar
+if ($mensj1|| $error1) {
+header("Location: lista_A.php?mensaje1=" . urlencode($mensj1) . "&error1=" . urlencode($error1));
 exit();
-
+}
+    
 ?>
 
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Registro de Notas del Centro Escolar Profesor Lennin" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoI6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-</head> -->
+</head>
 <?php require 'navbar.php'; ?>
 
 <body>
@@ -50,7 +45,7 @@ exit();
                 <div class="card rounded-2 border-0">
                     <h5 class="card-header bg-dark text-white">Asignar materia</h5>
                     <div class="card-body bg-light">
-                        <form method="$_POST" class="form" action="">
+                        <form method="post" class="form" action="">
 
                             <!-- ---------------El get trae el id del profesor q quiere asignar la materia------------------ -->
                             <div class="form-group">
