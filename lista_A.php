@@ -23,25 +23,32 @@
                         <form class="form-group mx-sm-3 d-inline-block">
                             <input class="form-control  light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">
                         </form>
-
                     </div>
                     <!-- Mensaje de asignar exitosamente o error  -->
                     <?php
-                    if (!empty($mensj)) {
-                        echo '<div class="alert alert-success" role="alert">' . htmlspecialchars($mensj) . '</div>';
+                    if (isset($_GET['mensaje1']) && !empty($_GET['mensaje1'])) {
+                        echo '<div class="alert alert-success"role="alert">' . htmlspecialchars($_GET['mensaje1']) . '</div>';
                     }
-                    if (!empty($danger)) {
-                        echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($danger)  . '</div>';
+                    if (isset($_GET['error1']) && !empty($_GET['error1'])) {
+                        echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['error1']) . '</div>';
                     }
                     ?>
-                    <!-- Mensaje de eliminar asignar -->
-
+                    <!-- Mensaje de desactivar un asignar -->
                     <?php
-                    if (isset($_GET['mensj1']) && !empty($_GET['mensj1'])) {
-                        echo '<div class="alert alert-success">' . htmlspecialchars($_GET['mensj1']) . '</div>';
+                    if (isset($_GET['mensaje3']) && !empty($_GET['mensaje3'])) {
+                        echo '<div class="alert alert-success"role="alert">' . htmlspecialchars($_GET['mensaje3']) . '</div>';
                     }
-                    if (isset($_GET['danger1']) && !empty($_GET['danger1'])) {
-                        echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['danger1']) . '</div>';
+                    if (isset($_GET['error3']) && !empty($_GET['error3'])) {
+                        echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['error3']) . '</div>';
+                    }
+                    ?>
+                    <!-- Mensaje de editar asignar -->
+                    <?php
+                    if (isset($_GET['mensaje2']) && !empty($_GET['mensaje2'])) {
+                        echo '<div class="alert alert-success"role="alert">' . htmlspecialchars($_GET['mensaje2']) . '</div>';
+                    }
+                    if (isset($_GET['error2']) && !empty($_GET['error2'])) {
+                        echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['error2']) . '</div>';
                     }
                     ?>
                     <div class="card-body table-responsive">
