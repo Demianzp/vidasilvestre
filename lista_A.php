@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asignación </title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
 <?php require 'navbar.php'; ?>
 
 <body>
@@ -14,51 +6,52 @@
         <div class="row m-auto">
             <div class="col-sm">
                 <div class="card rounded-2 border-0">
-
                     <div class="card-header bg-dark text-white pb-0">
-
                         <h5 class="d-inline-block">Listado de Profesores</h5>
-
-                        <a class="btn btn-primary float-right" href="listadoprofe.php">Volver</a>
-                        <form class="form-group mx-sm-3 d-inline-block">
-                            <input class="form-control  light-table-filter" data-table="table_id" type="text" placeholder="Buscar ">
-                        </form>
-
+                        <a class="btn btn-primary float-right mb-2" href="listadoprofe.php">Volver</a>                        
                     </div>
                     <!-- Mensaje de asignar exitosamente o error  -->
                     <?php
-                    if (!empty($mensj)) {
-                        echo '<div class="alert alert-success">' . htmlspecialchars($mensj) . '</div>';
+                    if (isset($_GET['mensaje1']) && !empty($_GET['mensaje1'])) {
+                        echo '<div class="alert alert-success"role="alert">' . htmlspecialchars($_GET['mensaje1']) . '</div>';
                     }
-                    if (!empty($danger)) {
-                        echo '<div class="alert alert-danger">' . htmlspecialchars($danger) . '</div>';
+                    if (isset($_GET['error1']) && !empty($_GET['error1'])) {
+                        echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['error1']) . '</div>';
                     }
                     ?>
-                    <!-- Mensaje de eliminar asignar -->
+                    <!-- Mensaje de desactivar un asignar -->
                     <?php
-                    if (!empty($inMessage)) {
-                        echo '<div class="alert alert-success">' . htmlspecialchars($inMessage) . '</div>';
+                    if (isset($_GET['mensaje3']) && !empty($_GET['mensaje3'])) {
+                        echo '<div class="alert alert-success"role="alert">' . htmlspecialchars($_GET['mensaje3']) . '</div>';
                     }
-                    if (!empty($errMessage)) {
-                        echo '<div class="alert alert-danger">' . htmlspecialchars($errMessage) . '</div>';
+                    if (isset($_GET['error3']) && !empty($_GET['error3'])) {
+                        echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['error3']) . '</div>';
+                    }
+                    ?>
+                    <!-- Mensaje de editar asignar -->
+                    <?php
+                    if (isset($_GET['mensaje2']) && !empty($_GET['mensaje2'])) {
+                        echo '<div class="alert alert-success"role="alert">' . htmlspecialchars($_GET['mensaje2']) . '</div>';
+                    }
+                    if (isset($_GET['error2']) && !empty($_GET['error2'])) {
+                        echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['error2']) . '</div>';
                     }
                     ?>
                     <div class="card-body table-responsive">
-                        <table class="table table-bordered table-striped table_id">
+                        <table id="example" class="table table-striped table_id">
                             <thead class="thead-dark">
                                 <th>#</th>
                                 <th>Profesor</th>
                                 <th>Materia</th>
-                                <th>Editar</th>
-                                <th>Eliminar</th>
+                                <th>Acciones</th>
                             </thead>
                             <tbody>
                                 <?php
                                 require("conn/conexion.php");
-                                $sql = $conexion->query("SELECT * FROM asignar
-                                    INNER JOIN persona ON asignar.id_persona = persona.id_persona
-                                    INNER JOIN materia ON asignar.id_materia = materia.id_materia");
-
+                                $sql = $conexion->query("SELECT * FROM asignar 
+                                INNER JOIN persona ON asignar.id_persona = persona.id_persona AND persona.estado = 'Activo'
+                                INNER JOIN materia ON asignar.id_materia = materia.id_materia AND materia.estado = 'Activo'
+                                WHERE asignar.Estado = 'Activo'");
                                 while ($resultado = $sql->fetch_assoc()) {
                                 ?>
                                     <tr>
@@ -67,15 +60,21 @@
                                         <td scope="row"><?php echo $resultado['Nombre'] ?></td> <!--Lo cambie en la BD materia-->
                                         <!--Lo cambie en la BD asignar----->
                                         <!--cambie los nombre en BD x q al tener el mismo nombre se mezclan las conexiones-->
-
                                         <!-------BOTONES--->
-                                        <td><a href="edit_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-warning" role="button">Editar</a></td>
-                                        <td><a href="delet_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                <a href="edit_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-warning" role="button">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a href="delet_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-danger" role="button">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>  
+                                        </td>
+                                        <!-- ------------------------- -->
                                     </tr>
                                 <?php
-
                                 }
-
                                 ?>
                             </tbody>
                         </table>
@@ -95,12 +94,8 @@
             </div>
         </div>
     </section>
-
     <?php require 'footer.php'; ?>
-
 </body>
 <script src="js/buscador.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="js/ocultarMensaje.js"></script>
-
-</html>
