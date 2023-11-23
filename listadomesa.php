@@ -12,7 +12,7 @@ $query = "SELECT mesa_examen.*,
           LEFT JOIN ciclo_lectivo ON mesa_examen.id_ciclo = ciclo_lectivo.id_ciclo
           LEFT JOIN tipo ON mesa_examen.id_tipo = tipo.id_tipo";
 $result = $db->query($query);
-
+// k
 ?>
 <?php require 'navbar.php'; ?>
 <!doctype html>
