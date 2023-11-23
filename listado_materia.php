@@ -47,7 +47,7 @@
                             <thead class="thead-dark">
                                 <th>ID Materia</th>
                                 <th>Materia</th>
-                                <th>ID Correlativa</th>
+                                <th>Agregar Correlativa</th>
                                 <th>Acciones</th>
                             </thead>
                             <tbody>
@@ -69,7 +69,7 @@
                                         <tr>
                                             <th scope="row"><?php echo $materia['id_materia'] ?></th>
                                             <td><?php echo $materia['Materia'] ?></td>
-                                            <td><?php echo $materia['id_correlativa'] ?></td>
+                                            <td class="text-center"><a href="correlativas.php?id=<?php echo $materia['id_materia'] ?>"  class="btn btn-success"> <i class="fa-sharp fa-solid fa-folder-open"></i></a></td>
 
                                             <td class="text-center">
                                                 <div class="btn-group">
