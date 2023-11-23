@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instituto Superior Vida Silvestre</title>
   <link rel="shortcut icon" href="img/LOGO.png" />
 </head>
-   <!--font awesome con CDN para iconos-->  
-   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">  
-      
+<!--font awesome con CDN para iconos-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
 <!-- -----------ARCHIVO CSS----------- -->
 <link rel="stylesheet" href="css/style.css">
 <!-- ---------FIN ARCHIVO CSS----------- -->
@@ -24,15 +25,15 @@
 <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css"/>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.3/css/buttons.bootstrap5.min.css"/>
-     <!-- Bootstrap-->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"/>
-     <!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-       <!-- JQuery -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.3/css/buttons.bootstrap5.min.css" />
+<!-- Bootstrap-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" />
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- JQuery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-     <!-- DataTable -->
+<!-- DataTable -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
@@ -41,8 +42,8 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.3/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.3/js/buttons.html5.min.js"></script>
-<script type="text/javascript"src="https://cdn.datatables.net/buttons/2.3.3/js/buttons.print.min.js"></script>
-     <!-- Bootstrap--> 
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.3/js/buttons.print.min.js"></script>
+<!-- Bootstrap-->
 
 <script defer src="js/tabla.js"></script>
 <!-- --------------------------Botones Datatable -->
@@ -53,7 +54,7 @@
 </style>
 <!-- ----------------------------- -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<!-- ----------------------------- -->    
+<!-- ----------------------------- -->
 <div style="height:60px">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid ">
@@ -76,24 +77,24 @@
               <!-- <li><a class="dropdown-item" href="inscripcion_alumno.php">Inscripcion Alumno</a></li> -->
               <li><a class="dropdown-item" href="listadoalumnos.view.php">Listar Alumnos </a></li>
               <li><a class="dropdown-item" href="seleccionar_alumnos.php">Inscripcion a Materia</a></li>
-              
+
             </ul>
           </li>
           <!-- ------------------------------------------------------- -->
           <li class="nav-item active pr-3">
             <a class="nav-link" href="notas.view.php">Notas </a>
           </li>
-          
+
 
           <li class="nav-item dropdown pr-3 ">
             <!-- Nueva parte de agregar notas  -->
             <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Profesor
+              Profesor
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="listadoprofe.php">Listado Profesor</a></li>
               <li><a class="dropdown-item" href="lista_A.php">Listado de Asignaciones</a></li>
-              
+
             </ul>
           </li>
           <!-- ------------------------------------------------------- -->
@@ -101,7 +102,7 @@
             <a class="nav-link" href="listado_materia.php">Materias </a>
           </li>
           <!-- ------------------------------------------------------- -->
-         
+
           <li class="nav-item dropdown pr-3 ">
             <!-- Nueva parte de agregar notas  -->
             <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -115,7 +116,7 @@
           </li>
           <!-- ------------------------------------------------------- -->
           <li class="nav-item active pr-3">
-            <a class="nav-link" href="">Cliclo lectivo (crear) </span></a>
+            <a class="nav-link" href="ciclo_lectivo.php">Cliclo lectivo (crear) </span></a>
           </li>
           <!-- ------------------------------------------------------- -->
         </ul>
