@@ -74,6 +74,7 @@
                                         $stmt->execute();
                                         $alumnos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         foreach ($alumnos as $alumno) {
+                                            //f
                                     ?>
                                             <tr>
                                                 <th scope="row"><?php echo $alumno['id_persona'] ?></th>
