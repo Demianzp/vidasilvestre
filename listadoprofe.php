@@ -56,8 +56,7 @@
                                 <th>Celular</th>
                                 <th>Departamento</th>
                                 <th>Asignar</th>
-                                <th>Editar</th>
-                                <th>Eliminar</th>
+                                <th>Acciones</th>
                             </thead>
                             <tbody>
                                 <?php
@@ -85,8 +84,16 @@
 
                                             <td><?php echo $profesor['ciudad'] ?></td>
                                             <td><a href="asignar_F.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-info" role="button">Asignar</a></td>
-                                            <td><a href="editarprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning" role="button">Editar</a></td>
-                                            <td><a href="deletprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-danger" role="button">Eliminar</a></td>
+                                            <td class="text-center">
+                                                    <div class="btn-group">
+                                                        <a href="editarprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning" role="button">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a> 
+                                                        <a href="deletprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-danger" role="button">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                    </div>  
+                                                </td>
                                         </tr>
                                 <?php
                                     }

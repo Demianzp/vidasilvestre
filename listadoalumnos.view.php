@@ -93,19 +93,15 @@
                                                     <div class="btn-group">
                                                         <a href="" class="btn btn-primary btn-flat view_result" type="button">
                                                             <i class="fas fa-eye"></i>                                                        
-                                                        </a>                                                
-                                                    
+                                                        </a>  
                                                         <a href="alumnoedit.view.php?id=<?php echo $alumno['id_persona'] ?>" class="btn btn-warning " type="button">
                                                             <i class="fas fa-edit"></i>
-                                                        </a>                                                
-                                                    
+                                                        </a>   
                                                         <a href="alumnodelete.php?id=<?php echo $alumno['id_persona'] ?>" class="btn btn-danger " type="button">
                                                             <i class="fas fa-trash"></i>
                                                         </a> 
                                                     </div>  
-
                                                 </td>
-
                                             </tr>
                                     <?php
                                         }
