@@ -1,4 +1,3 @@
-
 <body>
     <?php require 'navbar.php'; ?>
 
@@ -8,24 +7,20 @@
                 <div class="card rounded-2 border-0">
                     <h5 class="card-header bg-dark text-white ">Registro de Materias</h5>
                     <div class="card-body">
-                        
+
                         <form action="procesar_materia.php" method="post" id="materiaForm">
-                      
+
                             <div class="form-group">
                                 <label for="nombre">Nombre:</label>
                                 <input type="text" class="form-control" data-name="Nombre" name="nombre" id="nombre" placeholder="Ingrese el Nombre" required autocomplete="off">
                             </div>
                             <div class="form-group">
                                 <label for="descripcion">Descripción:</label>
-                                <input type="text" class="form-control" data-name="Descripción" name="descripcion" placeholder="Ingrese Descripcion" id="descripcion">
+                                <input type="text" class="form-control" data-name="Descripción" name="descripcion" placeholder="Ingrese Descripcion" id="descripcion" required autocomplete="off">
                             </div>
                             <div class="form-group">
                                 <label for="horas">Horas de cursada:</label>
                                 <input type="text" class="form-control" data-name="Horas de cursada" name="horas" id="horas" required placeholder="Ingrese las horas" autocomplete="off">
-                            </div>
-                            <div class="form-group">
-                                <label for="anio">Año de Cursado:</label>
-                                <input type="number" class="form-control" data-name="Año de Cursado" name="año" id="año" placeholder="Ingrese año de Cursado" required autocomplete="off">
                             </div>
                             <div class="form-group">
                                 <label for="num_resolucion">Número de Resolución:</label>
@@ -73,5 +68,3 @@
     <?php require 'footer.php'; ?>
     <script src="js/materia.js"></script>
 </body>
-
-

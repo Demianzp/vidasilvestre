@@ -8,17 +8,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Verificar si se seleccionó al menos una materia y un alumno
-    if (!empty($_POST['id_materia']) && isset($_POST['id_persona'])) {
-        // Definir el valor por defecto para id_ciclo (en este caso, 2)
-        $id_ciclo = 2;
+    if (!empty($_POST['id_materia']) && isset($_POST['id_persona']) && isset($_POST['ciclo_lectivo'])) {
         // Recibir datos del formulario
         $id_personas = explode(",", $_POST['id_persona']);
         $id_materias = $_POST['id_materia'];
+        $id_ciclo = $_POST['ciclo_lectivo'];
 
         // Insertar datos en la base de datos
         foreach ($id_personas as $id_persona) {
             foreach ($id_materias as $id_materia) {
-                $stmt = $db->prepare("INSERT INTO estadoalumno (id_persona, id_materia, id_ciclo ) VALUES (?, ?, ? )");
+                $stmt = $db->prepare("INSERT INTO estadoalumno (id_persona, id_materia, id_ciclo) VALUES (?, ?, ?)");
                 // Bind parameters
                 $stmt->bindParam(1, $id_persona);
                 $stmt->bindParam(2, $id_materia);
@@ -32,11 +31,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     } else {
-        $error = "No se seleccionó al menos una materia y un alumno.";
+        $error = "No se seleccionó al menos una materia, un alumno o un ciclo lectivo.";
     }
 
     if (isset($mensaje) || isset($error)) {
-        header("Location:seleccionar_alumnos.php? mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
+        header("Location:seleccionar_alumnos.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
         exit();
     }
 }

@@ -6,6 +6,10 @@ $materias = $db->prepare("SELECT * FROM materia WHERE estado = 'Activo'");
 $materias->execute();
 $materias = $materias->fetchAll();
 
+$ciclos = $db->prepare("SELECT * FROM ciclo_lectivo WHERE estado = 'Activo'");
+$ciclos->execute();
+$ciclos = $ciclos->fetchAll();
+
 // Inicializar $alumnos como un array vacío
 $alumnos = [];
 
@@ -68,8 +72,9 @@ if (isset($_GET['revisar'])) {
     <meta name="description" content="Registro de Notas del Centro Escolar" />
 </head> -->
 <?php require 'navbar.php'; ?>
+
 <body>
-    
+
     <div class="container mt-3">
         <div class="row d-flex justify-content-center">
             <div class="col-auto">
@@ -78,17 +83,30 @@ if (isset($_GET['revisar'])) {
                         <div class="content">
                             <h5 class="d-inline-block">Registro y Modificación Notas</h5>
                         </div>
-                        
+
                     </div>
                     <div class="card-body table-responsive-xl mb-1">
                         <?php if (!isset($_GET['revisar'])) { ?>
-                            <form method="get" action="notas.view.php">
+                            <form method="get" action="">
                                 <label class="font-weight-bold">Seleccione la Materia</label><br>
                                 <select class="form-select" name="materia" required>
+                                    <option value="" disabled selected>Seleccione la Materia</option>
                                     <?php foreach ($materias as $materia) : ?>
                                         <option value="<?php echo $materia['id_materia'] ?>"><?php echo $materia['Nombre'] ?></option>
                                     <?php endforeach; ?>
                                 </select>
+
+                                <label class="font-weight-bold">Seleccione Ciclo</label><br>
+                                <select name="ciclo_lectivo" id="ciclo_lectivo" class="form-control" autocomplete="off" required>
+                                    <option value="" disabled selected>Seleccione el ciclo lectivo</option>
+                                    <?php
+                                    foreach ($ciclos as $ciclo) : ?>
+                                        <option value="<?php echo $ciclo['id_ciclo'] ?>"><?php echo $ciclo['nombre_ciclo'] ?></option>
+                                    <?php endforeach; ?>
+                                    ?>
+                                </select>
+
+
                                 <div class="d-inline-block d-flex justify-content-center mt-3">
                                     <button type="submit" name="revisar" class="btn btn-primary" value="1">Ingresar Notas</button>
                                     <a class="btn btn-warning ml-3" href="listadonotas.view.php">Consultar Notas</a>
@@ -97,26 +115,26 @@ if (isset($_GET['revisar'])) {
                         <?php } ?>
 
                         <?php if (isset($_GET['revisar'])) { ?>
-                            <form action="procesarnota.php" method="post">                                
+                            <form action="guardar_notas.php" method="post">
                                 <table id="example" class="table table-bordered table-striped">
-                                    <thead class="thead-dark" >
+                                    <thead class="thead-dark">
                                         <th width="20px">#</th>
-                                        <th >Apellido y Nombre</th>
+                                        <th>Apellido y Nombre</th>
                                         <th width="20px">Nota1</th>
                                         <th width="20px">Nota2</th>
                                         <th width="20px">Nota3</th>
                                         <th width="20px">Nota4</th>
-                                        <th >Calif. Regularidad</th>
+                                        <th>Calif. Regularidad</th>
                                     </thead>
                                     <?php foreach ($alumnos as $index => $alumno) : ?>
-                                        <tr >
+                                        <tr>
                                             <td scope="row" width="20px"><?php echo $alumno['id_persona'] ?></td>
-                                            <td ><?php echo $alumno['nombre'] ?></td>
+                                            <td><?php echo $alumno['nombre'] ?></td>
                                             <td><input type="text" width="20px" class="form-control" placeholder="00.00" name="nota1_<?php echo $alumno['id_persona'] ?>" value="<?php echo $alumno['nota1'] ?>"></td>
                                             <td><input type="text" width="20px" class="form-control" placeholder="00.00" name="nota2_<?php echo $alumno['id_persona'] ?>" value="<?php echo $alumno['nota2'] ?>"></td>
                                             <td><input type="text" width="20px" class="form-control" placeholder="00.00" name="nota3_<?php echo $alumno['id_persona'] ?>" value="<?php echo $alumno['nota3'] ?>"></td>
                                             <td><input type="text" width="20px" class="form-control" placeholder="00.00" name="nota4_<?php echo $alumno['id_persona'] ?>" value="<?php echo $alumno['nota4'] ?>"></td>
-                                            <td ><?php echo number_format($alumno['promedio'], 2) ?></td>
+                                            <td><?php echo number_format($alumno['promedio'], 2) ?></td>
                                             <input type="hidden" name="id_persona_<?php echo $alumno['id_persona'] ?>" value="<?php echo $alumno['id_persona'] ?>">
                                         </tr>
                                     <?php endforeach; ?>
@@ -124,7 +142,7 @@ if (isset($_GET['revisar'])) {
                                 <div class="content mt-3 ">
                                     <a class="btn btn-danger mb-2" href="notas.view.php"><strong>&lt;&lt; Volver</strong></a>
                                     <div class="ml-3 " style="float: right">
-                                        <button type="submit" class="btn btn-primary" name="guardar_notas">Guardar</button>
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
                                         <a class="btn btn-warning" href="listadonotas.view.php">Consultar Notas</a>
                                     </div>
                                 </div>
@@ -137,4 +155,5 @@ if (isset($_GET['revisar'])) {
     </div>
     <?php require 'footer.php'; ?>
 </body>
+
 </html>
