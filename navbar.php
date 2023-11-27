@@ -111,12 +111,12 @@
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="mesa_examen_add.php">Mesa de Examen</a></li>
               <li><a class="dropdown-item" href="listadomesa.php">Listado de Mesa de Examen</a></li>
-              <li><a class="dropdown-item" href="acta_nota.php">Acta</a></li>
+              <!-- <li><a class="dropdown-item" href="acta_nota.php">Acta</a></li> -->
             </ul>
           </li>
           <!-- ------------------------------------------------------- -->
           <li class="nav-item active pr-3">
-            <a class="nav-link" href="ciclo_lectivo.php">Cliclo lectivo (crear) </span></a>
+            <a class="nav-link" href="ciclo_lectivo.php">Cliclo lectivo</span></a>
           </li>
           <!-- ------------------------------------------------------- -->
         </ul>
