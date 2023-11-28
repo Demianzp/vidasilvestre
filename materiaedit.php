@@ -11,15 +11,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nombre = $_POST['nombre'];
         $descripcion = $_POST['descripcion'];
         $horas = $_POST['horas'];
-        $año = $_POST['año'];
         $num_resolucion = $_POST['num_resolucion'];
         $plan_estudio = $_POST['plan_estudio'];
         $id_tipo = $_POST['id_tipo'];
 
-        $consulta_actualizar = $db->prepare("UPDATE materia SET nombre = ?, descripcion = ?, horas = ?, año = ?, num_resolucion = ?, plan_estudio = ?, id_tipo = ? WHERE id_materia = ?");
+        $consulta_actualizar = $db->prepare("UPDATE materia SET Nombre = ?, descripcion = ?, horas = ?, num_resolucion = ?, plan_estudio = ?, id_tipo = ? WHERE id_materia = ?");
 
         // Ejecutar la consulta
-        if ($consulta_actualizar->execute([$nombre, $descripcion, $horas, $año, $num_resolucion, $plan_estudio, $id_tipo, $id_materia])) {
+        if ($consulta_actualizar->execute([$nombre, $descripcion, $horas, $num_resolucion, $plan_estudio, $id_tipo, $id_materia])) {
             $infoMessage = 'Registro modificado correctamente';
         } else {
             $errorMessage = 'Error al editar el registro: ' . implode(', ' . $consulta_actualizar->errorInfo());
@@ -79,7 +78,7 @@ if ($infoMessage || $errorMessage) {
                             <input type="hidden" class="form-control" name="id" value="<?php echo htmlspecialchars($materia['id_materia']); ?>">
                             <!-------------------------------------------------------------->
                             <label>Nombres:</label>
-                            <input type="text" class="form-control" required name="nombre" autocomplete="off" value="<?php echo htmlspecialchars($materia['nombre']); ?>" maxlength="45">
+                            <input type="text" class="form-control" required name="nombre" autocomplete="off" value="<?php echo htmlspecialchars($materia['Nombre']); ?>" maxlength="45">
                             <!-------------------------------------------------------------->
                             <label>Descripción:</label>
                             <input type text="text" class="form-control" required name="descripcion" autocomplete="off" value="<?php echo htmlspecialchars($materia['descripcion']); ?>" maxlength="45">
@@ -87,11 +86,6 @@ if ($infoMessage || $errorMessage) {
                             <label>Horas de cursada:</label>
                             <input type="text" class="form-control" required name="horas" id="horas" autocomplete="off" value="<?php echo htmlspecialchars($materia['horas']); ?>" maxlength="8">
                             <span id="horasOK"></span>
-                            <br>
-                            <!-------------------------------------------------------------->
-                            <label>Año de Cursado:</label>
-                            <input type="text" class="form-control" required name="año" id="año" autocomplete="off" value="<?php echo htmlspecialchars($materia['año']); ?>" maxlength="45">
-                            <span id="añoOK"></span>
                             <br>
                             <!-------------------------------------------------------------->
                             <label>Número de resolución:</label>

@@ -6,7 +6,8 @@
     <title>Selección de Materias</title>
 </head> -->
 <?php require 'navbar.php'; ?>
-<body>    
+
+<body>
     <section class="content mt-2">
         <div class="row m-auto ">
             <div class="col-sm">
@@ -34,10 +35,10 @@
                                 // Verificar la conexión
                                 if ($conn->connect_error) {
                                     die("Conexión fallida: " . $conn->connect_error);
-                                }                                
-                                ?>
+                                }
+                            ?>
                                 <div class="row">
-                                    <div class="col">                                    
+                                    <div class="col">
                                         <?php
                                         // Mostrar los datos de los alumnos seleccionados
                                         echo "<h3>Alumnos Seleccionados:</h3>";
@@ -55,12 +56,27 @@
                                         echo "</ul>";
                                         ?>
                                     </div>
+                                    <div class="col">
+                                        <h3>Seleccionar Ciclo</h3>
+                                        <select name="ciclo_lectivo" id="ciclo_lectivo" class="form-control" autocomplete="off" required>
+                                            <option value="" disabled selected>Seleccione el ciclo lectivo</option>
+                                            <?php
+                                            require 'conn/connection.php';
+                                            $query_ciclos = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo";
+                                            $result_ciclos = $db->query($query_ciclos);
+                                            while ($row_ciclo = $result_ciclos->fetch(PDO::FETCH_ASSOC)) {
+                                                echo "<option value='" . $row_ciclo['id_ciclo'] . "'>" . $row_ciclo['nombre_ciclo'] . "</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
                                     <div class="col ">
+
                                         <?php
                                         // Mostrar la lista de materias disponibles
                                         echo "<h3>Selección de Materias:</h3>";
                                         echo "<table  id='example2' class='table table-striped' style='width:100%'>";
-                                        echo 
+                                        echo
                                         "<tr>
                                         <th>Seleccionar</th>
                                         <th>ID</th>
@@ -68,10 +84,10 @@
                                         <th>Estado</th>
                                         <th>Descripción</th>
                                         </tr>";
-                                        ?>                                
+                                        ?>
                                     </div>
                                 </div>
-                                <?php
+                            <?php
                                 // Query para obtener materias con estado activo
                                 $query_materias = "SELECT id_materia, Nombre, estado, descripcion FROM materia WHERE estado = 'Activo'";
                                 $result_materias = $conn->query($query_materias);
@@ -91,7 +107,7 @@
                                 echo "</table>";
                                 // -----------------------------------
                                 echo "<input type='hidden' name='id_persona' value='" . implode(",", $id_personas) . "'>";
-                                
+
                                 echo "<a href='seleccionar_alumnos.php' class='btn btn-danger mt-3 mr-2  px-4'>Cancelar</a>";
                                 echo "<input type='submit' class='btn btn-primary mt-3 px-4' value='Inscribir'>";
                                 // -----------------------------------
@@ -106,9 +122,10 @@
                         </form>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </section>
 </body>
+
 </html>
