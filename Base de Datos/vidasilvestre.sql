@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-11-2023 a las 23:44:24
+-- Tiempo de generación: 27-11-2023 a las 14:22:16
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -48,6 +48,14 @@ CREATE TABLE `asignar` (
   `Estado` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `asignar`
+--
+
+INSERT INTO `asignar` (`id_asignar`, `id_persona`, `id_materia`, `Estado`) VALUES
+(1, 6, 41, 'Activo'),
+(2, 7, 42, 'Activo');
+
 -- --------------------------------------------------------
 
 --
@@ -61,6 +69,13 @@ CREATE TABLE `ciclo_lectivo` (
   `fecha_fin` date NOT NULL,
   `Estado` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ciclo_lectivo`
+--
+
+INSERT INTO `ciclo_lectivo` (`id_ciclo`, `nombre_ciclo`, `fecha_inicio`, `fecha_fin`, `Estado`) VALUES
+(16, '2023', '2022-04-19', '2023-04-19', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -99,9 +114,17 @@ CREATE TABLE `estadoalumno` (
   `id_persona` int(11) NOT NULL,
   `id_materia` int(11) NOT NULL,
   `id_ciclo` int(11) NOT NULL,
-  `id_nota` int(11) NOT NULL,
-  `cod_correlativa` int(11) NOT NULL
+  `id_nota` int(11) DEFAULT NULL,
+  `cod_correlativa` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `estadoalumno`
+--
+
+INSERT INTO `estadoalumno` (`Id_alumno`, `id_persona`, `id_materia`, `id_ciclo`, `id_nota`, `cod_correlativa`) VALUES
+(7, 4, 42, 16, NULL, NULL),
+(8, 4, 41, 16, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -111,16 +134,22 @@ CREATE TABLE `estadoalumno` (
 
 CREATE TABLE `materia` (
   `id_materia` int(11) NOT NULL,
-  `Nombre` varchar(100) NOT NULL,
+  `Nombre` varchar(15) NOT NULL,
   `descripcion` varchar(50) NOT NULL,
   `horas` varchar(5) NOT NULL,
-  `año` int(11) NOT NULL,
-  `num_resolucion` int(11) NOT NULL,
-  `plan_estudio` int(11) NOT NULL,
+  `num_resolucion` varchar(11) NOT NULL,
+  `plan_estudio` varchar(11) NOT NULL,
   `id_tipo` int(11) NOT NULL,
-  `estado` varchar(11) NOT NULL,
-  `id_ciclo` int(11) NOT NULL
+  `estado` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `materia`
+--
+
+INSERT INTO `materia` (`id_materia`, `Nombre`, `descripcion`, `horas`, `num_resolucion`, `plan_estudio`, `id_tipo`, `estado`) VALUES
+(41, 'Matematica', '\'--\'', '2', '0', '0', 2, 'Activo'),
+(42, 'Lengua ', '\'Lengua\'', '2', 'ME-34-SJ', 'ME-34-SJ', 3, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -140,6 +169,13 @@ CREATE TABLE `mesa_examen` (
   `estado` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `mesa_examen`
+--
+
+INSERT INTO `mesa_examen` (`id_mesa`, `id_materia`, `fecha`, `nombre_mesa`, `hora`, `id_ciclo`, `fecha_fin`, `id_tipo`, `estado`) VALUES
+(26, 41, '2023-11-28', 'Mesa1', '08:30:00', 16, '2023-12-19', 1, 'Activo');
+
 -- --------------------------------------------------------
 
 --
@@ -148,16 +184,20 @@ CREATE TABLE `mesa_examen` (
 
 CREATE TABLE `nota` (
   `id_nota` int(11) NOT NULL,
-  `nota1` float NOT NULL,
-  `nota2` float NOT NULL,
-  `nota3` float NOT NULL,
-  `nota4` float NOT NULL,
-  `Nota_F` float NOT NULL,
-  `fecha_n1` date NOT NULL,
-  `fecha_n2` date NOT NULL,
-  `fecha_n3` date NOT NULL,
-  `fecha_n4` date NOT NULL,
-  `fecha_nF` date NOT NULL
+  `id_persona` int(11) DEFAULT NULL,
+  `id_materia` int(11) DEFAULT NULL,
+  `id_ciclo` int(11) DEFAULT NULL,
+  `nota1` decimal(5,2) DEFAULT NULL,
+  `fecha_n1` date DEFAULT NULL,
+  `nota2` decimal(5,2) DEFAULT NULL,
+  `fecha_n2` date DEFAULT NULL,
+  `nota3` decimal(5,2) DEFAULT NULL,
+  `fecha_n3` date DEFAULT NULL,
+  `nota4` decimal(5,2) DEFAULT NULL,
+  `fecha_n4` date DEFAULT NULL,
+  `nota_final` decimal(5,2) DEFAULT NULL,
+  `fecha_nota_final` date DEFAULT NULL,
+  `promedio` decimal(5,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -184,6 +224,17 @@ CREATE TABLE `persona` (
   `estado` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `persona`
+--
+
+INSERT INTO `persona` (`id_persona`, `nombre`, `apellido`, `fecha_nacimiento`, `DNI`, `celular`, `email_correo`, `direccion`, `fecha_ingreso`, `pais`, `ciudad`, `contraseña`, `id_rol`, `genero`, `estado`) VALUES
+(2, 'Demian Agustin', 'Perez', '2004-01-29', 45467149, '2646058767', 'dem23@gmail.com', '9 de Julio y San Juan', '2023-09-19', 'Argentina', 'Angaco', '12345', 3, 'Masculino', 'Activo'),
+(4, 'Maxi ', 'Sarmiento', '2023-11-01', 45424189, '2646210943', 'maxisarmiento@gmail.com', 'San Juan 7, alem 77.', '2022-01-29', 'Argentina', 'Rivadavia', '2345', 1, 'Masculino', 'Activo'),
+(5, 'Agustin Bastian', 'Gomez Lopez', '2023-11-28', 44321280, '2646067481', 'agustin78@gmail.com', 'Villa Colon', '2023-11-28', 'Argentina', 'Caucete', '2390xsc', 1, 'Masculino', 'Inactivo'),
+(6, 'David ', 'Nievas', '2023-11-01', 22073611, '2734542309', 'david@gmail.com', 'Laprida', '2023-11-22', 'Argentina', 'San Martín', '23profe4', 2, 'Masculino', 'Activo'),
+(7, 'Rocio', 'Cuello', '1978-06-27', 19202321, '2643421890', 'roocue45@gmail.com', '2 Acequias', '2023-11-15', 'Argentina', 'San Martín', '3234122', 2, 'Femenino', 'Activo');
+
 -- --------------------------------------------------------
 
 --
@@ -195,6 +246,15 @@ CREATE TABLE `rol` (
   `rol` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `rol`
+--
+
+INSERT INTO `rol` (`id_rol`, `rol`) VALUES
+(1, 'Alumno'),
+(2, 'Profesor'),
+(3, 'Administrador');
+
 -- --------------------------------------------------------
 
 --
@@ -205,6 +265,15 @@ CREATE TABLE `tipo` (
   `id_tipo` int(11) NOT NULL,
   `nombre_tipo` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tipo`
+--
+
+INSERT INTO `tipo` (`id_tipo`, `nombre_tipo`) VALUES
+(1, 'Regular'),
+(2, 'Promocional'),
+(3, 'Libre');
 
 --
 -- Índices para tablas volcadas
@@ -258,7 +327,6 @@ ALTER TABLE `estadoalumno`
   ADD KEY `id_ciclo` (`id_ciclo`),
   ADD KEY `id_persona` (`id_persona`),
   ADD KEY `id_persona_2` (`id_persona`),
-  ADD KEY `id_nota` (`id_nota`),
   ADD KEY `cod_correlativa` (`cod_correlativa`);
 
 --
@@ -266,8 +334,7 @@ ALTER TABLE `estadoalumno`
 --
 ALTER TABLE `materia`
   ADD PRIMARY KEY (`id_materia`),
-  ADD KEY `id_tipo` (`id_tipo`),
-  ADD KEY `id_ciclo` (`id_ciclo`);
+  ADD KEY `id_tipo` (`id_tipo`);
 
 --
 -- Indices de la tabla `mesa_examen`
@@ -282,7 +349,10 @@ ALTER TABLE `mesa_examen`
 -- Indices de la tabla `nota`
 --
 ALTER TABLE `nota`
-  ADD PRIMARY KEY (`id_nota`);
+  ADD PRIMARY KEY (`id_nota`),
+  ADD KEY `id_persona` (`id_persona`),
+  ADD KEY `id_materia` (`id_materia`),
+  ADD KEY `id_ciclo` (`id_ciclo`);
 
 --
 -- Indices de la tabla `persona`
@@ -317,13 +387,13 @@ ALTER TABLE `acta`
 -- AUTO_INCREMENT de la tabla `asignar`
 --
 ALTER TABLE `asignar`
-  MODIFY `id_asignar` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_asignar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `ciclo_lectivo`
 --
 ALTER TABLE `ciclo_lectivo`
-  MODIFY `id_ciclo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_ciclo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `correlativa`
@@ -341,19 +411,19 @@ ALTER TABLE `curso`
 -- AUTO_INCREMENT de la tabla `estadoalumno`
 --
 ALTER TABLE `estadoalumno`
-  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `materia`
 --
 ALTER TABLE `materia`
-  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de la tabla `mesa_examen`
 --
 ALTER TABLE `mesa_examen`
-  MODIFY `id_mesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_mesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `nota`
@@ -365,13 +435,13 @@ ALTER TABLE `nota`
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restricciones para tablas volcadas
@@ -411,7 +481,6 @@ ALTER TABLE `curso`
 ALTER TABLE `estadoalumno`
   ADD CONSTRAINT `estadoalumno_ibfk_1` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`),
   ADD CONSTRAINT `estadoalumno_ibfk_2` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`),
-  ADD CONSTRAINT `estadoalumno_ibfk_3` FOREIGN KEY (`id_nota`) REFERENCES `nota` (`id_nota`),
   ADD CONSTRAINT `estadoalumno_ibfk_4` FOREIGN KEY (`id_ciclo`) REFERENCES `ciclo_lectivo` (`id_ciclo`),
   ADD CONSTRAINT `estadoalumno_ibfk_5` FOREIGN KEY (`cod_correlativa`) REFERENCES `correlativa` (`cod_correlativa`);
 
@@ -419,8 +488,7 @@ ALTER TABLE `estadoalumno`
 -- Filtros para la tabla `materia`
 --
 ALTER TABLE `materia`
-  ADD CONSTRAINT `materia_ibfk_1` FOREIGN KEY (`id_tipo`) REFERENCES `tipo` (`id_tipo`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `materia_ibfk_2` FOREIGN KEY (`id_ciclo`) REFERENCES `ciclo_lectivo` (`id_ciclo`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `materia_ibfk_1` FOREIGN KEY (`id_tipo`) REFERENCES `tipo` (`id_tipo`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `mesa_examen`
@@ -429,6 +497,14 @@ ALTER TABLE `mesa_examen`
   ADD CONSTRAINT `mesa_examen_ibfk_1` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`),
   ADD CONSTRAINT `mesa_examen_ibfk_2` FOREIGN KEY (`id_tipo`) REFERENCES `tipo` (`id_tipo`),
   ADD CONSTRAINT `mesa_examen_ibfk_3` FOREIGN KEY (`id_ciclo`) REFERENCES `ciclo_lectivo` (`id_ciclo`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `nota`
+--
+ALTER TABLE `nota`
+  ADD CONSTRAINT `nota_ibfk_1` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`),
+  ADD CONSTRAINT `nota_ibfk_2` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`),
+  ADD CONSTRAINT `nota_ibfk_3` FOREIGN KEY (`id_ciclo`) REFERENCES `ciclo_lectivo` (`id_ciclo`);
 
 --
 -- Filtros para la tabla `persona`
