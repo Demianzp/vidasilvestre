@@ -1,6 +1,5 @@
 <!-- <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,7 +60,7 @@
                                     try {
                                         $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
                                         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                                        $query = "SELECT * FROM persona WHERE id_rol = 1 AND estado = 'Activo'";
+                                        $query = "SELECT * FROM estadoalumno";
                                         $stmt = $db->prepare($query);
                                         $stmt->execute();
                                         $alumnos = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -70,11 +69,11 @@
                                     ?>
                                             <tr>
                                                 <th scope="row"><?php echo $alumno['id_persona'] ?></th>
-                                                <td><?php echo $alumno['apellido'] ?></td>
-                                                <td><?php echo $alumno['nombre'] ?></td>
-                                                <td><?php echo $alumno['genero'] ?></td>
-                                                <td><?php echo $alumno['DNI'] ?></td>
-                                                <td><?php echo $alumno['celular'] ?></td>                                             
+                                                <td><?php echo $alumno['id_alumno'] ?></td>
+                                                <td><?php echo $alumno[''] ?></td>
+                                                <td><?php echo $alumno[''] ?></td>
+                                                <td><?php echo $alumno[''] ?></td>
+                                                <td><?php echo $alumno[''] ?></td>                                             
                                             </tr>
                                     <?php
                                         }
@@ -84,7 +83,7 @@
                                     ?>
                                 </tbody>
                             </table>
-                        </form>
+                          </form>
                         <br>
                         <br><br>
                     </div>
