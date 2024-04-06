@@ -31,7 +31,7 @@
                     }
                     ?>
                     <div class="card-body table-responsive pt-0">
-                        <form action="seleccionar_materias.php" method="post">
+                        <form action="inscripcion_materia.php" method="post">
                             <label for="id_persona"></label>
                             <table id="example" class="table table-striped " style="width:100%">
                                 <thead class="thead-dark">
