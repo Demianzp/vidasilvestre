@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
+<?php session_start();
+if(!isset($_SESSION['nombre'])){
+  header("Location:index.php");
+}
+?>
 
 <head>
   <meta charset="UTF-8">
@@ -44,11 +49,13 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.3/js/buttons.html5.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.3/js/buttons.print.min.js"></script>
 <!-- Bootstrap-->
-
 <script defer src="js/tabla.js"></script>
-<!-- --------------------------Botones Datatable -->
-
 <!-- ------------FIN-DATATABLES----- -->
+<!-- -------------sweetalert2(alertas emergentes)------------------   -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="js/alertas.js"></script>      
+<!-- ----------------------------- -->
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Roboto&display=swap');
 </style>
@@ -120,8 +127,8 @@
           </li>
           <!-- ------------------------------------------------------- -->
         </ul>
-        <div class="ml-auto" id="salir">
-          <a class="btn text-white text-decoration-none  py-1 px-3  mr-5 rounded-1 fw-semibold" role="button" href="logout.php">Salir</a>
+        <div class="ml-auto" id="salir">          
+          <a class="btn text-white text-decoration-none  py-1 px-3  mr-5 rounded-1 fw-semibold" role="button" href="javascript:cerrar()">Salir</a>
         </div>
       </div>
     </div>
