@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="es">
 <?php session_start();
 if(!isset($_SESSION['nombre'])){
   header("Location:index.php");
 }
 ?>
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -101,7 +100,6 @@ if(!isset($_SESSION['nombre'])){
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="listadoprofe.php">Listado Profesor</a></li>
               <li><a class="dropdown-item" href="lista_A.php">Listado de Asignaciones</a></li>
-
             </ul>
           </li>
           <!-- ------------------------------------------------------- -->
@@ -128,7 +126,10 @@ if(!isset($_SESSION['nombre'])){
           <!-- ------------------------------------------------------- -->
         </ul>
         <div class="ml-auto" id="salir">          
-          <a class="btn text-white text-decoration-none  py-1 px-3  mr-5 rounded-1 fw-semibold" role="button" href="javascript:cerrar()">Salir</a>
+          <a 
+          class="btn text-white text-decoration-none  py-1 px-3  mr-5 rounded-1 fw-semibold" 
+          role="button" 
+          href="javascript:cerrar()">Salir</a>
         </div>
       </div>
     </div>
