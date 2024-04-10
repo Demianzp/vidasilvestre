@@ -1,13 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Alumnos | Editar y Eliminar</title>
-    <meta name="description" content="Registro de Notas del Centro Escolar">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head> -->
 <?php require 'navbar.php'; ?>
 <body>    
     <section class="content mt-3">
@@ -59,9 +49,7 @@
                                     <th>Celular</th>
                                     <th>Departamento</th>
                                     <th>Historial</th>
-                                    <th>Acciones</th>
-                                                                        
-                                                                       
+                                    <th>Acciones</th>               
                                 </thead>
                                 <tbody>
                                     <?php
@@ -74,7 +62,6 @@
                                         $stmt->execute();
                                         $alumnos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         foreach ($alumnos as $alumno) {
-                                            //f
                                     ?>
                                             <tr>
                                                 <th scope="row"><?php echo $alumno['id_persona'] ?></th>
@@ -84,10 +71,7 @@
                                                 <td><?php echo $alumno['DNI'] ?></td>
                                                 <td><?php echo $alumno['fecha_ingreso'] ?></td>
                                                 <td><?php echo $alumno['fecha_nacimiento'] ?></td>
-                                                <td><?php echo $alumno['celular'] ?></td>
-
-                                                
-                                                
+                                                <td><?php echo $alumno['celular'] ?></td> 
                                                 <td><?php echo $alumno['ciudad'] ?></td>                                                
                                                 <td><a href="" class="btn btn-info" type="button">Historial</a></td>
                                                 <td class="text-center">
@@ -98,7 +82,8 @@
                                                         <a href="alumnoedit.view.php?id=<?php echo $alumno['id_persona'] ?>" class="btn btn-warning " type="button">
                                                             <i class="fas fa-edit"></i>
                                                         </a>   
-                                                        <a href="alumnodelete.php?id=<?php echo $alumno['id_persona'] ?>" class="btn btn-danger " type="button">
+                                                        <a href="javascript:borrar(<?php echo $alumno['id_persona'] ?>)" class="btn btn-danger " type="button">
+                                                            
                                                             <i class="fas fa-trash"></i>
                                                         </a> 
                                                     </div>  

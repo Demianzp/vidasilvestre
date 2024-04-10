@@ -27,7 +27,6 @@ if($_POST){
                 // Establecer información del usuario en la sesión
                 $_SESSION["id_rol"] = $usuario['id_rol']; // Almacena el ID de rol del usuario
                 $_SESSION["nombre"] = $usuario['nombre']; // Almacena el nombre del usuario
-
                 if ($usuario['id_rol'] == 1) {
                     // Configura un mensaje de "No tienes permisos" en la variable de sesión
                     $_SESSION['message'] = $messages[3];
