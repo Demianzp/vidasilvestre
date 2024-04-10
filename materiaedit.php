@@ -87,15 +87,28 @@ if ($infoMessage || $errorMessage) {
                             <input type="text" class="form-control" required name="horas" id="horas" autocomplete="off" value="<?php echo htmlspecialchars($materia['horas']); ?>" maxlength="8">
                             <span id="horasOK"></span>
                             <br>
-                            <!-------------------------------------------------------------->
-                            <label>Número de resolución:</label>
-                            <input type="text" class="form-control" required name="num_resolucion" id="num_resolucion" autocomplete="off" value="<?php echo htmlspecialchars($materia['num_resolucion']); ?>" maxlength="10">
+                          <label>Número de resolución:</label>  
+                          <input type="text" class="form-control" required name="num_resolucion" id="num_resolucion" autocomplete="off" value="<?php echo htmlspecialchars($materia['num_resolucion']); ?>" maxlength="10">
                             <span id="num_resolucionOK"></span>
                             <br>
+                             <!-------------------------------------------------------------->
+                             <label>Año de Cursado:</label>
+                             <select  name="año" id="año" class="form-control" autocomplete="off" required>
+                                    <option value="" disabled>Seleccione su Tipo</option>
+                                    <option value="1" <?php echo ($materia['año'] == 1) ? 'selected' : ''; ?>>1° Año</option>
+                                    <option value="2" <?php echo ($materia['año'] == 2) ? 'selected' : ''; ?>>2° Año</option>
+                                    <option value="3" <?php echo ($materia['año'] == 3) ? 'selected' : ''; ?>>3° Año</option>
+                                </select>
+                            <span id="añoOK"></span>
+                            <br>
                             <!-------------------------------------------------------------->
-                            <label for="plan_estudio">Plan de Estudio</label>
-                            <input type="text" class="form-control" data-name="Plan de Estudio" id="plan_estudio" name="plan_estudio" autocomplete="off" value="<?php echo htmlspecialchars($materia['plan_estudio']); ?>" maxlength="10">
-
+                            <label for="plan_estudio">Cuatrimestre</label>
+                             <select name="plan_estudio"   id="plan_estudio" class="form-control" autocomplete="off" required>
+                                    <option value="" disabled>Seleccione el Cuatrimestre</option>
+                                    <option value="1" <?php echo ($materia['plan_estudio'] == 1) ? 'selected' : ''; ?>>1° Cuatrimestre</option>
+                                    <option value="2" <?php echo ($materia['plan_estudio'] == 2) ? 'selected' : ''; ?>>2° Cuatrimestre</option>
+                                </select>
+                           
                             <!-------------------------------------------------------------->
                             <div class="form-group">
                                 <label for="id_tipo">Tipo de Materia:</label>

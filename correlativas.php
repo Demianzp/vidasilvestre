@@ -49,49 +49,10 @@
                                             if ($result->num_rows > 0) {
                                                 $row = $result->fetch_assoc();
                                                 echo "<li class='list-group-item'>{$row['Nombre']}</li>";
-                                            
+                                            }
                                         echo "</ul>";
                                         ?>
-                                    <form action="" method="GET">
-    
-                                             <div class="row">
-        
-                                              <div class="col-md-4">
-            
-                                                      <div class="form-group">
-                                                      <label><b>Año de Cursado:</b></label>
-                                                      <select  name="año" id="año" class="form-control" autocomplete="off" required>
-                                                 <option value="" >Seleccione su Tipo</option>
-                                                 <option value="<?php if(isset($_GET['año'])){ echo $_GET['año'] == 1; } ?>">1° Año</option>
-                                                 <option value="<?php if(isset($_GET['año'])){ echo $_GET['año'] == 2; } ?>">2° Año</option>
-                                           <option value="<?php if(isset($_GET['año'])){ echo $_GET['año'] == 3; } ?>">3° Año</option>
-                                               </select>
-                                                               </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <label><b>Cuatrimestre</b></label>
-                                                                    <select name="plan_estudio"   id="plan_estudio" class="form-control" autocomplete="off" required>
-                                             <option value="" >Seleccione el Cuatrimestre</option>
-                                            <option value="<?php if(isset($_GET['plan_estudio'])){ echo $_GET['plan_estudio'] == 1; } ?>">1° Cuatrimestre</option>
-                                              <option value="<?php if(isset($_GET['plan_estudio'])){ echo $_GET['plan_estudio'] == 2; } ?>">2° Cuatrimestre</option>
-                                             </select>
-                                           </div>
-                                                            </div>
-                                 
-                                                            <div class="col-md-4">
-                                                                <div class="form-group">
-                                                                    <label><b></b></label> <br>
-                                                                  <button type="submit" class="btn btn-primary">Buscar</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <br>
-                                                        <?php
-                                                        }
-
-                                            ?>
-                                    </form>
+                              
 
                                     </div>
                                     
@@ -111,14 +72,8 @@
                                     </div>
                                 </div>
                                 <?php
-                                $conexion=mysqli_connect("localhost","root","","vidasilvestre"); 
-
-                                if(isset($_GET['año']) && isset($_GET['plan_estudio'])) {
-                                    $año = $_GET['año'];
-                                    $plan_estudio = $_GET['plan_estudio'];
-
-                                            // Query para obtener materias con estado activo
-                                            $query_materias = "SELECT id_materia, Nombre, descripcion FROM materia WHERE año BETWEEN '$año' AND plan_estudio BETWEEN '$plan_estudio' ";
+                                        // Query para obtener materias con estado activo
+                                            $query_materias = "SELECT id_materia, Nombre, descripcion FROM materia WHERE estado = 'Activo'";
                                             $result_materias = $conn->query($query_materias);
                                             while ($row = $result_materias->fetch_assoc()) {
                                                 echo "<tr>";
@@ -143,8 +98,6 @@
                                             // Cerrar la conexión
                                             $conn->close();
                                  
-                        
-                                        }
 
                             ?>
                         </form>
