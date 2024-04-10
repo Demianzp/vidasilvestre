@@ -1,18 +1,13 @@
 <?php
 require 'conn/connection.php';
-
-// Inicializar variables de mensaje
 $inMessage = '';
 $errMessage = '';
-
 if (isset($_GET['id'])) {
     $id_profe = $_GET['id'];
-
     if (isset($_GET['confirm']) && $_GET['confirm'] === 'yes') {
         // El usuario confirmó la desactivación, proceder con la actualización del estado
         $consulta_desactivar = $db->prepare("UPDATE persona SET estado = 'Inactivo' WHERE id_persona = :id");
         $consulta_desactivar->bindParam(':id', $id_profe, PDO::PARAM_INT);
-
         if ($consulta_desactivar->execute()) {
             $inMessage = '!!Registro desactivado correctamente !!';
         } else {
@@ -22,16 +17,13 @@ if (isset($_GET['id'])) {
 } else {
     $errMessage = 'Ha ocurrido un error: Falta el ID del alumno en la URL.';
 }
-
 // Redirigir solo si hay mensajes para enviar
 if ($inMessage || $errMessage) {
     header("Location: listadoprofe.php?mensaje=" . urlencode($inMessage) . "&error=" . urlencode($errMessage));
     exit();
 }
 ?>
-
-
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -40,9 +32,8 @@ if ($inMessage || $errMessage) {
     <title>Desactivar Profesor</title>
     <meta name="description" content="Desactivar profesor" />
 </head>
-<body>
+<body> -->
 <?php require 'navbar.php'; ?>
-
 <div class="body">
     <div class="panel">
         <h4>Desactivar Profesor</h4>

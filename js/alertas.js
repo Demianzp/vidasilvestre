@@ -1,13 +1,12 @@
-
-function borrar (id){
-    Swal.fire({
+function borrar (id_persona){     
+    Swal.fire({      
         icon: "error",
-        title: "¿Borrar?",        
+        title: "¿Bor00000rar?",        
         showCancelButton: true,
         confirmButtonText: "Si",        
       }).then((result) => {        
         if (result.isConfirmed) {
-          window.location="user_view.php?txtID="+id;
+          window.location="alumnodelete.php?txtID="+id_persona;
         } 
       });    
 }
@@ -17,10 +16,10 @@ function cerrar (){
   Swal.fire({
       icon: "question",
       iconColor: 'red',
-      title: "¿Desea Salir?",        
+      title: "¿Desea000000000000 Salir?",        
       showDenyButton: true,
       confirmButtonText: "Si",
-      confirmButtonColor: "#3085d6", 
+      confirmButtonColor: "#000", 
       denyButtonText: "No",
       customClass: {
         confirmButton: 'px-5 ',
