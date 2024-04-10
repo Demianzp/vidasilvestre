@@ -9,7 +9,7 @@
                         <h5 class="d-inline-block ">Listado de Materias y Correlativas</h5>
                         <a class="btn btn-primary float-right mb-2" href="registromateria.php">Registro de Materia</a>
                     </div>
-                    <!-- Mensaje de Cancrelacion -->
+                    <!-- Mensaje de Cancelacion -->
                     <?php
                     if (isset($_GET['mensajeCancelacion']) && !empty($_GET['mensajeCancelacion'])) {
                         $mensajeCancelacion = htmlspecialchars($_GET['mensajeCancelacion']);
@@ -49,6 +49,7 @@
                                 <th>Materia</th>
                                 <th>Agregar Correlativa</th>
                                 <th>Acciones</th>
+                                <th>Listado de alumno</th>
                             </thead>
                             <tbody>
                                 <?php
@@ -79,9 +80,11 @@
                                                     
                                                     <a href="materiadelet.php?id=<?php echo $materia['id_materia'] ?>" class="btn btn-danger" role="button">
                                                         <i class="fas fa-trash"></i>
-                                                    </a> 
+                                                    </a>    
                                                 </div>
                                             </td>
+
+                                            <td class="text-center"><a href="materia_list.php?id=<?php echo $materia['id_materia'] ?>"  class="btn btn-success"> <i class="fa-sharp fa-solid fa-folder-open"></i></a></td>
                                         </tr>
                                 <?php
                                     }
