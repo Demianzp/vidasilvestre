@@ -27,14 +27,12 @@ input[type=checkbox]{
   width: 20px;
   height: 20px;
 }
-.paginate_button a{
+.paginate_button a {
   border-style:  solid  !important;
   border-color:  #6c757d  !important;
   border-width: 1px !important;
-
 }
 th {
   text-align: center !important;
   vertical-align: middle !important;
-
 }

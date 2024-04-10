@@ -1,6 +1,4 @@
-<?php
-require 'conn/connection.php';
-
+<?php require 'conn/connection.php';
 // Inicializar variables de mensaje
 $inMessage = '';
 $errMessage = '';
@@ -50,14 +48,14 @@ if ($inMessage || $errMessage) {
         <?php
         if (!empty($infoMessage)) {
             echo '<div class="alert alert-primary" role="alert">' .$infoMessage. '</div>';
-            
+
         }
         if (!empty($errorMessage)) {
             echo '<div class="alert alert-primary" role="alert">' . $errorMessage . '</div>';
         }
         ?>
         <br><br>
-        
+
         <?php if (empty($errorMessage)) { // Mostrar confirmación solo si no hay un error ?>
             <p>¿Está seguro de que desea desactivar este registro?</p>
             <a class="btn btn-danger" href="?id=<?php echo $id_alumno; ?>&confirm=yes">Sí</a>
@@ -70,3 +68,5 @@ if ($inMessage || $errMessage) {
 <?php require 'footer.php'; ?>
 </body>
 </html>
+
+

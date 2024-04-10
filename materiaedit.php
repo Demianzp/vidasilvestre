@@ -11,15 +11,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nombre = $_POST['nombre'];
         $descripcion = $_POST['descripcion'];
         $horas = $_POST['horas'];
-        $año = $_POST['año'];
         $num_resolucion = $_POST['num_resolucion'];
         $plan_estudio = $_POST['plan_estudio'];
         $id_tipo = $_POST['id_tipo'];
 
-        $consulta_actualizar = $db->prepare("UPDATE materia SET nombre = ?, descripcion = ?, horas = ?, año = ?, num_resolucion = ?, plan_estudio = ?, id_tipo = ? WHERE id_materia = ?");
+        $consulta_actualizar = $db->prepare("UPDATE materia SET Nombre = ?, descripcion = ?, horas = ?, num_resolucion = ?, plan_estudio = ?, id_tipo = ? WHERE id_materia = ?");
 
         // Ejecutar la consulta
-        if ($consulta_actualizar->execute([$nombre, $descripcion, $horas, $año, $num_resolucion, $plan_estudio, $id_tipo, $id_materia])) {
+        if ($consulta_actualizar->execute([$nombre, $descripcion, $horas, $num_resolucion, $plan_estudio, $id_tipo, $id_materia])) {
             $infoMessage = 'Registro modificado correctamente';
         } else {
             $errorMessage = 'Error al editar el registro: ' . implode(', ' . $consulta_actualizar->errorInfo());
@@ -88,9 +87,8 @@ if ($infoMessage || $errorMessage) {
                             <input type="text" class="form-control" required name="horas" id="horas" autocomplete="off" value="<?php echo htmlspecialchars($materia['horas']); ?>" maxlength="8">
                             <span id="horasOK"></span>
                             <br>
-                             <!-------------------------------------------------------------->
-                             <label>Número de resolución:</label>
-                            <input type="text" class="form-control" required name="num_resolucion" id="num_resolucion" autocomplete="off" value="<?php echo htmlspecialchars($materia['num_resolucion']); ?>" maxlength="10">
+                          <label>Número de resolución:</label>  
+                          <input type="text" class="form-control" required name="num_resolucion" id="num_resolucion" autocomplete="off" value="<?php echo htmlspecialchars($materia['num_resolucion']); ?>" maxlength="10">
                             <span id="num_resolucionOK"></span>
                             <br>
                              <!-------------------------------------------------------------->

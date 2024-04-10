@@ -12,7 +12,7 @@
 <?php require 'navbar.php'; ?>
 
 <body>
-    
+
     <section class="content mt-3">
         <div class="row m-auto">
             <div class="col-sm">
@@ -21,7 +21,7 @@
                         <h5 class="d-inline-block ">Seleccion de Alumno</h5>
                         <!-- <a class="btn btn-primary float-right mb-2" href="alumnos.view.php">Selección de Alumnos</a> -->
                     </div>
-                    
+
                     <?php
                     if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
                         echo '<div class="alert alert-success" role="alert">' . htmlspecialchars($_GET['mensaje']) . '</div>';
@@ -29,13 +29,13 @@
                     if (isset($_GET['error']) && !empty($_GET['error'])) {
                         echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['error']) . '</div>';
                     }
-                    ?> 
+                    ?>
                     <div class="card-body table-responsive pt-0">
                         <form action="seleccionar_materias.php" method="post">
                             <label for="id_persona"></label>
                             <table id="example" class="table table-striped " style="width:100%">
                                 <thead class="thead-dark">
-                                    
+
                                     <th>ID</th>
                                     <th>Apellidos</th>
                                     <th>Nombres</th>
@@ -71,7 +71,7 @@
                                     // Mostrar filas en la tabla para cada alumno
                                     while ($alumno = $result_alumnos->fetch_assoc()) {
                                         echo "<tr>";
-                                       
+
                                         echo "<td>" . $alumno['id_persona'] . "</td>";
                                         echo "<td>" . $alumno['apellido'] . "</td>";
                                         echo "<td>" . $alumno['nombre'] . "</td>";
@@ -94,13 +94,13 @@
                                     ?>
                                 </tbody>
                             </table>
-                            <div class="mt-3 " style="float: right">                            
+                            <div class="mt-3 " style="float: right">
                                 <a class="btn btn-danger mr-2 " href="seleccionar_alumnos.php" role="button">Limpiar</a>
                                 <input type="submit" class="btn btn-primary float-right " value="Continuar>>">
                             </div>
-                            
+
                         </form>
-                    </div>    
+                    </div>
                 </div>
             </div>
         </div>

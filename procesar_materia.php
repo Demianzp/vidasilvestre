@@ -14,23 +14,21 @@ try {
         $nombre = $db->quote($_POST["nombre"]);
         $descripcion = $db->quote($_POST["descripcion"]);
         $horas = (int)$_POST["horas"];
-        $año = (int)$_POST["año"];
         $num_resolucion = (int)$_POST["num_resolucion"];
         $plan_estudio = $db->quote($_POST["plan_estudio"]);
         $id_tipo = (int)$_POST["id_tipo"];
         $estado = 'Activo'; // Valor predeterminado para el estado, estado es si esta activo o inactivo.
 
         // Inserción de datos en la tabla 'materia' (usando sentencia preparada)
-        $sql = "INSERT INTO materia (Nombre, descripcion, horas, año, num_resolucion, plan_estudio, id_tipo, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO materia (Nombre, descripcion, horas, num_resolucion, plan_estudio, id_tipo, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(1, $nombre);
         $stmt->bindParam(2, $descripcion);
         $stmt->bindParam(3, $horas, PDO::PARAM_INT);
-        $stmt->bindParam(4, $año, PDO::PARAM_INT);
-        $stmt->bindParam(5, $num_resolucion, PDO::PARAM_INT);
-        $stmt->bindParam(6, $plan_estudio);
-        $stmt->bindParam(7, $id_tipo, PDO::PARAM_INT);
-        $stmt->bindParam(8, $estado);
+        $stmt->bindParam(4, $num_resolucion, PDO::PARAM_INT);
+        $stmt->bindParam(5, $plan_estudio);
+        $stmt->bindParam(6, $id_tipo, PDO::PARAM_INT);
+        $stmt->bindParam(7, $estado);
 
         // Ejecutar la consulta
         if ($stmt->execute()) {
@@ -50,4 +48,3 @@ try {
 // Redirigir a la página "listado_materia.php" con los mensajes en la URL
 header("Location: listado_materia.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
 exit();
-?>
