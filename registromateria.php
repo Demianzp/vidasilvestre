@@ -27,8 +27,21 @@
                                 <input type="text" class="form-control" data-name="Número de Resolución" id="num_resolucion" name="num_resolucion" placeholder="Ingrese N° de Resolucion" required autocomplete="off">
                             </div>
                             <div class="form-group">
-                                <label for="plan_estudio">Plan de Estudio</label>
-                                <input type="text" class="form-control" data-name="Plan de Estudio" id="plan_estudio" name="plan_estudio" placeholder="Ingrese Plan de estudio" autocomplete="off" required>
+                                <label for="anio">Año de Cursado:</label>
+                                <select name="año" id="año" class="form-control" autocomplete="off" required>
+                                    <option value="" disabled selected>Seleccione Año de Cursado</option>
+                                    <option value="1">1° Año</option>
+                                    <option value="2">2° Año</option>
+                                    <option value="3">3° Año</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="plan_estudio">Cuatrimestre</label>
+                                   <select name="plan_estudio"   id="plan_estudio" class="form-control" autocomplete="off" required>
+                                    <option value="" disabled selected>Seleccione el Cuatrimestre</option>
+                                    <option value="1">1° Cuatrimestre</option>
+                                    <option value="2">2° Cuatrimestre</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="id_tipo">Tipo de Materia:</label>
