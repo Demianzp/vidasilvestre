@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Insertar datos en la base de datos
         foreach ($id_personas as $id_persona) {
             foreach ($id_materias as $id_materia) {
-                $stmt = $db->prepare("INSERT INTO estadoalumno (id_persona, id_materia, id_ciclo) VALUES (?, ?, ?)");
+                $stmt = $db->prepare("INSERT INTO alumno_materia (id_persona, id_materia, id_ciclo) VALUES (?, ?, ?)");
                 // Bind parameters
                 $stmt->bindParam(1, $id_persona);
                 $stmt->bindParam(2, $id_materia);
