@@ -2,54 +2,35 @@
 <body>
     
     <section class="content mt-2">
-        <div class="row m-auto ">
+        <div class="row m-auto">
             <div class="col-sm">
                 <div class="card rounded-2 border-0">
                     <div class="card-header bg-dark text-white pb-0">
-                        <h5 class="d-inline-block ">Listado de Materias y Correlativas</h5>
+                        <h5 class="d-inline-block">Listado de Materias y Correlativas</h5>
                         <a class="btn btn-primary float-right mb-2" href="registromateria.php">Registro de Materia</a>
                     </div>
-                    <!-- Mensaje de Cancelacion -->
+                    <!-- Mensajes de notificación -->
                     <?php
-                    if (isset($_GET['mensajeCancelacion']) && !empty($_GET['mensajeCancelacion'])) {
-                        $mensajeCancelacion = htmlspecialchars($_GET['mensajeCancelacion']);
-                        echo '<div class="alert alert-warning" role="alert">' . $mensajeCancelacion . '</div>';
-                    }
-                    if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
-                        echo '<div class="alert alert-success " role="alert">' . htmlspecialchars($_GET['mensaje']) . '</div>';
-                    }
-                    if (isset($_GET['error']) && !empty($_GET['error'])) {
-                        echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['error']) . '</div>';
+                    $messages = array(
+                        'mensajeCancelacion', 'mensaje', 'error', 'infoMessage', 'errorMessage', 'inMessage', 'errMessage'
+                    );
+                    foreach ($messages as $messageKey) {
+                        if (isset($_GET[$messageKey]) && !empty($_GET[$messageKey])) {
+                            $message = htmlspecialchars($_GET[$messageKey]);
+                            echo '<div class="alert alert-' . ($messageKey === 'error' || $messageKey === 'errorMessage' || $messageKey === 'errMessage' ? 'danger' : 'success') . '">' . $message . '</div>';
+                        }
                     }
                     ?>
-                    <!-- Mensaje de materia editada  -->
-                    <?php
-                    if (isset($_GET['infoMessage']) && !empty($_GET['infoMessage'])) {
-                        echo '<div class="alert alert-success" role="alert">>' . htmlspecialchars($_GET['infoMessage']) . '</div>';
-                    }
-                    if (isset($_GET['errorMessage']) && !empty($_GET['errorMessage'])) {
-                        echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['errorMessage']) . '</div>';
-                    }
-                    ?>
-
-                    <!---------------Mensaje de materia desactiva o error --------------------------------->
-                    <?php
-                    if (isset($_GET['inMessage']) && !empty($_GET['inMessage'])) {
-                        echo '<div class="alert alert-success">' . htmlspecialchars($_GET['inMessage']) . '</div>';
-                    }
-                    if (isset($_GET['errMessage']) && !empty($_GET['errMessage'])) {
-                        echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['errMessage']) . '</div>';
-                    }
-                    ?>
-
                     <div class="card-body table-responsive">
-                        <table id="example" class="table table-striped " style="width:100%">
+                        <table id="example" class="table table-striped" style="width:100%">
                             <thead class="thead-dark">
-                                <th>ID Materia</th>
-                                <th>Materia</th>
-                                <th>Agregar Correlativa</th>
-                                <th>Acciones</th>
-                                <th>Listado de alumno</th>
+                                <tr>
+                                    <th>ID Materia</th>
+                                    <th>Materia</th>
+                                    <th>Agregar Correlativa</th>
+                                    <th>Acciones</th>
+                                    <th>Listado de Alumnos</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <?php
@@ -57,34 +38,26 @@
                                 try {
                                     $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
                                     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
                                     $query = "SELECT m.id_materia, m.Nombre AS 'Materia', c.id_correlativa, c.id_materia AS 'Correlativa'
-                                        FROM materia m
-                                        LEFT JOIN correlativa c ON m.id_materia = c.id_materia
-                                        WHERE m.estado = 'Activo'";
+                                              FROM materia m
+                                              LEFT JOIN correlativa c ON m.id_materia = c.id_materia
+                                              WHERE m.estado = 'Activo'";
                                     $stmt = $db->prepare($query);
                                     $stmt->execute();
                                     $materias = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     foreach ($materias as $materia) {
                                 ?>
                                         <tr>
-                                            <th scope="row"><?php echo $materia['id_materia'] ?></th>
+                                            <td><?php echo $materia['id_materia'] ?></td>
                                             <td><?php echo $materia['Materia'] ?></td>
-                                            <td class="text-center"><a href="correlativas.php?id=<?php echo $materia['id_materia'] ?>"  class="btn btn-success"> <i class="fa-sharp fa-solid fa-folder-open"></i></a></td>
-
+                                            <td class="text-center"><a href="correlativas.php?id=<?php echo $materia['id_materia'] ?>" class="btn btn-success"><i class="fa-sharp fa-solid fa-folder-open"></i></a></td>
                                             <td class="text-center">
                                                 <div class="btn-group">
-                                                    <a href="materiaedit.php?id=<?php echo $materia['id_materia'] ?>" class="btn btn-warning" role="button">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>                                                
-                                                    
-                                                    <a href="materiadelet.php?id=<?php echo $materia['id_materia'] ?>" class="btn btn-danger" role="button">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>    
+                                                    <a href="materiaedit.php?id=<?php echo $materia['id_materia'] ?>" class="btn btn-warning" role="button"><i class="fas fa-edit"></i></a>
+                                                    <a href="materiadelet.php?id=<?php echo $materia['id_materia'] ?>" class="btn btn-danger" role="button"><i class="fas fa-trash"></i></a>
                                                 </div>
                                             </td>
-
-                                            <td class="text-center"><a href="materia_list.php?id=<?php echo $materia['id_materia'] ?>"  class="btn btn-success"> <i class="fa-sharp fa-solid fa-folder-open"></i></a></td>
+                                            <td class="text-center"><a href="materia_alumno.php?id=<?php echo $materia['id_materia'] ?>" class="btn btn-success">Listado de Alumnos</a></td>
                                         </tr>
                                 <?php
                                     }
@@ -113,3 +86,4 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script  src="js/ocultarMensaje.js"></script>
 </html>
+
