@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-11-2023 a las 14:22:16
+-- Tiempo de generación: 15-04-2024 a las 19:24:40
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -34,6 +34,31 @@ CREATE TABLE `acta` (
   `id_ciclo` int(11) NOT NULL,
   `estado` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `alumno_materia`
+--
+
+CREATE TABLE `alumno_materia` (
+  `Id_alumno` int(11) NOT NULL,
+  `id_persona` int(11) NOT NULL,
+  `id_materia` int(11) NOT NULL,
+  `id_ciclo` int(11) NOT NULL,
+  `id_nota` int(11) DEFAULT NULL,
+  `cod_correlativa` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `alumno_materia`
+--
+
+INSERT INTO `alumno_materia` (`Id_alumno`, `id_persona`, `id_materia`, `id_ciclo`, `id_nota`, `cod_correlativa`) VALUES
+(7, 4, 42, 16, NULL, NULL),
+(8, 4, 41, 16, NULL, NULL),
+(9, 6, 41, 16, NULL, NULL),
+(10, 8, 41, 16, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -102,29 +127,6 @@ CREATE TABLE `curso` (
   `id_materia` int(11) NOT NULL,
   `estado` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `estadoalumno`
---
-
-CREATE TABLE `estadoalumno` (
-  `Id_alumno` int(11) NOT NULL,
-  `id_persona` int(11) NOT NULL,
-  `id_materia` int(11) NOT NULL,
-  `id_ciclo` int(11) NOT NULL,
-  `id_nota` int(11) DEFAULT NULL,
-  `cod_correlativa` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `estadoalumno`
---
-
-INSERT INTO `estadoalumno` (`Id_alumno`, `id_persona`, `id_materia`, `id_ciclo`, `id_nota`, `cod_correlativa`) VALUES
-(7, 4, 42, 16, NULL, NULL),
-(8, 4, 41, 16, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -232,8 +234,9 @@ INSERT INTO `persona` (`id_persona`, `nombre`, `apellido`, `fecha_nacimiento`, `
 (2, 'Demian Agustin', 'Perez', '2004-01-29', 45467149, '2646058767', 'dem23@gmail.com', '9 de Julio y San Juan', '2023-09-19', 'Argentina', 'Angaco', '12345', 3, 'Masculino', 'Activo'),
 (4, 'Maxi ', 'Sarmiento', '2023-11-01', 45424189, '2646210943', 'maxisarmiento@gmail.com', 'San Juan 7, alem 77.', '2022-01-29', 'Argentina', 'Rivadavia', '2345', 1, 'Masculino', 'Activo'),
 (5, 'Agustin Bastian', 'Gomez Lopez', '2023-11-28', 44321280, '2646067481', 'agustin78@gmail.com', 'Villa Colon', '2023-11-28', 'Argentina', 'Caucete', '2390xsc', 1, 'Masculino', 'Inactivo'),
-(6, 'David ', 'Nievas', '2023-11-01', 22073611, '2734542309', 'david@gmail.com', 'Laprida', '2023-11-22', 'Argentina', 'San Martín', '23profe4', 2, 'Masculino', 'Activo'),
-(7, 'Rocio', 'Cuello', '1978-06-27', 19202321, '2643421890', 'roocue45@gmail.com', '2 Acequias', '2023-11-15', 'Argentina', 'San Martín', '3234122', 2, 'Femenino', 'Activo');
+(6, 'David ', 'Nievas', '2023-11-01', 22073611, '2734542309', 'david@gmail.com', 'Laprida', '2023-11-22', 'Argentina', 'San Martín', '23profe4', 1, 'Masculino', 'Activo'),
+(7, 'Rocio', 'Cuello', '1978-06-27', 19202321, '2643421890', 'roocue45@gmail.com', '2 Acequias', '2023-11-15', 'Argentina', 'San Martín', '3234122', 2, 'Femenino', 'Activo'),
+(8, 'Lautaro', 'Correa', '2004-04-15', 45314890, '2645362903', 'lauta12@gmail.com', 'alem y laprida', '2016-03-23', 'Argentina', 'Angaco', '1234lau', 1, 'Masculino', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -289,6 +292,17 @@ ALTER TABLE `acta`
   ADD KEY `id_ciclo` (`id_ciclo`);
 
 --
+-- Indices de la tabla `alumno_materia`
+--
+ALTER TABLE `alumno_materia`
+  ADD PRIMARY KEY (`Id_alumno`),
+  ADD KEY `id_materia` (`id_materia`),
+  ADD KEY `id_ciclo` (`id_ciclo`),
+  ADD KEY `id_persona` (`id_persona`),
+  ADD KEY `id_persona_2` (`id_persona`),
+  ADD KEY `cod_correlativa` (`cod_correlativa`);
+
+--
 -- Indices de la tabla `asignar`
 --
 ALTER TABLE `asignar`
@@ -317,17 +331,6 @@ ALTER TABLE `curso`
   ADD PRIMARY KEY (`id_curso`),
   ADD KEY `id_persona` (`id_persona`),
   ADD KEY `id_materia` (`id_materia`);
-
---
--- Indices de la tabla `estadoalumno`
---
-ALTER TABLE `estadoalumno`
-  ADD PRIMARY KEY (`Id_alumno`),
-  ADD KEY `id_materia` (`id_materia`),
-  ADD KEY `id_ciclo` (`id_ciclo`),
-  ADD KEY `id_persona` (`id_persona`),
-  ADD KEY `id_persona_2` (`id_persona`),
-  ADD KEY `cod_correlativa` (`cod_correlativa`);
 
 --
 -- Indices de la tabla `materia`
@@ -384,6 +387,12 @@ ALTER TABLE `acta`
   MODIFY `id_acta` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `alumno_materia`
+--
+ALTER TABLE `alumno_materia`
+  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT de la tabla `asignar`
 --
 ALTER TABLE `asignar`
@@ -408,12 +417,6 @@ ALTER TABLE `curso`
   MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `estadoalumno`
---
-ALTER TABLE `estadoalumno`
-  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
 -- AUTO_INCREMENT de la tabla `materia`
 --
 ALTER TABLE `materia`
@@ -435,7 +438,7 @@ ALTER TABLE `nota`
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -456,6 +459,15 @@ ALTER TABLE `acta`
   ADD CONSTRAINT `acta_ibfk_3` FOREIGN KEY (`id_ciclo`) REFERENCES `ciclo_lectivo` (`id_ciclo`);
 
 --
+-- Filtros para la tabla `alumno_materia`
+--
+ALTER TABLE `alumno_materia`
+  ADD CONSTRAINT `alumno_materia_ibfk_1` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`),
+  ADD CONSTRAINT `alumno_materia_ibfk_2` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`),
+  ADD CONSTRAINT `alumno_materia_ibfk_4` FOREIGN KEY (`id_ciclo`) REFERENCES `ciclo_lectivo` (`id_ciclo`),
+  ADD CONSTRAINT `alumno_materia_ibfk_5` FOREIGN KEY (`cod_correlativa`) REFERENCES `correlativa` (`cod_correlativa`);
+
+--
 -- Filtros para la tabla `asignar`
 --
 ALTER TABLE `asignar`
@@ -474,15 +486,6 @@ ALTER TABLE `correlativa`
 ALTER TABLE `curso`
   ADD CONSTRAINT `curso_ibfk_1` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`),
   ADD CONSTRAINT `curso_ibfk_2` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`);
-
---
--- Filtros para la tabla `estadoalumno`
---
-ALTER TABLE `estadoalumno`
-  ADD CONSTRAINT `estadoalumno_ibfk_1` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`),
-  ADD CONSTRAINT `estadoalumno_ibfk_2` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`),
-  ADD CONSTRAINT `estadoalumno_ibfk_4` FOREIGN KEY (`id_ciclo`) REFERENCES `ciclo_lectivo` (`id_ciclo`),
-  ADD CONSTRAINT `estadoalumno_ibfk_5` FOREIGN KEY (`cod_correlativa`) REFERENCES `correlativa` (`cod_correlativa`);
 
 --
 -- Filtros para la tabla `materia`
