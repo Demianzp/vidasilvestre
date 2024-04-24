@@ -112,33 +112,10 @@ if (isset($_SESSION['message'])) {
                             </div>
                         </div>
                     </div>
-
+                         <!-- --------------------------------- -->
+                     
+                                <input  type="hidden" class="form-control" name="id_rol" value="2">
                     <!-- --------------------------------- -->
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="genero">Género:</label>
-                                <select name="genero" autocomplete="off" class="form-control" required>
-                                    <option value="" disabled selected>Seleccione su Género</option>
-                                    <option value="Masculino">Masculino</option>
-                                    <option value="Femenino">Femenino</option>
-                                    <option value="Otros">Otros</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="rol">Rol:</label>
-                                <select name="id_rol" id="rol" class="form-control" required>
-                                    <option value="" disabled selected>Seleccione el usuario</option>
-                                    <option value="1">Alumno</option>
-                                    <option value="2">Profesor</option>
-                                    <option value="3">Administrador</option>
-                                    <!-- Agrega otras opciones de roles aquí -->
-                                </select>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
@@ -148,8 +125,28 @@ if (isset($_SESSION['message'])) {
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label for="fecha_ingreso">Fecha de Ingreso:</label>
-                                <input type="date" class="form-control" name="fecha_ingreso" required>
+                            <label for="genero">Género:</label>
+                                <select name="genero" autocomplete="off" class="form-control" required>
+                                    <option value="" disabled selected>Seleccione su Género</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Femenino">Femenino</option>
+                                    <option value="Otros">Otros</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- --------------------------------- -->
+                      <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="titulo">Titulo:</label>
+                                <input type="text" class="form-control" name="titulo"  placeholder="Ingrese Titulo" required>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                            <label for="legajo">Legajo:</label>
+                                <input type="text" class="form-control" name="legajo" placeholder="Ingrese el n° de legajo" required>
                             </div>
                         </div>
                     </div>
