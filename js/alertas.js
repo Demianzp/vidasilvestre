@@ -1,30 +1,31 @@
-function borrar (id_persona){     
-    Swal.fire({      
-        icon: "error",
-        title: "¿Bor00000rar?",        
-        showCancelButton: true,
-        confirmButtonText: "Si",        
-      }).then((result) => {        
-        if (result.isConfirmed) {
-          window.location="alumnodelete.php?txtID="+id_persona;
-        } 
-      });    
+function elimianar (id_persona){
+  Swal.fire({
+      icon: "error",
+      title: "¿Borrar?",        
+      showCancelButton: true,
+      confirmButtonText: "Si",   
+      confirmButtonColor: "#007bff",
+      cancelButtonColor: '#dc3545',     
+    }).then((result) => {        
+      if (result.isConfirmed) {
+        window.location="listadoalumnos.view.php?txtID="+id_persona;
+        window.location="listadoprofe.php?txt2ID="+id_persona;
+      } 
+    });
 }
-
-
 function cerrar (){
   Swal.fire({
       icon: "question",
       iconColor: 'red',
-      title: "¿Desea000000000000 Salir?",        
+      title: "¿Desea Salir?",        
       showDenyButton: true,
       confirmButtonText: "Si",
-      confirmButtonColor: "#000", 
+      confirmButtonColor: "#007bff", 
       denyButtonText: "No",
       customClass: {
         confirmButton: 'px-5 ',
         denyButton: 'px-5 ',
-    }
+      }
     }).then((result) => {        
       if (result.isConfirmed) {
         window.location="logout.php";

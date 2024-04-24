@@ -1,3 +1,16 @@
+<?php
+require 'conn/connection.php';
+//-------------BORRADO------------------ 
+if(isset($_GET['txtID'])){
+  $txtID=(isset($_GET['txtID']))?$_GET['txtID']:"";
+  $sentencia=$db->prepare("UPDATE persona SET estado = 'Inactivo' WHERE id_persona = :id" );
+  $sentencia->bindParam(':id',$txtID);
+  $sentencia->execute();
+  $mensaje="Registro eliminado";
+  header("Location:listadoalumnos.view.php?mensaje=".$mensaje);
+}
+?>
+<!-- ------------------------------------------ -->
 <?php require 'navbar.php'; ?>
 <body>    
     <section class="content mt-3">
@@ -7,33 +20,7 @@
                     <div class="card-header pb-0 bg-dark text-white ">
                         <h5 class="d-inline-block ">Listado de Alumnos</h5>
                         <a class="btn btn-primary float-right mb-2" href="alumnos.view.php">Agregar Alumno</a>
-                    </div>
-                    <?php
-                    if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
-                        echo '<div class="alert alert-success" role="alert">' . htmlspecialchars($_GET['mensaje']) . '</div>';
-                    }
-                    if (isset($_GET['error']) && !empty($_GET['error'])) {
-                        echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['error']) . '</div>';
-                    }
-                    ?>
-                    <!-- Mensaje de carga o error de alumno Modificar -->
-                    <?php
-                    if (!empty($infoMessage)) {
-                        echo '<div class="alert alert-success" role="alert">' . htmlspecialchars($infoMessage) . '</div>';
-                    }
-                    if (!empty($errorMessage)) {
-                        echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($errorMessage)  . '</div>';
-                    }
-                    ?>
-                    <!-- ---------------Mensaje de Persona desactiva o error --------------->
-                    <?php
-                    if (isset($_GET['inMessage']) && !empty($_GET['inMessage'])) {
-                        echo '<div class="alert alert-success"role="alert">' . htmlspecialchars($_GET['inMessage']) . '</div>';
-                    }
-                    if (isset($_GET['errMessage']) && !empty($_GET['errMessage'])) {
-                        echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['errMessage']) . '</div>';
-                    }
-                    ?>
+                    </div>                    
                     <!-- -------------------- -->
                     <div class="card-body table-responsive">
                         <form id="inscripcionForm" action="" method="post">
@@ -52,8 +39,7 @@
                                     <th>Acciones</th>               
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    require 'conn/connection.php';
+                                    <?php                                    
                                     try {
                                         $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
                                         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -79,11 +65,10 @@
                                                         <a href="" class="btn btn-primary btn-flat view_result" type="button">
                                                             <i class="fas fa-eye"></i>                                                        
                                                         </a>  
-                                                        <a href="alumnoedit.view.php?id=<?php echo $alumno['id_persona'] ?>" class="btn btn-warning " type="button">
+                                                        <a href="alumnoedit.view.php?id=<?php echo $alumno['id_persona'];?>"class="btn btn-warning" type="button">
                                                             <i class="fas fa-edit"></i>
                                                         </a>   
-                                                        <a href="javascript:borrar(<?php echo $alumno['id_persona'] ?>)" class="btn btn-danger " type="button">
-                                                            
+                                                        <a href="javascript:elimianar(<?php echo $alumno['id_persona'];?>);"class="btn btn-danger" type="button">                                                            
                                                             <i class="fas fa-trash"></i>
                                                         </a> 
                                                     </div>  
@@ -108,5 +93,5 @@
     <?php require 'footer.php'; ?>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="js/ocultarMensaje.js"></script>
+    <script src="js/ocultarMensaje.js"></script>    
 </html>
