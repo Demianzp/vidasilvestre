@@ -1,3 +1,4 @@
+<!-- base datos demi -->
 <?php
 // Variables de conexión a la base de datos
 $db_host = 'localhost'; // Host de la base de datos
