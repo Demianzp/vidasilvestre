@@ -60,16 +60,38 @@ if(!isset($_SESSION['nombre'])){
 </head>
 <body>
   <!-- ---------------MENSAJE REGISTROS-------------- -->
-  <?php if(isset($_GET['mensaje'])) { ?>
-    <script>
-      Swal.fire({
-        icon:"success", 
-        title:"<?php echo $_GET['mensaje'];?>",
-        showConfirmButton: false,
-        timer: 1500,
-        });
-    </script>
-  <?php } ?>
+  <?php
+$mensaje = isset($_GET['mensaje']) ? $_GET['mensaje'] : '';
+$error = isset($_GET['error']) ? $_GET['error'] : '';
+?>
+
+<!-- Muestra la alerta para mensajes de éxito -->
+<?php if (!empty($mensaje)) { ?>
+<script>
+  Swal.fire({
+    icon: "success",
+    title: "<?php echo $mensaje; ?>",
+    showConfirmButton: false,
+    timer: 1700
+  });
+</script>
+<?php } ?>
+
+<!-- Muestra la alerta para errores -->
+<?php if (!empty($error)) { ?>
+<script>
+  Swal.fire({
+    icon: "error",
+    title: "Error",
+    text: "<?php echo $error; ?>",
+    showConfirmButton: true,
+    confirmButtonText: "OK",
+    confirmButtonColor: "#d33"
+  });
+</script>
+<?php } ?>
+
+
   <!-- ------------------------------------- -->
   <div style="height:60px">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
