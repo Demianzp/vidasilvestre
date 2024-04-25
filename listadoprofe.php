@@ -4,7 +4,7 @@ require 'conn/connection.php';
 if(isset($_GET['txt2ID'])){
   $txt2ID=(isset($_GET['txt2ID']))?$_GET['txt2ID']:"";
   $sentencia=$db->prepare("UPDATE persona SET estado = 'Inactivo' WHERE id_persona = :id" );
-  $sentencia->bindParam(':id',$txt2ID, PDO::PARAM_INT);
+  $sentencia->bindParam(':id',$txt2ID);
   $sentencia->execute();
   $mensaje="Registro eliminado";
   header("Location:listadoprofe.php?mensaje=".$mensaje);
