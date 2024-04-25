@@ -232,7 +232,7 @@ CREATE TABLE `persona` (
 -- Volcado de datos para la tabla `persona`
 --
 
-INSERT INTO `` (`id_`, `nombre`, `apellido`, `fecha_nacimiento`, `DNI`, `celular`, `email_correo`, `direccion`, `fecha_ingreso`, `pais`, `ciudad`, `contraseña`, `id_rol`, `genero`, `estado`) VALUES
+INSERT INTO `persona` (`id_persona`, `nombre`, `apellido`, `fecha_nacimiento`, `DNI`, `celular`, `email_correo`, `direccion`, `fecha_ingreso`, `pais`, `ciudad`, `contraseña`, `id_rol`, `genero`, `estado`) VALUES
 (2, 'Demian Agustin', 'Perez', '2004-01-29', 45467149, '2646058767', 'dem23@gmail.com', '9 de Julio y San Juan', '2023-09-19', 'Argentina', 'Angaco', '12345', 3, 'Masculino', 'Activo'),
 (4, 'Maxi ', 'Sarmiento', '2023-11-01', 45424189, '2646210943', 'maxisarmiento@gmail.com', 'San Juan 7, alem 77.', '2022-01-29', 'Argentina', 'Rivadavia', '2345', 1, 'Masculino', 'Activo'),
 (5, 'Agustin Bastian', 'Gomez Lopez', '2023-11-28', 44321280, '2646067481', 'agustin78@gmail.com', 'Villa Colon', '2023-11-28', 'Argentina', 'Caucete', '2390xsc', 1, 'Masculino', 'Inactivo'),
