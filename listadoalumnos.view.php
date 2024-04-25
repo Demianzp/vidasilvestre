@@ -24,7 +24,7 @@ if(isset($_GET['txtID'])){
                     <!-- -------------------- -->
                     <div class="card-body table-responsive">
                         <form id="inscripcionForm" action="" method="post">
-                            <table id="example" class="table table-striped" style="width:100%">
+                            <table id="example" class="table table-striped table-sm" style="width:100%">
                                 <thead class="thead-dark">
                                     <th>#</th>
                                     <th>Apellidos</th>
@@ -35,7 +35,7 @@ if(isset($_GET['txtID'])){
                                     <th>Fecha de Nacimiento</th>
                                     <th>Celular</th>
                                     <th>Departamento</th>
-                                    <th>Historial</th>
+                                    <!-- <th>Historial</th> -->
                                     <th>Acciones</th>               
                                 </thead>
                                 <tbody>
@@ -59,16 +59,17 @@ if(isset($_GET['txtID'])){
                                                 <td><?php echo $alumno['fecha_nacimiento'] ?></td>
                                                 <td><?php echo $alumno['celular'] ?></td> 
                                                 <td><?php echo $alumno['ciudad'] ?></td>                                                
-                                                <td><a href="" class="btn btn-info" type="button">Historial</a></td>
+                                                <!-- <td></td> -->
                                                 <td class="text-center">
                                                     <div class="btn-group">
-                                                        <a href="" class="btn btn-primary btn-flat view_result" type="button">
+                                                        <a href="" class="btn btn-info btn-sm" type="button">Historial</a>
+                                                        <a href="" class="btn btn-primary btn-sm" type="button">
                                                             <i class="fas fa-eye"></i>                                                        
                                                         </a>  
-                                                        <a href="alumnoedit.view.php?id=<?php echo $alumno['id_persona'];?>"class="btn btn-warning" type="button">
+                                                        <a href="alumnoedit.view.php?id=<?php echo $alumno['id_persona'];?>"class="btn btn-warning btn-sm" type="button">
                                                             <i class="fas fa-edit"></i>
                                                         </a>   
-                                                        <a href="javascript:elimianar(<?php echo $alumno['id_persona'];?>);"class="btn btn-danger" type="button">                                                            
+                                                        <a href="javascript:elimianar(<?php echo $alumno['id_persona'];?>);"class="btn btn-danger btn-sm" type="button">                                                            
                                                             <i class="fas fa-trash"></i>
                                                         </a> 
                                                     </div>  

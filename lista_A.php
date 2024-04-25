@@ -8,7 +8,7 @@
                 <div class="card rounded-2 border-0">
                     <div class="card-header bg-dark text-white pb-0">
                         <h5 class="d-inline-block">Listado de Profesores</h5>
-                        <a class="btn btn-primary float-right mb-2" href="listadoprofe.php">Volver</a>                        
+                        <a class="btn btn-primary float-right mb-2" href="listadoprofe.php">Volver</a>        b               
                     </div>
                     <!-- Mensaje de asignar exitosamente o error  -->
                     <?php
