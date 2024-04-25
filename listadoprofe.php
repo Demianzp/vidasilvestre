@@ -23,7 +23,7 @@ if(isset($_GET['txt2ID'])){
                     </div>                    
                     <div class="card-body table-responsive">
                         <!-- <button type="submit" class="btn btn-primary">Buscar</button> ------->
-                        <table id="example" class="table table-striped" style="width:100%">
+                        <table id="example" class="table table-striped table-sm" style="width:100%">
                             <thead class="thead-dark">
                                 <th>#</th>
                                 <th>Apellidos</th>
@@ -34,21 +34,19 @@ if(isset($_GET['txt2ID'])){
                                 <th>Fecha de Nacimiento</th>
                                 <th>Celular</th>
                                 <th>Departamento</th>
-                                <th>Asignar</th>
+                                <!-- <th>Asignar</th> -->
                                 <th>Acciones</th>
                             </thead>
                             <tbody>
                                 <?php
-                                require 'conn/connection.php';
+                                // require 'conn/connection.php';
                                 try {
                                     $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
                                     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
                                     $query = "SELECT * FROM persona WHERE id_rol = 2 AND estado = 'Activo'";
                                     $stmt = $db->prepare($query);
                                     $stmt->execute();
                                     $profesores = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
                                     foreach ($profesores as $profesor) {
                                 ?>
                                         <tr>
@@ -60,15 +58,15 @@ if(isset($_GET['txt2ID'])){
                                             <td><?php echo $profesor['fecha_ingreso'] ?></td>
                                             <td><?php echo $profesor['fecha_nacimiento'] ?></td>
                                             <td><?php echo $profesor['celular'] ?></td>
-
                                             <td><?php echo $profesor['ciudad'] ?></td>
-                                            <td><a href="asignar_F.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-info" role="button">Asignar</a></td>
+                                            <!-- <td></td> -->
                                             <td class="text-center">
                                                     <div class="btn-group">
-                                                        <a href="editarprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning" role="button">
+                                                        <a href="asignar_F.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-info btn-sm" title="Asignar" role="button">Asignar</a>
+                                                        <a href="editarprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning btn-sm" title="Editar" role="button">
                                                             <i class="fas fa-edit"></i>
                                                         </a> 
-                                                        <a href="javascript:elimianar(<?php echo $profesor['id_persona'] ?>)" class="btn btn-danger" role="button">
+                                                        <a href="javascript:elimianar(<?php echo $profesor['id_persona'] ?>)" class="btn btn-danger btn-sm" title="Borrar" role="button">
                                                             <i class="fas fa-trash"></i>
                                                         </a>
                                                     </div>  
@@ -102,4 +100,3 @@ if(isset($_GET['txt2ID'])){
 <?php require 'footer.php'; ?>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="js/ocultarMensaje.js"></script>
-<!-- <script src="js/buscador.js"></script> -->
