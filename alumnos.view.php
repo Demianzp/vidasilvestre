@@ -16,12 +16,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $direccion = $_POST["direccion"];
     $ciudad = $_POST["ciudad"];
     $genero = $_POST["genero"];
-    $id_rol = $_POST["id_rol"];
     $pais = "Argentina";
     $fecha_nacimiento = $_POST["fecha_nacimiento"];
     $fecha_ingreso = $_POST["fecha_ingreso"];
     $contrasena = $_POST["contrasena"];
     $estado = "Activo"; // Valor predeterminado para estado
+    $id_rol = "1"; //Valor  predeterminado para alumno es 1.
+
 
     try {
         // Verificar si el correo electrónico ya existe
@@ -177,18 +178,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <option value="Otros">Otros</option>
                                 </select>
 
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="rol">Rol:</label>
-                                <select name="id_rol" id="rol" class="form-control" required>
-                                    <option value="" disabled selected>Seleccione el usuario</option>
-                                    <option value="1">Alumno</option>
-                                    <option value="2">Profesor</option>
-                                    <option value="3">Administrador</option>
-                                    <!-- Agrega otras opciones de roles aquí -->
-                                </select>
                             </div>
                         </div>
                     </div>
