@@ -1,33 +1,14 @@
 <?php
 session_start(); // Asegúrate de incluir esto al principio del archivo.....
-
 if (isset($_SESSION['message'])) {
     $message = $_SESSION['message'];
     unset($_SESSION['message']); // Borra el mensaje después de mostrarlo
 } else {
-    $message = ""; // Inicializa la variable de mensaje si no hay un mensaje en la sesión
+    $message = "";
 }
 ?>
-<!-- <!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta name="description" content="Formulario de Inscripcion" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <title>Formulario de Inscripción de Profesor</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Roboto&display=swap');
-    </style>
-</head> -->
+<!-- ---------------------------------------------------- -->
 <?php require 'navbar.php'; ?>
-
-<body>
-
-    <!-- "content" es diferente que "container" -->
     <div class="container mt-3">
         <div class="card rounded-2 border-0">
             <h5 class="card-header bg-dark text-white">Formulario de Inscripción de Profesor</h5>
@@ -74,8 +55,7 @@ if (isset($_SESSION['message'])) {
                         </div>
                     </div>
                     <!-- --------------------------------- -->
-                    <div class="row">
-                        <!-- --------------------------------- -->
+                    <div class="row">                       
                         <div class="col">
                             <div class="form-group">
                                 <label for="ciudad">Ciudad:</label>
@@ -99,12 +79,10 @@ if (isset($_SESSION['message'])) {
                                     <option value="Ullum">Ullum</option>
                                     <option value="Valle Fértil">Valle Fértil</option>
                                     <option value="Zonda">Zonda</option>
-                                    <option value="25 de Mayo">25 de Mayo</option>
-                                    <!-- Agrega otros departamentos de San Juan aquí -->
+                                    <option value="25 de Mayo">25 de Mayo</option>                                   
                                 </select>
                             </div>
                         </div>
-
                         <div class="col">
                             <div class="form-group">
                                 <label for="direccion">Dirección:</label>
@@ -112,8 +90,7 @@ if (isset($_SESSION['message'])) {
                             </div>
                         </div>
                     </div>
-                         <!-- --------------------------------- -->
-                     
+                         <!-- --------------------------------- -->                     
                                 <input  type="hidden" class="form-control" name="id_rol" value="2">
                     <!-- --------------------------------- -->
                     <div class="row">
@@ -192,10 +169,9 @@ if (isset($_SESSION['message'])) {
             </div>
         </div>
     </div>
-    <?php require 'footer.php'; ?>
-</body>
-<script src="js/contraseña.js"></script>
-<script src="js/validacion.js"></script>
-<script src="js/validacion2.js"></script>
+    
 
-</html>
+    <script src="js/contraseña.js"></script>
+    <script src="js/validacion.js"></script>
+    <script src="js/validacion2.js"></script>
+<?php require 'footer.php'; ?>

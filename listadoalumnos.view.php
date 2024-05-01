@@ -12,7 +12,6 @@ if(isset($_GET['txtID'])){
 ?>
 <!-- ------------------------------------------ -->
 <?php require 'navbar.php'; ?>
-<body>    
     <section class="content mt-3">
         <div class="row m-auto">
             <div class="col-sm">
@@ -91,8 +90,7 @@ if(isset($_GET['txtID'])){
             </div>
         </div>
     </section>
-    <?php require 'footer.php'; ?>
-</body>
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="js/ocultarMensaje.js"></script>    
-</html>
+<?php require 'footer.php'; ?>   

@@ -1,7 +1,6 @@
 <?php require 'navbar.php'; ?>
-<body>
-    
-    <section class="content mt-2">
+
+   <section class="content mt-2">
         <div class="row m-auto">
             <div class="col-sm">
                 <div class="card rounded-2 border-0">
@@ -79,11 +78,7 @@
                 </div>
             </div>
         </div>
-    </section>
-    <?php require 'footer.php'; ?>
-    
-</body>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script  src="js/ocultarMensaje.js"></script>
-</html>
-
+    </section>    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script  src="js/ocultarMensaje.js"></script>
+<?php require 'footer.php'; ?>   

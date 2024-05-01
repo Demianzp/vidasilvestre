@@ -10,7 +10,6 @@ if ( isset($_COOKIE["activo"]) && isset($_SESSION['username'])) {
 }
 //importamos el archivo que contiene la variable de conexioon a la base de datos
 require 'conn/connection.php';
-
 //para verificar que tiene acceso a un archivo
 function permisos($permisos){
     if (!in_array($_SESSION['rol'], $permisos)) {
@@ -18,7 +17,6 @@ function permisos($permisos){
         header('location:inicio.view.php?err=1');
     }
 }
-
 function existeNota($id_alumno, $id_materia, $conn){
     $nota = $conn->prepare("select * from notas where id_materia = '$id_materia' and id_alumno = '$id_alumno'");
     $nota->execute();

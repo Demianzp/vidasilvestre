@@ -1,12 +1,4 @@
-<!-- <!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Selección de Materias</title>
-</head> -->
 <?php require 'navbar.php'; ?>
-<body>    
     <section class="content mt-2">
         <div class="row m-auto ">
             <div class="col-sm">
@@ -18,14 +10,11 @@
                     <div class="card-body table-responsive">
                         <form action="correlativa1.php" method="post">
                             <?php
-                            
-                            
                                 // Conexión a la base de datos (reemplaza estos valores con los tuyos)
                                 $servername = "localhost";
                                 $username = "root";
                                 $password = "";
                                 $dbname = "vidasilvestre";
-
                                 // Crear conexión
                                 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -39,10 +28,8 @@
                                         <?php
                                         // Mostrar los datos de materia seleccionada
                                         echo "<h3>Materia Seleccionada:</h3>";
-                                        echo "<ul class='list-group'>";
-                                        
-                                            // Query para obtener datos del alumno
-                                            
+                                        echo "<ul class='list-group'>";                                        
+                                            // Query para obtener datos del alumno                                            
                                             $query = "SELECT Nombre FROM materia WHERE id_materia =". $_GET['id'];
                                             $result = $conn->query($query);
 
@@ -52,10 +39,7 @@
                                             }
                                         echo "</ul>";
                                         ?>
-                              
-
-                                    </div>
-                                    
+                                    </div>                                    
                                     <div class="col ">
                                         <?php
                                         // Mostrar la lista de materias disponibles
@@ -89,16 +73,12 @@
                                             };
                                             echo "</table>";
                                             // -----------------------------------
-                                    
-                          
                                             echo "<a href='listado_materia.php' class='btn btn-danger mt-3 mr-2  px-4'>Cancelar</a>";
                                             echo "<input type='submit' class='btn btn-primary mt-3 px-4' value='Agregar'>";
                                             // -----------------------------------
                                            // Cierre del formulario
                                             // Cerrar la conexión
                                             $conn->close();
-                                 
-
                             ?>
                         </form>
                     </div>
@@ -107,5 +87,4 @@
             </div>
         </div>
     </section>
-</body>
-</html>
+<?php require 'footer.php'; ?>

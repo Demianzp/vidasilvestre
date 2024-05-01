@@ -1,12 +1,9 @@
 <?php
-// Incluye el archivo de conexión
 include 'conn/connection.php';
-
 // Verifica si se envió una solicitud POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mensaje = "";
     $error = "";
-
     // Recolecta datos del formulario
     $nombre = $_POST["nombre"];
     $apellido = $_POST["apellido"];
@@ -22,17 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contrasena = $_POST["contrasena"];
     $estado = "Activo"; // Valor predeterminado para estado
     $id_rol = "1"; //Valor  predeterminado para alumno es 1.
-
-
     try {
         // Verificar si el correo electrónico ya existe
         $sql_check_email = "SELECT COUNT(*) FROM persona WHERE email_correo = :email"; // Falta la comilla
         $stmt_check_email = $db->prepare($sql_check_email);
         $stmt_check_email->bindParam(':email', $email);
         $stmt_check_email->execute();
-
         $count = $stmt_check_email->fetchColumn(); // Obtiene el número de registros
-
         if ($count > 0) {
             // El correo ya está registrado, genera un mensaje de error
             $error = "El correo electrónico ya está registrado. Por favor, use uno diferente.";
@@ -42,7 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         VALUES (:nombre, :apellido, :fecha_nacimiento, :dni, :celular, :email, :direccion, :fecha_ingreso, :pais, :ciudad, :contrasena, :id_rol, :genero, :estado)";
 
             $stmt = $db->prepare($sql);
-
             // Vincula los parámetros para la inserción
             $stmt->bindParam(':nombre', $nombre);
             $stmt->bindParam(':apellido', $apellido);
@@ -75,11 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit();
 }
 ?>
-
-
 <!-- ----------------------------------- -->
 <?php require 'navbar.php'; ?>
-<body>    
     <!-- "content" es diferente que "container" -->
     <div class="container mt-3">
         <div class="card rounded-2 border-0">
@@ -99,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <input type="text" class="form-control" name="nombre" autocomplete="off" placeholder="Ingrese Nombre(s)" required>
                             </div>
                         </div>
-                        <!-- --------------------------------- -->
+                    <!-- --------------------------------- -->
                         <div class="col">
                             <div class="form-group">
                                 <label for="apellido">Apellido:</label>
@@ -116,8 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <span id="dniOK"></span>
                             </div>
                         </div>
-                        <div class="col">
-                            
+                        <div class="col">                            
                             <div class="form-group">
                                 <label for="celular">Celular:</label>
                                 <input type="tel" class="form-control" name="celular" placeholder="Ingrese Teléfono" id="celular" autocomplete="off" required>
@@ -127,8 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                     <!-- --------------------------------- -->
-                    <div class="row">
-                        <!-- --------------------------------- -->
+                    <div class="row">                        
                         <div class="col">
                             <div class="form-group">
                                 <label for="ciudad">Ciudad:</label>
@@ -157,7 +144,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </select>
                             </div>
                         </div>
-
                         <div class="col">
                             <div class="form-group">
                                 <label for="direccion">Dirección:</label>
@@ -165,7 +151,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                         </div>
                     </div>
-
                     <!-- --------------------------------- -->
                     <div class="row">
                         <div class="col">
@@ -177,7 +162,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <option value="Femenino">Femenino</option>
                                     <option value="Otros">Otros</option>
                                 </select>
-
                             </div>
                         </div>
                     </div>
@@ -202,7 +186,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <label for="email">Email:</label>
                                 <input id="email" class="form-control" name="email" placeholder="Ingrese Email" autocomplete="off" required>
                                 <span id="emailOK"></span>
-
                             </div>
                         </div>                        
                         <div class="col">
@@ -229,11 +212,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </form>
             </div>
         </div>
-    </div>
-    <?php require 'footer.php'; ?>
-</body>
+    </div> 
 <script src="js/contraseña.js"></script>
 <script src="js/validacion.js"></script>
 <script src="js/validacion2.js"></script>
 
-</html>
+<?php require 'footer.php'; ?>

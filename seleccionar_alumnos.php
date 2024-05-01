@@ -1,27 +1,11 @@
-<!-- <!DOCTYPE html>
-<html lang="es"> -->
-
-<!-- <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Alumnos | Editar y Eliminar</title>
-    <meta name="description" content="Registro de Notas del Centro Escolar">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head> -->
-
 <?php require 'navbar.php'; ?>
-
-<body>
-
     <section class="content mt-3">
         <div class="row m-auto">
             <div class="col-sm">
                 <div class="card rounded-2 border-0">
                     <div class="card-header pb-0 bg-dark text-white ">
                         <h5 class="d-inline-block ">Seleccion de Alumno</h5>
-                        <!-- <a class="btn btn-primary float-right mb-2" href="alumnos.view.php">Selección de Alumnos</a> -->
                     </div>
-
                     <?php
                     if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
                         echo '<div class="alert alert-success" role="alert">' . htmlspecialchars($_GET['mensaje']) . '</div>';
@@ -35,7 +19,6 @@
                             <label for="id_persona"></label>
                             <table id="example" class="table table-striped " style="width:100%">
                                 <thead class="thead-dark">
-
                                     <th>ID</th>
                                     <th>Apellidos</th>
                                     <th>Nombres</th>
@@ -46,7 +29,6 @@
                                     <th>Celular</th>
                                     <th>Departamento</th>
                                     <th>Seleccione</th>
-
                                 </thead>
                                 <tbody>
                                     <?php
@@ -55,23 +37,18 @@
                                     $username = "root";
                                     $password = "";
                                     $dbname = "vidasilvestre";
-
                                     // Crear conexión
                                     $conn = new mysqli($servername, $username, $password, $dbname);
-
                                     // Verificar la conexión
                                     if ($conn->connect_error) {
                                         die("Conexión fallida: " . $conn->connect_error);
                                     }
-
                                     // Query para obtener alumnos con id_rol=1 y estado activo
                                     $query_alumnos = "SELECT id_persona, apellido, nombre, genero, dni, fecha_ingreso, fecha_nacimiento, celular, ciudad FROM persona WHERE id_rol = 1 AND estado = 'Activo'";
                                     $result_alumnos = $conn->query($query_alumnos);
-
                                     // Mostrar filas en la tabla para cada alumno
                                     while ($alumno = $result_alumnos->fetch_assoc()) {
                                         echo "<tr>";
-
                                         echo "<td>" . $alumno['id_persona'] . "</td>";
                                         echo "<td>" . $alumno['apellido'] . "</td>";
                                         echo "<td>" . $alumno['nombre'] . "</td>";
@@ -86,7 +63,6 @@
                                         <input type='checkbox' id='checkbox'class='form-check-input ' name='id_persona[]' value='" . $alumno['id_persona'] . "'>
                                         </div>
                                         </td>";
-
                                         echo "</tr>";
                                     }
                                     // Cerrar la conexión
@@ -105,9 +81,6 @@
             </div>
         </div>
     </section>
-    <?php require 'footer.php'; ?>
-</body>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="js/ocultarMensaje.js"></script>
-
-<!-- </html> -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="js/ocultarMensaje.js"></script>
+<?php require 'footer.php'; ?>

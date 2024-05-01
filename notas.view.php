@@ -1,27 +1,21 @@
 <?php
 require 'conn/connection.php';
-
 // Inicializar la variable para evitar advertencias
 $alumnos = [];
-
 // Consulta de materias y ciclos activos
 $materias = $db->prepare("SELECT * FROM materia WHERE estado = 'Activo'");
 $materias->execute();
 $materias = $materias->fetchAll();
-
 $ciclos = $db->prepare("SELECT * FROM ciclo_lectivo WHERE estado = 'Activo'");
 $ciclos->execute();
 $ciclos = $ciclos->fetchAll();
-
 // Procesamiento del formulario
 if (isset($_GET['revisar'])) {
     $id_materia = $_GET['materia'];
-
     // Validar datos del formulario
     if (!is_numeric($id_materia)) {
         die('Error: Los datos del formulario no son válidos.');
     }
-
     try {
         $sqlAlumnos = $db->prepare("
             SELECT
@@ -46,11 +40,9 @@ if (isset($_GET['revisar'])) {
             GROUP BY
                 p.id_persona
         ");
-
         // Ligar parámetros y ejecutar la consulta
         $sqlAlumnos->bindParam(':id_materia', $id_materia, PDO::PARAM_INT);
         $sqlAlumnos->execute();
-
         // Guardar resultados en la variable
         $alumnos = $sqlAlumnos->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
@@ -58,17 +50,8 @@ if (isset($_GET['revisar'])) {
     }
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <title>Registro de Notas</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-
-<body>
-    <?php require 'navbar.php'; ?>
+<!-- -------------------------------------------- -->
+<?php require 'navbar.php'; ?>
     <div class="container mt-3">
         <div class="row d-flex justify-content-center">
             <div class="col-auto">
@@ -94,14 +77,12 @@ if (isset($_GET['revisar'])) {
                                         <option value="<?php echo $ciclo['id_ciclo']; ?>"><?php echo $ciclo['nombre_ciclo']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
-
                                 <div class="d-flex justify-content-center mt-3">
                                     <button type="submit" name="revisar" class="btn btn-primary">Ingresar Notas</button>
                                     <a class="btn btn-warning ml-3" href="listadonotas.view.php">Consultar Notas</a>
                                 </div>
                             </form>
                         <?php endif; ?>
-
                         <?php if (isset($_GET['revisar'])) : ?>
                             <form action="guardar_notas.php" method="post">
                                 <div class="table-responsive">
@@ -157,7 +138,6 @@ if (isset($_GET['revisar'])) {
                                         </tbody>
                                     </table>
                                 </div>
-
                                 <!-- Botones de acción -->
                                 <div class="content mt-3">
                                     <a class="btn btn-danger mb-2" href="notas.view.php"><strong>&lt;&lt; Volver</strong></a>
@@ -168,15 +148,9 @@ if (isset($_GET['revisar'])) {
                                 </div>
                             </form>
                         <?php endif; ?>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Inclusión del pie de página -->
-    <?php require 'footer.php'; ?>
-</body>
-
-</html>
+<?php require 'footer.php'; ?>
