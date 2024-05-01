@@ -1,33 +1,76 @@
 <?php
-session_start(); // Asegúrate de incluir esto al principio del archivo.....
+require 'conn/connection.php';
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$mensaje = "";
+$error = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : '';
+    $apellido = isset($_POST["apellido"]) ? $_POST["apellido"] : '';
+    $dni = isset($_POST["dni"]) ? $_POST["dni"] : '';
+    $celular = isset($_POST["celular"]) ? $_POST["celular"] : '';
+    $email = isset($_POST["email"]) ? $_POST["email"] : '';
+    $direccion = isset($_POST["direccion"]) ? $_POST["direccion"] : '';
+    $ciudad = isset($_POST["ciudad"]) ? $_POST["ciudad"] : '';
+    $genero = isset($_POST["genero"]) ? $_POST["genero"] : '';
+    $id_rol = isset($_POST["id_rol"]) ? $_POST["id_rol"] : '';
+    $pais = isset($_POST["pais"]) ? $_POST["pais"] : '';
+    $fecha_nacimiento = isset($_POST["fecha_nacimiento"]) ? $_POST["fecha_nacimiento"] : '';
+    $fecha_ingreso = isset($_POST["fecha_ingreso"]) ? $_POST["fecha_ingreso"] : '';
+    $contrasena = isset($_POST["contrasena"]) ? $_POST["contrasena"] : '';
 
+    // Definir el valor predeterminado para el campo "estado" (asumiendo que se llama "estado")
+    $estado = "Activo";
+    $pais = "Argentina";
+
+    try {
+        $sql = "INSERT INTO persona (nombre, apellido, fecha_nacimiento, DNI, celular, email_correo, direccion, fecha_ingreso, pais, ciudad, contraseña, id_rol, genero, estado) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $db->prepare($sql);
+
+        if ($stmt) {
+            $stmt->bindParam(1, $nombre, PDO::PARAM_STR);
+            $stmt->bindParam(2, $apellido, PDO::PARAM_STR);
+            $stmt->bindParam(3, $fecha_nacimiento, PDO::PARAM_STR);
+            $stmt->bindParam(4, $dni, PDO::PARAM_STR);
+            $stmt->bindParam(5, $celular, PDO::PARAM_STR);
+            $stmt->bindParam(6, $email, PDO::PARAM_STR);
+            $stmt->bindParam(7, $direccion, PDO::PARAM_STR);
+            $stmt->bindParam(8, $fecha_ingreso, PDO::PARAM_STR);
+            $stmt->bindParam(9, $pais, PDO::PARAM_STR);
+            $stmt->bindParam(10, $ciudad, PDO::PARAM_STR);
+            $stmt->bindParam(11, $contrasena, PDO::PARAM_STR);
+            $stmt->bindParam(12, $id_rol, PDO::PARAM_STR);
+            $stmt->bindParam(13, $genero, PDO::PARAM_STR);
+            $stmt->bindParam(14, $estado, PDO::PARAM_STR);
+
+            // Ejecutar la consulta
+            if ($stmt->execute()) {
+                $mensaje = "Persona ingresada con éxito.";
+            } else {
+                $error = "Error al ingresar Persona: " . $stmt->errorInfo()[2];
+            }
+        }
+    } catch (PDOException $e) {
+        $error = "Error en la consulta: " . $e->getMessage();
+    }
+}
+// Redirigir a la página "listadoalumnos.view.php" con los mensajes en la URL
+header("Location: listadoprofe.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
+exit();
+}
+?>
+<!-- ------------------------------------------------------------------- -->
+<?php
+session_start(); // Asegúrate de incluir esto al principio del archivo.....
 if (isset($_SESSION['message'])) {
     $message = $_SESSION['message'];
     unset($_SESSION['message']); // Borra el mensaje después de mostrarlo
 } else {
-    $message = ""; // Inicializa la variable de mensaje si no hay un mensaje en la sesión
+    $message = "";
 }
 ?>
-<!-- <!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta name="description" content="Formulario de Inscripcion" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <title>Formulario de Inscripción de Profesor</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Roboto&display=swap');
-    </style>
-</head> -->
+<!-- ---------------------------------------------------- -->
 <?php require 'navbar.php'; ?>
-
-<body>
-
-    <!-- "content" es diferente que "container" -->
     <div class="container mt-3">
         <div class="card rounded-2 border-0">
             <h5 class="card-header bg-dark text-white">Formulario de Inscripción de Profesor</h5>
@@ -37,7 +80,7 @@ if (isset($_SESSION['message'])) {
                     echo '<div class="alert alert-success" role="alert">' . $message . '</div>';
                 }
                 ?>
-                <form id="formulario" method="post" action="profesor2.php">
+                <form id="formulario" method="post" action="">
                     <!-- --------------------------------- -->
                     <div class="row">
                         <div class="col">
@@ -74,8 +117,7 @@ if (isset($_SESSION['message'])) {
                         </div>
                     </div>
                     <!-- --------------------------------- -->
-                    <div class="row">
-                        <!-- --------------------------------- -->
+                    <div class="row">                       
                         <div class="col">
                             <div class="form-group">
                                 <label for="ciudad">Ciudad:</label>
@@ -99,12 +141,10 @@ if (isset($_SESSION['message'])) {
                                     <option value="Ullum">Ullum</option>
                                     <option value="Valle Fértil">Valle Fértil</option>
                                     <option value="Zonda">Zonda</option>
-                                    <option value="25 de Mayo">25 de Mayo</option>
-                                    <!-- Agrega otros departamentos de San Juan aquí -->
+                                    <option value="25 de Mayo">25 de Mayo</option>                                   
                                 </select>
                             </div>
                         </div>
-
                         <div class="col">
                             <div class="form-group">
                                 <label for="direccion">Dirección:</label>
@@ -112,8 +152,7 @@ if (isset($_SESSION['message'])) {
                             </div>
                         </div>
                     </div>
-                         <!-- --------------------------------- -->
-                     
+                         <!-- --------------------------------- -->                     
                                 <input  type="hidden" class="form-control" name="id_rol" value="2">
                     <!-- --------------------------------- -->
                     <div class="row">
@@ -192,10 +231,9 @@ if (isset($_SESSION['message'])) {
             </div>
         </div>
     </div>
-    <?php require 'footer.php'; ?>
-</body>
-<script src="js/contraseña.js"></script>
-<script src="js/validacion.js"></script>
-<script src="js/validacion2.js"></script>
+    
 
-</html>
+    <script src="js/contraseña.js"></script>
+    <script src="js/validacion.js"></script>
+    <script src="js/validacion2.js"></script>
+<?php require 'footer.php'; ?>

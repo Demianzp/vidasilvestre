@@ -1,9 +1,7 @@
 <?php
 require 'conn/connection.php';
-
 $infoMessage = '';
 $errorMessage = '';
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['id'])) {
         $id_alumno = $_POST['id'];
@@ -13,9 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = $_POST['email'];
         $celular = $_POST['celular'];
         $contrasena = $_POST['contrasena']; // Nuevo campo de contraseña
-
         $consulta_actualizar = $db->prepare("UPDATE persona SET nombre = :nombre, apellido = :apellido, DNI = :dni, email_correo = :email, celular = :celular, contraseña = :contrasena WHERE id_persona = :id");
-
         $consulta_actualizar->bindParam(':id', $id_alumno, PDO::PARAM_INT);
         $consulta_actualizar->bindParam(':nombre', $nombre, PDO::PARAM_STR);
         $consulta_actualizar->bindParam(':apellido', $apellido, PDO::PARAM_STR);
@@ -23,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $consulta_actualizar->bindParam(':email', $email, PDO::PARAM_STR);
         $consulta_actualizar->bindParam(':celular', $celular, PDO::PARAM_STR);
         $consulta_actualizar->bindParam(':contrasena', $contrasena, PDO::PARAM_STR);
-
         if ($consulta_actualizar->execute()) {
             $infoMessage = 'Registro modificado correctamente';
         } else {
@@ -33,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errorMessage = 'Falta el ID del alumno en el formulario.';
     }
 }
-
 if (isset($_GET['id'])) {
     $id_alumno = $_GET['id'];
     $consulta_alumno = $db->prepare("SELECT * FROM persona WHERE id_persona = :id");
@@ -47,18 +41,14 @@ if (isset($_GET['id'])) {
 } else {
     die('Ha ocurrido un error');
 }
-
 // Redirigir solo si hay mensajes para enviar
 if ($infoMessage || $errorMessage) {
     header("Location: listadoalumnos.view.php?mensaje=" . urlencode($infoMessage) . "&error=" . urlencode($errorMessage));
     exit();
 }
 ?>
-
-
+<!-- ------------------------------------------------------------ -->
 <?php require 'navbar.php'; ?>
-<body>
-    
     <div class="container mt-3">
         <div class="row m-auto">
             <div class="col-sm">
@@ -96,10 +86,7 @@ if ($infoMessage || $errorMessage) {
                                 <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
                                     <i class="fas fa-eye p-1"></i>
                                 </button>
-
-
-                            </div>
-                            
+                            </div>                            
                             <!-------------------------------------------------------------->
                             <br>                            
                             <div class="mt-3">
@@ -112,13 +99,7 @@ if ($infoMessage || $errorMessage) {
             </div>
         </div>
     </div>
-    <?php require 'footer.php'; ?>
-
     <script src="js/contraseña.js"></script>
-
     <script src="js/validacion.js"></script>
-
     <script src="js/validacion2.js"></script>
-
-</body>
-</html>
+    <?php require 'footer.php'; ?>

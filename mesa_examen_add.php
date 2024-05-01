@@ -2,11 +2,9 @@
 require 'conn/connection.php';
 $mensaje = "";
 $error = "";
-
 // Realizar la consulta SQL para obtener las materias
 $query = "SELECT id_materia, Nombre FROM materia WHERE Estado = 'Activo'";
 $result_materias = $db->query($query);
-
 // Consulta SQL para obtener los ciclos lectivos
 $query_ciclos = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo";
 $result_ciclos = $db->query($query_ciclos);
@@ -37,7 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(6, $hora);
             $stmt->bindParam(7, $estado);
             $stmt->bindParam(8, $id_tipo);
-
             if ($stmt->execute()) {
                 $mensaje = 'Registro cargado correctamente.';
             } else {
@@ -48,18 +45,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-
 // Redirigir solo si hay mensajes para enviar
 if ($mensaje || $error) {
     header("Location: listadomesa.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
     exit();
 }
 ?>
-
-
 <?php require 'navbar.php'; ?>
-
-<body>
     <div class="container mt-3 " style="width: 40rem">
         <div class="row d-flex justify-content-center ">
             <div class="col ">
@@ -135,5 +127,4 @@ if ($mensaje || $error) {
             </div>
         </div>
     </div>
-</body>
 <?php require 'footer.php'; ?>

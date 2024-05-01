@@ -1,5 +1,5 @@
 <?php
-
+// NO TRABAJAR CON ESTA CONECCION
 $host = "localhost";
 $user = "root";
 $pass = "";

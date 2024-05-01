@@ -1,7 +1,4 @@
-
 <?php require 'navbar.php'; ?>
-
-<body>
     <section class="content mt-3">
         <div class="row m-auto">
             <div class="col-sm">
@@ -93,9 +90,8 @@
                 </div>
             </div>
         </div>
-    </section>
-    <?php require 'footer.php'; ?>
-</body>
-<script src="js/buscador.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="js/ocultarMensaje.js"></script>
+        </section>    
+    <script src="js/buscador.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="js/ocultarMensaje.js"></script>
+<?php require 'footer.php'; ?>

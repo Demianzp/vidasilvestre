@@ -1,5 +1,4 @@
 <?php
-// Incluye el archivo de conexión
 require 'conn/connection.php';
 
 // Realiza la consulta para obtener las mesas de examen
@@ -12,13 +11,9 @@ $query = "SELECT mesa_examen.*,
           LEFT JOIN ciclo_lectivo ON mesa_examen.id_ciclo = ciclo_lectivo.id_ciclo
           LEFT JOIN tipo ON mesa_examen.id_tipo = tipo.id_tipo";
 $result = $db->query($query);
-// k
 ?>
+<!-- --------------------------------------------------- -->
 <?php require 'navbar.php'; ?>
-<!doctype html>
-<html lang="en">
-
-<body>
     <div class="container mt-3">
         <div class="card rounded-2 border-0">
             <di class="card-header pb-0 bg-dark text-white ">
@@ -66,8 +61,6 @@ $result = $db->query($query);
             </div>
         </div>
     </div>
-</body>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="js/ocultarMensaje.js"></script>
-
-</html>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="js/ocultarMensaje.js"></script>
+<?php require 'footer.php'; ?>   

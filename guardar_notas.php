@@ -22,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             VALUES 
             (:id_persona, :id_materia, :nota1, :nota2, :nota3, :nota4, :calif_regularidad, :calif_1_ex_final, :calif_2_ex_final, :calif_final, :ev_dic_1, :ev_dic_2, :ev_feb_1, :ev_feb_2, :calificacion_definitiva)
         ");
-
         // Ligar parámetros con valores del formulario
         $sqlInsert->bindParam(':id_persona', $id_persona, PDO::PARAM_INT);
         $sqlInsert->bindParam(':id_materia', $id_materia, PDO::PARAM_INT);
@@ -39,13 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $sqlInsert->bindParam(':ev_feb_1', $_POST['ev_feb_1'], PDO::PARAM_STR);
         $sqlInsert->bindParam(':ev_feb_2', $_POST['ev_feb_2'], PDO::PARAM_STR);
         $sqlInsert->bindParam(':calificacion_definitiva', $_POST['calificacion_definitiva'], PDO::PARAM_STR);
-
         // Ejecutar la declaración
         $sqlInsert->execute();
-
         // Confirmar la transacción después de operaciones exitosas
         $db->commit();
-
         echo "Las notas se insertaron con éxito.";
     } catch (Exception $e) {
         // Revertir la transacción y mostrar el mensaje de error
