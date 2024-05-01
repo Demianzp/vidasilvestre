@@ -26,18 +26,9 @@ if ($mensj3|| $error3) {
     exit();
 }
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoI6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <title>Desactivar Profesor</title>
-    <meta name="description" content="Desactivar profesor" />
-</head>
-<body>
-    <?php require 'navbar.php'; ?>
+<!-- -------------------------------------------- -->
 
+    <?php require 'navbar.php'; ?>
     <div class="body">
         <div class="panel">
             <h4>Desactivar </h4>
@@ -51,6 +42,4 @@ if ($mensj3|| $error3) {
             <?php } ?>
         </div>
     </div>
-    <?php require 'footer.php'; ?>
-</body>
-</html>
+<?php require 'footer.php'; ?>

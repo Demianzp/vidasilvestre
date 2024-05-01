@@ -1,13 +1,5 @@
-<!-- <!DOCTYPE html>
-<html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Selección de Materias</title>
-</head> -->
 <?php require 'navbar.php'; ?>
-
-<body>
     <section class="content mt-2">
         <div class="row m-auto ">
             <div class="col-sm">
@@ -28,7 +20,6 @@
                                 $username = "root";
                                 $password = "";
                                 $dbname = "vidasilvestre";
-
                                 // Crear conexión
                                 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -71,7 +62,6 @@
                                         </select>
                                     </div>
                                     <div class="col ">
-
                                         <?php
                                         // Mostrar la lista de materias disponibles
                                         echo "<h3>Selección de Materias:</h3>";
@@ -122,10 +112,7 @@
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
-</body>
-
-</html>
+<?php require 'footer.php'; ?>

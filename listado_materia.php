@@ -1,7 +1,6 @@
 <?php require 'navbar.php'; ?>
-<body>
-    
-    <section class="content mt-2">
+
+   <section class="content mt-2">
         <div class="row m-auto">
             <div class="col-sm">
                 <div class="card rounded-2 border-0">
@@ -30,6 +29,7 @@
                                     <th>Agregar Correlativa</th>
                                     <th>Acciones</th>
                                     <th>Listado de Alumnos</th>
+                                    <th>Ciclo Lectivo Actual</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,6 +58,7 @@
                                                 </div>
                                             </td>
                                             <td class="text-center"><a href="materia_alumno.php?id=<?php echo $materia['id_materia'] ?>" class="btn btn-success">Listado de Alumnos</a></td>
+                                            <td>**2024**</td>
                                         </tr>
                                 <?php
                                     }
@@ -79,11 +80,7 @@
                 </div>
             </div>
         </div>
-    </section>
-    <?php require 'footer.php'; ?>
-    
-</body>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script  src="js/ocultarMensaje.js"></script>
-</html>
-
+    </section>    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script  src="js/ocultarMensaje.js"></script>
+<?php require 'footer.php'; ?>   

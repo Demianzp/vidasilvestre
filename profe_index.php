@@ -12,14 +12,13 @@ if(isset($_GET['txt2ID'])){
 ?>
 <!-- ------------------------------------------ -->
 <?php require 'navbar.php'; ?>
-<body>
     <section class="content mt-3">
         <div class="row m-auto">
             <div class="col-sm">
                 <div class="card rounded-2 border-0">
                     <div class="card-header bg-dark text-white pb-0">
                         <h5 class="d-inline-block">Listado de Profesores</h5>
-                        <a class="btn btn-primary float-right mb-2" href="profesor.php">Agregar Profesor</a>
+                        <a class="btn btn-primary float-right mb-2" href="profe_crea.php">Agregar Profesor</a>
                     </div>                    
                     <div class="card-body table-responsive">
                         <!-- <button type="submit" class="btn btn-primary">Buscar</button> ------->
@@ -96,7 +95,6 @@ if(isset($_GET['txt2ID'])){
             </div>
         </div>
     </section>
-</body>
-<?php require 'footer.php'; ?>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="js/ocultarMensaje.js"></script>
+<?php require 'footer.php'; ?>   

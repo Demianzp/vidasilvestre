@@ -54,22 +54,8 @@ if ($infoMessage || $errorMessage) {
     exit();
 }
 ?>
-<!-- 
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edición de Profesor</title>
-    <meta name="description" content="Registro de Notas del Centro Escolar Profesor Lennin" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoI6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-</head> -->
+<!-- -------------------------------- -->
 <?php require 'navbar.php'; ?>
-<body>
-    
-    
     <div class="container mt-3">
         <div class="row m-auto">
             <div class="col-sm">
@@ -106,16 +92,12 @@ if ($infoMessage || $errorMessage) {
                                 <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
                                     <i class="fas fa-eye p-1"></i>
                                 </button>
-                            </div>
-                           
-                            <!-------------------------------------------------------------->
-                            
+                            </div>                          
+                            <!-------------------------------------------------------------->                            
                             <div class="mt-3 mb-2">
                                 <button type="submit" class="btn btn-primary" name="modificar" onclick="return confirm('¿Estás seguro de guardar los cambios?')">Guardar Cambios</button>
                                 <a class="btn btn-warning" href="listadoprofe.php">Ver Listado</a>
                             </div>
-                            
-
                             <?php
                             if (!empty($infoMessage)) {
                                 echo '<div class="alert alert-success" role="alert">' . $infoMessage . '</div>';
@@ -129,11 +111,8 @@ if ($infoMessage || $errorMessage) {
                 </div>
             </div>
         </div>
-    </div>
-    <?php require 'footer.php'; ?>
+    </div>    
     <script src="js/contraseña.js"></script>
     <script src="js/validacion.js"></script>
     <script src="js/validacion2.js"></script>
-</body>
-
-</html>
+<?php require 'footer.php'; ?>

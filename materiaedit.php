@@ -14,9 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $num_resolucion = $_POST['num_resolucion'];
         $plan_estudio = $_POST['plan_estudio'];
         $id_tipo = $_POST['id_tipo'];
-
         $consulta_actualizar = $db->prepare("UPDATE materia SET Nombre = ?, descripcion = ?, horas = ?, num_resolucion = ?, plan_estudio = ?, id_tipo = ? WHERE id_materia = ?");
-
         // Ejecutar la consulta
         if ($consulta_actualizar->execute([$nombre, $descripcion, $horas, $num_resolucion, $plan_estudio, $id_tipo, $id_materia])) {
             $infoMessage = 'Registro modificado correctamente';
@@ -28,16 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errorMessage = 'Falta el ID de la materia en el formulario.';
     }
 }
-
 // Verificar si se proporciona un ID válido en la URL
 if (isset($_GET['id'])) {
     $id_materia = $_GET['id'];
-
     // Consultar la materia con el ID proporcionado
     $consulta_materia = $db->prepare("SELECT * FROM materia WHERE id_materia = ?");
     $consulta_materia->execute([$id_materia]);
     $materia = $consulta_materia->fetch();
-
     // Verificar si se encontró la materia
     if (!$materia) {
         die('No se encontró la materia con el ID proporcionado.');
@@ -46,28 +41,14 @@ if (isset($_GET['id'])) {
     // Si no se proporciona un ID válido en la URL
     die('Ha ocurrido un error');
 }
-
 // Redirigir solo si hay mensajes para enviar
 if ($infoMessage || $errorMessage) {
     header("Location: listado_materia.php?mensaje=" . urlencode($infoMessage) . "&error=" . urlencode($errorMessage));
     exit();
 }
 ?>
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edición de Materia</title>
-    <meta name="description" content="Registro de Notas del Centro Escolar Materia Lennin" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoI6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crosigin="anonymous">
-</head>
-
-<body>
-    <?php require 'navbar.php'; ?>
-
+<!-- -------------------------------------------- -->
+<?php require 'navbar.php'; ?>
     <div class="container mt-3">
         <div class="row m-auto">
             <div class="col-sm">
@@ -107,8 +88,7 @@ if ($infoMessage || $errorMessage) {
                                     <option value="" disabled>Seleccione el Cuatrimestre</option>
                                     <option value="1" <?php echo ($materia['plan_estudio'] == 1) ? 'selected' : ''; ?>>1° Cuatrimestre</option>
                                     <option value="2" <?php echo ($materia['plan_estudio'] == 2) ? 'selected' : ''; ?>>2° Cuatrimestre</option>
-                                </select>
-                           
+                                </select>                           
                             <!-------------------------------------------------------------->
                             <div class="form-group">
                                 <label for="id_tipo">Tipo de Materia:</label>
@@ -119,9 +99,7 @@ if ($infoMessage || $errorMessage) {
                                     <option value="3" <?php echo ($materia['id_tipo'] == 3) ? 'selected' : ''; ?>>Libre</option>
                                 </select>
                             </div>
-
                             <!-------------------------------------------------------------->
-
                             <div class="mt-3 mb-2">
                                 <button type="submit" class="btn btn-primary" name="modificar" onclick="return confirm('¿Estás seguro de guardar los cambios?')">Guardar Cambios</button>
                                 <a class="btn btn-warning" href="listado_materia.php">Ver Listado</a>
@@ -132,10 +110,7 @@ if ($infoMessage || $errorMessage) {
             </div>
         </div>
     </div>
-    <?php require 'footer.php'; ?>
     <script src="js/contraseña.js"></script>
     <script src="js/validacion.js"></script>
     <script src="js/validacion2.js"></script>
-</body>
-
-</html>
+<?php require 'footer.php'; ?>   

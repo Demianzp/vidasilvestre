@@ -1,11 +1,4 @@
-<?php
-
-?>
-
-
 <?php require 'navbar.php'; ?>
-<body>
-  
     <div class="body">
         <div class="panel">
         <?php
@@ -23,8 +16,4 @@
             <h1 class="text-center">Centro Escolar Inicio</h1>
         </div>
     </div>
-
-    <?php require 'footer.php'; ?>
-
-</body>
-</html>
+<?php require 'footer.php'; ?>

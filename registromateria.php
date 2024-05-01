@@ -1,15 +1,12 @@
-<body>
-    <?php require 'navbar.php'; ?>
 
+<?php require 'navbar.php'; ?>
     <div class="container mt-2 " style="width: 40rem">
         <div class="row m-auto">
             <div class="col ">
                 <div class="card rounded-2 border-0">
                     <h5 class="card-header bg-dark text-white ">Registro de Materias</h5>
                     <div class="card-body">
-
                         <form action="procesar_materia.php" method="post" id="materiaForm">
-
                             <div class="form-group">
                                 <label for="nombre">Nombre:</label>
                                 <input type="text" class="form-control" data-name="Nombre" name="nombre" id="nombre" placeholder="Ingrese el Nombre" required autocomplete="off">
@@ -55,7 +52,6 @@
                             <button type="button" class="btn btn-primary" onclick="validarCampos()">Continuar</button>
                             <a type="button" class="btn btn-danger" href="listado_materia.php">Cancelar</a>
                         </form>
-
                         <div id="datosIngresados" style="display: none;">
                             <h5 class="mt-3">Datos Ingresados:</h5>
                             <table class="table">
@@ -78,6 +74,5 @@
 
         </div>
     </div>
-    <?php require 'footer.php'; ?>
     <script src="js/materia.js"></script>
-</body>
+<?php require 'footer.php'; ?>
