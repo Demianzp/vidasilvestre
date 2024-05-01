@@ -35,57 +35,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 <!-- ------------------------------------------------------------ -->
 <?php require 'navbar.php'; ?>
-    <div class="container mt-3 " style="width: 40rem">
-        <div class="row d-flex justify-content-center ">
-            <div class="col ">
+<!-- --------------------------------------------------->
+    <div class="container mt-3 " >
+        <div class="row">
+            <div class="col">
                 <div class="card rounded-2 border-0">
-                    <h5 class="card-header bg-dark text-white">Agregar Ciclo Lectivo</h5>
+                    <h5 class="card-header bg-dark text-white">Actualizar ciclo lectivo</h5>
                     <div class="card-body bg-light">                        
-                        <form action="ciclo_lectivo.php" method="post">
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="">Ciclo Lectivo Actual: </label>
-                                    <input type="text" class="form-control" name="inputname" value="2024" disabled>                               
-                                </div>
-                            </div>                        
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="genero">Ciclo lectivo</label>
-                                    <select name="genero" autocomplete="off" class="form-control" required>
-                                        <option value="" disabled selected>Seleccione Cilco Lectivo</option>
-                                        <option value="Masculino">Masculino</option>
-                                        <option value="Femenino">Femenino</option>
-                                        <option value="Otros">Otros</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">                               
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="ciclo">Nuevo Ciclo lectivo:</label>
-                                    <input type="text" class="form-control" data-name="ciclo" name="ciclo" id="ciclo" placeholder="Ingrese Ciclo Lectivo" required autocomplete="off">
-                                </div> 
-                            </div>
-                            <div class="col"></div>                                
-                        </div>                         
-                            <!-- ----------------------------
+                        <form action="" method="post">            
                             <div class="form-group">
-                                <label for="fecha">Fecha Inicio:</label>
-                                <input type="date" name="fecha" autocomplete="off" class="form-control" required>
-                            </div>
-                            - ---------------------------- 
+                                <label for="">Ciclo lectivo actual: </label>
+                                <input type="text" class="form-control" name="inputname" value="**2024**" disabled>  
+                                -------------------------- 
+                                <div class="text text-danger">AGREGAR A BASE DE DATOS DE CICLO LECTIVO "ciclo_actual" </div>   .
+                                --------------------------                         
+                            </div>                                
                             <div class="form-group">
-                                <label for="fecha_fin">Fecha Fin:</label>
-                                <input type="date" name="fecha_fin" autocomplete="off" class="form-control" required>
-                            </div>
-                            <br>  -->
-                            <input type="submit" class="btn btn-primary" value="Enviar">
+                                <label for="">Seleccione ciclo lectivo</label>
+                                <select name="" autocomplete="off" class="form-control" >
+                                    <option value="" disabled selected>Seleccione Cilco Lectivo</option>
+                                    <option value="**2023**">**2023***</option>
+                                    <option value="**2023**">**2023***</option>
+                                    <option value="**2023**">**2023***</option>
+                                </select>
+                            </div>                                
+                                <input type="submit" class="btn btn-success" value="Actualizar">
                         </form>
                     </div>
                 </div>
             </div>
+            <!-- --------------------------------------------------->
+            <div class="col">
+                <div class="card rounded-2 border-0">
+                    <h5 class="card-header bg-dark text-white">Agregar ciclo lectivo</h5>
+                    <div class="card-body bg-light">                
+                        <form action="" method="post">       
+                            <div class="form-group">
+                                <label for="ciclo">Agreagar nuevo ciclo lectivo:</label>
+                                <input type="text" class="form-control" data-name="ciclo" name="ciclo" id="ciclo" placeholder="Ingrese Ciclo Lectivo" required autocomplete="off">
+                            </div>
+                            <input type="submit" class="btn btn-primary" value="Agregar">
+                        </form>                        
+                    </div>           
+                </div>
+            </div>
         </div>
     </div>
+    <!-- --------------------------------------------------->
 <?php require 'footer.php'; ?>
