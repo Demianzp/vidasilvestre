@@ -92,50 +92,50 @@ if(!isset($_SESSION['nombre'])){
     <!-- ------------------------------------- -->
       <div style="height:60px">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-          <div class="container-fluid ">
+          <div class="container-fluid ml-2 ">
             <a href="inicio.view.php" class="navbar-brand mb-0 pr-3 ">
-              <img class="d-line-block align-top " src="img/vida-silvestre.png" width="150px" style="margin-right:10px">
+              <img class="d-line-block align-top " src="img/vida-silvestre.png" width="130px" style="margin-right:10px">
             </a>
             <!-- Toggle Btn-->
             <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" class="navbar-toggler shadow-none border-0 bg-dark" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <!-- SideBar -->
+            <!-- ------------------------------------------------------- -->
             <div class="collapse navbar-collapse " id="navbarNav">
-              <ul class="navbar-nav ">
+              <ul class="navbar-nav mr-auto ">
                 <!-- ------------------------------------------------------- -->
-                <li class="nav-item dropdown pr-3">
-                  <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <li class="nav-item  pr-3">
+                  <a class="nav-link   " href="alumno_index.php">
                     Alumnos
                   </a>
-                  <ul class="dropdown-menu">
-                    <!-- <li><a class="dropdown-item" href="inscripcion_alumno.php">Inscripcion Alumno</a></li> -->
+                  <!-- <ul class="dropdown-menu">
+                     <li><a class="dropdown-item" href="inscripcion_alumno.php">Inscripcion Alumno</a></li>
                     <li><a class="dropdown-item" href="listadoalumnos.view.php">Listar Alumnos </a></li>
                     <li><a class="dropdown-item" href="seleccionar_alumnos.php">Inscripcion a Materia</a></li>
-                  </ul>
+                  </ul> -->
                 </li>
                 <!-- ------------------------------------------------------- -->
-                <li class="nav-item active pr-3">
-                  <a class="nav-link" href="notas.view.php">Notas </a>
-                </li>
-                <li class="nav-item dropdown pr-3 ">
-                  <!-- Nueva parte de agregar notas  -->
-                  <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <li class="nav-item dropdown pr-3">
+                  <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Profesor
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="listadoprofe.php">Listado Profesor</a></li>
+                    <li><a class="dropdown-item" href="profe_index.php">Listado Profesor</a></li>
                     <li><a class="dropdown-item" href="lista_A.php">Listado de Asignaciones</a></li>
                   </ul>
                 </li>
                 <!-- ------------------------------------------------------- -->
-                <li class="nav-item active pr-3">
-                  <a class="nav-link" href="listado_materia.php">Materias </a>
+                <li class="nav-item  pr-3">
+                  <a class="nav-link" href="notas.view.php">Notas </a>
+                </li>
+                <li class="nav-item dropdown pr-3 ">
+                <!-- ------------------------------------------------------- -->
+                <li class="nav-item  pr-3">
+                  <a class="nav-link " href="listado_materia.php">Materias </a>
                 </li>
                 <!-- ------------------------------------------------------- -->
                 <li class="nav-item dropdown pr-3 ">
-                  <!-- Nueva parte de agregar notas  -->
-                  <a class="nav-link dropdown-toggle active me-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Mesa y Acta
                   </a>
                   <ul class="dropdown-menu">
@@ -145,17 +145,29 @@ if(!isset($_SESSION['nombre'])){
                   </ul>
                 </li>
                 <!-- ------------------------------------------------------- -->
-                <li class="nav-item active pr-3">
-                  <a class="nav-link" href="ciclo_lectivo.php">Cliclo lectivo</span></a>
+                <li class="nav-item  pr-3">
+                  <a class="nav-link" href="ciclo_lectivo.php">Cliclo lectivo</a>
                 </li>
                 <!-- ------------------------------------------------------- -->
               </ul>
-              <div class="ml-auto" id="salir">          
-                <a 
-                class="btn text-white text-decoration-none  py-1 px-3  mr-5 rounded-1 fw-semibold" 
-                role="button" 
-                href="javascript:cerrar()">Salir</a>
-              </div>
+              <form class="form-inline">
+              <div class="collapse navbar-collapse " id="navbarNav">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown pr-3 ">
+                  <a class="nav-link dropdown-toggle active " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <!-- iconos sacados de "fontawesome" -->
+                    <i class="fas fa-user pr-2"></i>
+                      Nombre,Apellido
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <!-- <li><a class="dropdown-item" href="#"> <i class="fas fa-user-alt pe-2"></i>My Profile</a></li> -->
+                    <li><a class="dropdown-item" href="#"> <i class="fas fa-cog pe-2"></i>Configuración</a></li>
+                    <li><a class="dropdown-item" href="javascript:cerrar()"> <i class="fa fa-power-off pe-2"></i>Cerrar Sesión</a></li>
+                  </ul>
+                </li>
+                </div>
+                </ul>
+              </form>
             </div>
           </div>
         </nav>

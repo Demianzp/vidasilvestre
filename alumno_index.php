@@ -18,7 +18,7 @@ if(isset($_GET['txtID'])){
                 <div class="card rounded-2 border-0">
                     <div class="card-header pb-0 bg-dark text-white ">
                         <h5 class="d-inline-block ">Listado de Alumnos</h5>
-                        <a class="btn btn-primary float-right mb-2" href="alumnos.view.php">Agregar Alumno</a>
+                        <a class="btn btn-primary float-right mb-2" href="alumno_crea.php">Agregar Alumno</a>
                     </div>                    
                     <!-- -------------------- -->
                     <div class="card-body table-responsive">
@@ -61,11 +61,11 @@ if(isset($_GET['txtID'])){
                                                 <!-- <td></td> -->
                                                 <td class="text-center">
                                                     <div class="btn-group">
-                                                        <a href="" class="btn btn-info btn-sm" type="button">Historial</a>
-                                                        <a href="" class="btn btn-primary btn-sm" type="button">
+                                                        <a href="alumno_estado.php" class="btn btn-info btn-sm" type="button">Estado</a>
+                                                        <!-- <a href="" class="btn btn-primary btn-sm" type="button">
                                                             <i class="fas fa-eye"></i>                                                        
-                                                        </a>  
-                                                        <a href="alumnoedit.view.php?id=<?php echo $alumno['id_persona'];?>"class="btn btn-warning btn-sm" type="button">
+                                                        </a>   -->
+                                                        <a href="alumno_edit.php?id=<?php echo $alumno['id_persona'];?>"class="btn btn-warning btn-sm" type="button">
                                                             <i class="fas fa-edit"></i>
                                                         </a>   
                                                         <a href="javascript:elimianar(<?php echo $alumno['id_persona'];?>);" class="btn btn-danger btn-sm" type="button">                                                            

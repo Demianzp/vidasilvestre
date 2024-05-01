@@ -18,7 +18,7 @@ if(isset($_GET['txt2ID'])){
                 <div class="card rounded-2 border-0">
                     <div class="card-header bg-dark text-white pb-0">
                         <h5 class="d-inline-block">Listado de Profesores</h5>
-                        <a class="btn btn-primary float-right mb-2" href="profesor.php">Agregar Profesor</a>
+                        <a class="btn btn-primary float-right mb-2" href="profe_crea.php">Agregar Profesor</a>
                     </div>                    
                     <div class="card-body table-responsive">
                         <!-- <button type="submit" class="btn btn-primary">Buscar</button> ------->

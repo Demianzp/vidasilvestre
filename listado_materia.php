@@ -29,6 +29,7 @@
                                     <th>Agregar Correlativa</th>
                                     <th>Acciones</th>
                                     <th>Listado de Alumnos</th>
+                                    <th>Ciclo Lectivo Actual</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,6 +58,7 @@
                                                 </div>
                                             </td>
                                             <td class="text-center"><a href="materia_alumno.php?id=<?php echo $materia['id_materia'] ?>" class="btn btn-success">Listado de Alumnos</a></td>
+                                            <td>**2024**</td>
                                         </tr>
                                 <?php
                                     }
