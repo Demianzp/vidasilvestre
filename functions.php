@@ -8,7 +8,7 @@ if ( isset($_COOKIE["activo"]) && isset($_SESSION['username'])) {
     http_response_code(403);
     header('location:index.php?err=2');
 }
-//importamos el archivo que contiene la variable de conexion a la base de datos
+//importamos el archivo que contiene la variable de conexioon a la base de datos
 require 'conn/connection.php';
 
 //para verificar que tiene acceso a un archivo
