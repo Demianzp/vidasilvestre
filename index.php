@@ -81,13 +81,13 @@ if($_POST){
                 <div class="input-group-text bg-info">
                     <img src="img/username-icon.svg" alt="username-icon" style="height: 1rem" />
                 </div>
-                <input class="form-control bg-light" type="text" placeholder="Email" name="email" autocomplete="off" required />
+                <input class="form-control bg-light" type="text" placeholder="Email" name="email" required />
             </div>
             <div class="input-group mt-2">
                 <div class="input-group-text bg-info">
                     <img src="img/padlock-svgrepo-com.svg" alt="password-icon" style="height: 1rem" />
                 </div>
-                <input class="form-control bg-light" type="password" placeholder="Contraseña" name="contrasena" id="password" autocomplete="off" required />
+                <input class="form-control bg-light" type="password" placeholder="Contraseña" name="contrasena" id="password" required />
                 <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
                     <i class="fas fa-eye p-1"></i>
                 </button>
