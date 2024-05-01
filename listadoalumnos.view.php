@@ -69,7 +69,7 @@ if(isset($_GET['txtID'])){
                                                         <a href="alumnoedit.view.php?id=<?php echo $alumno['id_persona'];?>"class="btn btn-warning btn-sm" type="button">
                                                             <i class="fas fa-edit"></i>
                                                         </a>   
-                                                        <a href="javascript:elimianar(<?php echo $alumno['id_persona'];?>);"class="btn btn-danger btn-sm" type="button">                                                            
+                                                        <a href="javascript:elimianar(<?php echo $alumno['id_persona'];?>);" class="btn btn-danger btn-sm" type="button">                                                            
                                                             <i class="fas fa-trash"></i>
                                                         </a> 
                                                     </div>  
@@ -94,5 +94,5 @@ if(isset($_GET['txtID'])){
     <?php require 'footer.php'; ?>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="js/ocultarMensaje.js"></script>    
+<script src="js/ocultarMensaje.js"></script>    
 </html>
