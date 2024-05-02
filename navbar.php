@@ -105,7 +105,7 @@ if(!isset($_SESSION['nombre'])){
               <ul class="navbar-nav mr-auto ">
                 <!-- ------------------------------------------------------- -->
                 <li class="nav-item  pr-3">
-                  <a class="nav-link   " href="alumno_index.php">
+                  <a class="nav-link" href="alumno_index.php">
                     Alumnos
                   </a>
                   <!-- <ul class="dropdown-menu">
@@ -116,7 +116,7 @@ if(!isset($_SESSION['nombre'])){
                 </li>
                 <!-- ------------------------------------------------------- -->
                 <li class="nav-item dropdown pr-3">
-                  <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Profesor
                   </a>
                   <ul class="dropdown-menu">
@@ -150,24 +150,26 @@ if(!isset($_SESSION['nombre'])){
                 </li>
                 <!-- ------------------------------------------------------- -->
               </ul>
+              <!-- ----------------------------------------------------- -->
               <form class="form-inline">
-              <div class="collapse navbar-collapse " id="navbarNav">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown pr-3 ">
-                  <a class="nav-link dropdown-toggle active " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <!-- iconos sacados de "fontawesome" -->
-                    <i class="fas fa-user pr-2"></i>
-                      Nombre,Apellido
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <!-- <li><a class="dropdown-item" href="#"> <i class="fas fa-user-alt pe-2"></i>My Profile</a></li> -->
-                    <li><a class="dropdown-item" href="#"> <i class="fas fa-cog pe-2"></i>Configuración</a></li>
-                    <li><a class="dropdown-item" href="javascript:cerrar()"> <i class="fa fa-power-off pe-2"></i>Cerrar Sesión</a></li>
+                <div class="collapse navbar-collapse " id="navbarNav">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown pr-3 ">
+                      <a class="nav-link dropdown-toggle active " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <!-- iconos sacados de "fontawesome" -->
+                      <i class="fas fa-user pr-2"></i>
+                        Nombre,Apellido
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <!-- <li><a class="dropdown-item" href="#"> <i class="fas fa-user-alt pe-2"></i>My Profile</a></li> -->
+                        <li><a class="dropdown-item" href="#"> <i class="fas fa-cog pe-2"></i>Configuración</a></li>
+                        <li><a class="dropdown-item" href="javascript:cerrar()"> <i class="fa fa-power-off pe-2"></i>Cerrar Sesión</a></li>
+                      </ul>
+                    </li>                    
                   </ul>
-                </li>
                 </div>
-                </ul>
               </form>
+              <!-- ----------------------------------------------------- -->
             </div>
           </div>
         </nav>
