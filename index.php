@@ -1,6 +1,7 @@
 <?php
 require 'conn/connection.php'; // Asegúrate de que el archivo de conexión esté en la ubicación correcta
 session_start();
+
 if($_POST){
     $messages = [
         "1" => "Credenciales incorrectas",
@@ -25,8 +26,9 @@ if($_POST){
                 // Credenciales válidas, redirigir al usuario a la página de inicio
                 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
                 // Establecer información del usuario en la sesión
-                $_SESSION["id_rol"] = $usuario['id_rol']; // Almacena el ID de rol del usuario
-                $_SESSION["nombre"] = $usuario['nombre']; // Almacena el nombre del usuario
+                $_SESSION['id_persona'] = $usuario['id_persona'];
+                $_SESSION['nombre'] = $usuario['nombre'];
+                $_SESSION['apellido'] = $usuario['apellido'];
                 if ($usuario['id_rol'] == 1) {
                     // Configura un mensaje de "No tienes permisos" en la variable de sesión
                     $_SESSION['message'] = $messages[3];

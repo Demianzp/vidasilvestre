@@ -7,7 +7,7 @@ if(isset($_GET['txtID'])){
   $sentencia->bindParam(':id',$txtID);
   $sentencia->execute();
   $mensaje="Registro eliminado";
-  header("Location:listadoalumnos.view.php?mensaje=".$mensaje);
+  header("Location:alumno_index.php?mensaje=".$mensaje);
 }
 ?>
 <!-- ------------------------------------------ -->
@@ -65,10 +65,10 @@ if(isset($_GET['txtID'])){
                                                         <!-- <a href="" class="btn btn-primary btn-sm" type="button">
                                                             <i class="fas fa-eye"></i>                                                        
                                                         </a>   -->
-                                                        <a href="alumno_edit.php?id=<?php echo $alumno['id_persona'];?>"class="btn btn-warning btn-sm" type="button">
+                                                        <a href="alumno_edit.php?id=<?php echo $alumno['id_persona'];?>"class="btn btn-warning btn-sm" type="button" title="Editar">
                                                             <i class="fas fa-edit"></i>
                                                         </a>   
-                                                        <a href="javascript:elimianar(<?php echo $alumno['id_persona'];?>);" class="btn btn-danger btn-sm" type="button">                                                            
+                                                        <a href="javascript:eliminar(<?php echo $alumno['id_persona'];?>);" class="btn btn-danger btn-sm" type="button" title="Borrar">                                                            
                                                             <i class="fas fa-trash"></i>
                                                         </a> 
                                                     </div>  
