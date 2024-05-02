@@ -1,4 +1,4 @@
-function elimianar (id_persona){
+function eliminar (id_persona){
   Swal.fire({
       icon: "error",
       title: "¿Borrar?",        
@@ -8,8 +8,8 @@ function elimianar (id_persona){
       cancelButtonColor: '#dc3545',     
     }).then((result) => {        
       if (result.isConfirmed) {
-        window.location="listadoalumnos.view.php?txtID="+id_persona;
-        window.location="listadoprofe.php?txt2ID="+id_persona;
+        window.location="alumno_index.php?txtID="+id_persona;
+        window.location="profe_index.php?txt2ID="+id_persona;
       } 
     });
 }

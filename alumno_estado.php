@@ -6,7 +6,7 @@
         <div class="col-sm">
             <div class="card rounded-2 border-0">
                 <div class="card-header bg-dark text-white pb-0">
-                    <h5 class="d-inline-block">*Nombre del Apellido y Nombre del alumno*</h5>
+                    <h5 class="d-inline-block">*Nombre y Apellido del alumno*</h5>
                     <a class="btn btn-primary float-right mb-2" href="">Información</a>                    
                 </div>
                 <div class="card-body table-responsive">
@@ -26,8 +26,23 @@
                             <tr>
                                 <td>1</td>
                                 <td>lengua</td>
-                                <td>                                    
-                                    <a class="btn btn-primary btn-sm btn-block" href="">Inscribir</a>
+                                <td>
+                                    <style>
+                                        #text{
+                                            display: none;
+                                        }
+                                    </style>   
+                                    <button id="boton" onclick="mostrar();" class="btn btn-danger btn-sm btn-block" href="">Inscribir</button>                                 
+                                    <!-- <a class="btn btn-danger btn-sm btn-block" href="">Inscribir</a> -->
+                                    <div id="text" class="bg-success text-white text-center" >
+                                        Inscripto
+                                    </div>
+                                    <script>
+                                        function mostrar(){
+                                            document.getElementById('text').style.display='block';
+                                            document.getElementById('boton').style.display='none';
+                                        }                                     
+                                    </script>
                                 </td>
                                 <td>nota1</td>
                                 <td>nota1</td>

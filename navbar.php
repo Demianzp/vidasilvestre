@@ -99,16 +99,20 @@
         <!-- ------------------------------------------------------- -->
         <div class="collapse navbar-collapse " id="navbarNav">
           <ul class="navbar-nav mr-auto ">
-            <!-- ------------------------------------------------------- -->
-            <li class="nav-item  pr-3">
-              <a class="nav-link   " href="alumno_index.php">
-                Alumnos
-              </a>
-              <!-- <ul class="dropdown-menu">
+
+            <div class="collapse navbar-collapse " id="navbarNav">
+              <ul class="navbar-nav mr-auto ">
+                <!-- ------------------------------------------------------- -->
+                <li class="nav-item  pr-3">
+                  <a class="nav-link" href="alumno_index.php">
+                    Alumnos
+                  </a>
+                  <!-- <ul class="dropdown-menu">
                      <li><a class="dropdown-item" href="inscripcion_alumno.php">Inscripcion Alumno</a></li>
                     <li><a class="dropdown-item" href="listadoalumnos.view.php">Listar Alumnos </a></li>
                     <li><a class="dropdown-item" href="seleccionar_alumnos.php">Inscripcion a Materia</a></li>
                   </ul> -->
+
             </li>
             <!-- ------------------------------------------------------- -->
             <li class="nav-item dropdown pr-3">
@@ -163,6 +167,7 @@
                 <li><a class="dropdown-item" href="javascript:cerrar()"> <i class="fa fa-power-off pe-2"></i>Cerrar Sesión</a></li>
               </ul>
               </li>
+
             </div>
             </ul>
           </form>
