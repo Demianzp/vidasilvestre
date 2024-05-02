@@ -4,7 +4,7 @@
         <?php
         if (isset($_SESSION["authenticated"]) && $_SESSION["authenticated"] === true) {
             // Usuario autenticado, mostrar el contenido protegido
-            echo "Bienvenido, usuario autenticado.<br>";
+            echo "Bienvenido, usuario autenticado.  <br>";
             // Puedes agregar más contenido aquí.
         } else {
             // Si el usuario no ha iniciado sesión, mostrar el formulario de inicio de sesión y mensajes de error si las credenciales son incorrectas
