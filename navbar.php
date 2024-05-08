@@ -1,4 +1,8 @@
-<?php session_start(); ?>
+<?php session_start();
+if(!isset($_SESSION['nombre'])){
+  header("Location:index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -96,8 +100,8 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <!-- ------------------------------------------------------- -->
-        <div class="collapse navbar-collapse " id="navbarNav">
-          <ul class="navbar-nav mr-auto ">
+        <div class="collapse navbar-collapse d-flex" id="navbarNav">
+          <ul class="navbar-nav mr-auto flex-grow-1 bd-highlight">
 
             <div class="collapse navbar-collapse " id="navbarNav">
               <ul class="navbar-nav mr-auto ">
@@ -111,7 +115,6 @@
                     <li><a class="dropdown-item" href="listadoalumnos.view.php">Listar Alumnos </a></li>
                     <li><a class="dropdown-item" href="seleccionar_alumnos.php">Inscripcion a Materia</a></li>
                   </ul> -->
-
             </li>
             <!-- ------------------------------------------------------- -->
             <li class="nav-item dropdown pr-3">
@@ -149,14 +152,15 @@
             </li>
             <!-- ------------------------------------------------------- -->
           </ul>
-          <form class="form-inline">
-            <div class="collapse navbar-collapse " id="navbarNav">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown pr-3 ">
-                  <a class="nav-link dropdown-toggle active " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <!-- ------------------------------------------------------- -->
+          <form class="form-inline d-flex justify-content-end">
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <!-- iconos sacados de "fontawesome" -->
-                    <?php if (isset($_SESSION['nombre']) && isset($_SESSION['apellido'])) : ?>
                     <i class="fas fa-user pr-2"></i>
+                    <?php if (isset($_SESSION['nombre']) && isset($_SESSION['apellido'])) : ?>                    
                     <?php echo $_SESSION['nombre'] . ' ' . $_SESSION['apellido']; ?>
                     <?php endif; ?>
                     </a>
@@ -166,12 +170,11 @@
                 <li><a class="dropdown-item" href="javascript:cerrar()"> <i class="fa fa-power-off pe-2"></i>Cerrar Sesión</a></li>
               </ul>
               </li>
-
             </div>
             </ul>
           </form>
+          <!-- ------------------------------------------------------- -->
         </div>
       </div>
     </nav>
   </div>
-</body>
