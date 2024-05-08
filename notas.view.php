@@ -67,7 +67,7 @@ if (isset($_GET['revisar'])) {
                                 <select class="form-select" name="materia" required>
                                     <option value="" disabled selected>Seleccione la Materia</option>
                                     <?php foreach ($materias as $materia) : ?>
-                                        <option value="<?php echo $materia['id_materia']; ?>"><?php echo $materia['nombre']; ?></option>
+                                        <option value="<?php echo $materia['id_materia']; ?>"><?php echo $materia['Nombre']; ?></option>
                                     <?php endforeach; ?>
                                 </select>
                                 <label class="font-weight-bold">Seleccione Ciclo</label>
