@@ -1,5 +1,5 @@
 <?php
-require 'conn/connection.php';
+require '../../conn/connection.php';
 if(isset($_GET['id']) && !empty($_GET['id'])) {
     $materia_id = $_GET['id'];
     try {

@@ -1,7 +1,16 @@
 <?php
 // Conexión a la base de datos
-require 'conn/connection.php'; 
-
+require '../../conn/connection.php'; 
+//-------------BORRADO------------------ 
+if(isset($_GET['txtID'])){
+    $txtID=(isset($_GET['txtID']))?$_GET['txtID']:"";
+    $sentencia=$db->prepare("UPDATE materia SET estado = 'Inactivo' WHERE id_materia = :id" );
+    $sentencia->bindParam(':id',$txtID);
+    $sentencia->execute();
+    $mensaje="Registro eliminado";
+    header("Location:materia_index.php?mensaje=".$mensaje);
+  }
+// --------------------------------------------------------------
 // Inicializar la variable del ciclo actual antes de usarla
 $ciclo_actual = null;
 
@@ -32,7 +41,7 @@ require 'navbar.php';
             <div class="card rounded-2 border-0">
                 <div class="card-header bg-dark text-white pb-0">
                     <h5 class="d-inline-block">Listado de Materias y Correlativas</h5>
-                    <a class="btn btn-primary float-right mb-2" href="registromateria.php">Registro de Materia</a>
+                    <a class="btn btn-primary float-right mb-2" href="materia_crea.php">Registro de Materia</a>
                 </div>
                 
                 <!-- Mostrar el ciclo lectivo actual -->
@@ -89,7 +98,7 @@ require 'navbar.php';
                                         </td>
                                         <td class="text-center">
                                             <div class="btn-group">
-                                                <a href="materiaedit.php?id=<?php echo htmlspecialchars($materia['id_materia'], ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-warning" role="button"><i class="fas fa-edit"></i></a>
+                                                <a href="materia_edit.php?id=<?php echo htmlspecialchars($materia['id_materia'], ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-warning" role="button"><i class="fas fa-edit"></i></a>
                                                 <a href="materiadelet.php?id=<?php echo htmlspecialchars($materia['id_materia'], ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-danger" role="button"><i class="fas fa-trash"></i></a>
                                             </div>
                                         </td>
