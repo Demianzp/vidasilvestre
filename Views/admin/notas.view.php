@@ -22,11 +22,11 @@ if (isset($_GET['revisar'])) {
                 p.id_persona, 
                 CONCAT(p.apellido, ', ', p.nombre) AS nombre,
                 m.nombre AS materia,
-                n.nota1,
-                n.nota2,
-                n.nota3,
-                n.nota4,
-                AVG((n.nota1 + n.nota2 + n.nota3 + n.nota4) / 4) AS promedio
+                n.Nota_1,
+                n.Nota_2,
+                n.Nota_3,
+                n.Nota_4,
+                AVG((n.Nota_1 + n.Nota_2 + n.Nota_3 + n.Nota_4) / 4) AS promedio
             FROM
                 persona p
             JOIN

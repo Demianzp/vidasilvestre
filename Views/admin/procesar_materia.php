@@ -46,5 +46,5 @@ try {
 }
 
 // Redirigir a la página "listado_materia.php" con los mensajes en la URL
-header("Location: listado_materia.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
+header("Location:materia_index.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
 exit();

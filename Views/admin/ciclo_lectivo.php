@@ -80,13 +80,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     }
                 }
                 // Redireccionar después de actualizar
-                header("Location: " . $_SERVER['PHP_SELF']);
+                header("Location:ciclo_lectivo.php " . $_SERVER['PHP_SELF']);
                 exit();
                 break;
 
             default:
                 $_SESSION['mensaje'] = "Acción no reconocida.";
-                header("Location: " . $_SERVER['PHP_SELF']);  // Redireccionar para evitar estado incorrecto
+                header("Location:ciclo_lectivo.php" . $_SERVER['PHP_SELF']);  // Redireccionar para evitar estado incorrecto
                 exit();
         }
     }
