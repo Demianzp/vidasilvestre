@@ -1,5 +1,5 @@
 <?php
-require 'conn/connection.php';
+require '../../conn/connection.php';
 // Inicializar la variable para evitar advertencias
 $alumnos = [];
 // Consulta de materias y ciclos activos

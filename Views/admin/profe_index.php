@@ -1,17 +1,18 @@
 <?php
-require 'conn/connection.php';
+require '../../conn/connection.php';
 //-------------BORRADO------------------ 
-if(isset($_GET['txt2ID'])){
-  $txt2ID=(isset($_GET['txt2ID']))?$_GET['txt2ID']:"";
-  $sentencia=$db->prepare("UPDATE persona SET estado = 'Inactivo' WHERE id_persona = :id" );
-  $sentencia->bindParam(':id',$txt2ID);
-  $sentencia->execute();
-  $mensaje="Registro eliminado";
-  header("Location:listadoprofe.php?mensaje=".$mensaje);
-}
+// if(isset($_GET['txt2ID'])){
+//   $txt2ID=(isset($_GET['txt2ID']))?$_GET['txt2ID']:"";
+//   $sentencia=$db->prepare("UPDATE persona SET estado = 'Inactivo' WHERE id_persona = :id" );
+//   $sentencia->bindParam(':id',$txt2ID);
+//   $sentencia->execute();
+//   $mensaje="Registro eliminado22222";
+//   header("Location:profe_index.php?mensaje=".$mensaje);
+// }
 ?>
 <!-- ------------------------------------------ -->
 <?php require 'navbar.php'; ?>
+
     <section class="content mt-3">
         <div class="row m-auto">
             <div class="col-sm">

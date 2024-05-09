@@ -50,7 +50,7 @@
                                 </select>
                             </div>
                             <button type="button" class="btn btn-primary" onclick="validarCampos()">Continuar</button>
-                            <a type="button" class="btn btn-danger" href="listado_materia.php">Cancelar</a>
+                            <a type="button" class="btn btn-danger" href="materia_index.php">Cancelar</a>
                         </form>
                         <div id="datosIngresados" style="display: none;">
                             <h5 class="mt-3">Datos Ingresados:</h5>
@@ -66,7 +66,7 @@
                                 </tbody>
                             </table>
                             <button type="button" class="btn btn-success" onclick="registrarMateria()">Registrar</button>
-                            <a href="listado_materia.php?mensajeCancelacion=<?= urlencode('Se canceló la carga de materia') ?>" class="btn btn-secondary">Cancelar</a>
+                            <a href="materia_index.php?mensajeCancelacion=<?= urlencode('Se canceló la carga de materia') ?>" class="btn btn-secondary">Cancelar</a>
                         </div>
                     </div>
                 </div>

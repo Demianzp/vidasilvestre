@@ -1,6 +1,6 @@
 <?php session_start();
 if(!isset($_SESSION['nombre'])){
-  header("Location:index.php");
+  header("Location:../home.php");
 }
 ?>
 <!DOCTYPE html>
@@ -9,11 +9,11 @@ if(!isset($_SESSION['nombre'])){
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instituto Superior Vida Silvestre</title>
-  <link rel="shortcut icon" href="img/LOGO.png" />
+  <link rel="shortcut icon" href="../../img/LOGO.png" />
   <!--font awesome con CDN para iconos-->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
   <!-- -----------ARCHIVO CSS----------- -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../../css/style.css">
   <!-- ---------FIN ARCHIVO CSS----------- -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -45,12 +45,12 @@ if(!isset($_SESSION['nombre'])){
   <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.3/js/buttons.html5.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.3/js/buttons.print.min.js"></script>
   <!-- Bootstrap-->
-  <script defer src="js/tabla.js"></script>
+  <script defer src="../../js/tabla.js"></script>
   <!-- ------------FIN-DATATABLES----- -->
   <!-- -------------sweetalert2(alertas emergentes)------------------   -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="js/alertas.js"></script>
+  <script src="../../js/alertas.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Roboto&display=swap');
   </style>
@@ -93,7 +93,7 @@ if(!isset($_SESSION['nombre'])){
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container-fluid ml-2 ">
         <a href="inicio.view.php" class="navbar-brand mb-0 pr-3 ">
-          <img class="d-line-block align-top " src="img/vida-silvestre.png" width="130px" style="margin-right:10px">
+          <img class="d-line-block align-top " src="../../img/vida-silvestre.png" width="130px" style="margin-right:10px">
         </a>
         <!-- Toggle Btn-->
         <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" class="navbar-toggler shadow-none border-0 bg-dark" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -133,7 +133,7 @@ if(!isset($_SESSION['nombre'])){
             <li class="nav-item dropdown pr-3 ">
               <!-- ------------------------------------------------------- -->
             <li class="nav-item  pr-3">
-              <a class="nav-link " href="listado_materia.php">Materias </a>
+              <a class="nav-link " href="materia_index.php">Materias </a>
             </li>
             <!-- ------------------------------------------------------- -->
             <li class="nav-item dropdown pr-3 ">
@@ -160,6 +160,7 @@ if(!isset($_SESSION['nombre'])){
                   <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <!-- iconos sacados de "fontawesome" -->
                     <i class="fas fa-user pr-2"></i>
+                    Alumno:
                     <?php if (isset($_SESSION['nombre']) && isset($_SESSION['apellido'])) : ?>                    
                     <?php echo $_SESSION['nombre'] . ' ' . $_SESSION['apellido']; ?>
                     <?php endif; ?>

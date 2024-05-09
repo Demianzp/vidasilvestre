@@ -1,5 +1,5 @@
 <?php
-require 'conn/connection.php';
+require '../../conn/connection.php';
 
 $infoMessage = '';
 $errorMessage = '';

@@ -1,7 +1,7 @@
 <?php
 // Inicia la sesión para usar variables de sesión para mensajes
 // Conexión a la base de datos
-require 'conn/connection.php';
+require '../../conn/connection.php';
 
 // Obtener el ciclo lectivo actual
 $ciclo_actual = null;

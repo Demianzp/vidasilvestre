@@ -8,8 +8,8 @@ function eliminar (id_persona){
       cancelButtonColor: '#dc3545',     
     }).then((result) => {        
       if (result.isConfirmed) {
-        window.location="alumno_index.php?txtID="+id_persona;
-        window.location="profe_index.php?txt2ID="+id_persona;
+        window.location="../Views/admin/alumno_index.php?txtID="+id_persona;
+        // window.location="../Views/admin/profe_index.php?txt2ID="+id_persona;
       } 
     });
 }
@@ -28,7 +28,7 @@ function cerrar (){
       }
     }).then((result) => {        
       if (result.isConfirmed) {
-        window.location="logout.php";
+        window.location="../Views/logout.php";
       } 
     });    
 }

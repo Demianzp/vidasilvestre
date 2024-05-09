@@ -1,5 +1,5 @@
 <?php
-require 'conn/connection.php';
+require '../../conn/connection.php';
 $mensaje = "";
 $error = "";
 // Realizar la consulta SQL para obtener las materias

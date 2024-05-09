@@ -1,5 +1,5 @@
 <?php
-require 'conn/connection.php';
+require '../../conn/connection.php';
 
 if (isset($_POST['guardar_notas'])) {
     var_dump($_POST);
