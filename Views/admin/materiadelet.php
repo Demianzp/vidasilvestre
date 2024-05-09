@@ -1,5 +1,5 @@
 <?php
-require 'conn/connection.php';
+require '../../conn/connection.php';
 $inMessage = '';
 $errMessage = '';
 if (isset($_GET['id'])) {
@@ -22,7 +22,7 @@ if (isset($_GET['id'])) {
 
 // Redirigir solo si hay mensajes para enviar
 if ($inMessage || $errMessage) {
-    header("Location: listado_materia.php?mensaje=" . urlencode($inMessage) . "&error=" . urlencode($errMessage));
+    header("Location: materia_index.php?mensaje=" . urlencode($inMessage) . "&error=" . urlencode($errMessage));
     exit();
 }
 ?>
@@ -44,9 +44,9 @@ if ($inMessage || $errMessage) {
             <?php if (empty($errMessage)) { // Mostrar confirmación solo si no hay un error ?>
                 <p>¿Está seguro de que desea desactivar este registro?</p>
                 <a class="btn btn-danger" href="?id=<?php echo $id_materia; ?>&confirm=yes">Si</a>
-                <a class="btn btn-primary" href="listado_materia.php">No</a>
+                <a class="btn btn-primary" href="materia_index.php">No</a>
             <?php } else { ?>
-                <a class="btn btn-warning" href="listado_materia.php">Volver al Listado</a>
+                <a class="btn btn-warning" href="materia_index.php">Volver al Listado</a>
             <?php } ?>
         </div>
     </div>

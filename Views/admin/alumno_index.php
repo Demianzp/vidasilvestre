@@ -1,12 +1,12 @@
 <?php
-require 'conn/connection.php';
+require '../../conn/connection.php';
 //-------------BORRADO------------------ 
 if(isset($_GET['txtID'])){
   $txtID=(isset($_GET['txtID']))?$_GET['txtID']:"";
   $sentencia=$db->prepare("UPDATE persona SET estado = 'Inactivo' WHERE id_persona = :id" );
   $sentencia->bindParam(':id',$txtID);
   $sentencia->execute();
-  $mensaje="Registro eliminado";
+  $mensaje="Registro eliminado11111111";
   header("Location:alumno_index.php?mensaje=".$mensaje);
 }
 ?>
@@ -68,7 +68,7 @@ if(isset($_GET['txtID'])){
                                                         <a href="alumno_edit.php?id=<?php echo $alumno['id_persona'];?>"class="btn btn-warning btn-sm" type="button" title="Editar">
                                                             <i class="fas fa-edit"></i>
                                                         </a>   
-                                                        <a href="javascript:eliminar(<?php echo $alumno['id_persona'];?>);" class="btn btn-danger btn-sm" type="button" title="Borrar">                                                            
+                                                        <a href="javascript:eliminar(<?php echo $alumno['id_persona']?>)" class="btn btn-danger btn-sm" type="button" title="Borrar">                                                            
                                                             <i class="fas fa-trash"></i>
                                                         </a> 
                                                     </div>  
@@ -92,5 +92,5 @@ if(isset($_GET['txtID'])){
     </section>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="js/ocultarMensaje.js"></script>    
+<!-- <script src="js/ocultarMensaje.js"></script>     -->
 <?php require 'footer.php'; ?>   
