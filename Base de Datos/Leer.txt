@@ -1,6 +1,5 @@
-BD name: vida_silvestre
-actualice la parte de cilo_lectivo
+BD name: vidasilvestre
 ------------------------
-Usuario Alumno: correo@ejemplo.com
-Contraseña: 123456
+Usuario Alumno: 
+Contraseña:
 

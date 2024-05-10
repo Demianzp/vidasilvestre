@@ -1,4 +1,4 @@
-function eliminar (id_persona){
+function eliminar1 (id_persona){
   Swal.fire({
       icon: "error",
       title: "¿Borrar?",        
@@ -6,11 +6,38 @@ function eliminar (id_persona){
       confirmButtonText: "Si",   
       confirmButtonColor: "#007bff",
       cancelButtonColor: '#dc3545',     
-    }).then((result) => {        
-      if (result.isConfirmed) {
-        window.location="../Views/admin/alumno_index.php?txtID="+id_persona;
-        // window.location="../Views/admin/profe_index.php?txt2ID="+id_persona;
-      } 
+    }).then((result) => {  
+          if (result.isConfirmed) { 
+            window.location = "../admin/alumno_index.php?txtID="+id_persona;
+           }          
+    });
+}
+function eliminar2 (id_persona){
+  Swal.fire({
+      icon: "error",
+      title: "¿Borrar?",        
+      showCancelButton: true,
+      confirmButtonText: "Si",   
+      confirmButtonColor: "#007bff",
+      cancelButtonColor: '#dc3545',     
+    }).then((result) => {  
+          if (result.isConfirmed) { 
+            window.location = "../admin/profe_index.php?txtID="+id_persona;
+           }          
+    });
+}
+function eliminar3 (id_persona){
+  Swal.fire({
+      icon: "error",
+      title: "¿Borrar?",        
+      showCancelButton: true,
+      confirmButtonText: "Si",   
+      confirmButtonColor: "#007bff",
+      cancelButtonColor: '#dc3545',     
+    }).then((result) => {  
+          if (result.isConfirmed) { 
+            window.location = "../admin/materia_index.php?txtID="+id_persona;
+           }          
     });
 }
 function cerrar (){
@@ -28,7 +55,7 @@ function cerrar (){
       }
     }).then((result) => {        
       if (result.isConfirmed) {
-        window.location="../Views/logout.php";
+        window.location="logout.php";
       } 
     });    
 }
