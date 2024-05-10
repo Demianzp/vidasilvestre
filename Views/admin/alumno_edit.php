@@ -91,7 +91,7 @@ if ($infoMessage || $errorMessage) {
                             <br>                            
                             <div class="mt-3">
                                 <button type="submit" class="btn btn-primary" name="modificar" onclick="return confirm('¿Seguro desea guardar los cambios?')">Guardar Cambios</button>
-                                <a class="btn btn-warning" href="listadoalumnos.view.php">Ver Listado</a>                            
+                                <a class="btn btn-warning" href="alumno_index.php">Ver Listado</a>                            
                             </div>  
                         </form>
                     </div>

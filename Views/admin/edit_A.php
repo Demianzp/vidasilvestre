@@ -1,5 +1,5 @@
 <?php
-include_once('conn/connection.php');
+include_once('../../conn/connection.php');
 // Inicializar variables de mensaje
 $mensj2 = '';
 $error2 = '';
@@ -36,7 +36,7 @@ exit();
                     <div class="card-body bg-light">
                         <form method="post" class="form" action="">
                             <?php
-                            include('conn/conexion.php');
+                            include('../../conn/connection.php');
                             $sql = "SELECT * FROM asignar WHERE id_asignar =" . $_GET['id'];
                             $resultado = $conexion->query($sql);
                             $row = $resultado->fetch_assoc();
@@ -47,7 +47,7 @@ exit();
                                 <label for="profesor">Profesor:</label>
                                 <select name="profesor" class="form-control">
                                     <?php
-                                    include('conn/conexion.php');
+                                    include('../../conn/connection.php');
                                     $sql = $conexion->query("SELECT * FROM persona WHERE id_rol = 2 AND estado = 'Activo' AND id_persona=" . $row['id_persona']);
                                     while ($resultado3 = $sql->fetch_assoc()) {
                                         echo "<option value='" . $resultado3["id_persona"] . "'>" . $resultado3["nombre"] . " " . $resultado3["apellido"] . "</option>";
@@ -55,13 +55,22 @@ exit();
                                     ?>
                                 </select>
                             </div>
+                                 <!-- --------------------------------- -->
+                                 <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="fecha_nacimiento">Fecha de Ingreso:</label>
+                                <input type="date" class="form-control" name="fecha_ingreso" required>
+                            </div>
+                        </div>
+                        </div>
                             <!-- --------------------------------- -->
                             <div class="form-group">
                                 <label for="materia">Materia:</label>
                                 <select name="materia" class="form-control" required>
                                 <option disabled selected hidden>Seleccione la materia</option>
                                     <?php
-                                    include('conn/conexion.php');
+                                    include('../../conn/connection.php');
                                     $sql = $conexion->query("SELECT * FROM materia WHERE  estado = 'Activo'");
                                     while ($resultado = $sql->fetch_assoc()) {
                                         echo "<option value='" . $resultado["id_materia"] . "'>" . $resultado["Nombre"] . " </option>";
