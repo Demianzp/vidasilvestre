@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 // Redirigir a la página "listadoalumnos.view.php" con los mensajes en la URL
-header("Location: listadoprofe.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
+header("Location: profe_index.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
 exit();
 }
 ?>
@@ -233,7 +233,7 @@ if (isset($_SESSION['message'])) {
     </div>
     
 
-    <script src="js/contraseña.js"></script>
-    <script src="js/validacion.js"></script>
-    <script src="js/validacion2.js"></script>
+    <script src="../../js/contraseña.js"></script>
+    <script src="../../js/validacion.js"></script>
+    <script src="../../js/validacion2.js"></script>
 <?php require 'footer.php'; ?>

@@ -1,5 +1,5 @@
 <?php
-require 'conn/connection.php';
+require '../../conn/connection.php';
 
 // Inicializar variables de mensaje
 $mensj3 = '';
@@ -26,20 +26,42 @@ if ($mensj3|| $error3) {
     exit();
 }
 ?>
+
 <!-- -------------------------------------------- -->
 
     <?php require 'navbar.php'; ?>
     <div class="body">
         <div class="panel">
-            <h4>Desactivar </h4>
             <?php if (empty($errMessage)) { // Mostrar confirmación solo si no hay un error 
             ?>
-                <p>¿Está seguro de que desea desactivar este registro?</p>
+                <!-- --------------------------------- -->
+                <div class="container mt-3">
+        <div class="row m-auto">
+            <div class="col-sm">
+                <div class="card rounded-2 border-0">
+                    <h5 class="card-header bg-dark text-white">¿Está seguro de que desea dar de baja al profesor?</h5>
+                    <div class="card-body bg-light">
+                     
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="fecha_nacimiento">Fecha de salida:</label>
+                                <input type="date" class="form-control" name="fecha_baja" required>
+                            </div>
+                        </div>
+                        </div>
+
                 <a class="btn btn-danger" href="?id=<?php echo $id_materia; ?>&confirm=yes">Sí</a>
                 <a class="btn btn-primary" href="lista_A.php">No</a>
             <?php } else { ?>
                 <a class="btn btn-warning" href="lista_A.php">Volver al Listado</a>
             <?php } ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                
         </div>
     </div>
 <?php require 'footer.php'; ?>

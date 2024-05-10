@@ -5,7 +5,7 @@
                 <div class="card rounded-2 border-0">
                     <div class="card-header bg-dark text-white pb-0">
                         <h5 class="d-inline-block">Listado de Profesores</h5>
-                        <a class="btn btn-primary float-right mb-2" href="listadoprofe.php">Volver</a>        b               
+                        <a class="btn btn-primary float-right mb-2" href="profe_index.php">Volver</a>            
                     </div>
                     <!-- Mensaje de asignar exitosamente o error  -->
                     <?php
@@ -43,12 +43,14 @@
                                 <th>Acciones</th>
                             </thead>
                             <tbody>
+                     
                                 <?php
-                                require("conn/conexion.php");
+                                require("../../conn/connection.php");
                                 $sql = $conexion->query("SELECT * FROM asignar 
                                 INNER JOIN persona ON asignar.id_persona = persona.id_persona AND persona.estado = 'Activo'
                                 INNER JOIN materia ON asignar.id_materia = materia.id_materia AND materia.estado = 'Activo'
-                                WHERE asignar.Estado = 'Activo'");
+                                WHERE asignar.Estado = 'Activo' ");
+                               
                                 while ($resultado = $sql->fetch_assoc()) {
                                 ?>
                                     <tr>
