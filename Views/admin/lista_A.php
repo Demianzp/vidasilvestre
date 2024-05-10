@@ -5,7 +5,9 @@
                 <div class="card rounded-2 border-0">
                     <div class="card-header bg-dark text-white pb-0">
                         <h5 class="d-inline-block">Listado de Profesores</h5>
-                        <a class="btn btn-primary float-right mb-2" href="profe_index.php">Volver</a>            
+
+                        <a class="btn btn-primary float-right mb-2" href="profe_index.php">Volver</a>                
+
                     </div>
                     <!-- Mensaje de asignar exitosamente o error  -->
                     <?php
@@ -45,7 +47,15 @@
                             <tbody>
                      
                                 <?php
-                                require("../../conn/connection.php");
+
+                                $file = __DIR__ . '/../../conn/conexion.php';
+                                if (file_exists($file)) {
+                                    require $file;
+                                } else {
+                                    die("Error: No se puede encontrar el archivo de conexión.");
+                                }
+                                
+
                                 $sql = $conexion->query("SELECT * FROM asignar 
                                 INNER JOIN persona ON asignar.id_persona = persona.id_persona AND persona.estado = 'Activo'
                                 INNER JOIN materia ON asignar.id_materia = materia.id_materia AND materia.estado = 'Activo'

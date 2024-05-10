@@ -1,239 +1,281 @@
 <?php
 require '../../conn/connection.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-$mensaje = "";
-$error = "";
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $error = "";
+
     $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : '';
     $apellido = isset($_POST["apellido"]) ? $_POST["apellido"] : '';
     $dni = isset($_POST["dni"]) ? $_POST["dni"] : '';
     $celular = isset($_POST["celular"]) ? $_POST["celular"] : '';
     $email = isset($_POST["email"]) ? $_POST["email"] : '';
+    $id_rol = isset($_POST["id_rol"]) ? $_POST["id_rol"] : '';
     $direccion = isset($_POST["direccion"]) ? $_POST["direccion"] : '';
     $ciudad = isset($_POST["ciudad"]) ? $_POST["ciudad"] : '';
     $genero = isset($_POST["genero"]) ? $_POST["genero"] : '';
-    $id_rol = isset($_POST["id_rol"]) ? $_POST["id_rol"] : '';
     $pais = isset($_POST["pais"]) ? $_POST["pais"] : '';
     $fecha_nacimiento = isset($_POST["fecha_nacimiento"]) ? $_POST["fecha_nacimiento"] : '';
     $fecha_ingreso = isset($_POST["fecha_ingreso"]) ? $_POST["fecha_ingreso"] : '';
     $contrasena = isset($_POST["contrasena"]) ? $_POST["contrasena"] : '';
-
+    $titulo = isset($_POST["titulo"]) ? $_POST["titulo"] : '';
+    $legajo = isset($_POST["legajo"]) ? $_POST["legajo"] : '';
     // Definir el valor predeterminado para el campo "estado" (asumiendo que se llama "estado")
     $estado = "Activo";
     $pais = "Argentina";
-
     try {
-        $sql = "INSERT INTO persona (nombre, apellido, fecha_nacimiento, DNI, celular, email_correo, direccion, fecha_ingreso, pais, ciudad, contraseña, id_rol, genero, estado) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $db->prepare($sql);
+        // Verificar si el correo electrónico ya existe
+        $sql_check_email = "SELECT COUNT(*) FROM persona WHERE email_correo = :email";
+        $stmt_check_email = $db->prepare($sql_check_email);
+        $stmt_check_email->bindParam(':email', $email);
+        $stmt_check_email->execute();
+        $count = $stmt_check_email->fetchColumn();
 
-        if ($stmt) {
-            $stmt->bindParam(1, $nombre, PDO::PARAM_STR);
-            $stmt->bindParam(2, $apellido, PDO::PARAM_STR);
-            $stmt->bindParam(3, $fecha_nacimiento, PDO::PARAM_STR);
-            $stmt->bindParam(4, $dni, PDO::PARAM_STR);
-            $stmt->bindParam(5, $celular, PDO::PARAM_STR);
-            $stmt->bindParam(6, $email, PDO::PARAM_STR);
-            $stmt->bindParam(7, $direccion, PDO::PARAM_STR);
-            $stmt->bindParam(8, $fecha_ingreso, PDO::PARAM_STR);
-            $stmt->bindParam(9, $pais, PDO::PARAM_STR);
-            $stmt->bindParam(10, $ciudad, PDO::PARAM_STR);
-            $stmt->bindParam(11, $contrasena, PDO::PARAM_STR);
-            $stmt->bindParam(12, $id_rol, PDO::PARAM_STR);
-            $stmt->bindParam(13, $genero, PDO::PARAM_STR);
-            $stmt->bindParam(14, $estado, PDO::PARAM_STR);
+        if ($count > 0) {
+            // El correo ya está registrado, redirige a profe_crea.php con mensaje de error y datos del formulario
+            $error = "El correo electrónico ya está registrado. Por favor, use uno diferente.";
+            $redirect_url = "profe_crea.php?error=" . urlencode($error)
+                . "&nombre=" . urlencode($nombre)
+                . "&apellido=" . urlencode($apellido)
+                . "&dni=" . urlencode($dni)
+                . "&celular=" . urlencode($celular)
+                . "&email=" . urlencode($email)
+                . "&direccion=" . urlencode($direccion)
+                . "&ciudad=" . urlencode($ciudad)
+                . "&genero=" . urlencode($genero)
+                 . "&id_rol=" . urlencode($id_rol)
+                . "&fecha_nacimiento=" . urlencode($fecha_nacimiento)
+                . "&fecha_ingreso=" . urlencode($fecha_ingreso)
+                . "&legajo=" . urlencode($legajo)
+                . "&titulo=" . urlencode($titulo);
 
-            // Ejecutar la consulta
+            header("Location: " . $redirect_url);
+            exit();
+        } else {
+            // Inserta datos en la base de datos
+            $sql = "INSERT INTO persona (nombre, apellido, fecha_nacimiento, DNI, celular, email_correo, direccion, fecha_ingreso, pais, ciudad, contraseña, id_rol, genero, legajo, titulo, estado) 
+            VALUES (:nombre, :apellido, :fecha_nacimiento, :dni, :celular, :email, :direccion, :fecha_ingreso, :pais, :ciudad, :contrasena, :id_rol, :genero, :legajo, :titulo, :estado)";    
+            //Datos que se van a insertar
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(':nombre', $nombre);
+            $stmt->bindParam(':apellido', $apellido);
+            $stmt->bindParam(':fecha_nacimiento', $fecha_nacimiento);
+            $stmt->bindParam(':dni', $dni);
+            $stmt->bindParam(':celular', $celular);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':direccion', $direccion);
+            $stmt->bindParam(':fecha_ingreso', $fecha_ingreso);
+            $stmt->bindParam(':pais', $pais);
+            $stmt->bindParam(':ciudad', $ciudad);
+            $stmt->bindParam(':contrasena', $contrasena);
+            $stmt->bindParam(':id_rol', $id_rol);
+            $stmt->bindParam(':genero', $genero);
+            $stmt->bindParam(':legajo', $legajo);
+            $stmt->bindParam(':titulo', $titulo);
+            $stmt->bindParam(':estado', $estado);
+
             if ($stmt->execute()) {
-                $mensaje = "Persona ingresada con éxito.";
+                // Redirige a alumno_index.php con mensaje de éxito
+                header("Location: profe_index.php?mensaje=" . urlencode("Persona ingresada con éxito."));
+                exit();
             } else {
-                $error = "Error al ingresar Persona: " . $stmt->errorInfo()[2];
+                $error = "Error al ingresar Persona.";
             }
         }
     } catch (PDOException $e) {
-        $error = "Error en la consulta: " . $e->getMessage();
+        $error = "Error en la base de datos: " . $e->getMessage();
+        // Redirige a alumno_crea.php con el error y datos del formulario
+        $redirect_url = "profe_crea.php?error=" . urlencode($error)
+            . "&nombre=" . urlencode($nombre)
+            . "&apellido=" . urlencode($apellido)
+            . "&dni=" . urlencode($dni)
+            . "&celular=" . urlencode($celular)
+            . "&email=" . urlencode($email)
+            . "&direccion=" . urlencode($direccion)
+            . "&ciudad=" . urlencode($ciudad)
+            . "&genero=" . urlencode($genero)
+            . "&id_rol=" . urlencode($id_rol)
+            . "&fecha_nacimiento=" . urlencode($fecha_nacimiento)
+            . "&fecha_ingreso=" . urlencode($fecha_ingreso)
+            . "&legajo=" . urlencode($legajo)
+            . "&titulo=" . urlencode($titulo);
+
+        header("Location: " . $redirect_url);
+        exit();
     }
 }
-// Redirigir a la página "listadoalumnos.view.php" con los mensajes en la URL
-header("Location: profe_index.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
-exit();
-}
-?>
-<!-- ------------------------------------------------------------------- -->
-<?php
-session_start(); // Asegúrate de incluir esto al principio del archivo.....
-if (isset($_SESSION['message'])) {
-    $message = $_SESSION['message'];
-    unset($_SESSION['message']); // Borra el mensaje después de mostrarlo
-} else {
-    $message = "";
-}
+
 ?>
 <!-- ---------------------------------------------------- -->
 <?php require 'navbar.php'; ?>
-    <div class="container mt-3">
-        <div class="card rounded-2 border-0">
-            <h5 class="card-header bg-dark text-white">Formulario de Inscripción de Profesor</h5>
-            <div class="card-body bg-light">
-                <?php
-                if (!empty($message)) {
-                    echo '<div class="alert alert-success" role="alert">' . $message . '</div>';
-                }
-                ?>
-                <form id="formulario" method="post" action="">
-                    <!-- --------------------------------- -->
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="nombre">Nombre:</label>
-                                <input type="text" class="form-control" name="nombre" autocomplete="off" placeholder="Ingrese Nombre(s)" required>
-                            </div>
-                        </div>
-                        <!-- --------------------------------- -->
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="apellido">Apellido:</label>
-                                <input type="text" class="form-control" name="apellido" autocomplete="off" placeholder="Ingrese Apellido(s)" required>
-                            </div>
+<div class="container mt-3">
+    <div class="card rounded-2 border-0">
+        <h5 class="card-header bg-dark text-white">Formulario de Inscripción de Profesor</h5>
+        <div class="card-body bg-light">
+            <?php
+            // Recupera el mensaje de error y los datos del formulario desde la URL
+            $error = isset($_GET["error"]) ? $_GET["error"] : "";
+            $nombre = isset($_GET["nombre"]) ? $_GET["nombre"] : "";
+            $apellido = isset($_GET["apellido"]) ? $_GET["apellido"] : "";
+            $dni = isset($_GET["dni"]) ? $_GET["dni"] : "";
+            $celular = isset($_GET["celular"]) ? $_GET["celular"] : "";
+            $email = isset($_GET["email"]) ? $_GET["email"] : "";
+            $direccion = isset($_GET["direccion"]) ? $_GET["direccion"] : "";
+            $ciudad = isset($_GET["ciudad"]) ? $_GET["ciudad"] : "";
+            $genero = isset($_GET["genero"]) ? $_GET["genero"] : "";
+            $fecha_nacimiento = isset($_GET["fecha_nacimiento"]) ? $_GET["fecha_nacimiento"] : "";
+            $fecha_ingreso = isset($_GET["fecha_ingreso"]) ? $_GET["fecha_ingreso"] : "";
+            $legajo = isset($_GET["legajo"]) ? $_GET["legajo"] : "";
+            $titulo = isset($_GET["titulo"]) ? $_GET["titulo"] : "";
+            ?>
+            <form id="formulario" method="post" action="">
+                <!-- --------------------------------- -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" class="form-control" name="nombre" value="<?php echo htmlspecialchars($nombre); ?>" autocomplete="off" placeholder="Ingrese Nombre(s)" required>
                         </div>
                     </div>
                     <!-- --------------------------------- -->
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="dni">DNI:</label>
-                                <input type="text" class="form-control" name="dni" id="dni" placeholder="Ingrese DNI" autocomplete="off" required>
-                                <span id="dniOK"></span>
-                            </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="apellido">Apellido:</label>
+                            <input type="text" class="form-control" name="apellido" value="<?php echo htmlspecialchars($apellido); ?>" autocomplete="off" placeholder="Ingrese Apellido(s)" required>
                         </div>
-                        <div class="col">
+                    </div>
+                </div>
+                <!-- --------------------------------- -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="dni">DNI:</label>
+                            <input type="text" class="form-control" name="dni" id="dni" value="<?php echo htmlspecialchars($dni); ?>" autocomplete="off" placeholder="Ingrese su DNI" required>
+                            <span id="dniOK"></span>
+                        </div>
+                    </div>
+                    <div class="col">
 
-                            <div class="form-group">
-                                <label for="celular">Celular:</label>
-                                <input type="tel" class="form-control" name="celular" placeholder="Ingrese Teléfono" id="celular" autocomplete="off" required>
-                                <span id="celularOK"></span>
-                            </div>
+                        <div class="form-group">
+                            <label for="celular">Celular:</label>
+                            <input type="tel" class="form-control" name="celular" id="celular" value="<?php echo htmlspecialchars($celular); ?>" autocomplete="off" placeholder="Ingrese Telefono" required>
+                            <span id="celularOK"></span>
+                        </div>
 
+                    </div>
+                </div>
+                <!-- --------------------------------- -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="ciudad">Ciudad:</label>
+                            <select name="ciudad" id="ciudad" class="form-control" autocomplete="off" required>
+                                <option value="" disabled <?php echo ($ciudad == "") ? "selected" : ""; ?>>Seleccione un departamento de San Juan</option>
+                                <option value="Albardón" <?php echo ($ciudad == "Albardon") ? "selected" : ""; ?>>Albardón</option>
+                                <option value="Angaco" <?php echo ($ciudad == "Angaco") ? "selected" : ""; ?>>Angaco</option>
+                                <option value="Calingasta" <?php echo ($ciudad == "Calingasta") ? "selected" : ""; ?>>Calingasta</option>
+                                <option value="Caucete" <?php echo ($ciudad == "Caucete") ? "selected" : ""; ?>>Caucete</option>
+                                <option value="Chimbas" <?php echo ($ciudad == "Chimbas") ? "selected" : ""; ?>>Chimbas</option>
+                                <option value="Capital" <?php echo ($ciudad == "Capital") ? "selected" : ""; ?>>Capital</option>
+                                <option value="Iglesia" <?php echo ($ciudad == "Iglesia") ? "selected" : ""; ?>>Iglesia</option>
+                                <option value="Jáchal" <?php echo ($ciudad == "Jáchal") ? "selected" : ""; ?>>Jáchal</option>
+                                <option value="9 de Julio" <?php echo ($ciudad == "9 de Julio") ? "selected" : ""; ?>>9 de Julio</option>
+                                <option value="Pocito" <?php echo ($ciudad == "Pocito") ? "selected" : ""; ?>>Pocito</option>
+                                <option value="Rawson" <?php echo ($ciudad == "Rawson") ? "selected" : ""; ?>>Rawson</option>
+                                <option value="Rivadavia" <?php echo ($ciudad == "Rivadavia") ? "selected" : ""; ?>>Rivadavia</option>
+                                <option value="San Martín" <?php echo ($ciudad == "San Martín") ? "selected" : ""; ?>>San Martín</option>
+                                <option value="Santa Lucía" <?php echo ($ciudad == "Santa Lucía") ? "selected" : ""; ?>>Santa Lucía</option>
+                                <option value="Sarmiento" <?php echo ($ciudad == "Sarmiento") ? "selected" : ""; ?>>Sarmiento</option>
+                                <option value="Ullum" <?php echo ($ciudad == "Ullum") ? "selected" : ""; ?>>Ullum</option>
+                                <option value="Valle Fértil" <?php echo ($ciudad == "Valle Fértil") ? "selected" : ""; ?>>Valle Fértil</option>
+                                <option value="Zonda" <?php echo ($ciudad == "Zonda") ? "selected" : ""; ?>>Zonda</option>
+                                <option value="25 de Mayo" <?php echo ($ciudad == "25 de Mayo") ? "selected" : ""; ?>>25 de Mayo</option>
+                                <!-- Agrega otros departamentos de San Juan aquí -->
+                            </select>
                         </div>
                     </div>
-                    <!-- --------------------------------- -->
-                    <div class="row">                       
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="ciudad">Ciudad:</label>
-                                <select name="ciudad" id="ciudad" class="form-control" autocomplete="off" required>
-                                    <option value="" disabled selected>Seleccione un departamento de San Juan</option>
-                                    <option value="Albardón">Albardón</option>
-                                    <option value="Angaco">Angaco</option>
-                                    <option value="Calingasta">Calingasta</option>
-                                    <option value="Caucete">Caucete</option>
-                                    <option value="Chimbas">Chimbas</option>
-                                    <option value="Capital">Capital</option>
-                                    <option value="Iglesia">Iglesia</option>
-                                    <option value="Jáchal">Jáchal</option>
-                                    <option value="9 de Julio">9 de Julio</option>
-                                    <option value="Pocito">Pocito</option>
-                                    <option value="Rawson">Rawson</option>
-                                    <option value="Rivadavia">Rivadavia</option>
-                                    <option value="San Martín">San Martín</option>
-                                    <option value="Santa Lucía">Santa Lucía</option>
-                                    <option value="Sarmiento">Sarmiento</option>
-                                    <option value="Ullum">Ullum</option>
-                                    <option value="Valle Fértil">Valle Fértil</option>
-                                    <option value="Zonda">Zonda</option>
-                                    <option value="25 de Mayo">25 de Mayo</option>                                   
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="direccion">Dirección:</label>
-                                <input type="text" class="form-control" name="direccion" placeholder="Ingrese Direccion" autocomplete="off" required>
-                            </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="direccion">Dirección:</label>
+                            <input type="text" class="form-control" name="direccion" value="<?php echo htmlspecialchars($direccion); ?>" autocomplete="off" placeholder="Ingrese Direcion" required>
                         </div>
                     </div>
-                         <!-- --------------------------------- -->                     
-                                <input  type="hidden" class="form-control" name="id_rol" value="2">
-                    <!-- --------------------------------- -->
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-                                <input type="date" class="form-control" name="fecha_nacimiento" required>
-                            </div>
+                </div>
+                <!-- --------------------------------- -->
+                <input type="hidden" class="form-control" name="id_rol" value="2">
+                <!-- --------------------------------- -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                            <input type="date" class="form-control" name="fecha_nacimiento" value="<?php echo htmlspecialchars($fecha_nacimiento); ?>" autocomplete="off" required>
                         </div>
-                        <div class="col">
-                            <div class="form-group">
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
                             <label for="genero">Género:</label>
-                                <select name="genero" autocomplete="off" class="form-control" required>
-                                    <option value="" disabled selected>Seleccione su Género</option>
-                                    <option value="Masculino">Masculino</option>
-                                    <option value="Femenino">Femenino</option>
-                                    <option value="Otros">Otros</option>
-                                </select>
-                            </div>
+                            <select name="genero" autocomplete="off" class="form-control" required>
+                                <option value="" disabled <?php echo ($genero == "") ? "selected" : ""; ?>>Seleccione su Género</option>
+                                <option value="Masculino" <?php echo ($genero == "Masculino") ? "selected" : ""; ?>>Masculino</option>
+                                <option value="Femenino" <?php echo ($genero == "Femenino") ? "selected" : ""; ?>>Femenino</option>
+                                <option value="Otros" <?php echo ($genero == "Otros") ? "selected" : ""; ?>>Otros</option>
+                            </select>
                         </div>
                     </div>
-                    <!-- --------------------------------- -->
-                      <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="titulo">Titulo:</label>
-                                <input type="text" class="form-control" name="titulo"  placeholder="Ingrese Titulo" required>
-                            </div>
+                </div>
+                <!-- --------------------------------- -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="titulo">Titulo:</label>
+                            <input type="text" class="form-control" name="titulo" placeholder="Ingrese Titulo" autocomplete="off" value="<?php echo htmlspecialchars($titulo); ?> " required>
                         </div>
-                        <div class="col">
-                            <div class="form-group">
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
                             <label for="legajo">Legajo:</label>
-                                <input type="text" class="form-control" name="legajo" placeholder="Ingrese el n° de legajo" required>
-                            </div>
+                            <input type="text" class="form-control" name="legajo" placeholder="Ingrese el n° de legajo" value="<?php echo htmlspecialchars($legajo); ?>" autocomplete="off" required>
                         </div>
                     </div>
-                    <!-- --------------------------------- -->
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="email">Email:</label>
-                                <input id="email" class="form-control" name="email" placeholder="Ingrese Email" autocomplete="off" required>
-                                <span id="emailOK"></span>
+                </div>
+                <!-- --------------------------------- -->
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input id="email" class="form-control" name="email" placeholder="Ingrese Email" autocomplete="off" value="<?php echo htmlspecialchars($email); ?>" required>
+                            <span id="emailOK"></span>
 
-                            </div>
                         </div>
+                    </div>
 
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="contraseña">Contraseña:</label>
-                                <div class="input-group">
-                                    <input class="form-control bg-light" type="password" placeholder="Contraseña" name="contrasena" id="password" autocomplete="off" required />
-                                    <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
-                                        <i class="fas fa-eye p-1"></i>
-                                    </button>
-                                </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="contraseña">Contraseña:</label>
+                            <div class="input-group">
+                                <input class="form-control bg-light" type="password" placeholder="Contraseña" name="contrasena" id="password" autocomplete="off" required />
+                                <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
+                                    <i class="fas fa-eye p-1"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <!-- --------------------------------- -->
-                    <!-- Agregamos un botón para guardar con un evento JavaScript -->
-                    <button type="button" class="btn btn-primary float-right" id="guardarBtn" onclick="validarFormulario()">Guardar</button>
-                    <!-- Agregamos un div para mostrar un mensaje de confirmación -->
-                    <div id="confirmacion" style="display: none;">
-                        <p>¿Estás seguro de que deseas guardar los datos?</p>
-                        <button type="button" class="btn btn-success" id="confirmarBtn">Sí</button>
-                        <button type="button" class="btn btn-danger" id="cancelarBtn">No</button>
-                    </div>
-                    <?php
-                    if (isset($_SESSION['message'])) {
-                        echo '<div class="alert alert-success" role="alert">' . $_SESSION['message'] . '</div>';
-                        unset($_SESSION['message']); // Borra el mensaje después de mostrarlo
-                    }
-                    ?>
-                </form>
-            </div>
+                </div>
+                <!-- --------------------------------- -->
+                <!-- Agregamos un botón para guardar con un evento JavaScript -->
+                <button type="button" class="btn btn-primary float-right" id="guardarBtn" onclick="validarFormulario()">Guardar</button>
+                <!-- Agregamos un div para mostrar un mensaje de confirmación -->
+                <div id="confirmacion" style="display: none;">
+                    <p>¿Estás seguro de que deseas guardar los datos?</p>
+                    <button type="button" class="btn btn-success" id="confirmarBtn">Sí</button>
+                    <button type="button" class="btn btn-danger" id="cancelarBtn">No</button>
+                </div>
+            </form>
         </div>
     </div>
-    
+</div>
+<script src="../../js/contraseña.js"></script>
+<script src="../../js/validacion.js"></script>
+<script src="../../js/validacion2.js"></script>
 
-    <script src="../../js/contraseña.js"></script>
-    <script src="../../js/validacion.js"></script>
-    <script src="../../js/validacion2.js"></script>
+
 <?php require 'footer.php'; ?>
+

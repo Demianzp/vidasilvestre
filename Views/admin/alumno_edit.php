@@ -43,7 +43,7 @@ if (isset($_GET['id'])) {
 }
 // Redirigir solo si hay mensajes para enviar
 if ($infoMessage || $errorMessage) {
-    header("Location: listadoalumnos.view.php?mensaje=" . urlencode($infoMessage) . "&error=" . urlencode($errorMessage));
+    header("Location: alumno_index.php?mensaje=" . urlencode($infoMessage) . "&error=" . urlencode($errorMessage));
     exit();
 }
 ?>
@@ -99,7 +99,7 @@ if ($infoMessage || $errorMessage) {
             </div>
         </div>
     </div>
-    <script src="js/contraseña.js"></script>
-    <script src="js/validacion.js"></script>
-    <script src="js/validacion2.js"></script>
+    <script src="../../js/contraseña.js"></script>
+    <script src="../../js/validacion.js"></script>
+    <script src="../../js/validacion2.js"></script>
     <?php require 'footer.php'; ?>
