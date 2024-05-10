@@ -12,6 +12,6 @@ try {
 } catch (PDOException $e) {
     echo "Error de conexión: " . $e->getMessage();
 }
-
+$conexion = new mysqli($db_host, $db_user, $db_password, $db_name);
 ?>
 

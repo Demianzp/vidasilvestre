@@ -103,7 +103,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-
 ?>
 <!-- ---------------------------------------------------- -->
 <?php require 'navbar.php'; ?>
@@ -277,4 +276,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <script src="../../js/validacion.js"></script>
 <script src="../../js/validacion2.js"></script>
 
+
 <?php require 'footer.php'; ?>
+

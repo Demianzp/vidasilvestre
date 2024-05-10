@@ -1,5 +1,5 @@
 <?php
-include_once('conn/connection.php');
+include_once('../../conn/connection.php');
 // Inicializar variables de mensaje
 $mensj1 = '';
 $error1 = '';
@@ -7,6 +7,7 @@ if (isset($_POST['profesor']) && isset($_POST['materia'])) {
     $profesor = $_POST['profesor'];
     $materia = $_POST['materia'];
     $estado = "Activo";
+    $id=$_POST['id'];
 
     $sql = "INSERT INTO asignar (id_persona, id_materia, Estado) VALUES (:profesor, :materia, :estado)";
     $stmt = $db->prepare($sql);
@@ -38,27 +39,38 @@ exit();
                     <div class="card-body bg-light">
                         <form method="post" class="form" action="">
 
-                            <!-- ---------------El get trae el id del profesor q quiere asignar la materia------------------ -->
-                            <div class="form-group">
-                                <label for="profesor">Profesor:</label>
-                                <select name="profesor" class="form-control" required>
-                                    <option disabled selected hidden>Seleccione Profesor</option>
+  <!-- ---------------El get trae el id del profesor q quiere asignar la materia------------------ -->
+                           <div class="form-group">
+                                <label  for="profesor">
+                                <select name="profesor" class="form-control card-header bg-white text-dark" >
+                           
                                     <?php
-                                    include('conn/conexion.php');
+                                
+                                    include('../../conn/connection.php');
                                     $sql = $conexion->query("SELECT * FROM persona WHERE id_rol = 2 AND estado = 'Activo' AND id_persona=" . $_GET['id']);
                                     while ($resultado = $sql->fetch_assoc()) {
                                         echo "<option value='" . $resultado["id_persona"] . "'>" . $resultado["nombre"] . " " . $resultado["apellido"] . "</option>";
                                     }
                                     ?>
-                                </select>
+                                </select></label>
                             </div>
+
+                                <!-- --------------------------------- -->
+                                <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="fecha_nacimiento">Fecha de Ingreso:</label>
+                                <input type="date" class="form-control" name="fecha_ingreso" required>
+                            </div>
+                        </div>
+                        </div>
                             <!-- --------------------------------- -->
                             <div class="form-group">
                                 <label for="materia">Materia:</label>
                                 <select name="materia" class="form-control" required>
                                     <option disabled selected hidden>Seleccione la materia</option>
                                     <?php
-                                    include('conn/conexion.php');
+                                    include('../../conn/connection.php');
                                     $sql = $conexion->query("SELECT * FROM materia WHERE  estado = 'Activo'");
                                     while ($resultado = $sql->fetch_assoc()) {
                                         echo "<option value='" . $resultado["id_materia"] . "'>" . $resultado["Nombre"] . " </option>";
@@ -66,6 +78,8 @@ exit();
                                     ?>
                                 </select>
                             </div>
+                            
+                        
                             <!-- --------------------------------- -->
                             <div class="form-group">
                                 <input type="hidden" class="form-control" name="Estado" value="Activo" disabled>
