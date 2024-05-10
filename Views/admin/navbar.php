@@ -48,9 +48,9 @@ if(!isset($_SESSION['nombre'])){
   <script defer src="../../js/tabla.js"></script>
   <!-- ------------FIN-DATATABLES----- -->
   <!-- -------------sweetalert2(alertas emergentes)------------------   -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../../js/alertas.js"></script>
+  <!-- ------------------------------ -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Roboto&display=swap');
   </style>

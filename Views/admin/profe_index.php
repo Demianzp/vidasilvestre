@@ -1,18 +1,17 @@
 <?php
 require '../../conn/connection.php';
 //-------------BORRADO------------------ 
-// if(isset($_GET['txt2ID'])){
-//   $txt2ID=(isset($_GET['txt2ID']))?$_GET['txt2ID']:"";
-//   $sentencia=$db->prepare("UPDATE persona SET estado = 'Inactivo' WHERE id_persona = :id" );
-//   $sentencia->bindParam(':id',$txt2ID);
-//   $sentencia->execute();
-//   $mensaje="Registro eliminado22222";
-//   header("Location:profe_index.php?mensaje=".$mensaje);
-// }
+ if(isset($_GET['txtID'])){
+   $txtID=(isset($_GET['txtID']))?$_GET['txtID']:"";
+   $sentencia=$db->prepare("UPDATE persona SET estado = 'Inactivo' WHERE id_persona = :id" );
+   $sentencia->bindParam(':id',$txtID);
+   $sentencia->execute();
+   $mensaje="Registro Profesor Eliminado";
+   header("Location:profe_index.php?mensaje=".$mensaje);
+ }
 ?>
 <!-- ------------------------------------------ -->
 <?php require 'navbar.php'; ?>
-
     <section class="content mt-3">
         <div class="row m-auto">
             <div class="col-sm">
@@ -60,11 +59,11 @@ require '../../conn/connection.php';
                                             <!-- <td></td> -->
                                             <td class="text-center">
                                                     <div class="btn-group">
-                                                        <a href="asignar_F.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-info btn-sm" title="Asignar" role="button">Asignar</a>
-                                                        <a href="profe_edit.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning btn-sm" title="Editar" role="button">
+                                                        <a href="asignar_F.php?id=<?php echo $profesor['id_persona']; ?>" class="btn btn-info btn-sm" title="Asignar" role="button">Asignar</a>
+                                                        <a href="profe_edit.php?id=<?php echo $profesor['id_persona']; ?>" class="btn btn-warning btn-sm" title="Editar" role="button">
                                                             <i class="fas fa-edit"></i>
-                                                        </a> 
-                                                        <a href="javascript:elimianar(<?php echo $profesor['id_persona'] ?>)" class="btn btn-danger btn-sm" title="Borrar" role="button">
+                                                        </a>                                                         
+                                                        <a href="javascript:eliminar2(<?php echo $profesor['id_persona'];?>)" class="btn btn-danger btn-sm" title="Borrar" role="button">
                                                             <i class="fas fa-trash"></i>
                                                         </a>
                                                     </div>  
