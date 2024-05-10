@@ -50,7 +50,7 @@ if (isset($_GET['id'])) {
 
 // Redirigir solo si hay mensajes para enviar
 if ($infoMessage || $errorMessage) {
-    header("Location: listadoprofe.php?mensaje=" . urlencode($infoMessage) . "&error=" . urlencode($errorMessage));
+    header("Location: profe_index.php?mensaje=" . urlencode($infoMessage) . "&error=" . urlencode($errorMessage));
     exit();
 }
 ?>

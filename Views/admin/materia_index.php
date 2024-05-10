@@ -51,20 +51,6 @@ require 'navbar.php';
                         <strong><?php echo htmlspecialchars($ciclo_actual['nombre_ciclo'], ENT_QUOTES, 'UTF-8'); ?></strong>
                     </h6>
                 </div>
-
-                <!-- Mensajes de notificación -->
-                <?php
-                $messages = array(
-                    'mensajeCancelacion', 'mensaje', 'error', 'infoMessage', 'errorMessage', 'inMessage', 'errMessage'
-                );
-                foreach ($messages as $messageKey) {
-                    if (isset($_GET[$messageKey]) && !empty($_GET[$messageKey])) {
-                        $message = htmlspecialchars($_GET[$messageKey]);
-                        echo '<div class="alert alert-' . ($messageKey === 'error' || $messageKey === 'errorMessage' || 'errMessage' ? 'danger' : 'success') . '">' . $message . '</div>';
-                    }
-                }
-                ?>
-
                 <!-- Tabla de materias -->
                 <div class="card-body table-responsive">
                     <table id="example" class="table table-striped" style="width:100%">

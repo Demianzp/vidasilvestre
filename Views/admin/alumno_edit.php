@@ -43,7 +43,7 @@ if (isset($_GET['id'])) {
 }
 // Redirigir solo si hay mensajes para enviar
 if ($infoMessage || $errorMessage) {
-    header("Location: listadoalumnos.view.php?mensaje=" . urlencode($infoMessage) . "&error=" . urlencode($errorMessage));
+    header("Location: alumno_index.php?mensaje=" . urlencode($infoMessage) . "&error=" . urlencode($errorMessage));
     exit();
 }
 ?>
@@ -91,7 +91,7 @@ if ($infoMessage || $errorMessage) {
                             <br>                            
                             <div class="mt-3">
                                 <button type="submit" class="btn btn-primary" name="modificar" onclick="return confirm('¿Seguro desea guardar los cambios?')">Guardar Cambios</button>
-                                <a class="btn btn-warning" href="listadoalumnos.view.php">Ver Listado</a>                            
+                                <a class="btn btn-warning" href="alumno_index.php">Ver Listado</a>                            
                             </div>  
                         </form>
                     </div>
@@ -99,7 +99,7 @@ if ($infoMessage || $errorMessage) {
             </div>
         </div>
     </div>
-    <script src="js/contraseña.js"></script>
-    <script src="js/validacion.js"></script>
-    <script src="js/validacion2.js"></script>
+    <script src="../../js/contraseña.js"></script>
+    <script src="../../js/validacion.js"></script>
+    <script src="../../js/validacion2.js"></script>
     <?php require 'footer.php'; ?>

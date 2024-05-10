@@ -30,7 +30,6 @@ require '../../conn/connection.php';
                                 <th>Nombres</th>
                                 <th>Genero</th>
                                 <th>DNI</th>
-                                <th>Fecha de Ingreso</th>
                                 <th>Fecha de Nacimiento</th>
                                 <th>Celular</th>
                                 <th>Departamento</th>
@@ -55,7 +54,6 @@ require '../../conn/connection.php';
                                             <td><?php echo $profesor['nombre'] ?></td>
                                             <td><?php echo $profesor['genero'] ?></td>
                                             <td><?php echo $profesor['DNI'] ?></td>
-                                            <td><?php echo $profesor['fecha_ingreso'] ?></td>
                                             <td><?php echo $profesor['fecha_nacimiento'] ?></td>
                                             <td><?php echo $profesor['celular'] ?></td>
                                             <td><?php echo $profesor['ciudad'] ?></td>
@@ -63,7 +61,7 @@ require '../../conn/connection.php';
                                             <td class="text-center">
                                                     <div class="btn-group">
                                                         <a href="asignar_F.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-info btn-sm" title="Asignar" role="button">Asignar</a>
-                                                        <a href="editarprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning btn-sm" title="Editar" role="button">
+                                                        <a href="profe_edit.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning btn-sm" title="Editar" role="button">
                                                             <i class="fas fa-edit"></i>
                                                         </a> 
                                                         <a href="javascript:elimianar(<?php echo $profesor['id_persona'] ?>)" class="btn btn-danger btn-sm" title="Borrar" role="button">
