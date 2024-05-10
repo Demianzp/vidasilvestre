@@ -63,7 +63,7 @@ require '../../conn/connection.php';
                                             <td class="text-center">
                                                     <div class="btn-group">
                                                         <a href="asignar_F.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-info btn-sm" title="Asignar" role="button">Asignar</a>
-                                                        <a href="editarprofe.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning btn-sm" title="Editar" role="button">
+                                                        <a href="profe_edit.php?id=<?php echo $profesor['id_persona'] ?>" class="btn btn-warning btn-sm" title="Editar" role="button">
                                                             <i class="fas fa-edit"></i>
                                                         </a> 
                                                         <a href="javascript:elimianar(<?php echo $profesor['id_persona'] ?>)" class="btn btn-danger btn-sm" title="Borrar" role="button">

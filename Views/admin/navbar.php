@@ -92,7 +92,7 @@ if(!isset($_SESSION['nombre'])){
   <div style="height:60px">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container-fluid ml-2 ">
-        <a href="inicio.view.php" class="navbar-brand mb-0 pr-3 ">
+        <a href="index.php" class="navbar-brand mb-0 pr-3 ">
           <img class="d-line-block align-top " src="../../img/vida-silvestre.png" width="130px" style="margin-right:10px">
         </a>
         <!-- Toggle Btn-->

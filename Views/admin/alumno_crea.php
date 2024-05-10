@@ -1,6 +1,5 @@
 <?php
 include '../../conn/connection.php';
-
 // Verifica si se envió una solicitud POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recolecta datos del formulario
@@ -146,7 +145,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="form-group">
                             <label for="celular">Celular:</label>
                             <input type="tel" class="form-control" name="celular" id="celular" value="<?php echo htmlspecialchars($celular); ?>" autocomplete="off" placeholder="Ingrese Telefono" required>
-
                             <span id="celularOK"></span>
                         </div>
 
