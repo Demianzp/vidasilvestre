@@ -16,19 +16,21 @@ try {
         $horas = (int)$_POST["horas"];
         $num_resolucion = (int)$_POST["num_resolucion"];
         $plan_estudio = $db->quote($_POST["plan_estudio"]);
+        $año_cursado = $db->quote($_POST["año"]);
         $id_tipo = (int)$_POST["id_tipo"];
         $estado = 'Activo'; // Valor predeterminado para el estado, estado es si esta activo o inactivo.
 
         // Inserción de datos en la tabla 'materia' (usando sentencia preparada)
-        $sql = "INSERT INTO materia (Nombre, descripcion, horas, num_resolucion, plan_estudio, id_tipo, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO materia (Nombre, descripcion, horas, num_resolucion, plan_estudio,año_cursado , id_tipo, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(1, $nombre);
         $stmt->bindParam(2, $descripcion);
         $stmt->bindParam(3, $horas, PDO::PARAM_INT);
         $stmt->bindParam(4, $num_resolucion, PDO::PARAM_INT);
         $stmt->bindParam(5, $plan_estudio);
-        $stmt->bindParam(6, $id_tipo, PDO::PARAM_INT);
-        $stmt->bindParam(7, $estado);
+        $stmt->bindParam(6, $año_cursado);
+        $stmt->bindParam(7, $id_tipo, PDO::PARAM_INT);
+        $stmt->bindParam(8, $estado);
 
         // Ejecutar la consulta
         if ($stmt->execute()) {

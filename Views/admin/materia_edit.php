@@ -13,10 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $horas = $_POST['horas'];
         $num_resolucion = $_POST['num_resolucion'];
         $plan_estudio = $_POST['plan_estudio'];
+        $año = $_POST['año'];
         $id_tipo = $_POST['id_tipo'];
-        $consulta_actualizar = $db->prepare("UPDATE materia SET Nombre = ?, descripcion = ?, horas = ?, num_resolucion = ?, plan_estudio = ?, id_tipo = ? WHERE id_materia = ?");
+        $consulta_actualizar = $db->prepare("UPDATE materia SET Nombre = ?, descripcion = ?, horas = ?, num_resolucion = ?, plan_estudio = ?,año_cursado=?, id_tipo = ? WHERE id_materia = ?");
         // Ejecutar la consulta
-        if ($consulta_actualizar->execute([$nombre, $descripcion, $horas, $num_resolucion, $plan_estudio, $id_tipo, $id_materia])) {
+        if ($consulta_actualizar->execute([$nombre, $descripcion, $horas, $num_resolucion, $plan_estudio, $año, $id_tipo, $id_materia])) {
             $infoMessage = 'Registro modificado correctamente';
         } else {
             $errorMessage = 'Error al editar el registro: ' . implode(', ' . $consulta_actualizar->errorInfo());
@@ -76,9 +77,9 @@ if ($infoMessage || $errorMessage) {
                              <label>Año de Cursado:</label>
                              <select  name="año" id="año" class="form-control" autocomplete="off" required>
                                     <option value="" disabled>Seleccione su Tipo</option>
-                                    <option value="1" <?php echo ($materia['año'] == 1) ? 'selected' : ''; ?>>1° Año</option>
-                                    <option value="2" <?php echo ($materia['año'] == 2) ? 'selected' : ''; ?>>2° Año</option>
-                                    <option value="3" <?php echo ($materia['año'] == 3) ? 'selected' : ''; ?>>3° Año</option>
+                                    <option value="1" <?php echo ($materia['año_cursado'] == 1) ? 'selected' : ''; ?>>1° Año</option>
+                                    <option value="2" <?php echo ($materia['año_cursado'] == 2) ? 'selected' : ''; ?>>2° Año</option>
+                                    <option value="3" <?php echo ($materia['año_cursado'] == 3) ? 'selected' : ''; ?>>3° Año</option>
                                 </select>
                             <span id="añoOK"></span>
                             <br>
