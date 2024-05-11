@@ -24,7 +24,7 @@
                                 <input type="text" class="form-control" data-name="Número de Resolución" id="num_resolucion" name="num_resolucion" placeholder="Ingrese N° de Resolucion" required autocomplete="off">
                             </div>
                             <div class="form-group">
-                                <label for="anio">Año de Cursado:</label>
+                                <label for="año">Año de Cursado:</label>
                                 <select name="año" id="año" class="form-control" autocomplete="off" required>
                                     <option value="" disabled selected>Seleccione Año de Cursado</option>
                                     <option value="1">1° Año</option>
