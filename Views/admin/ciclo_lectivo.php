@@ -83,7 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 header("Location:ciclo_lectivo.php " . $_SERVER['PHP_SELF']);
                 exit();
                 break;
-
             default:
                 $_SESSION['mensaje'] = "Acción no reconocida.";
                 header("Location:ciclo_lectivo.php" . $_SERVER['PHP_SELF']);  // Redireccionar para evitar estado incorrecto
@@ -92,10 +91,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 ?>
-
-<!-- Incluir la barra de navegación -->
+<!-- ------------------------------------------ -->
 <?php require 'navbar.php'; ?>
-
+<!-- ------------------------------------------ -->
 <div class="container mt-3">
     <!-- Mostrar mensajes de éxito o error -->
     <?php if (isset($_SESSION['mensaje'])) : ?>
@@ -103,17 +101,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <?php unset($_SESSION['mensaje']); // Eliminar el mensaje después de mostrarlo 
         ?>
     <?php endif; ?>
-
-    <!-- Mostrar el ciclo lectivo actual -->
-    <h2>Ciclo Lectivo Actual</h2>
-    <?php if ($ciclo_actual) : ?>
-        <p>El ciclo lectivo actual es: <strong><?php echo htmlspecialchars($ciclo_actual['nombre_ciclo'], ENT_QUOTES, 'UTF-8'); ?></strong></p>
-    <?php else : ?>
-        <p>No hay un ciclo lectivo actual definido.</p>
-    <?php endif; ?>
-
+<!-- ---------------------- -->
     <div class="row">
-        <!-- Formulario para agregar un nuevo ciclo lectivo -->
         <div class="col">
             <div class="card rounded-2 border-0">
                 <h5 class="card-header bg-dark text-white">Agregar Ciclo Lectivo</h5>
@@ -137,12 +126,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </div>
             </div>
         </div>
-
         <!-- Formulario para actualizar el ciclo lectivo actual -->
         <div class="col">
             <div class="card rounded-2 border-0">
-                <h5 class="card-header bg-dark text-white">Actualizar Ciclo Lectivo</h5>
-                <div class="card-body bg-light">
+                <h5 class="card-header bg-dark text-white">Ciclo Lectivo</h5>
+                <div class="card-body bg-light">                    
+                <!-- ----------------------------------------- -->                
+                <div class="card border-dark mb-3">
+                    <h5 class="card-header bg-dark text-white">Ciclo Lectivo Actual</h5>
+                        <div class="card-body ">
+                            <?php if ($ciclo_actual) : ?>
+                            <p>El ciclo lectivo actual es: <h2 class="text-success"><?php echo htmlspecialchars($ciclo_actual['nombre_ciclo'], ENT_QUOTES, 'UTF-8'); ?></h2></p>
+                            <?php else : ?>
+                            <p class="text-danger">No hay un ciclo lectivo actual definido.</p>
+                            <?php endif; ?> 
+                        </div>
+                </div>           
                     <form action="" method="post">
                         <div class="form-group">
                             <label>Seleccione Ciclo Lectivo para Actualizar:</label>
@@ -151,7 +150,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 <?php
                                 // Consulta SQL para obtener ciclos que no sean el actual
                                 $stmt = $db->query("SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 0 ORDER BY id_ciclo DESC");
-
                                 // Recorrer los resultados para llenar el select
                                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                     echo "<option value='{$row["id_ciclo"]}'>{$row["nombre_ciclo"]}</option>";
@@ -161,12 +159,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         </div>
                         <input type="hidden" name="accion" value="actualizar_ciclo">
                         <input type="submit" class="btn btn-success" value="Actualizar">
-                    </form>
-                </div>
+                    </form>                                  
+                </div>                
             </div>
         </div>
     </div>
 </div>
-
 <!-- Incluir el pie de página -->
 <?php require 'footer.php'; ?>

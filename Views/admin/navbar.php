@@ -123,7 +123,7 @@ if(!isset($_SESSION['nombre'])){
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="profe_index.php">Listado Profesor</a></li>
-                <li><a class="dropdown-item" href="lista_A.php">Listado de Asignaciones</a></li>
+                <li><a class="dropdown-item" href="asigna_index.php">Listado de Asignaciones</a></li>
               </ul>
             </li>
             <!-- ------------------------------------------------------- -->

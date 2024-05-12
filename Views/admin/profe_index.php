@@ -18,7 +18,9 @@ require '../../conn/connection.php';
                 <div class="card rounded-2 border-0">
                     <div class="card-header bg-dark text-white pb-0">
                         <h5 class="d-inline-block">Listado de Profesores</h5>
+                        
                         <a class="btn btn-primary float-right mb-2" href="profe_crea.php">Agregar Profesor</a>
+                        <a class="btn btn-warning float-right mb-2 mr-2" href="asigna_index.php">Listar Asignaciones</a> 
                     </div>                    
                     <div class="card-body table-responsive">
                         <!-- <button type="submit" class="btn btn-primary">Buscar</button> ------->
@@ -59,7 +61,7 @@ require '../../conn/connection.php';
                                             <!-- <td></td> -->
                                             <td class="text-center">
                                                     <div class="btn-group">
-                                                        <a href="asignar_F.php?id=<?php echo $profesor['id_persona']; ?>" class="btn btn-info btn-sm" title="Asignar" role="button">Asignar</a>
+                                                        <a href="asigna_crea.php?id=<?php echo $profesor['id_persona']; ?>" class="btn btn-info btn-sm" title="Asignar" role="button">Asignar</a>
                                                         <a href="profe_edit.php?id=<?php echo $profesor['id_persona']; ?>" class="btn btn-warning btn-sm" title="Editar" role="button">
                                                             <i class="fas fa-edit"></i>
                                                         </a>                                                         
