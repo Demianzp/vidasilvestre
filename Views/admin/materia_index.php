@@ -56,11 +56,11 @@ require 'navbar.php';
                     <table id="example" class="table table-striped table-sm" style="width:100%">
                         <thead class="thead-dark">
                             <tr>
-                                <th>ID Materia</th>
-                                <th>Materia</th>
-                                <th>Agregar Correlativa</th>
+                                <th class="th-sm">ID Materia</th>
+                                <th>Para Rendir</th>
+                                <th>Tener Aprobada</th>
                                 <th>Acciones</th>
-                                <th>Listado de Alumnos</th>
+                                <!-- <th>Listado de Alumnos</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -80,7 +80,8 @@ require 'navbar.php';
                                         <td><?php echo htmlspecialchars($materia['id_materia'], ENT_QUOTES, 'UTF-8'); ?></td>
                                         <td><?php echo htmlspecialchars($materia['Materia'], ENT_QUOTES, 'UTF-8'); ?></td>
                                         <td class="text-center">
-                                            <a href="correlativas.php?id=<?php echo htmlspecialchars($materia['id_materia'], ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-success btn-sm"><i class="fa-sharp fa-solid fa-folder-open"></i></a>
+                                            poner las correlativas
+                                            <!-- <a href="correlativas.php?id=<?php echo htmlspecialchars($materia['id_materia'], ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-success btn-sm"><i class="fa-sharp fa-solid fa-folder-open"></i></a> -->
                                         </td>
                                         <td class="text-center">
                                             <div class="btn-group">
@@ -90,7 +91,7 @@ require 'navbar.php';
                                                 </a>
                                             </div>
                                         </td>
-                                        <td class="text-center"><a href="materia_alumno.php?id=<?php echo htmlspecialchars($materia['id_materia'], ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-success btn-sm">Listado de Alumnos</a></td>
+                                        <!-- <td class="text-center"><a href="materia_alumno.php?id=<?php echo htmlspecialchars($materia['id_materia'], ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-success btn-sm">Listado de Alumnos</a></td> -->
                                     </tr>
                             <?php
                                 }

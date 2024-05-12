@@ -1,62 +1,62 @@
 <?php
 include_once('../../conn/connection.php');
 // Inicializar variables de mensaje
-$mensj2 = '';
-$error2 = '';
-if (isset($_POST['profesor']) && isset($_POST['materia']) && isset($_POST['Id'])) {
-    $id = $_POST['Id'];
+$mensj1 = '';
+$error1 = '';
+if (isset($_POST['profesor']) && isset($_POST['materia'])) {
     $profesor = $_POST['profesor'];
     $materia = $_POST['materia'];
+    $estado = "Activo";
+    $id=$_POST['id'];
 
-    $sql = "UPDATE asignar SET id_persona=:profesor, id_materia=:materia WHERE id_asignar=:id";
+    $sql = "INSERT INTO asignar (id_persona, id_materia, Estado) VALUES (:profesor, :materia, :estado)";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(":profesor", $profesor, PDO::PARAM_INT);
     $stmt->bindParam(":materia", $materia, PDO::PARAM_INT);
-    $stmt->bindParam(":id", $id, PDO::PARAM_INT);
-    
+    $stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
     if ($stmt->execute()) {
-        $mensj2 = 'Registro actualizado correctamente.';
+        $mensj1 = 'Registro cargado correctamente.';
     } else {
-        $error2 = 'Error al a actualizar el registro: ' . implode(', ', $consulta_desactivar->errorInfo());
+        $error1 = 'Error al a cargar el registro: ' . implode(', ', $consulta_desactivar->errorInfo());
     }
 }
 // Redirigir solo si hay mensajes para enviar
-if ($mensj2|| $error2) {
-header("Location: lista_A.php?mensaje2=" . urlencode($mensj2) . "&error2=" . urlencode($error2));
+if ($mensj1|| $error1) {
+header("Location: asigna_index.php?mensaje1=" . urlencode($mensj1) . "&error1=" . urlencode($error1));
 exit();
 }
+    
 ?>
-<!-- ------------------------------------------------- -->
+
 <?php require 'navbar.php'; ?>
+
+
     <div class="container mt-3">
         <div class="row m-auto">
             <div class="col-sm">
                 <div class="card rounded-2 border-0">
-                    <h5 class="card-header bg-dark text-white">Editar</h5>
+                    <h5 class="card-header bg-dark text-white">Asignar materia</h5>
                     <div class="card-body bg-light">
                         <form method="post" class="form" action="">
-                            <?php
-                            include('../../conn/connection.php');
-                            $sql = "SELECT * FROM asignar WHERE id_asignar =" . $_GET['id'];
-                            $resultado = $conexion->query($sql);
-                            $row = $resultado->fetch_assoc();
-                            ?>
-                            <input type="hidden" class="form-control" name="Id" value="<?php echo $row['id_asignar'] ?>">
-                            <!-- ---------------El get trae el id del profesor q quiere asignar la materia------------------ -->
-                            <div class="form-group">
-                                <label for="profesor">Profesor:</label>
-                                <select name="profesor" class="form-control">
+
+  <!-- ---------------El get trae el id del profesor q quiere asignar la materia------------------ -->
+                           <div class="form-group">
+                                <label  for="profesor">
+                                <select name="profesor" class="form-control card-header bg-white text-dark" >
+                           
                                     <?php
+                                
                                     include('../../conn/connection.php');
-                                    $sql = $conexion->query("SELECT * FROM persona WHERE id_rol = 2 AND estado = 'Activo' AND id_persona=" . $row['id_persona']);
-                                    while ($resultado3 = $sql->fetch_assoc()) {
-                                        echo "<option value='" . $resultado3["id_persona"] . "'>" . $resultado3["nombre"] . " " . $resultado3["apellido"] . "</option>";
+                                    $sql = $conexion->query("SELECT * FROM persona WHERE id_rol = 2 AND estado = 'Activo' AND id_persona=" . $_GET['id']);
+                                    while ($resultado = $sql->fetch_assoc()) {
+                                        echo "<option value='" . $resultado["id_persona"] . "'>" . $resultado["nombre"] . " " . $resultado["apellido"] . "</option>";
                                     }
                                     ?>
-                                </select>
+                                </select></label>
                             </div>
-                                 <!-- --------------------------------- -->
-                                 <div class="row">
+
+                                <!-- --------------------------------- -->
+                                <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <label for="fecha_nacimiento">Fecha de Ingreso:</label>
@@ -68,7 +68,7 @@ exit();
                             <div class="form-group">
                                 <label for="materia">Materia:</label>
                                 <select name="materia" class="form-control" required>
-                                <option disabled selected hidden>Seleccione la materia</option>
+                                    <option disabled selected hidden>Seleccione la materia</option>
                                     <?php
                                     include('../../conn/connection.php');
                                     $sql = $conexion->query("SELECT * FROM materia WHERE  estado = 'Activo'");
@@ -78,19 +78,29 @@ exit();
                                     ?>
                                 </select>
                             </div>
+                            
+                        
                             <!-- --------------------------------- -->
                             <div class="form-group">
                                 <input type="hidden" class="form-control" name="Estado" value="Activo" disabled>
                             </div>
                             <!-------------------------------------------------------------->
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Actualizar</button>
-                                <a class="btn btn-warning" href="lista_A.php">Volver</a>
+                            <div class="mt-3 mb-2">
+                                <button type="submit" class="btn btn-primary">Guardar </button>
+                                <a class="btn btn-warning" href="asigna_index.php">Ver Listado</a>
                             </div>
+                            <?php
+                            if (!empty($infoMessage)) {
+                                echo '<div class="alert alert-success" role="alert">' . $infoMessage . '</div>';
+                            }
+                            if (!empty($errorMessage)) {
+                                echo '<div class="alert alert-danger" role="alert">' . $errorMessage . '</div>';
+                            }
+                            ?>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<?php require 'footer.php'; ?>
+    <?php require 'footer.php'; ?>

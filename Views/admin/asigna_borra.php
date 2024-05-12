@@ -22,7 +22,7 @@ if (isset($_GET['id'])) {
 } 
 // Redirigir solo si hay mensajes para enviar
 if ($mensj3|| $error3) {
-    header("Location: lista_A.php?mensaje3=" . urlencode($mensj3) . "&error3=" . urlencode($error3));
+    header("Location: asigna_index.php?mensaje3=" . urlencode($mensj3) . "&error3=" . urlencode($error3));
     exit();
 }
 ?>
@@ -52,9 +52,9 @@ if ($mensj3|| $error3) {
                         </div>
 
                 <a class="btn btn-danger" href="?id=<?php echo $id_materia; ?>&confirm=yes">Sí</a>
-                <a class="btn btn-primary" href="lista_A.php">No</a>
+                <a class="btn btn-primary" href="asigna_index.php">No</a>
             <?php } else { ?>
-                <a class="btn btn-warning" href="lista_A.php">Volver al Listado</a>
+                <a class="btn btn-warning" href="asigna_index.php">Volver al Listado</a>
             <?php } ?>
                     </div>
                 </div>
