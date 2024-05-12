@@ -72,10 +72,10 @@
                                         <!-------BOTONES--->
                                         <td class="text-center">
                                             <div class="btn-group">
-                                                <a href="edit_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-warning" role="button">
+                                                <a href="asigna_edit.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-warning" role="button">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a href="delet_A.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-danger" role="button">
+                                                <a href="asigna_borra.php?id=<?php echo $resultado['id_asignar'] ?>" class="btn btn-danger" role="button">
                                                     <i class="fas fa-trash"></i>
                                                 </a>
                                             </div>  
