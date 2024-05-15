@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-05-2024 a las 21:39:20
+-- Tiempo de generación: 15-05-2024 a las 02:11:48
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -60,8 +60,22 @@ CREATE TABLE `asignar` (
   `id_asignar` int(11) NOT NULL,
   `id_persona` int(11) DEFAULT NULL,
   `id_materia` int(11) DEFAULT NULL,
+  `fecha_i` date DEFAULT NULL,
+  `fecha_b` date DEFAULT NULL,
   `Estado` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `asignar`
+--
+
+INSERT INTO `asignar` (`id_asignar`, `id_persona`, `id_materia`, `fecha_i`, `fecha_b`, `Estado`) VALUES
+(1, 6, 2, NULL, NULL, 'Activo'),
+(2, 7, 3, NULL, NULL, 'Activo'),
+(3, 5, 3, NULL, NULL, 'Activo'),
+(4, 6, 2, NULL, NULL, 'Activo'),
+(5, 6, 3, '0000-00-00', NULL, 'Activo'),
+(6, 7, 3, '0000-00-00', NULL, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -76,8 +90,18 @@ CREATE TABLE `ciclo_lectivo` (
   `fecha_fin` date DEFAULT NULL,
   `Estado` varchar(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `ciclo_actual` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ciclo_lectivo`
+--
+
+INSERT INTO `ciclo_lectivo` (`id_ciclo`, `nombre_ciclo`, `fecha_inicio`, `fecha_fin`, `Estado`, `created_at`, `updated_at`, `ciclo_actual`) VALUES
+(1, '2024', '2024-03-03', '2025-03-03', 'Activo', '2024-05-09 19:57:14', '2024-05-15 00:07:29', 1),
+(2, '2025', '2025-03-09', '2026-03-12', 'Activo', '2024-05-09 19:59:29', '2024-05-15 00:07:29', 0),
+(3, '2026', '2024-05-16', '2024-05-15', 'Activo', '2024-05-15 00:07:44', '2024-05-15 00:07:44', 0);
 
 -- --------------------------------------------------------
 
@@ -118,9 +142,19 @@ CREATE TABLE `materia` (
   `horas` varchar(5) DEFAULT NULL,
   `num_resolucion` varchar(11) DEFAULT NULL,
   `plan_estudio` varchar(11) DEFAULT NULL,
+  `año_cursado` varchar(5) NOT NULL,
   `id_tipo` int(11) DEFAULT NULL,
   `estado` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `materia`
+--
+
+INSERT INTO `materia` (`id_materia`, `Nombre`, `descripcion`, `horas`, `num_resolucion`, `plan_estudio`, `año_cursado`, `id_tipo`, `estado`) VALUES
+(1, '\'Lengua\'', '\'Lengua\'', '2', '0', '\'1\'', '', 1, 'Inactivo'),
+(2, '\'Matematica\'', '\'Matematica aplicada\'', '2', '213123', '\'1\'', '', 2, 'Activo'),
+(3, '\'Geografia\'', '\'Geografia basica\'', '5', '324234', '2', '3', 2, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -151,15 +185,19 @@ CREATE TABLE `nota` (
   `id_persona` int(11) DEFAULT NULL,
   `id_materia` int(11) DEFAULT NULL,
   `id_ciclo` int(11) DEFAULT NULL,
-  `nota1` decimal(5,2) DEFAULT NULL,
-  `fecha_n1` date DEFAULT NULL,
-  `nota2` decimal(5,2) DEFAULT NULL,
-  `fecha_n2` date DEFAULT NULL,
-  `nota3` decimal(5,2) DEFAULT NULL,
-  `fecha_n3` date DEFAULT NULL,
-  `nota_final` decimal(5,2) DEFAULT NULL,
-  `fecha_nota_final` date DEFAULT NULL,
-  `promedio` decimal(5,2) DEFAULT NULL
+  `Nota_1` decimal(5,2) DEFAULT NULL,
+  `Nota_2` decimal(5,2) DEFAULT NULL,
+  `Nota_3` decimal(5,2) DEFAULT NULL,
+  `Nota_4` decimal(5,2) DEFAULT NULL,
+  `Calif_Regularidad` decimal(5,2) DEFAULT NULL,
+  `Calif_1_Ex_Final` decimal(5,2) DEFAULT NULL,
+  `Calif_2_Ex_Final` decimal(5,2) DEFAULT NULL,
+  `Calif_Final` decimal(5,2) DEFAULT NULL,
+  `Primera_Per_Re_Ev_Dic` decimal(5,2) DEFAULT NULL,
+  `Segunda_Per_Re_Ev_Dic` decimal(5,2) DEFAULT NULL,
+  `Primera_Per_Re_Ev_Feb` decimal(5,2) DEFAULT NULL,
+  `Segunda_Per_Re_Ev_Feb` decimal(5,2) DEFAULT NULL,
+  `Calificacion_Definitiva` decimal(5,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -193,8 +231,13 @@ CREATE TABLE `persona` (
 --
 
 INSERT INTO `persona` (`id_persona`, `nombre`, `apellido`, `fecha_nacimiento`, `DNI`, `celular`, `email_correo`, `direccion`, `fecha_ingreso`, `pais`, `ciudad`, `contraseña`, `id_rol`, `genero`, `legajo`, `titulo`, `estado`) VALUES
-(1, 'Juan', 'Castro', '1997-05-01', 44231783, '2646054711', 'adminjuan@gmai.com', '9 de julio y san juan', '2006-05-03', 'Argentina', 'Angaco', 'admin123', 3, 'Masculino', 2332423, '332423', 'Activo'),
-(2, 'Juan', 'Perez', '1997-05-01', 44231783, '2646054711', 'juan@gmai.com', '9 de julio y san juan', '2006-05-03', 'Argentina', 'Angaco', '123cas', 1, 'Masculino', 2332423, '332423', 'Activo');
+(1, 'Juan', 'Castro', '1997-05-01', 44231783, '2646054711', 'adminjuan@gmail.com', '9 de julio y san juan', '2006-05-03', 'Argentina', 'Angaco', 'admin123', 3, 'Masculino', 2332423, '332423', 'Activo'),
+(2, 'Juan', 'Perez', '1997-05-01', 44231783, '2646054711', 'jua2n@gmail.com', '9 de julio y san juan', '2006-05-03', 'Argentina', 'Angaco', '123cas', 1, 'Masculino', 2332423, '332423', 'Activo'),
+(3, 'Juan Ignacio', 'Perez', '2003-05-23', 44145158, '2645128932', 'juan@gmail.com', 'La cañada', '2023-03-02', 'Argentina', 'Calingasta', 'juan23w3', 1, 'Masculino', NULL, NULL, 'Activo'),
+(4, 'Juan Alberto', 'Sosa', '2004-02-02', 44327649, '2343241222', 'juanalberto23@gmail.com', '9 de julion 23', '2024-04-30', 'Argentina', 'Zonda', 'alberto23', 1, 'Masculino', NULL, NULL, 'Activo'),
+(5, 'Cristian', 'Castro', '2005-02-01', 34423412, '3242343243', 'cristiann@gmail.com', '2e2', '0000-00-00', 'Argentina', 'Albardón', 'admin1221', 2, 'Masculino', NULL, NULL, 'Activo'),
+(6, 'Marta', 'Castro', '2024-05-28', 34554452, '2648309212', 'marta@gmail.com', 'ee', '0000-00-00', 'Argentina', 'Zonda', '1231313', 2, 'Femenino', 23424, ' assadd  ', 'Activo'),
+(7, 'ssss', 'SS', '2002-02-02', 23424242, '2443234231', 'admin21n@gmail.com', 'dad34', '0000-00-00', 'Argentina', '25 de Mayo', '123131', 2, 'Masculino', 0, ' eqeq ', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -232,8 +275,8 @@ CREATE TABLE `tipo` (
 --
 
 INSERT INTO `tipo` (`id_tipo`, `nombre_tipo`) VALUES
-(1, 'Promocional'),
-(2, 'Regular'),
+(1, 'Regular'),
+(2, 'Promocional'),
 (3, 'Libre');
 
 --
@@ -351,13 +394,13 @@ ALTER TABLE `alumno_materia`
 -- AUTO_INCREMENT de la tabla `asignar`
 --
 ALTER TABLE `asignar`
-  MODIFY `id_asignar` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_asignar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `ciclo_lectivo`
 --
 ALTER TABLE `ciclo_lectivo`
-  MODIFY `id_ciclo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ciclo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `correlativa`
@@ -375,7 +418,7 @@ ALTER TABLE `curso`
 -- AUTO_INCREMENT de la tabla `materia`
 --
 ALTER TABLE `materia`
-  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `mesa_examen`
@@ -393,7 +436,7 @@ ALTER TABLE `nota`
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
