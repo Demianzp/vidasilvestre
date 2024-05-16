@@ -230,6 +230,7 @@ CREATE TABLE `persona` (
 -- Volcado de datos para la tabla `persona`
 --
 
+
 INSERT INTO `persona` (`id_persona`, `nombre`, `apellido`, `fecha_nacimiento`, `DNI`, `celular`, `email_correo`, `direccion`, `fecha_ingreso`, `pais`, `ciudad`, `contraseña`, `id_rol`, `genero`, `legajo`, `titulo`, `estado`) VALUES
 (1, 'Juan', 'Castro', '1997-05-01', 44231783, '2646054711', 'adminjuan@gmail.com', '9 de julio y san juan', '2006-05-03', 'Argentina', 'Angaco', 'admin123', 3, 'Masculino', 2332423, '332423', 'Activo'),
 (2, 'Juan', 'Perez', '1997-05-01', 44231783, '2646054711', 'jua2n@gmail.com', '9 de julio y san juan', '2006-05-03', 'Argentina', 'Angaco', '123cas', 1, 'Masculino', 2332423, '332423', 'Activo'),
@@ -238,7 +239,6 @@ INSERT INTO `persona` (`id_persona`, `nombre`, `apellido`, `fecha_nacimiento`, `
 (5, 'Cristian', 'Castro', '2005-02-01', 34423412, '3242343243', 'cristiann@gmail.com', '2e2', '0000-00-00', 'Argentina', 'Albardón', 'admin1221', 2, 'Masculino', NULL, NULL, 'Activo'),
 (6, 'Marta', 'Castro', '2024-05-28', 34554452, '2648309212', 'marta@gmail.com', 'ee', '0000-00-00', 'Argentina', 'Zonda', '1231313', 2, 'Femenino', 23424, ' assadd  ', 'Activo'),
 (7, 'ssss', 'SS', '2002-02-02', 23424242, '2443234231', 'admin21n@gmail.com', 'dad34', '0000-00-00', 'Argentina', '25 de Mayo', '123131', 2, 'Masculino', 0, ' eqeq ', 'Activo');
-
 -- --------------------------------------------------------
 
 --

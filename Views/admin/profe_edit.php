@@ -96,7 +96,7 @@ if ($infoMessage || $errorMessage) {
                             <!-------------------------------------------------------------->                            
                             <div class="mt-3 mb-2">
                                 <button type="submit" class="btn btn-primary" name="modificar" onclick="return confirm('¿Estás seguro de guardar los cambios?')">Guardar Cambios</button>
-                                <a class="btn btn-warning" href="listadoprofe.php">Ver Listado</a>
+                                <a class="btn btn-warning" href="profe_index.php">Ver Listado</a>
                             </div>
                             <?php
                             if (!empty($infoMessage)) {
