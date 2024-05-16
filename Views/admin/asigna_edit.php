@@ -45,7 +45,7 @@ exit();
                             <!-- ---------------El get trae el id del profesor q quiere asignar la materia------------------ -->
                             <div class="form-group">
                                 <label for="profesor">Profesor:</label>
-                                <select name="profesor" class="form-control">
+                                <h2 name="profesor" class="form-control">
                                     <?php
                                     include('../../conn/connection.php');
                                     $sql = $conexion->query("SELECT * FROM persona WHERE id_rol = 2 AND estado = 'Activo' AND id_persona=" . $row['id_persona']);
@@ -53,13 +53,28 @@ exit();
                                         echo "<option value='" . $resultado3["id_persona"] . "'>" . $resultado3["nombre"] . " " . $resultado3["apellido"] . "</option>";
                                     }
                                     ?>
-                                </select>
+                                </h2>
                             </div>
-                                 <!-- --------------------------------- -->
-                                 <div class="row">
+                                    <!-- --------------------------------- -->
+                                    <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="fecha_nacimiento">Fecha de Ingreso:</label>
+                                <label for="fecha_i">Fecha de Ingreso actual:</label>
+                                <?php
+                            include('../../conn/connection.php');
+                            $sql = "SELECT * FROM asignar WHERE id_asignar =" . $_GET['id'];
+                            $resultado = $conexion->query($sql);
+                            $row = $resultado->fetch_assoc();
+                            ?>
+                             <input type="date" class="form-control" name="fecha_i" value="<?php echo $row['fecha_i'] ?>">
+                            </div>
+                        </div>
+                        </div>
+                               <!-- --------------------------------- -->
+                               <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="fecha_nacimiento">Actualizar Fecha de Ingreso :</label>
                                 <input type="date" class="form-control" name="fecha_ingreso" required>
                             </div>
                         </div>

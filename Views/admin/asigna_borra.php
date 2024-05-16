@@ -6,12 +6,15 @@ $mensj3 = '';
 $error3 = '';
 
 if (isset($_GET['id'])) {
+   
     $id_materia = $_GET['id'];
 
     if (isset($_GET['confirm']) && $_GET['confirm'] === 'yes') {
+        
         // El usuario confirmó la desactivación, proceder con la actualización del estado
-        $consulta_desactivar = $db->prepare("UPDATE asignar SET Estado = 'Inactivo' WHERE id_asignar = :id");
-        $consulta_desactivar->bindParam(':id', $id_materia, PDO::PARAM_INT);
+         $fecha_baja = $_POST['fecha_baja'];
+        $consulta_desactivar = $db->prepare("INSERT ON asignar (fecha_b) VALUES (:fecha_baja) SET Estado = 'Inactivo' WHERE id_asignar = :id");
+        $consulta_desactivar->bindParam(':id', $id_asignar, PDO::PARAM_INT);
 
         if ($consulta_desactivar->execute()) {
             $mensj3 = 'Registro desactivado correctamente';
@@ -45,7 +48,7 @@ if ($mensj3|| $error3) {
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="fecha_nacimiento">Fecha de salida:</label>
+                                <label for="fecha_baja">Fecha de salida:</label>
                                 <input type="date" class="form-control" name="fecha_baja" required>
                             </div>
                         </div>

@@ -42,19 +42,13 @@
                                 <th>#</th>
                                 <th>Profesor</th>
                                 <th>Materia</th>
+                                <th>Fecha</th>
                                 <th>Acciones</th>
                             </thead>
                             <tbody>
                      
                                 <?php
-
-                                $file = __DIR__ . '/../../conn/conexion.php';
-                                if (file_exists($file)) {
-                                    require $file;
-                                } else {
-                                    die("Error: No se puede encontrar el archivo de conexión.");
-                                }
-                                
+                                require ("../../conn/connection.php");
 
                                 $sql = $conexion->query("SELECT * FROM asignar 
                                 INNER JOIN persona ON asignar.id_persona = persona.id_persona AND persona.estado = 'Activo'
@@ -67,6 +61,7 @@
                                         <th scope="row"><?php echo $resultado['id_asignar'] ?></th>
                                         <td scope="row"><?php echo $resultado['nombre'] ?> <?php echo $resultado['apellido'] ?> </td>
                                         <td scope="row"><?php echo $resultado['Nombre'] ?></td> <!--Lo cambie en la BD materia-->
+                                        <td scope="row"><?php echo $resultado['fecha_i'] ?></td> 
                                         <!--Lo cambie en la BD asignar----->
                                         <!--cambie los nombre en BD x q al tener el mismo nombre se mezclan las conexiones-->
                                         <!-------BOTONES--->

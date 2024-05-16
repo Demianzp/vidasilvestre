@@ -6,13 +6,15 @@ $error1 = '';
 if (isset($_POST['profesor']) && isset($_POST['materia'])) {
     $profesor = $_POST['profesor'];
     $materia = $_POST['materia'];
+    $fecha_ingreso = $_POST['fecha_ingreso'];
     $estado = "Activo";
     $id=$_POST['id'];
 
-    $sql = "INSERT INTO asignar (id_persona, id_materia, Estado) VALUES (:profesor, :materia, :estado)";
+    $sql = "INSERT INTO asignar (id_persona, id_materia, fecha_i, Estado) VALUES (:profesor, :materia, :fecha_ingreso, :estado)";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(":profesor", $profesor, PDO::PARAM_INT);
     $stmt->bindParam(":materia", $materia, PDO::PARAM_INT);
+    $stmt->bindParam(":fecha_ingreso", $fecha_ingreso);
     $stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
     if ($stmt->execute()) {
         $mensj1 = 'Registro cargado correctamente.';
@@ -59,7 +61,7 @@ exit();
                                 <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="fecha_nacimiento">Fecha de Ingreso:</label>
+                                <label for="fecha_ingreso">Fecha de Ingreso:</label>
                                 <input type="date" class="form-control" name="fecha_ingreso" required>
                             </div>
                         </div>
