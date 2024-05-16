@@ -55,7 +55,7 @@ function cerrar (){
       }
     }).then((result) => {        
       if (result.isConfirmed) {
-        window.location="logout.php";
+        window.location="../logout.php";
       } 
     });    
 }

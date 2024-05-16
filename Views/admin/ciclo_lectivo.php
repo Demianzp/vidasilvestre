@@ -2,10 +2,8 @@
 // Inicia la sesión para usar variables de sesión para mensajes
 // Conexión a la base de datos
 require '../../conn/connection.php';
-
 // Obtener el ciclo lectivo actual
 $ciclo_actual = null;
-
 try {
     // Consulta para obtener el ciclo actual
     $stmt = $db->prepare("SELECT nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 1 LIMIT 1");
@@ -15,7 +13,6 @@ try {
     // Manejo de errores y registro en el log
     error_log("Error al obtener el ciclo actual: " . $e->getMessage());
 }
-
 // Manejo de formularios con método POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST['accion'])) {
@@ -51,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     }
                 }
                 // Redireccionar después de agregar
+                
                 header("Location: " . $_SERVER['PHP_SELF']);
                 exit();
                 break;
@@ -80,12 +78,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     }
                 }
                 // Redireccionar después de actualizar
-                header("Location:ciclo_lectivo.php " . $_SERVER['PHP_SELF']);
+                header("Location:ciclo_lectivo.php");
+                // header("Location: " . $_SERVER['PHP_SELF']);
                 exit();
                 break;
             default:
                 $_SESSION['mensaje'] = "Acción no reconocida.";
-                header("Location:ciclo_lectivo.php" . $_SERVER['PHP_SELF']);  // Redireccionar para evitar estado incorrecto
+                header("Location:ciclo_lectivo.php");
+                // header("Location: " . $_SERVER['PHP_SELF']);  // Redireccionar para evitar estado incorrecto
                 exit();
         }
     }
@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </div>           
                     <form action="" method="post">
                         <div class="form-group">
-                            <label>Seleccione Ciclo Lectivo para Actualizar:</label>
+                            <label>Seleccione Ciclo Lectivo para Actualizar:</label>                            
                             <select name="nuevo_ciclo" class="form-control" required>
                                 <option value="" disabled selected>Seleccione Ciclo Lectivo</option>
                                 <?php
