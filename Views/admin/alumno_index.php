@@ -61,7 +61,8 @@ if(isset($_GET['txtID'])){
                                                 <!-- <td></td> -->
                                                 <td class="text-center">
                                                     <div class="btn-group">
-                                                        <a href="alumno_estado.php" class="btn btn-info btn-sm" type="button">Estado</a>
+                    
+                                                        <a href="alumno_estado.php?id=<?php echo $alumno['id_persona'];?>" class="btn btn-info btn-sm" type="button">Estado</a>
                                                         <!-- <a href="" class="btn btn-primary btn-sm" type="button">
                                                             <i class="fas fa-eye"></i>                                                        
                                                         </a>   -->

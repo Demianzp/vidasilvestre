@@ -229,8 +229,6 @@ CREATE TABLE `persona` (
 --
 -- Volcado de datos para la tabla `persona`
 --
-
-
 INSERT INTO `persona` (`id_persona`, `nombre`, `apellido`, `fecha_nacimiento`, `DNI`, `celular`, `email_correo`, `direccion`, `fecha_ingreso`, `pais`, `ciudad`, `contraseña`, `id_rol`, `genero`, `legajo`, `titulo`, `estado`) VALUES
 (1, 'Juan', 'Castro', '1997-05-01', 44231783, '2646054711', 'adminjuan@gmail.com', '9 de julio y san juan', '2006-05-03', 'Argentina', 'Angaco', 'admin123', 3, 'Masculino', 2332423, '332423', 'Activo'),
 (2, 'Juan', 'Perez', '1997-05-01', 44231783, '2646054711', 'jua2n@gmail.com', '9 de julio y san juan', '2006-05-03', 'Argentina', 'Angaco', '123cas', 1, 'Masculino', 2332423, '332423', 'Activo'),
