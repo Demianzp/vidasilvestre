@@ -8,6 +8,17 @@ require '../../conn/connection.php';
 $alumno_id = isset($_GET['id']) ? $_GET['id'] : null;
 
 if ($alumno_id) {
+    // Obtener el nombre y apellido del alumno
+    $sql_alumno = "SELECT nombre, apellido FROM persona WHERE id_persona = $alumno_id";
+    $result_alumno = $conexion->query($sql_alumno);
+
+    if ($result_alumno->num_rows > 0) {
+        $alumno = $result_alumno->fetch_assoc();
+        $nombre_completo = $alumno['nombre'] . ' ' . $alumno['apellido'];
+    } else {
+        $nombre_completo = "Alumno no encontrado";
+    }
+
     // Obtener las materias disponibles desde la base de datos
     $sql = "SELECT id_materia, Nombre FROM materia";
     $result = $conexion->query($sql);
@@ -22,7 +33,7 @@ if ($alumno_id) {
     }
 
     // Obtener el estado del alumno en las materias
-    $sql_estado = "SELECT id_materia, estado FROM alumno_materia WHERE id_persona= $alumno_id";
+    $sql_estado = "SELECT id_materia, estado FROM alumno_materia WHERE id_persona = $alumno_id";
     $result_estado = $conexion->query($sql_estado);
 
     $estado_alumno = [];
@@ -31,6 +42,11 @@ if ($alumno_id) {
             $estado_alumno[$row_estado['id_materia']] = $row_estado['estado'];
         }
     }
+
+    // Obtener el ciclo lectivo actual
+    $sql_ciclo = "SELECT id_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 1 LIMIT 1";
+    $result_ciclo = $conexion->query($sql_ciclo);
+    $ciclo_lectivo = $result_ciclo->fetch_assoc()['id_ciclo'];
 
     $conexion->close();
 } else {
@@ -44,7 +60,7 @@ if ($alumno_id) {
         <div class="col-sm">
             <div class="card rounded-2 border-0">
                 <div class="card-header bg-dark text-white pb-0">
-                    <h5 class="d-inline-block">*Nombre y Apellido del alumno*</h5>
+                    <h5 class="d-inline-block"><?php echo htmlspecialchars($nombre_completo); ?></h5>
                     <a class="btn btn-primary float-right mb-2" href="">Información</a>                    
                 </div>
                 <div class="card-body table-responsive">
@@ -68,12 +84,13 @@ if ($alumno_id) {
                                     <td><?php echo $index + 1; ?></td>
                                     <td><?php echo htmlspecialchars($materia['Nombre']); ?></td>
                                     <td>
-                                        <?php if (isset($estado_alumno[$materia['id_materia']]) && $estado_alumno[$materia['id_persona']] == 'Inscripto'): ?>
+                                        <?php if (isset($estado_alumno[$materia['id_materia']]) && $estado_alumno[$materia['id_materia']] == 'Inscripto'): ?>
                                             <div class="bg-success text-white text-center">Inscripto</div>
                                         <?php else: ?>
                                             <form action="alumno_inscripcion.php" method="post">
                                                 <input type="hidden" name="alumno_id" value="<?php echo htmlspecialchars($alumno_id); ?>">
                                                 <input type="hidden" name="materia_id" value="<?php echo htmlspecialchars($materia['id_materia']); ?>">
+                                                <input type="hidden" name="ciclo_lectivo" value="<?php echo htmlspecialchars($ciclo_lectivo); ?>">
                                                 <button type="submit" class="btn btn-danger btn-sm btn-block">Inscribir</button>
                                             </form>
                                         <?php endif; ?>
@@ -83,7 +100,7 @@ if ($alumno_id) {
                                     <td>nota3</td>
                                     <td>nota4</td>
                                     <td>notaf</td>
-                                    <td><?php echo isset($estado_alumno[$materia['id_materia']]) ? htmlspecialchars($estado_alumno[$materia['id_persona']]) : 'libre'; ?></td>
+                                    <td><?php echo isset($estado_alumno[$materia['id_materia']]) ? htmlspecialchars($estado_alumno[$materia['id_materia']]) : 'libre'; ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
