@@ -20,7 +20,7 @@ if ($alumno_id) {
     }
 
     // Obtener las materias disponibles desde la base de datos
-    $sql = "SELECT id_materia, Nombre FROM materia";
+    $sql = "SELECT id_materia, Nombre, estado  FROM materia where estado = 'Activo'";
     $result = $conexion->query($sql);
 
     $materias = [];
