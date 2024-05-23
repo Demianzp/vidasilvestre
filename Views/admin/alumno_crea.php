@@ -73,6 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 $error = "Error al ingresar Persona.";
             }
+            
         }
     } catch (PDOException $e) {
         $error = "Error en la base de datos: " . $e->getMessage();
@@ -253,5 +254,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <script src="../../js/contraseña.js"></script>
 <script src="../../js/validacion.js"></script>
 <script src="../../js/validacion2.js"></script>
-
 <?php require 'footer.php'; ?>

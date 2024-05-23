@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-05-2024 a las 02:11:48
+-- Tiempo de generación: 22-05-2024 a las 02:13:53
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -47,8 +47,19 @@ CREATE TABLE `alumno_materia` (
   `id_materia` int(11) DEFAULT NULL,
   `id_ciclo` int(11) DEFAULT NULL,
   `id_nota` int(11) DEFAULT NULL,
-  `cod_correlativa` int(11) DEFAULT NULL
+  `cod_correlativa` int(11) DEFAULT NULL,
+  `estado` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `alumno_materia`
+--
+
+INSERT INTO `alumno_materia` (`Id_alumno`, `id_persona`, `id_materia`, `id_ciclo`, `id_nota`, `cod_correlativa`, `estado`) VALUES
+(1, 4, 3, NULL, NULL, NULL, 'Inscripto'),
+(2, 4, 1, 1, NULL, NULL, 'Inscripto'),
+(3, 3, 1, 1, NULL, NULL, 'Inscripto'),
+(4, 3, 3, 1, NULL, NULL, 'Inscripto');
 
 -- --------------------------------------------------------
 
@@ -229,14 +240,16 @@ CREATE TABLE `persona` (
 --
 -- Volcado de datos para la tabla `persona`
 --
+
 INSERT INTO `persona` (`id_persona`, `nombre`, `apellido`, `fecha_nacimiento`, `DNI`, `celular`, `email_correo`, `direccion`, `fecha_ingreso`, `pais`, `ciudad`, `contraseña`, `id_rol`, `genero`, `legajo`, `titulo`, `estado`) VALUES
 (1, 'Juan', 'Castro', '1997-05-01', 44231783, '2646054711', 'adminjuan@gmail.com', '9 de julio y san juan', '2006-05-03', 'Argentina', 'Angaco', 'admin123', 3, 'Masculino', 2332423, '332423', 'Activo'),
-(2, 'Juan', 'Perez', '1997-05-01', 44231783, '2646054711', 'jua2n@gmail.com', '9 de julio y san juan', '2006-05-03', 'Argentina', 'Angaco', '123cas', 1, 'Masculino', 2332423, '332423', 'Activo'),
+(2, 'Juan', 'Perez', '1997-05-01', 44231783, '2646054711', 'jua2n@gmail.com', '9 de julio y san juan', '2006-05-03', 'Argentina', 'Angaco', '123cas', 1, 'Masculino', 2332423, '332423', 'Inactivo'),
 (3, 'Juan Ignacio', 'Perez', '2003-05-23', 44145158, '2645128932', 'juan@gmail.com', 'La cañada', '2023-03-02', 'Argentina', 'Calingasta', 'juan23w3', 1, 'Masculino', NULL, NULL, 'Activo'),
 (4, 'Juan Alberto', 'Sosa', '2004-02-02', 44327649, '2343241222', 'juanalberto23@gmail.com', '9 de julion 23', '2024-04-30', 'Argentina', 'Zonda', 'alberto23', 1, 'Masculino', NULL, NULL, 'Activo'),
 (5, 'Cristian', 'Castro', '2005-02-01', 34423412, '3242343243', 'cristiann@gmail.com', '2e2', '0000-00-00', 'Argentina', 'Albardón', 'admin1221', 2, 'Masculino', NULL, NULL, 'Activo'),
 (6, 'Marta', 'Castro', '2024-05-28', 34554452, '2648309212', 'marta@gmail.com', 'ee', '0000-00-00', 'Argentina', 'Zonda', '1231313', 2, 'Femenino', 23424, ' assadd  ', 'Activo'),
-(7, 'ssss', 'SS', '2002-02-02', 23424242, '2443234231', 'admin21n@gmail.com', 'dad34', '0000-00-00', 'Argentina', '25 de Mayo', '123131', 2, 'Masculino', 0, ' eqeq ', 'Activo');
+(7, 'ssss', 'SS', '2002-02-02', 23424242, '2443234231', 'admin21n@gmail.com', 'dad34', '0000-00-00', 'Argentina', '25 de Mayo', '123131', 2, 'Masculino', 0, ' eqeq ', 'Inactivo');
+
 -- --------------------------------------------------------
 
 --
@@ -386,7 +399,7 @@ ALTER TABLE `acta`
 -- AUTO_INCREMENT de la tabla `alumno_materia`
 --
 ALTER TABLE `alumno_materia`
-  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `asignar`
