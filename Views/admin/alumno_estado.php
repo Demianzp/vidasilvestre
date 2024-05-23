@@ -54,7 +54,7 @@ if ($alumno_id) {
     exit;
 }
 ?>
-
+<!-- ------------------------------------- -->
 <section class="content mt-2">
     <div class="row m-auto">
         <div class="col-sm">
