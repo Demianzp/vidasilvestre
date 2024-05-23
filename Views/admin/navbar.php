@@ -59,32 +59,48 @@ if(!isset($_SESSION['nombre'])){
 </head>
 
 <body>
-  <!-- ---------------MENSAJE REGISTROS-------------- -->
-  <?php
+<!-- ---------------MENSAJE REGISTROS-------------- -->
+<?php
   $mensaje = isset($_GET['mensaje']) ? $_GET['mensaje'] : '';
   $error = isset($_GET['error']) ? $_GET['error'] : '';
   ?>
+
   <!-- Muestra la alerta para mensajes de éxito -->
   <?php if (!empty($mensaje)) { ?>
     <script>
-      Swal.fire({
-        icon: "success",
-        title: "<?php echo $mensaje; ?>",
-        showConfirmButton: false,
-        timer: 1700
+      document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+          icon: "success",
+          title: "<?php echo $mensaje; ?>",
+          showConfirmButton: false,
+          timer: 1700
+        }).then(() => {
+          // Eliminar parámetro de la URL
+          const url = new URL(window.location);
+          url.searchParams.delete('mensaje');
+          window.history.replaceState(null, null, url);
+        });
       });
     </script>
   <?php } ?>
+
   <!-- Muestra la alerta para errores -->
   <?php if (!empty($error)) { ?>
     <script>
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "<?php echo $error; ?>",
-        showConfirmButton: true,
-        confirmButtonText: "OK",
-        confirmButtonColor: "#d33"
+      document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "<?php echo $error; ?>",
+          showConfirmButton: true,
+          confirmButtonText: "OK",
+          confirmButtonColor: "#d33"
+        }).then(() => {
+          // Eliminar parámetro de la URL
+          const url = new URL(window.location);
+          url.searchParams.delete('error');
+          window.history.replaceState(null, null, url);
+        });
       });
     </script>
   <?php } ?>

@@ -3,7 +3,7 @@ require '../../conn/connection.php';
 $mensaje = "";
 $error = "";
 // Realizar la consulta SQL para obtener las materias
-$query = "SELECT id_materia, Nombre FROM materia WHERE Estado = 'Activo'";
+$query = "SELECT id_materia, Nombre FROM materia WHERE estado = 'Activo'";
 $result_materias = $db->query($query);
 // Consulta SQL para obtener los ciclos lectivos
 $query_ciclos = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo";
@@ -64,8 +64,8 @@ if ($mensaje || $error) {
                                 <select name="materia" id="materia" class="form-control" autocomplete="off" required>
                                     <option value="" disabled selected>Elija la materia</option>
                                     <?php
-                                    require 'conn/connection.php';
-                                    $query = "SELECT id_materia, Nombre FROM materia WHERE Estado = 'Activo'";
+                                    require '../../conn/connection.php';
+                                    $query = "SELECT id_materia, Nombre FROM materia WHERE estado = 'Activo'";
                                     $result_materias = $db->query($query);
                                     while ($row = $result_materias->fetch(PDO::FETCH_ASSOC)) {
                                         echo "<option value='" . $row['id_materia'] . "'>" . $row['Nombre'] . "</option>";
@@ -110,7 +110,7 @@ if ($mensaje || $error) {
                                 <select name="ciclo_lectivo" id="ciclo_lectivo" class="form-control" autocomplete="off" required>
                                     <option value="" disabled selected>Seleccione el ciclo lectivo</option>
                                     <?php
-                                    require 'conn/connection.php';
+                                    require '../../conn/connection.php';
                                     $query_ciclos = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo";
                                     $result_ciclos = $db->query($query_ciclos);
                                     while ($row_ciclo = $result_ciclos->fetch(PDO::FETCH_ASSOC)) {
