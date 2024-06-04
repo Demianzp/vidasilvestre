@@ -1,7 +1,6 @@
 
 <?php require 'navbar.php'; ?>
-    <div class="container mt-2 " style="">
-        
+    <div class="container mt-2 " >        
                 <div class="card rounded-2 border-0">
                     <h5 class="card-header bg-dark text-white ">Registro de Materias</h5>
                     <div class="card-body">
