@@ -1,4 +1,3 @@
-
 <?php
 require '../conn/connection.php';
 session_start();
@@ -22,28 +21,21 @@ if($_POST){
                 $_SESSION['id_persona'] = $usuario['id_persona'];
                 $_SESSION['nombre'] = $usuario['nombre'];
                 $_SESSION['apellido'] = $usuario['apellido'];
-                if ($usuario['id_rol'] == 1) { //ROL:Administrador
-                    $_SESSION['message'] = $messages[3];
-                } else {
-                    header('Location: admin/index.php');
-                    exit;
-                }
-                if ($usuario['id_rol'] == 2) {//ROL:Alumno
-                    $_SESSION['message'] = $messages[3];
-                } else {
+                // ------------------------------------------------
+                if ($usuario['id_rol'] == 1) {
                     header('Location: alumno/index.php');
                     exit;
-                }
-                if ($usuario['id_rol'] == 3) {//ROL:Profesor
-                    $_SESSION['message'] = $messages[3];
-                } else {
+                }else if ($usuario['id_rol'] == 2){
                     header('Location: profe/index.php');
                     exit;
-                }
-            } else {
+                }else{
+                    header('Location: admin/index.php');
+                    exit;
+                }                
+            }else{
                 $_SESSION['message'] = $messages[1];
             }
-        } else {
+        }else{
             $_SESSION['message'] = $messages[1];
         }
     }

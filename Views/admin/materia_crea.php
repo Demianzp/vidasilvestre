@@ -2,6 +2,8 @@
 require 'navbar.php'; 
 require '../../conn/connection.php';
 
+
+  
 $materia_id = null;
 $mensaje = null;
 $error = null;
@@ -57,6 +59,8 @@ try {
 }
 ?>
 <!-- ----------------------------------------------------- -->
+<?php require 'navbar.php'; ?>
+
 <div class="container mt-2 ">        
     <div class="card rounded-2 border-0">
         <h5 class="card-header bg-dark text-white">Registro de Materias</h5>

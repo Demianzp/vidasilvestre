@@ -160,7 +160,7 @@ if(!isset($_SESSION['nombre'])){
                   <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <!-- iconos sacados de "fontawesome" -->
                     <i class="fas fa-user pr-2"></i>
-                    Alumno:
+                    Profesor:
                     <?php if (isset($_SESSION['nombre']) && isset($_SESSION['apellido'])) : ?>                    
                     <?php echo $_SESSION['nombre'] . ' ' . $_SESSION['apellido']; ?>
                     <?php endif; ?>
