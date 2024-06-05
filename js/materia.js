@@ -1,51 +1,46 @@
-function validarCampos() {
-    const formulario = document.getElementById("materiaForm");
-    const inputs = formulario.querySelectorAll("input, select");
-    let camposIncompletos = false;
+document.getElementById('continuarBtn').addEventListener('click', function() {
+    document.getElementById('formulario-ingreso').style.display = 'none';
+    document.getElementById('confirmacion').style.display = 'block';
 
-    inputs.forEach((input) => {
-        if (input.required && input.value.trim() === "") {
-            camposIncompletos = true;
-        }
+    document.getElementById('confirmarNombre').textContent = document.getElementById('nombre').value;
+    document.getElementById('confirmarDescripcion').textContent = document.getElementById('descripcion').value;
+    document.getElementById('confirmarHoras').textContent = document.getElementById('horas').value;
+    document.getElementById('confirmarResolucion').textContent = document.getElementById('num_resolucion').value;
+    document.getElementById('confirmarAño').textContent = document.getElementById('año').value;
+    document.getElementById('confirmarPlan').textContent = document.getElementById('plan_estudio').value;
+
+    // Obtener texto del select de Tipo de Materia
+    var tipoSelect = document.getElementById('id_tipo');
+    var tipoText = tipoSelect.options[tipoSelect.selectedIndex].text;
+    document.getElementById('confirmarTipo').textContent = tipoText;
+
+    let correlativasSeleccionadas = Array.from(document.querySelectorAll('input[name="correlativas[]"]:checked'))
+        .map(el => el.parentElement.parentElement.previousElementSibling.textContent)
+        .join(', ');
+    document.getElementById('confirmarCorrelativas').textContent = correlativasSeleccionadas || 'Sin correlativas';
+
+    document.querySelector('input[name="nombre"]').value = document.getElementById('nombre').value;
+    document.querySelector('input[name="descripcion"]').value = document.getElementById('descripcion').value;
+    document.querySelector('input[name="horas"]').value = document.getElementById('horas').value;
+    document.querySelector('input[name="num_resolucion"]').value = document.getElementById('num_resolucion').value;
+    document.querySelector('input[name="año"]').value = document.getElementById('año').value;
+    document.querySelector('input[name="plan_estudio"]').value = document.getElementById('plan_estudio').value;
+    document.querySelector('input[name="id_tipo"]').value = document.getElementById('id_tipo').value;
+    
+    // Actualizar correlativas ocultas
+    document.querySelectorAll('.form-check.d-none input[name="correlativas[]"]').forEach(el => el.parentElement.remove());
+    document.querySelectorAll('input[name="correlativas[]"]:checked').forEach(el => {
+        let hiddenCheckbox = document.createElement('input');
+        hiddenCheckbox.type = 'checkbox';
+        hiddenCheckbox.className = 'form-check-input d-none';
+        hiddenCheckbox.name = 'correlativas[]';
+        hiddenCheckbox.value = el.value;
+        hiddenCheckbox.checked = true;
+        document.querySelector('.form-check.d-none').appendChild(hiddenCheckbox);
     });
+});
 
-    if (camposIncompletos) {
-        alert("Por favor, complete todos los campos obligatorios.");
-    } else {
-        mostrarDatos();
-    }
-}
-
-function mostrarDatos() {
-    const formulario = document.getElementById("materiaForm");
-    const datosIngresados = document.getElementById("datosIngresados");
-
-    formulario.style.display = "none";
-    datosIngresados.style.display = "block";
-
-    const tbody = datosIngresados.querySelector("tbody");
-    tbody.innerHTML = "";
-
-    const formElements = Array.from(formulario.elements);
-    formElements.forEach((element) => {
-        if (element.type !== "button") {
-            const campo = element.getAttribute("data-name");
-            const valor = element.value;
-            if (campo && valor) {
-                const tr = document.createElement("tr");
-                const tdCampo = document.createElement("td");
-                const tdValor = document.createElement("td");
-                tdCampo.textContent = campo;
-                tdValor.textContent = valor;
-                tr.appendChild(tdCampo);
-                tr.appendChild(tdValor);
-                tbody.appendChild(tr);
-            }
-        }
-    });
-}
-
-function registrarMateria() {
-    const formulario = document.getElementById("materiaForm");
-    formulario.submit(); // Envía el formulario a "procesar_materia.php"
-}
+document.getElementById('cancelarBtn').addEventListener('click', function() {
+    document.getElementById('confirmacion').style.display = 'none';
+    document.getElementById('formulario-ingreso').style.display = 'block';
+});

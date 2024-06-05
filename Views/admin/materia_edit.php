@@ -103,7 +103,7 @@ if ($infoMessage || $errorMessage) {
                             <!-------------------------------------------------------------->
                             <div class="mt-3 mb-2">
                                 <button type="submit" class="btn btn-primary" name="modificar" onclick="return confirm('¿Estás seguro de guardar los cambios?')">Guardar Cambios</button>
-                                <a class="btn btn-warning" href="listado_materia.php">Ver Listado</a>
+                                <a class="btn btn-warning" href="materia_index.php">Ver Listado</a>
                             </div>
                         </form>
                     </div>
@@ -111,7 +111,5 @@ if ($infoMessage || $errorMessage) {
             </div>
         </div>
     </div>
-    <script src="js/contraseña.js"></script>
-    <script src="js/validacion.js"></script>
-    <script src="js/validacion2.js"></script>
+
 <?php require 'footer.php'; ?>   
