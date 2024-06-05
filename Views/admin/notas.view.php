@@ -52,8 +52,8 @@ if (isset($_GET['revisar'])) {
 ?>
 <!-- -------------------------------------------- -->
 <?php require 'navbar.php'; ?>
-    <div class="container mt-3">
-        <div class="row d-flex justify-content-center">
+    <div class="content mt-3">
+        <div class="row m-auto justify-content-center">
             <div class="col-auto">
                 <div class="card rounded-2 border-0">
                     <div class="card-header bg-dark text-white">
@@ -90,21 +90,21 @@ if (isset($_GET['revisar'])) {
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>#</th>
-                                                <th>Apellido y Nombre</th>
+                                                <th>Alumno</th>
                                                 <!-- Campos para ingresar las notas -->
                                                 <th>Nota 1</th>
                                                 <th>Nota 2</th>
                                                 <th>Nota 3</th>
                                                 <th>Nota 4</th>
-                                                <th>Calif.Regularidad</th>
+                                                <th>Calif. Regular</th>
                                                 <th>Calif.1° Ex.Final</th>
                                                 <th>Calif.2° Ex.Final</th>
-                                                <th>Calif.Final</th>
-                                                <th>1°PeR.Ev.Dic</th>
-                                                <th>2°PeR.Ev.Dic</th>
-                                                <th>1°PeR.Ev.Feb</th>
-                                                <th>2°PeR.Ev.Feb</th>
-                                                <th>Calificación Definitiva</th>
+                                                <th>Calif. Final</th>
+                                                <th>1°PeR. Ev.Dic</th>
+                                                <th>2°PeR. Ev.Dic</th>
+                                                <th>1°PeR. Ev.Feb</th>
+                                                <th>2°PeR. Ev.Feb</th>
+                                                <th>Calif. Final</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -118,13 +118,13 @@ if (isset($_GET['revisar'])) {
                                                         <!-- Campos de entrada para las notas -->
                                                         <?php for ($i = 1; $i <= 4; $i++) : ?>
                                                             <td>
-                                                                <input type="text" name="nota<?php echo $i; ?>_<?php echo $alumno['id_persona']; ?>" value="<?php echo isset($alumno['nota' . $i]) ? $alumno['nota' . $i] : ''; ?>">
+                                                                <input size="5" type="text" name="nota<?php echo $i; ?>_<?php echo $alumno['id_persona']; ?>" value="<?php echo isset($alumno['nota' . $i]) ? $alumno['nota' . $i] : ''; ?>">
                                                             </td>
                                                         <?php endfor; ?>
                                                         <!-- Otros tipos de notas -->
                                                         <?php for ($i = 5; $i <= 12; $i++) : ?>
                                                             <td>
-                                                                <input type="text" name="nota<?php echo $i; ?>_<?php echo $alumno['id_persona']; ?>" value="<?php echo isset($alumno['nota' . $i]) ? $alumno['nota' . $i] : ''; ?>">
+                                                                <input size="5" type="text" name="nota<?php echo $i; ?>_<?php echo $alumno['id_persona']; ?>" value="<?php echo isset($alumno['nota' . $i]) ? $alumno['nota' . $i] : ''; ?>">
                                                             </td>
                                                         <?php endfor; ?>
                                                         <td><?php echo number_format($alumno['promedio'], 2); ?></td>
