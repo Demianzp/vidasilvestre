@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                 <th scope="row"><?php echo $persona['id_persona'] ?></th>
                                                 <td><?php echo $persona['apellido'] ?></td>
                                                 <td><?php echo $persona['nombre'] ?></td>
-                                                <td><?php echo $persona['email'] ?></td>
+                                                <td><?php echo $persona['email_correo'] ?></td>
                                                 <td class="text-center">
                                                     <div class="btn-group">
                                                         
