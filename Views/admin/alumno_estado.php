@@ -60,10 +60,32 @@ if ($alumno_id) {
         <div class="col-sm">
             <div class="card rounded-2 border-0">
                 <div class="card-header bg-dark text-white pb-0">
-                    <h5 class="d-inline-block"><?php echo htmlspecialchars($nombre_completo); ?></h5>
-                    <a class="btn btn-primary float-right mb-2" href="">Información</a>                    
+                    <h5 class="d-inline-block"><?php echo htmlspecialchars($nombre_completo); ?></h5>            
                 </div>
                 <div class="card-body table-responsive">
+            <!-- ------------------------------------------------------------- -->
+
+            <!-- <div class="input-group border border-primary d-flex flex-row ">    -->
+                <form action="" method="post" class="form-group  d-flex flex-row w-25">
+                      <select name="nuevo_ciclo" class="form-select" required>
+                          <option  value="" disabled selected>**poner ciclo lectivo actual por BD **</option>
+                          <?php
+                          
+                          $stmt = $db->query("SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 0 ORDER BY id_ciclo DESC");
+                          
+                          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                              echo "<option value='{$row["id_ciclo"]}'>{$row["nombre_ciclo"]}</option>";
+                          }
+                          ?>
+                      </select>
+                    <button type="submit" class="btn btn border  ">
+                        <i class="fa-solid fa-magnifying-glass "></i>
+                    </button>
+                </form>
+            <!-- </div>                  -->
+            <!-- --------------------------------------------------------    -->
+            
+           <!-- ------------------------------------------------------------- -->
                     <table id="" class="table table-bordered table-sm">
                         <thead class="thead-dark">
                             <tr>
@@ -74,8 +96,15 @@ if ($alumno_id) {
                                 <th>Nota 2</th>
                                 <th>Nota 3</th>
                                 <th>Nota 4</th>
-                                <th>Nota F</th>
-                                <th>Estado</th>
+                                <th>Calif. Regular</th>
+                                <th>Calif.1° Ex.Final</th>
+                                <th>Calif.2° Ex.Final</th>
+                                <th>Calif. Final</th>
+                                <th>1°PeR. Ev.Dic</th>
+                                <th>2°PeR. Ev.Dic</th>
+                                <th>1°PeR. Ev.Feb</th>
+                                <th>2°PeR. Ev.Feb</th>
+                                <th>Calif. Final</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -95,11 +124,43 @@ if ($alumno_id) {
                                             </form>
                                         <?php endif; ?>
                                     </td>
-                                    <td>nota1</td>
-                                    <td>nota2</td>
-                                    <td>nota3</td>
-                                    <td>nota4</td>
-                                    <td>notaf</td>
+                                    <td>
+                                        <input size="5" type="text" name="" value="" placeholder="nota">
+                                    </td>
+                                    <td>
+                                        <input size="5" type="text" name="" value="" placeholder="nota">
+                                    </td>
+                                    <td>
+                                        <input size="5" type="text" name="" value="" placeholder="nota">
+                                    </td>
+                                    <td>
+                                        <input size="5" type="text" name="" value="" placeholder="nota">
+                                    </td>
+                                    <td>
+                                        <input size="5" type="text" name="" value="" placeholder="nota">
+                                    </td>
+                                    <td>
+                                        <input size="5" type="text" name="" value="" placeholder="nota">
+                                    </td>
+                                    <td>
+                                        <input size="5" type="text" name="" value="" placeholder="nota">
+                                    </td>
+                                    <td>
+                                        <input size="5" type="text" name="" value="" placeholder="nota">
+                                    </td>
+                                    <td>
+                                        <input size="5" type="text" name="" value="" placeholder="nota">
+                                    </td>
+                                    <td>
+                                        <input size="5" type="text" name="" value="" placeholder="nota">
+                                    </td>
+                                    <td>
+                                        <input size="5" type="text" name="" value="" placeholder="nota">
+                                    </td>
+                                    <td>
+                                        <input size="5" type="text" name="" value="" placeholder="nota">
+                                    </td>
+                                    
                                     <td><?php echo isset($estado_alumno[$materia['id_materia']]) ? htmlspecialchars($estado_alumno[$materia['id_materia']]) : 'libre'; ?></td>
                                 </tr>
                             <?php endforeach; ?>

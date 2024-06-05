@@ -149,6 +149,10 @@ if(!isset($_SESSION['nombre'])){
             </li>
             <!-- ------------------------------------------------------- -->
             <li class="nav-item  pr-3">
+              <a class="nav-link" href="admin_index.php">Administradores</a>
+            </li>
+            <!-- ------------------------------------------------------- -->
+            <li class="nav-item  pr-3">
               <a class="nav-link" href="notas.view.php">Notas </a>
             </li>
             <li class="nav-item dropdown pr-3 ">
@@ -171,7 +175,6 @@ if(!isset($_SESSION['nombre'])){
             <li class="nav-item  pr-3">
               <a class="nav-link" href="ciclo_lectivo.php">Cliclo lectivo</a>
             </li>
-            <!-- ------------------------------------------------------- -->
           </ul>
           <!-- ------------------------------------------------------- -->
           <form class="form-inline d-flex justify-content-end">

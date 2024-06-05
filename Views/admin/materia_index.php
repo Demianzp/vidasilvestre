@@ -56,7 +56,7 @@ require 'navbar.php';
                     <table id="example" class="table table-striped table-sm" style="width:100%">
                         <thead class="thead-dark">
                             <tr>
-                                <th class="th-sm">ID Materia</th>
+                                <th >#</th>
                                 <th>Para Rendir</th>
                                 <th>Tener Aprobada</th>
                                 <th>Acciones</th>
