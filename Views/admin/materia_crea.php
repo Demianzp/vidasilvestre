@@ -1,28 +1,23 @@
 <?php 
-require 'navbar.php'; 
-require '../../conn/connection.php';
+require '../../conn/connection.php'; 
 
-
-  
-$materia_id = null;
-$mensaje = null;
-$error = null;
-
-try {
-    $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nombre'])) {
-        // Guardar la materia
-        $nombre = $_POST["nombre"];
-        $descripcion = $_POST["descripcion"];
-        $horas = (int)$_POST["horas"];
-        $num_resolucion = (int)$_POST["num_resolucion"];
-        $plan_estudio = $_POST["plan_estudio"];
-        $año_cursado = $_POST["año"];
-        $id_tipo = (int)$_POST["id_tipo"];
-        $estado = 'Activo';
-
+if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
+   $materia_id = null;
+   $mensaje = null;
+   $error = null;
+    
+   $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
+   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);    
+   // Guardar la materia
+   $nombre = $_POST["nombre"];
+   $descripcion = $_POST["descripcion"];
+   $horas = (int)$_POST["horas"];
+   $num_resolucion = (int)$_POST["num_resolucion"];
+   $plan_estudio = $_POST["plan_estudio"];
+   $año_cursado = $_POST["año"];
+   $id_tipo = (int)$_POST["id_tipo"];
+   $estado = 'Activo';
+   try{
         $sql = "INSERT INTO materia (Nombre, descripcion, horas, num_resolucion, plan_estudio, año_cursado, id_tipo, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(1, $nombre);
@@ -37,7 +32,6 @@ try {
         if ($stmt->execute()) {
             $materia_id = $db->lastInsertId();
             $mensaje = "Materia ingresada con éxito.";
-
             // Guardar las correlativas seleccionadas
             if (isset($_POST['correlativas'])) {
                 $correlativas = $_POST['correlativas'];
@@ -52,15 +46,15 @@ try {
             }
         } else {
             $error = "Error al ingresar Materia: " . $stmt->errorInfo()[2];
-        }
+        }        
+    } catch (PDOException $e) {
+        $error = "Error: " . $e->getMessage();        
     }
-} catch (PDOException $e) {
-    $error = "Error: " . $e->getMessage();
 }
 ?>
 <!-- ----------------------------------------------------- -->
 <?php require 'navbar.php'; ?>
-
+<!-- ----------------------------------------------------- -->
 <div class="container mt-2 ">        
     <div class="card rounded-2 border-0">
         <h5 class="card-header bg-dark text-white">Registro de Materias</h5>
@@ -144,7 +138,7 @@ try {
                                 </tbody>
                             </table>
                             <!--Aretglar boton-->
-                            <button type="button" class="btn btn-primary float-right" id="guardarBtn">Guardar</button>
+                            <button type="button" class="btn btn-primary float-right" id="guardarBtn" onclick="validarFormulario()">Guardar</button>
                             <!-- Div para el mensaje de confirmación -->
                             <div id="confirmacion" style="display: none;">
                                 <p>¿Estás seguro de que deseas guardar los datos?</p>
@@ -153,9 +147,10 @@ try {
                             </div>
                         </div>
                     </div>                        
-                    <!-- ----------------------------------------------       -->                            
+                                               
                 </div>
             </form>
+            <!-- ----------------------------------------------       --> 
             <?php if (isset($mensaje)): ?>
                 <div class="alert alert-success" role="alert">
                     <?php echo $mensaje; ?>
@@ -166,7 +161,11 @@ try {
                     <?php echo $error; ?>
                 </div>
             <?php endif; ?>
+            <!-- ----------------------------------------------       --> 
         </div>
     </div>
 </div>
+<script src="../../js/contraseña.js"></script>
+<script src="../../js/validacion.js"></script>
+<script src="../../js/validacion2.js"></script>
 <?php require 'footer.php'; ?>

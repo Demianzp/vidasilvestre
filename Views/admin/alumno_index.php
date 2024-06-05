@@ -35,6 +35,7 @@ if(isset($_GET['txtID'])){
                                     <th>Celular</th>
                                     <th>Departamento</th>
                                     <!-- <th>Historial</th> -->
+                                    <th>Estado</th>  
                                     <th>Acciones</th>               
                                 </thead>
                                 <tbody>
@@ -57,12 +58,16 @@ if(isset($_GET['txtID'])){
                                                 <td><?php echo $alumno['fecha_ingreso'] ?></td>
                                                 <td><?php echo $alumno['fecha_nacimiento'] ?></td>
                                                 <td><?php echo $alumno['celular'] ?></td> 
-                                                <td><?php echo $alumno['ciudad'] ?></td>                                                
+                                                <td><?php echo $alumno['ciudad'] ?></td>   
+                                                <td> <a href="alumno_estado.php?id=<?php echo $alumno['id_persona'];?>" class="btn btn-info btn-sm" type="button">Estado</a></td>  
+                                                                                            
                                                 <!-- <td></td> -->
                                                 <td class="text-center">
                                                     <div class="btn-group">
+                                                        <!-- fa-id-card-o -->
+                                                        <a href="alumno_info.php?id=<?php echo $alumno['id_persona'];?>" class="btn btn-info btn-sm" type="button">Info.</a>
                     
-                                                        <a href="alumno_estado.php?id=<?php echo $alumno['id_persona'];?>" class="btn btn-info btn-sm" type="button">Estado</a>
+                                                        
                                                         <!-- <a href="" class="btn btn-primary btn-sm" type="button">
                                                             <i class="fas fa-eye"></i>                                                        
                                                         </a>   -->
