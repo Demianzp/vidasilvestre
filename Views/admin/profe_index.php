@@ -18,13 +18,12 @@ require '../../conn/connection.php';
                 <div class="card rounded-2 border-0">
                     <div class="card-header bg-dark text-white pb-0">
                         <h5 class="d-inline-block">Listado de Profesores</h5>
-                        
                         <a class="btn btn-primary float-right mb-2" href="profe_crea.php">Agregar Profesor</a>
                         <a class="btn btn-warning float-right mb-2 mr-2" href="asigna_index.php">Listar Asignaciones</a> 
                     </div>                    
                     <div class="card-body table-responsive">
                         <!-- <button type="submit" class="btn btn-primary">Buscar</button> ------->
-                        <table id="example" class="table table-striped table-sm" style="width:100%">
+                        <table  id="example" class="table table-striped table-sm" style="width:100%">
                             <thead class="thead-dark">
                                 <th>#</th>
                                 <th>Apellidos</th>
