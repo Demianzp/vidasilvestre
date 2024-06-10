@@ -1,14 +1,11 @@
-
-document.getElementById('guardarBtn').addEventListener('click', function() {
-    // Realizar validación de campos requeridos
+function validarFormulario() {
     if (validarCampos()) {
         // Mostrar el mensaje de confirmación
         document.getElementById('confirmacion').style.display = 'block';
     } else {
         alert('Por favor complete todos los campos requeridos antes de continuar.');
     }
-});
-
+}
 function validarCampos() {
     var camposRequeridos = document.querySelectorAll('[required]');
     for (var i = 0; i < camposRequeridos.length; i++) {
@@ -18,11 +15,13 @@ function validarCampos() {
     }
     return true; // Todos los campos requeridos están completos
 }
-document.getElementById('cancelarBtn').addEventListener('click', function() {
+
+document.getElementById('cancelarBtn').addEventListener('click', function () {
     // Ocultar el mensaje de confirmación
     document.getElementById('confirmacion').style.display = 'none';
 });
-document.getElementById('confirmarBtn').addEventListener('click', function() {
+
+document.getElementById('confirmarBtn').addEventListener('click', function () {
     // Enviar el formulario cuando se confirme
     document.getElementById('formulario').submit();
 });

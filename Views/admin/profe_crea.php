@@ -1,37 +1,64 @@
 <?php
-require '../../conn/connection.php';
+include '../../conn/connection.php';
+
+// Verifica si se envió una solicitud POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Recolecta datos del formulario
+    $nombre = trim($_POST["nombre"]);
+    $apellido = trim($_POST["apellido"]);
+    $dni = trim($_POST["dni"]);
+    $celular = trim($_POST["celular"]);
+    $email = trim($_POST["email"]);
+    $direccion = trim($_POST["direccion"]);
+    $ciudad = trim($_POST["ciudad"]);
+    $genero = trim($_POST["genero"]);
+    $pais = "Argentina";
+    $fecha_nacimiento = trim($_POST["fecha_nacimiento"]);
+    $fecha_ingreso = trim($_POST["fecha_ingreso"]);
+    $passwordd = trim($_POST["passwordd"]);
+    $legajo =  trim($_POST["legajo"]);
+    $titulo = trim($_POST["titulo"]);
+    $estado = "Activo"; // Valor predeterminado para estado
+    $id_rol = "2"; // Valor predeterminado para alumno es 1.
+
     $error = "";
 
-    $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : '';
-    $apellido = isset($_POST["apellido"]) ? $_POST["apellido"] : '';
-    $dni = isset($_POST["dni"]) ? $_POST["dni"] : '';
-    $celular = isset($_POST["celular"]) ? $_POST["celular"] : '';
-    $email = isset($_POST["email"]) ? $_POST["email"] : '';
-    $id_rol = isset($_POST["id_rol"]) ? $_POST["id_rol"] : '';
-    $direccion = isset($_POST["direccion"]) ? $_POST["direccion"] : '';
-    $ciudad = isset($_POST["ciudad"]) ? $_POST["ciudad"] : '';
-    $genero = isset($_POST["genero"]) ? $_POST["genero"] : '';
-    $pais = isset($_POST["pais"]) ? $_POST["pais"] : '';
-    $fecha_nacimiento = isset($_POST["fecha_nacimiento"]) ? $_POST["fecha_nacimiento"] : '';
-    $fecha_ingreso = isset($_POST["fecha_ingreso"]) ? $_POST["fecha_ingreso"] : '';
-    $contrasena = isset($_POST["contrasena"]) ? $_POST["contrasena"] : '';
-    $titulo = isset($_POST["titulo"]) ? $_POST["titulo"] : '';
-    $legajo = isset($_POST["legajo"]) ? $_POST["legajo"] : '';
-    // Definir el valor predeterminado para el campo "estado" (asumiendo que se llama "estado")
-    $estado = "Activo";
-    $pais = "Argentina";
+    // Validación de la contraseña
+    if (strlen($passwordd) < 6) {
+        $error = "La contraseña debe tener al menos 6 caracteres.";
+    }
+
+    // Validación de la mayoría de edad
+    $fecha_actual = new DateTime();
+    $fecha_nacimiento_dt = new DateTime($fecha_nacimiento);
+    $edad = $fecha_actual->diff($fecha_nacimiento_dt)->y;
+
+    if ($edad < 18) {
+        $error = "Debe ser mayor de edad para registrarse.";
+    }
+
     try {
         // Verificar si el correo electrónico ya existe
         $sql_check_email = "SELECT COUNT(*) FROM persona WHERE email_correo = :email";
         $stmt_check_email = $db->prepare($sql_check_email);
         $stmt_check_email->bindParam(':email', $email);
         $stmt_check_email->execute();
-        $count = $stmt_check_email->fetchColumn();
+        $count_email = $stmt_check_email->fetchColumn();
 
-        if ($count > 0) {
-            // El correo ya está registrado, redirige a profe_crea.php con mensaje de error y datos del formulario
+        // Verificar si el DNI ya existe
+        $sql_check_dni = "SELECT COUNT(*) FROM persona WHERE DNI = :dni";
+        $stmt_check_dni = $db->prepare($sql_check_dni);
+        $stmt_check_dni->bindParam(':dni', $dni);
+        $stmt_check_dni->execute();
+        $count_dni = $stmt_check_dni->fetchColumn();
+
+        if ($count_email > 0) {
             $error = "El correo electrónico ya está registrado. Por favor, use uno diferente.";
+        } elseif ($count_dni > 0) {
+            $error = "El DNI ya está registrado. Por favor, use uno diferente.";
+        }
+
+        if ($error) {
             $redirect_url = "profe_crea.php?error=" . urlencode($error)
                 . "&nombre=" . urlencode($nombre)
                 . "&apellido=" . urlencode($apellido)
@@ -41,19 +68,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 . "&direccion=" . urlencode($direccion)
                 . "&ciudad=" . urlencode($ciudad)
                 . "&genero=" . urlencode($genero)
-                 . "&id_rol=" . urlencode($id_rol)
                 . "&fecha_nacimiento=" . urlencode($fecha_nacimiento)
                 . "&fecha_ingreso=" . urlencode($fecha_ingreso)
-                . "&legajo=" . urlencode($legajo)
-                . "&titulo=" . urlencode($titulo);
+                . "&legajo=". urlencode($legajo)
+                . "&titulo=". urlencode($titulo);
 
             header("Location: " . $redirect_url);
             exit();
         } else {
             // Inserta datos en la base de datos
-            $sql = "INSERT INTO persona (nombre, apellido, fecha_nacimiento, DNI, celular, email_correo, direccion, fecha_ingreso, pais, ciudad, contraseña, id_rol, genero, legajo, titulo, estado) 
-            VALUES (:nombre, :apellido, :fecha_nacimiento, :dni, :celular, :email, :direccion, :fecha_ingreso, :pais, :ciudad, :contrasena, :id_rol, :genero, :legajo, :titulo, :estado)";    
-            //Datos que se van a insertar
+            $sql = "INSERT INTO persona (nombre, apellido, fecha_nacimiento, DNI, celular, email_correo, direccion, fecha_ingreso, pais, ciudad, contraseña, id_rol, genero,legajo , titulo, estado) 
+                    VALUES (:nombre, :apellido, :fecha_nacimiento, :dni, :celular, :email, :direccion, :fecha_ingreso, :pais, :ciudad, :passwordd , :id_rol, :genero, :legajo,:titulo, :estado)";
+
             $stmt = $db->prepare($sql);
             $stmt->bindParam(':nombre', $nombre);
             $stmt->bindParam(':apellido', $apellido);
@@ -65,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':fecha_ingreso', $fecha_ingreso);
             $stmt->bindParam(':pais', $pais);
             $stmt->bindParam(':ciudad', $ciudad);
-            $stmt->bindParam(':contrasena', $contrasena);
+            $stmt->bindParam(':passwordd', $passwordd);
             $stmt->bindParam(':id_rol', $id_rol);
             $stmt->bindParam(':genero', $genero);
             $stmt->bindParam(':legajo', $legajo);
@@ -73,7 +99,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':estado', $estado);
 
             if ($stmt->execute()) {
-                // Redirige a alumno_index.php con mensaje de éxito
                 header("Location: profe_index.php?mensaje=" . urlencode("Persona ingresada con éxito."));
                 exit();
             } else {
@@ -82,7 +107,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } catch (PDOException $e) {
         $error = "Error en la base de datos: " . $e->getMessage();
-        // Redirige a alumno_crea.php con el error y datos del formulario
         $redirect_url = "profe_crea.php?error=" . urlencode($error)
             . "&nombre=" . urlencode($nombre)
             . "&apellido=" . urlencode($apellido)
@@ -92,17 +116,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             . "&direccion=" . urlencode($direccion)
             . "&ciudad=" . urlencode($ciudad)
             . "&genero=" . urlencode($genero)
-            . "&id_rol=" . urlencode($id_rol)
-            . "&fecha_nacimiento=" . urlencode($fecha_nacimiento)
-            . "&fecha_ingreso=" . urlencode($fecha_ingreso)
             . "&legajo=" . urlencode($legajo)
-            . "&titulo=" . urlencode($titulo);
+            . "&titulo=" . urlencode($titulo)
+            . "&fecha_nacimiento=" . urlencode($fecha_nacimiento)
+            . "&fecha_ingreso=" . urlencode($fecha_ingreso);
 
         header("Location: " . $redirect_url);
         exit();
     }
 }
-
 ?>
 <!-- ---------------------------------------------------- -->
 <?php require 'navbar.php'; ?>
@@ -132,14 +154,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="col">
                         <div class="form-group">
                             <label for="nombre">Nombre:</label>
-                            <input type="text" class="form-control" name="nombre" value="<?php echo htmlspecialchars($nombre); ?>" autocomplete="off" placeholder="Ingrese Nombre(s)" required>
+                            <input type="text" class="form-control" name="nombre" id="nombre" value="<?php echo htmlspecialchars($nombre); ?>" autocomplete="off" placeholder="Ingrese Nombre(s)" required>
                         </div>
                     </div>
                     <!-- --------------------------------- -->
                     <div class="col">
                         <div class="form-group">
                             <label for="apellido">Apellido:</label>
-                            <input type="text" class="form-control" name="apellido" value="<?php echo htmlspecialchars($apellido); ?>" autocomplete="off" placeholder="Ingrese Apellido(s)" required>
+                            <input type="text" class="form-control" name="apellido" id="apellido" value="<?php echo htmlspecialchars($apellido); ?>" autocomplete="off" placeholder="Ingrese Apellido(s)" required>
                         </div>
                     </div>
                 </div>
@@ -195,24 +217,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="col">
                         <div class="form-group">
                             <label for="direccion">Dirección:</label>
-                            <input type="text" class="form-control" name="direccion" value="<?php echo htmlspecialchars($direccion); ?>" autocomplete="off" placeholder="Ingrese Direcion" required>
+                            <input type="text" class="form-control" name="direccion" id="direccion" value="<?php echo htmlspecialchars($direccion); ?>" autocomplete="off" placeholder="Ingrese Direcion" required>
                         </div>
                     </div>
                 </div>
-                <!-- --------------------------------- -->
-                <input type="hidden" class="form-control" name="id_rol" value="2">
                 <!-- --------------------------------- -->
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
                             <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-                            <input type="date" class="form-control" name="fecha_nacimiento" value="<?php echo htmlspecialchars($fecha_nacimiento); ?>" autocomplete="off" required>
+                            <input type="date" class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" value="<?php echo htmlspecialchars($fecha_nacimiento); ?>" autocomplete="off" required>
+                            <span id="edadError" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label for="genero">Género:</label>
-                            <select name="genero" autocomplete="off" class="form-control" required>
+                            <select name="genero" id="genero" autocomplete="off" class="form-control" required>
                                 <option value="" disabled <?php echo ($genero == "") ? "selected" : ""; ?>>Seleccione su Género</option>
                                 <option value="Masculino" <?php echo ($genero == "Masculino") ? "selected" : ""; ?>>Masculino</option>
                                 <option value="Femenino" <?php echo ($genero == "Femenino") ? "selected" : ""; ?>>Femenino</option>
@@ -226,13 +247,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="col">
                         <div class="form-group">
                             <label for="titulo">Titulo:</label>
-                            <input type="text" class="form-control" name="titulo" placeholder="Ingrese Titulo" autocomplete="off" value="<?php echo htmlspecialchars($titulo); ?> " required>
+                            <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Ingrese Titulo" autocomplete="off" value="<?php echo htmlspecialchars($titulo); ?> " required>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label for="legajo">Legajo:</label>
-                            <input type="text" class="form-control" name="legajo" placeholder="Ingrese el n° de legajo" value="<?php echo htmlspecialchars($legajo); ?>" autocomplete="off" required>
+                            <input type="text" class="form-control" name="legajo" id="legajo" placeholder="Ingrese el n° de legajo" value="<?php echo htmlspecialchars($legajo); ?>" autocomplete="off" required>
                         </div>
                     </div>
                 </div>
@@ -241,7 +262,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="col">
                         <div class="form-group">
                             <label for="email">Email:</label>
-                            <input id="email" class="form-control" name="email" placeholder="Ingrese Email" autocomplete="off" value="<?php echo htmlspecialchars($email); ?>" required>
+                            <input id="email" class="form-control" name="email" id="email"  placeholder="Ingrese Email" autocomplete="off" value="<?php echo htmlspecialchars($email); ?>" required>
                             <span id="emailOK"></span>
 
                         </div>
@@ -249,9 +270,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="col">
                         <div class="form-group">
-                            <label for="contraseña">Contraseña:</label>
+                            <label for="passwordd">Contraseña:</label>
                             <div class="input-group">
-                                <input class="form-control bg-light" type="password" placeholder="Contraseña" name="contrasena" id="password" autocomplete="off" required />
+                                <input class="form-control bg-light" type="password" placeholder="Contraseña" name="passwordd" id="passwordd" autocomplete="off" required />
                                 <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
                                     <i class="fas fa-eye p-1"></i>
                                 </button>
@@ -275,7 +296,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <script src="../../js/contraseña.js"></script>
 <script src="../../js/validacion.js"></script>
 <script src="../../js/validacion2.js"></script>
-
-
 <?php require 'footer.php'; ?>
-

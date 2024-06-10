@@ -57,10 +57,6 @@ if(!isset($_SESSION['nombre'])){
   <!-- ----------------------------- -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <!-- ------------------------------- -->
-<script src="../../js/contraseña.js"></script>
-<script src="../../js/validacion.js"></script>
-<script src="../../js/validacion2.js"></script>
-<script src="../../js/materia.js"></script>
 </head>
 
 <body>
