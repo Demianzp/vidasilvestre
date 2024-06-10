@@ -175,7 +175,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                 </div>                    
                                         <!-- --------------------------------- -->
                                         <!-- Agregamos un botón para guardar con un evento JavaScript -->
-                                        <button type="button" class="btn btn-primary float-right" id="guardarBtn" onclick="validarFormulario()">Guardar</button>
+                                        <button type="button" class="btn btn-primary float-right mb-3" id="guardarBtn" onclick="validarFormulario()">Guardar</button>
                                         <!-- Agregamos un div para mostrar un mensaje de confirmación -->
                                         <div id="confirmacion" style="display: none;">
                                             <p>¿Seguro desea guardar los datos?</p>
