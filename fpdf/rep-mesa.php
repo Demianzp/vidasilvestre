@@ -1,7 +1,7 @@
 
 <?php
 
-require('./fpdf.php');
+require('fpdf.php');
 
 class PDF extends FPDF
 {
@@ -9,16 +9,16 @@ class PDF extends FPDF
    // Cabecera de página
    function Header()
    {
-     // include '../conn/connection.php';//llamamos a la conexion BD
+      include '../conn/connection.php';//llamamos a la conexion BD
 
-     /* $consulta_info = $conexion->query("SELECT mesa_examen.*, 
+     $consulta_info = $conexion->query("SELECT mesa_examen.*, 
       materia.nombre AS nombre_materia, 
       ciclo_lectivo.nombre_ciclo,
       nombre_tipo AS nombre_tipo
 FROM mesa_examen 
 INNER JOIN materia ON mesa_examen.id_materia = materia.id_materia
 LEFT JOIN ciclo_lectivo ON mesa_examen.id_ciclo = ciclo_lectivo.id_ciclo
-LEFT JOIN tipo ON mesa_examen.id_tipo = tipo.id_tipo");*///traemos datos de la empresa desde BD
+LEFT JOIN tipo ON mesa_examen.id_tipo = tipo.id_tipo"); ///traemos datos de la empresa desde BD
      // $dato_info = $consulta_info->fetch_object();
       $this->Image('logo1.png', 25, 5, 30); //logo de la empresa,moverDerecha,moverAbajo,tamañoIMG
       $this->SetFont('Arial', 'B', 19); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
@@ -68,7 +68,7 @@ LEFT JOIN tipo ON mesa_examen.id_tipo = tipo.id_tipo");*///traemos datos de la e
    }
 }
 
- include '../conn/conexion.php';
+ //include '../conn/connection.php';
 //require '../../funciones/CortarCadena.php';
 /* CONSULTA INFORMACION DEL HOSPEDAJE */
 //$consulta_info = $conexion->query(" select *from hotel ");
