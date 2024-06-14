@@ -1,5 +1,14 @@
 <?php
-require 'conn/connection.php';
+require '../../conn/connection.php';
+//-------------BORRADO------------------ 
+if(isset($_GET['txtID'])){
+    $txtID=(isset($_GET['txtID']))?$_GET['txtID']:"";
+    $sentencia=$db->prepare("UPDATE mesa_examen SET estado = 'Inactivo' WHERE id_mesa = :id" );
+    $sentencia->bindParam(':id',$txtID);
+    $sentencia->execute();
+    $mensaje="Registro Eliminado";
+    header("Location:listadomesa.php?mensaje=".$mensaje);
+  }
 
 // Realiza la consulta para obtener las mesas de examen
 $query = "SELECT mesa_examen.*, 
@@ -9,7 +18,7 @@ $query = "SELECT mesa_examen.*,
           FROM mesa_examen 
           INNER JOIN materia ON mesa_examen.id_materia = materia.id_materia
           LEFT JOIN ciclo_lectivo ON mesa_examen.id_ciclo = ciclo_lectivo.id_ciclo
-          LEFT JOIN tipo ON mesa_examen.id_tipo = tipo.id_tipo";
+          LEFT JOIN tipo ON mesa_examen.id_tipo = tipo.id_tipo WHERE  mesa_examen.estado= 'Activo'";
 $result = $db->query($query);
 ?>
 <!-- --------------------------------------------------- -->
@@ -17,8 +26,8 @@ $result = $db->query($query);
     <div class="container mt-3">
         <div class="card rounded-2 border-0">
             <di class="card-header pb-0 bg-dark text-white ">
-                <h5 class="card-header bg-dark text-white"> Mesas de Examen <a href="fpdf/rep-mesa.php" tanget="_blank" class="btn btn-danger  float-right mb-2 "> <i class="fa-solid fa-file-pdf"></i></a>
-                    <a href="fpdf/excel.php" tanget="_blank" class="btn btn-success float-right mb-2 mr-2"> <i class="fas fa-file-excel"></i></a>
+                <h5 class="card-header bg-dark text-white"> Mesas de Examen <a href="../../fpdf/rep-mesa.php" tanget="_blank" class="btn btn-danger  float-right mb-2 "> <i class="fa-solid fa-file-pdf"></i></a>
+                    <a href="../../fpdf/excel.php" tanget="_blank" class="btn btn-success float-right mb-2 mr-2"> <i class="fas fa-file-excel"></i></a>
                 </h5>
             </di>
             <div class="card-body table-responsive">
@@ -40,6 +49,7 @@ $result = $db->query($query);
                             <th>Fecha Fin</th>
                             <th>Ciclo Lectivo</th>
                             <th>Tipo</th>
+                            <th>Acciones </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,13 +59,26 @@ $result = $db->query($query);
                             echo "<td>" . $row['nombre_mesa'] . "</td>";
                             echo "<td>" . $row['nombre_materia'] . "</td>";
                             echo "<td>" . $row['hora'] . "</td>";
-                            echo "<td>" . $row['fecha'] . "</td>";
+                            echo "<td>" . $row['fecha_i'] . "</td>";
                             echo "<td>" . $row['fecha_fin'] . "</td>";
                             echo "<td>" . $row['nombre_ciclo'] . "</td>";
-                            echo "<td>" . $row['nombre_tipo'] . "</td>";
-                            echo "</tr>";
-                        }
+                            echo "<td>" . $row['nombre_tipo'] . "</td>";    
                         ?>
+                        <td class="text-center">
+                                                    <div class="btn-group">
+                                                        <a href="mesa_edit.php?id=<?php echo $row['id_mesa']; ?>" class="btn btn-warning btn-sm" title="Editar" role="button">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>                                                         
+                                                        <a href="javascript:eliminar5(<?php echo $row['id_mesa'];?>)" class="btn btn-danger btn-sm" title="Borrar" role="button">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                    </div>  
+                                                </td>
+
+                             <?php
+                               echo "</tr>";
+                                }
+                                ?>
                     </tbody>
                 </table>
             </div>
