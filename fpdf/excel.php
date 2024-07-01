@@ -49,7 +49,7 @@ while($fila=mysqli_fetch_array($dato)){
                                     echo "<td>" .$fila['nombre_mesa'] . "</td>";
                                     echo "<td>" .$fila['nombre_materia'] . "</td>";
                                     echo "<td>" .$fila['hora'] . "</td>";
-                                    echo "<td>" .$fila['fecha'] . "</td>";
+                                    echo "<td>" .$fila['fecha_i'] . "</td>";
                                     echo "<td>" .$fila['fecha_fin'] . "</td>";
                                     echo "<td>" .$fila['nombre_ciclo'] . "</td>";
                                     echo "<td>" .$fila['nombre_tipo'] . "</td>";
