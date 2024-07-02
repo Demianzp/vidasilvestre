@@ -65,6 +65,7 @@ if(isset($_GET['txtID'])){
                                                 <td class="text-center">
                                                     <div class="btn-group">
                                                         <!-- fa-id-card-o -->
+                                                          <!-- revisar archivo info -->
                                                         <a href="alumno_info.php?id=<?php echo $alumno['id_persona'];?>" class="btn btn-info btn-sm" type="button">Info.</a>
                     
                                                         

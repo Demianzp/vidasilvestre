@@ -81,7 +81,7 @@ $pdf->AliasNbPages(); //muestra la pagina / y total de paginas
 $i = 0;
 $pdf->SetFont('Arial', '', 10);
 $pdf->SetDrawColor(163, 163, 163); //colorBorde
-
+include '../conn/connection.php';
 $consulta_mesa = $conexion->query("SELECT mesa_examen.*, 
 materia.nombre AS nombre_materia, 
 ciclo_lectivo.nombre_ciclo,
@@ -98,7 +98,7 @@ $i = $i + 1;
 $pdf->Cell(38, 10, utf8_decode($datos_reporte->nombre_mesa), 1, 0, 'C', 0);
 $pdf->Cell(40, 10, utf8_decode($datos_reporte->nombre_materia), 1, 0, 'C', 0);
 $pdf->Cell(20, 10, utf8_decode($datos_reporte->hora), 1, 0, 'C', 0);
-$pdf->Cell(25, 10, utf8_decode($datos_reporte->fecha), 1, 0, 'C', 0);
+$pdf->Cell(25, 10, utf8_decode($datos_reporte->fecha_i), 1, 0, 'C', 0);
 $pdf->Cell(25, 10, utf8_decode($datos_reporte->fecha_fin), 1, 0, 'C', 0);
 $pdf->Cell(20, 10, utf8_decode($datos_reporte->nombre_ciclo), 1, 0, 'C', 0);
 $pdf->Cell(25, 10, utf8_decode($datos_reporte->nombre_tipo), 1, 1, 'C', 0);
