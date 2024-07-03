@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-06-2024 a las 02:31:36
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Tiempo de generación: 04-07-2024 a las 00:11:13
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -51,6 +51,16 @@ CREATE TABLE `alumno_materia` (
   `estado` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `alumno_materia`
+--
+
+INSERT INTO `alumno_materia` (`Id_alumno`, `id_persona`, `id_materia`, `id_ciclo`, `id_nota`, `cod_correlativa`, `estado`) VALUES
+(8, 2, 1, 1, NULL, NULL, 'Inscripto'),
+(9, 2, 1, 3, NULL, NULL, 'Inscripto'),
+(10, 2, 3, 3, NULL, NULL, 'Inscripto'),
+(11, 2, 2, 3, NULL, NULL, 'Inscripto');
+
 -- --------------------------------------------------------
 
 --
@@ -65,6 +75,13 @@ CREATE TABLE `asignar` (
   `fecha_b` date DEFAULT NULL,
   `Estado` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `asignar`
+--
+
+INSERT INTO `asignar` (`id_asignar`, `id_persona`, `id_materia`, `fecha_i`, `fecha_b`, `Estado`) VALUES
+(1, 3, 1, '2024-06-12', NULL, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -82,6 +99,15 @@ CREATE TABLE `ciclo_lectivo` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `ciclo_actual` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ciclo_lectivo`
+--
+
+INSERT INTO `ciclo_lectivo` (`id_ciclo`, `nombre_ciclo`, `fecha_inicio`, `fecha_fin`, `Estado`, `created_at`, `updated_at`, `ciclo_actual`) VALUES
+(1, '2024', '2024-06-19', '2024-06-26', 'Activo', '2024-06-08 10:24:14', '2024-06-10 14:31:14', 0),
+(2, '2025', '2024-06-06', '2024-06-13', 'Activo', '2024-06-10 14:14:49', '2024-06-24 23:42:38', 0),
+(3, '2026', '2024-06-05', '2024-06-10', 'Activo', '2024-06-24 07:30:53', '2024-06-24 23:42:38', 1);
 
 -- --------------------------------------------------------
 
@@ -112,6 +138,36 @@ CREATE TABLE `curso` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `examen`
+--
+
+CREATE TABLE `examen` (
+  `id_examen_tipo` int(11) NOT NULL,
+  `nombre_examen` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `examen`
+--
+
+INSERT INTO `examen` (`id_examen_tipo`, `nombre_examen`) VALUES
+(1, 'nota 1'),
+(2, 'nota 2'),
+(3, 'nota 3'),
+(4, 'nota 4'),
+(5, 'calificacion regular'),
+(6, 'calificacion 1º examen final'),
+(7, 'calificacion 2º examen final'),
+(8, 'calificacion final'),
+(9, '1º per. ev. dic.'),
+(10, '2º per. ev. dic.'),
+(11, '1º per. ev. feb.'),
+(12, '1º per. ev. feb.'),
+(13, 'calificacion definitiva');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `materia`
 --
 
@@ -126,6 +182,15 @@ CREATE TABLE `materia` (
   `id_tipo` int(11) DEFAULT NULL,
   `estado` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `materia`
+--
+
+INSERT INTO `materia` (`id_materia`, `Nombre`, `descripcion`, `horas`, `num_resolucion`, `plan_estudio`, `año_cursado`, `id_tipo`, `estado`) VALUES
+(1, 'lengua', 'd2', '2', '3', '1', '1', 2, 'Activo'),
+(2, 'matematicas', 'd', '3', '3', '3', '2', 2, 'Activo'),
+(3, 'matematicas', 'd', '3', '3', '3', '2', 2, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -152,23 +217,12 @@ CREATE TABLE `mesa_examen` (
 --
 
 CREATE TABLE `nota` (
-  `id_nota` int(11) NOT NULL,
-  `id_persona` int(11) DEFAULT NULL,
-  `id_materia` int(11) DEFAULT NULL,
-  `id_ciclo` int(11) DEFAULT NULL,
-  `Nota_1` decimal(5,2) DEFAULT NULL,
-  `Nota_2` decimal(5,2) DEFAULT NULL,
-  `Nota_3` decimal(5,2) DEFAULT NULL,
-  `Nota_4` decimal(5,2) DEFAULT NULL,
-  `Calif_Regularidad` decimal(5,2) DEFAULT NULL,
-  `Calif_1_Ex_Final` decimal(5,2) DEFAULT NULL,
-  `Calif_2_Ex_Final` decimal(5,2) DEFAULT NULL,
-  `Calif_Final` decimal(5,2) DEFAULT NULL,
-  `Primera_Per_Re_Ev_Dic` decimal(5,2) DEFAULT NULL,
-  `Segunda_Per_Re_Ev_Dic` decimal(5,2) DEFAULT NULL,
-  `Primera_Per_Re_Ev_Feb` decimal(5,2) DEFAULT NULL,
-  `Segunda_Per_Re_Ev_Feb` decimal(5,2) DEFAULT NULL,
-  `Calificacion_Definitiva` decimal(5,2) DEFAULT NULL
+  `id` int(11) NOT NULL,
+  `id_persona` int(11) NOT NULL,
+  `id_materia` int(11) NOT NULL,
+  `id_ciclo` int(11) NOT NULL,
+  `id_examen_tipo` int(11) NOT NULL,
+  `nota` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -203,7 +257,8 @@ CREATE TABLE `persona` (
 
 INSERT INTO `persona` (`id_persona`, `nombre`, `apellido`, `fecha_nacimiento`, `DNI`, `celular`, `email_correo`, `direccion`, `fecha_ingreso`, `pais`, `ciudad`, `contraseña`, `id_rol`, `genero`, `legajo`, `titulo`, `estado`) VALUES
 (1, 'Juan', 'Perez', '2014-06-20', 44231783, '26', 'adminjuan@gmail.com', '9 de julio y san juan', '2024-06-12', 'Argentina', 'Angaco', '12345', 3, 'Masculino', 2332423, 'Preceptor', 'Activo'),
-(2, 'Juan', 'Perez', '2014-06-20', 44231721, '2646058763', 'alumnojuan@gmail.com', '9 de julio y san juan', '2024-06-12', 'Argentina', 'Angaco', 'alumno123', 1, 'Masculino', 2332423, 'Preceptor', 'Activo');
+(2, 'Juan', 'Perez', '2014-06-20', 44231721, '2646058763', 'alumnojuan@gmail.com', '9 de julio y san juan', '2024-06-12', 'Argentina', 'Angaco', 'alumno123', 1, 'Masculino', 2332423, 'Preceptor', 'Activo'),
+(3, 'maxi', 'olmos', '2024-06-19', 45555555, '5555555555', 'd@gmail.com', 'ds', '0000-00-00', 'Argentina', 'Pocito', '123', 2, 'Femenino', 0, ' d', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -299,6 +354,12 @@ ALTER TABLE `curso`
   ADD KEY `id_materia` (`id_materia`);
 
 --
+-- Indices de la tabla `examen`
+--
+ALTER TABLE `examen`
+  ADD PRIMARY KEY (`id_examen_tipo`);
+
+--
 -- Indices de la tabla `materia`
 --
 ALTER TABLE `materia`
@@ -318,10 +379,7 @@ ALTER TABLE `mesa_examen`
 -- Indices de la tabla `nota`
 --
 ALTER TABLE `nota`
-  ADD PRIMARY KEY (`id_nota`),
-  ADD KEY `id_persona` (`id_persona`),
-  ADD KEY `id_materia` (`id_materia`),
-  ADD KEY `id_ciclo` (`id_ciclo`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `persona`
@@ -356,19 +414,19 @@ ALTER TABLE `acta`
 -- AUTO_INCREMENT de la tabla `alumno_materia`
 --
 ALTER TABLE `alumno_materia`
-  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `asignar`
 --
 ALTER TABLE `asignar`
-  MODIFY `id_asignar` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_asignar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `ciclo_lectivo`
 --
 ALTER TABLE `ciclo_lectivo`
-  MODIFY `id_ciclo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ciclo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `correlativa`
@@ -383,10 +441,16 @@ ALTER TABLE `curso`
   MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `examen`
+--
+ALTER TABLE `examen`
+  MODIFY `id_examen_tipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
 -- AUTO_INCREMENT de la tabla `materia`
 --
 ALTER TABLE `materia`
-  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `mesa_examen`
@@ -398,13 +462,13 @@ ALTER TABLE `mesa_examen`
 -- AUTO_INCREMENT de la tabla `nota`
 --
 ALTER TABLE `nota`
-  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -440,7 +504,7 @@ ALTER TABLE `alumno_materia`
   ADD CONSTRAINT `fk_alumno_materia_ciclo` FOREIGN KEY (`id_ciclo`) REFERENCES `ciclo_lectivo` (`id_ciclo`),
   ADD CONSTRAINT `fk_alumno_materia_correlativa` FOREIGN KEY (`cod_correlativa`) REFERENCES `correlativa` (`cod_correlativa`),
   ADD CONSTRAINT `fk_alumno_materia_materia` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`),
-  ADD CONSTRAINT `fk_alumno_materia_nota` FOREIGN KEY (`id_nota`) REFERENCES `nota` (`id_nota`),
+  ADD CONSTRAINT `fk_alumno_materia_nota` FOREIGN KEY (`id_nota`) REFERENCES `examen_tipo` (`id_examen`),
   ADD CONSTRAINT `fk_alumno_materia_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`);
 
 --
@@ -476,14 +540,6 @@ ALTER TABLE `mesa_examen`
   ADD CONSTRAINT `fk_mesa_examen_ciclo` FOREIGN KEY (`id_ciclo`) REFERENCES `ciclo_lectivo` (`id_ciclo`),
   ADD CONSTRAINT `fk_mesa_examen_materia` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`),
   ADD CONSTRAINT `fk_mesa_examen_tipo` FOREIGN KEY (`id_tipo`) REFERENCES `tipo` (`id_tipo`);
-
---
--- Filtros para la tabla `nota`
---
-ALTER TABLE `nota`
-  ADD CONSTRAINT `fk_nota_ciclo` FOREIGN KEY (`id_ciclo`) REFERENCES `ciclo_lectivo` (`id_ciclo`),
-  ADD CONSTRAINT `fk_nota_materia` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`),
-  ADD CONSTRAINT `fk_nota_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`);
 
 --
 -- Filtros para la tabla `persona`
