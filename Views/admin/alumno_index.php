@@ -64,7 +64,9 @@ if(isset($_GET['txtID'])){
                                                 <td><a href="alumno_estado.php?id=<?php echo $alumno['id_persona'];?>" class="btn btn-info btn-sm" type="button">Notas</a></td>                                                     
                                                 <td class="text-center">
                                                     <div class="btn-group">
+
                                                         <a href="alumno_info.php?id=<?php echo $alumno['id_persona'];?>" class="btn btn-info btn-sm" type="button">Info.</a>  
+
                                                         <a href="alumno_edit.php?id=<?php echo $alumno['id_persona'];?>"class="btn btn-warning btn-sm" type="button" title="Editar">
                                                             <i class="fas fa-edit"></i>
                                                         </a>

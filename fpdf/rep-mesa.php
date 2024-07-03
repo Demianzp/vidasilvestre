@@ -1,7 +1,7 @@
 
 <?php
 
-require('./fpdf.php');
+require('fpdf.php');
 
 class PDF extends FPDF
 {
@@ -9,16 +9,16 @@ class PDF extends FPDF
    // Cabecera de página
    function Header()
    {
-     // include '../conn/connection.php';//llamamos a la conexion BD
+      include '../conn/connection.php';//llamamos a la conexion BD
 
-     /* $consulta_info = $conexion->query("SELECT mesa_examen.*, 
+     $consulta_info = $conexion->query("SELECT mesa_examen.*, 
       materia.nombre AS nombre_materia, 
       ciclo_lectivo.nombre_ciclo,
       nombre_tipo AS nombre_tipo
 FROM mesa_examen 
 INNER JOIN materia ON mesa_examen.id_materia = materia.id_materia
 LEFT JOIN ciclo_lectivo ON mesa_examen.id_ciclo = ciclo_lectivo.id_ciclo
-LEFT JOIN tipo ON mesa_examen.id_tipo = tipo.id_tipo");*///traemos datos de la empresa desde BD
+LEFT JOIN tipo ON mesa_examen.id_tipo = tipo.id_tipo"); ///traemos datos de la empresa desde BD
      // $dato_info = $consulta_info->fetch_object();
       $this->Image('logo1.png', 25, 5, 30); //logo de la empresa,moverDerecha,moverAbajo,tamañoIMG
       $this->SetFont('Arial', 'B', 19); //tipo fuente, negrita(B-I-U-BIU), tamañoTexto
@@ -68,7 +68,7 @@ LEFT JOIN tipo ON mesa_examen.id_tipo = tipo.id_tipo");*///traemos datos de la e
    }
 }
 
- include '../conn/conexion.php';
+ //include '../conn/connection.php';
 //require '../../funciones/CortarCadena.php';
 /* CONSULTA INFORMACION DEL HOSPEDAJE */
 //$consulta_info = $conexion->query(" select *from hotel ");
@@ -81,7 +81,7 @@ $pdf->AliasNbPages(); //muestra la pagina / y total de paginas
 $i = 0;
 $pdf->SetFont('Arial', '', 10);
 $pdf->SetDrawColor(163, 163, 163); //colorBorde
-
+include '../conn/connection.php';
 $consulta_mesa = $conexion->query("SELECT mesa_examen.*, 
 materia.nombre AS nombre_materia, 
 ciclo_lectivo.nombre_ciclo,
@@ -98,7 +98,7 @@ $i = $i + 1;
 $pdf->Cell(38, 10, utf8_decode($datos_reporte->nombre_mesa), 1, 0, 'C', 0);
 $pdf->Cell(40, 10, utf8_decode($datos_reporte->nombre_materia), 1, 0, 'C', 0);
 $pdf->Cell(20, 10, utf8_decode($datos_reporte->hora), 1, 0, 'C', 0);
-$pdf->Cell(25, 10, utf8_decode($datos_reporte->fecha), 1, 0, 'C', 0);
+$pdf->Cell(25, 10, utf8_decode($datos_reporte->fecha_i), 1, 0, 'C', 0);
 $pdf->Cell(25, 10, utf8_decode($datos_reporte->fecha_fin), 1, 0, 'C', 0);
 $pdf->Cell(20, 10, utf8_decode($datos_reporte->nombre_ciclo), 1, 0, 'C', 0);
 $pdf->Cell(25, 10, utf8_decode($datos_reporte->nombre_tipo), 1, 1, 'C', 0);
