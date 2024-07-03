@@ -32,7 +32,12 @@ input[type=checkbox]{
   border-color:  #6c757d  !important;
   border-width: 1px !important;
 }
-th {
+th, td {
   text-align: center !important;
   vertical-align: middle !important;
+}
+#notas {
+  border: 1px solid blue !important;
+  width: 100px !important;
+  word-wrap: break-word !important;
 }
