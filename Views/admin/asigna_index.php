@@ -61,12 +61,12 @@
                                     <tr>
                                         <th scope="row"><?php echo $resultado['id_asignar'] ?></th>
                                         <td scope="row"><?php echo $resultado['nombre'] ?><?php echo $resultado['apellido'] ?> </td>
-                                        <td scope="row">*DNI profesor*</td>
+                                        <td scope="row"><?php echo $resultado['DNI'] ?></td>
                                         <td scope="row"><?php echo $resultado['Nombre'] ?></td> <!--Lo cambie en la BD materia-->
                                         <td scope="row"><?php echo $resultado['fecha_i'] ?></td> 
                                         <!--Lo cambie en la BD asignar----->
-                                        <td scope="row">*fecha baja*</td>
-                                        <td scope="row">Activo,Baja</td>
+                                        <td scope="row"><?php echo $resultado['fecha_b'] ?></td> 
+                                        <td scope="row"><?php echo $resultado['Estado'] ?></td> 
                                         <!--cambie los nombre en BD x q al tener el mismo nombre se mezclan las conexiones-->
                                         <!-------BOTONES--->
                                         <td class="text-center">
