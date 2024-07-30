@@ -68,7 +68,19 @@ if($_POST){
     <div class="bg-white p-4 rounded-5 text-secondary shadow my-2" style="width: 25rem">
         <div class="d-flex justify-content-center">
             <img src="../img/LOGO.png" alt="login-icon" style="height: 15rem" />
-        </div>
+        </div>        
+        <!-- --------------------- -->
+         <p>m@gmail.com</p>
+         <p>123</p>
+        <a
+            name=""
+            id=""
+            class="btn btn-primary"
+            href="admin/carga_base_datos.php"
+            role="button"
+            >Carga Base Datos
+        </a>
+        <!-- --------------------- -->
         <div class="text-center fs-1 fw-bold">Bienvenid@</div>
         <form method="post" class="form" action="">
             <div class="input-group mt-4">

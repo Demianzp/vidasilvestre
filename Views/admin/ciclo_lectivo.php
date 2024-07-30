@@ -47,29 +47,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         $_SESSION['mensaje'] = "Error al agregar el ciclo lectivo: " . $e->getMessage();
                     }
                 }
-                // Redireccionar después de agregar
-                
                 header("Location: " . $_SERVER['PHP_SELF']);
                 exit();
                 break;
-
             case 'actualizar_ciclo':
                 $nuevo_ciclo = $_POST['nuevo_ciclo'];
                 if (empty($nuevo_ciclo)) {
                     $_SESSION['mensaje'] = "Error: No se seleccionó un nuevo ciclo lectivo.";
                 } else {
                     try {
-                        // Usar transacciones para mantener la consistencia
                         $db->beginTransaction();
-                        // Desactivar el ciclo actual existente
                         $stmt = $db->prepare("UPDATE ciclo_lectivo SET ciclo_actual = 0 WHERE ciclo_actual = 1");
                         $stmt->execute();
-
                         // Establecer el nuevo ciclo como el actual
                         $stmt = $db->prepare("UPDATE ciclo_lectivo SET ciclo_actual = 1 WHERE id_ciclo = ?");
                         $stmt->bindParam(1, $nuevo_ciclo);
                         $stmt->execute();
-
                         $db->commit();  // Confirmar la transacción
                         $_SESSION['mensaje'] = "Ciclo lectivo actualizado exitosamente.";
                     } catch (PDOException $e) {
@@ -77,15 +70,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         $_SESSION['mensaje'] = "Error al actualizar el ciclo lectivo: " . $e->getMessage();
                     }
                 }
-                // Redireccionar después de actualizar
                 header("Location:ciclo_lectivo.php");
-                // header("Location: " . $_SERVER['PHP_SELF']);
                 exit();
                 break;
             default:
                 $_SESSION['mensaje'] = "Acción no reconocida.";
                 header("Location:ciclo_lectivo.php");
-                // header("Location: " . $_SERVER['PHP_SELF']);  // Redireccionar para evitar estado incorrecto
                 exit();
         }
     }

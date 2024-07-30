@@ -58,14 +58,12 @@ if(!isset($_SESSION['nombre'])){
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <!-- ------------------------------- -->
 </head>
-
 <body>
 <!-- ---------------MENSAJE REGISTROS-------------- -->
 <?php
   $mensaje = isset($_GET['mensaje']) ? $_GET['mensaje'] : '';
   $error = isset($_GET['error']) ? $_GET['error'] : '';
   ?>
-
   <!-- Muestra la alerta para mensajes de éxito -->
   <?php if (!empty($mensaje)) { ?>
     <script>
@@ -84,7 +82,6 @@ if(!isset($_SESSION['nombre'])){
       });
     </script>
   <?php } ?>
-
   <!-- Muestra la alerta para errores -->
   <?php if (!empty($error)) { ?>
     <script>
@@ -108,9 +105,9 @@ if(!isset($_SESSION['nombre'])){
   <!-- ------------------------------------- -->
   <div style="height:60px">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container-fluid ml-2 ">
-        <a href="index.php" class="navbar-brand mb-0 pr-3 ">
-          <img class="d-line-block align-top " src="../../img/vida-silvestre.png" width="130px" style="margin-right:10px">
+      <div class="container-fluid">
+        <a href="index.php" class="navbar-brand ">
+          <img class="d-line-block align-top " src="../../img/vida-silvestre.png" width="140px" style="margin-right:10px">
         </a>
         <!-- Toggle Btn-->
         <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" class="navbar-toggler shadow-none border-0 bg-dark" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,35 +120,40 @@ if(!isset($_SESSION['nombre'])){
             <div class="collapse navbar-collapse " id="navbarNav">
               <ul class="navbar-nav mr-auto ">
                 <!-- ------------------------------------------------------- -->
-                <li class="nav-item  pr-3">
-                  <a class="nav-link" href="alumno_index.php">
-                    Alumnos
-                  </a>
-                  <!-- <ul class="dropdown-menu">
-                     <li><a class="dropdown-item" href="inscripcion_alumno.php">Inscripcion Alumno</a></li>
-                    <li><a class="dropdown-item" href="listadoalumnos.view.php">Listar Alumnos </a></li>
-                    <li><a class="dropdown-item" href="seleccionar_alumnos.php">Inscripcion a Materia</a></li>
-                  </ul> -->
+            <li class="nav-item dropdown pr-3">
+              <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Consultar
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="alumno_index.php">Alumno</a></li>
+                <li><a class="dropdown-item" href="profe_index.php">Profesor</a></li>                
+                <li><a class="dropdown-item" href="materia_index.php">Materia</a></li>
+                <li><a class="dropdown-item" href="admin_index.php">Administrador</a></li>
+                <li><a class="dropdown-item" href="asigna_index.php">Listar Asignaciones</a></li>
+              </ul>
+            </li>
+                <!-- ------------------------------------------------------- -->
+            <li class="nav-item dropdown pr-3">
+              <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Registrar
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="alumno_crea.php">Alumno</a></li>
+                <li><a class="dropdown-item" href="profe_crea.php">Profesor</a></li>                
+                <li><a class="dropdown-item" href="materia_crea.php">Materia</a></li>
+                <li><a class="dropdown-item" href="admin_index.php">Administrador</a></li>
+              </ul>
             </li>
             <!-- ------------------------------------------------------- -->
             <li class="nav-item dropdown pr-3">
               <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Profesor
+                Notas
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="profe_index.php">Listado Profesor</a></li>
-                <li><a class="dropdown-item" href="asigna_index.php">Listado de Asignaciones</a></li>
+                <li><a class="dropdown-item" href="nota_una.php">Registra una Nota</a></li>
+                <li><a class="dropdown-item" href="nota_materia.php">Registra por Materia</a></li>
+                <li><a class="dropdown-item" href="nota_alumno.php">Registra por Alumno</a></li>
               </ul>
-            </li>
-            
-            <!-- ------------------------------------------------------- -->
-            <li class="nav-item  pr-3">
-              <a class="nav-link" href="notas.view.php">Notas </a>
-            </li>
-            <li class="nav-item dropdown pr-3 ">
-              <!-- ------------------------------------------------------- -->
-            <li class="nav-item  pr-3">
-              <a class="nav-link " href="materia_index.php">Materias </a>
             </li>
             <!-- ------------------------------------------------------- -->
             <li class="nav-item dropdown pr-3 ">
@@ -167,10 +169,6 @@ if(!isset($_SESSION['nombre'])){
             <!-- ------------------------------------------------------- -->
             <li class="nav-item  pr-3">
               <a class="nav-link" href="ciclo_lectivo.php">Cliclo lectivo</a>
-            </li>
-            <!-- ------------------------------------------------------- -->
-            <li class="nav-item  pr-3">
-              <a class="nav-link" href="admin_index.php">Administradores</a>
             </li>
             <!-- ------------------------------------------------------- -->
           </ul>     
