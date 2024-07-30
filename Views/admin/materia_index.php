@@ -18,7 +18,7 @@ require 'navbar.php';
 ?>
 
 <!-- Sección de contenido -->
-<section class="content mt-2">
+<section class="content mt-3">
     <div class="row m-auto">
         <div class="col-sm">
             <div class="card rounded-2 border-0">

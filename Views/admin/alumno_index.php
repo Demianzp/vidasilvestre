@@ -61,7 +61,7 @@ if(isset($_GET['txtID'])){
                                                 <td><?php echo $alumno['celular'] ?></td> 
                                                 <td><?php echo $alumno['ciudad'] ?></td>  
                                                 <td><a href="alumno_inscripcion.php?id=<?php echo $alumno['id_persona'];?>" class="btn btn-info btn-sm" type="button">Inscripciones</a> </td>
-                                                <td><a href="alumno_estado.php?id=<?php echo $alumno['id_persona'];?>" class="btn btn-info btn-sm" type="button">Notas</a></td>                                                     
+                                                <td><a href="nota_alumno.php?id=<?php echo $alumno['id_persona'];?>" class="btn btn-info btn-sm" type="button">Estado</a></td>                                                     
                                                 <td class="text-center">
                                                     <div class="btn-group">
 
