@@ -36,8 +36,7 @@ th, td {
   text-align: center !important;
   vertical-align: middle !important;
 }
-#notas {
-  border: 1px solid blue !important;
+#notas {  
   width: 100px !important;
   word-wrap: break-word !important;
 }

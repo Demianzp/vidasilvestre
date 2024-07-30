@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmar'])) {
 ?>
 <?php require 'navbar.php'; ?>
 
-<div class="container mt-2">
+<div class="container mt-3">
     <div class="card rounded-2 border-0">
         <h5 class="card-header bg-dark text-white">Registro de Materias</h5>
         <div class="card-body">
@@ -54,27 +54,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmar'])) {
                 <div id="formulario-ingreso">
                     <div class="row">
                         <div class="col">
-                            <br>
                             <div class="form-group">
-                                <label for="nombre">Nombre:</label>
+                                <label for="nombre">Nombre(*)</label>
                                 <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingrese el Nombre" autocomplete="off" required>
                             </div>
                             <div class="form-group">
                                 <label for="descripcion">Descripción:</label>
-                                <input type="text" class="form-control" name="descripcion" placeholder="Ingrese Descripcion" id="descripcion" autocomplete="off" required>
+                                <input type="text" class="form-control" name="descripcion" placeholder="Ingrese Descripcion" id="descripcion" autocomplete="off" >
                             </div>
                             <div class="form-group">
                                 <label for="horas">Horas de cursada:</label>
-                                <input type="number" class="form-control" name="horas" id="horas" placeholder="Ingrese las horas" autocomplete="off" required>
+                                <input type="number" class="form-control" name="horas" id="horas" placeholder="Ingrese las horas" autocomplete="off" >
                             </div>
                             <div class="form-group">
                                 <label for="num_resolucion">Número de Resolución:</label>
-                                <input type="text" class="form-control" id="num_resolucion" name="num_resolucion" placeholder="Ingrese N° de Resolucion (Máx. 11 caracteres)" maxlength="15" autocomplete="off" required>
+                                <input type="text" class="form-control" id="num_resolucion" name="num_resolucion" placeholder="Ingrese N° de Resolucion (Máx. 11 caracteres)" maxlength="15" autocomplete="off" >
                                 <small class="form-text text-muted">Máximo 15 caracteres.</small>
                             </div>
 
                             <div class="form-group">
-                                <label for="año">Año de Cursado:</label>
+                                <label for="año">Año de Cursado(*)</label>
                                 <select name="año" id="año" class="form-control" autocomplete="off" required>
                                     <option value="" disabled selected>Seleccione Año de Cursado</option>
                                     <option value="1">1° Año</option>
@@ -83,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmar'])) {
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="plan_estudio">Cuatrimestre</label>
+                                <label for="plan_estudio">Cuatrimestre(*)</label>
                                 <select name="plan_estudio" id="plan_estudio" class="form-control" autocomplete="off" required>
                                     <option value="" disabled selected>Seleccione el Cuatrimestre</option>
                                     <option value="1">1° Cuatrimestre</option>
@@ -91,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmar'])) {
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="id_tipo">Tipo de Materia:</label>
+                                <label for="id_tipo">Tipo de Materia(*)</label>
                                 <select name="id_tipo" id="id_tipo" class="form-control" autocomplete="off" required>
                                     <option value="" disabled selected>Seleccione su Tipo</option>
                                     <option value="1">Promocional</option>
@@ -101,7 +100,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmar'])) {
                             </div>
                         </div>
                         <div class="col">
-                            <div class="card-body table-responsive pt-0">
+                            <div class="card rounded-2 ">
+                            <h5 class="card-header bg-dark text-white">Agrega Correlativa/a(*)</h5>
+                            <div class="card-body ">
                                 <table id="" class="table table-striped table-sm" style="width:100%">
                                     <thead class="thead-dark">
                                         <tr>
@@ -120,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmar'])) {
                                                 <td><?php echo $resultado["Nombre"] ?></td>
                                                 <td>
                                                     <div class="form-check checkbox-xl d-flex justify-content-center">
-                                                        <input type="checkbox" class="form-check-input" name="correlativas[]" value="<?php echo $resultado["id_materia"]; ?>">
+                                                        <input type="checkbox" class="form-check-input" name="correlativas[]" value="<?php echo $resultado["id_materia"]; ?>" >
                                                     </div>
                                                 </td>
                                             </tr>
@@ -139,6 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmar'])) {
                                     </tbody>
                                 </table>
                                 <button type="button" class="btn btn-primary float-right" id="continuarBtn">Continuar</button>
+                            </div>
                             </div>
                         </div>
                     </div>
