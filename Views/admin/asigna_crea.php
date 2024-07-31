@@ -46,7 +46,7 @@ if ($mensj1 || $error1) {
   <!-- ---------------El get trae el id del profesor q quiere asignar la materia------------------ -->
                            <div class="form-group">
                                 <label  for="profesor">Profesor:
-                                <select  name="profesor" class="form-control" disabled>
+                                <select  name="profesor" class="form-control" >
                            
                                     <?php
                                     $sql = $conexion->query("SELECT * FROM persona WHERE id_rol = 2 AND estado = 'Activo' AND id_persona=" . $_GET['id']);

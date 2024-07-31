@@ -150,7 +150,7 @@ if(!isset($_SESSION['nombre'])){
                 Notas
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="nota_una.php">Registra una Nota</a></li>
+                <li><a class="dropdown-item" href="nota_eva.php">Registra una Nota</a></li>
                 <li><a class="dropdown-item" href="nota_materia.php">Registra por Materia</a></li>
                 <li><a class="dropdown-item" href="nota_alumno.php">Registra por Alumno</a></li>
               </ul>
