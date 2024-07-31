@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 09-07-2024 a las 05:50:18
+-- Servidor: localhost
+-- Tiempo de generación: 31-07-2024 a las 23:27:05
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -48,7 +48,8 @@ CREATE TABLE `alumno_materia` (
   `id_ciclo` int(11) DEFAULT NULL,
   `id_nota` int(11) DEFAULT NULL,
   `cod_correlativa` int(11) DEFAULT NULL,
-  `estado` varchar(15) NOT NULL
+  `estado` varchar(15) NOT NULL,
+  `fecha_inscripcion` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -123,6 +124,16 @@ CREATE TABLE `materia` (
   `id_tipo` int(11) DEFAULT NULL,
   `estado` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `materia`
+--
+
+INSERT INTO `materia` (`id_materia`, `Nombre`, `descripcion`, `horas`, `num_resolucion`, `plan_estudio`, `año_cursado`, `id_tipo`, `estado`) VALUES
+(1, 'lengua', 'd2', '2', '3', '1', '1', 2, 'Activo'),
+(2, 'Matematica', '---', '3', 'AABS12', '1', '1', 1, 'Activo'),
+(3, 'Progrmacion', '--', '2', 'asgaas', '1', '1', 1, 'Activo'),
+(4, 'SOYR', '--', '3', 'AASGX12', '2', '1', 1, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -363,7 +374,7 @@ ALTER TABLE `examen`
 -- AUTO_INCREMENT de la tabla `materia`
 --
 ALTER TABLE `materia`
-  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `mesa_examen`
