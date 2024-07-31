@@ -40,33 +40,29 @@
                         <table id="example" class="table table-striped table_id">
                             <thead class="thead-dark">
                                 <th>#</th>
-                                <th>Profesor</th>                                
-                                <th>DNI</th>
+                                <th>Profesor</th>
                                 <th>Materia</th>
-                                <th>Fecha Alta</th>
-                                <th>Fecha Baja</th>
-                                <th>Estado</th>
+                                <th>Fecha</th>
                                 <th>Acciones</th>
                             </thead>
-                            <tbody>                     
+                            <tbody>
+                     
                                 <?php
                                 require ("../../conn/connection.php");
-                                $sql = $conexion->query
-                                ("SELECT * FROM asignar 
+
+                                $sql = $conexion->query("SELECT * FROM asignar 
                                 INNER JOIN persona ON asignar.id_persona = persona.id_persona AND persona.estado = 'Activo'
                                 INNER JOIN materia ON asignar.id_materia = materia.id_materia AND materia.estado = 'Activo'
-                                WHERE asignar.Estado = 'Activo'");                               
+                                WHERE asignar.Estado = 'Activo' ");
+                               
                                 while ($resultado = $sql->fetch_assoc()) {
                                 ?>
                                     <tr>
                                         <th scope="row"><?php echo $resultado['id_asignar'] ?></th>
-                                        <td scope="row"><?php echo $resultado['nombre'] ?><?php echo $resultado['apellido'] ?> </td>
-                                        <td scope="row"><?php echo $resultado['DNI'] ?></td>
+                                        <td scope="row"><?php echo $resultado['nombre'] ?> <?php echo $resultado['apellido'] ?> </td>
                                         <td scope="row"><?php echo $resultado['Nombre'] ?></td> <!--Lo cambie en la BD materia-->
                                         <td scope="row"><?php echo $resultado['fecha_i'] ?></td> 
                                         <!--Lo cambie en la BD asignar----->
-                                        <td scope="row"><?php echo $resultado['fecha_b'] ?></td> 
-                                        <td scope="row"><?php echo $resultado['Estado'] ?></td> 
                                         <!--cambie los nombre en BD x q al tener el mismo nombre se mezclan las conexiones-->
                                         <!-------BOTONES--->
                                         <td class="text-center">

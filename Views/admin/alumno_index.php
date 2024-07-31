@@ -61,11 +61,13 @@ if(isset($_GET['txtID'])){
                                                 <td><?php echo $alumno['celular'] ?></td> 
                                                 <td><?php echo $alumno['ciudad'] ?></td>  
                                                 <td><a href="alumno_inscripcion.php?id=<?php echo $alumno['id_persona'];?>" class="btn btn-info btn-sm" type="button">Inscripciones</a> </td>
-                                                <td><a href="nota_alumno.php?id=<?php echo $alumno['id_persona'];?>" class="btn btn-info btn-sm" type="button">Estado</a></td>                                                     
+                                                <td><div class="btn-group">
+                                                <a href="nota_alumno.php?id=<?php echo $alumno['id_persona'];?>" class="btn btn-info btn-sm" type="button">Estado</a>
+                                                <a href="nota_una.php?id=<?php echo $alumno['id_persona'];?>" class="btn btn-warning btn-sm" type="button">Nota</a>   </div>    </td>                                                     
                                                 <td class="text-center">
                                                     <div class="btn-group">
 
-                                                        <a href="alumno_info.php?id=<?php echo $alumno['id_persona'];?>" class="btn btn-info btn-sm" type="button">Info.</a>  
+                                                        
 
                                                         <a href="alumno_edit.php?id=<?php echo $alumno['id_persona'];?>"class="btn btn-warning btn-sm" type="button" title="Editar">
                                                             <i class="fas fa-edit"></i>
