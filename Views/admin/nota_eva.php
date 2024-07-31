@@ -57,10 +57,10 @@ if ($mensj1 || $error1) {
                         <div class="col">
                            <div class="form-group">
                                 <label  for="alumno">Alumno:
-                                <select  name="alumno" class="form-control" >
+                                <select class="form-select"  name="alumno"  >
                            
                                     <?php
-                                    $sql = $conexion->query("SELECT * FROM persona WHERE id_rol = 1 AND estado = 'Activo' AND id_persona=" . $_GET['id']);
+                                    $sql = $conexion->query("SELECT * FROM persona WHERE id_rol = 1 AND estado = 'Activo'");
                                     while ($resultado = $sql->fetch_assoc()) {
                                         echo "<option value='" . $resultado["id_persona"] . "'>" . $resultado["nombre"] . " " . $resultado["apellido"] . "</option>";
                                     }
@@ -72,7 +72,7 @@ if ($mensj1 || $error1) {
                             <!-- --------------------------------- -->
                             <div class="form-group">
                                 <label for="materia">Materia:</label>
-                                <select name="materia" class="form-control" required>
+                                <select name="materia" class="form-select" required>
                                     <option disabled selected hidden>Seleccione la materia</option>
                                     <?php
                                     $sqlm = $conexion->query("SELECT * FROM materia WHERE  estado = 'Activo'");
@@ -86,7 +86,7 @@ if ($mensj1 || $error1) {
                         
                                 <div class="form-group">
                                 <label for="ciclo_lectivo">Ciclo Lectivo:</label>
-                                <select name="ciclo_lectivo" class="form-control" required>
+                                <select name="ciclo_lectivo" class="form-select"  required>
                                     <option disabled selected hidden>Seleccione el ciclo lectivo</option>
                                     <?php
                                     $sqlCL = $conexion->query("SELECT * FROM ciclo_lectivo WHERE Estado = 'Activo'");
@@ -99,7 +99,7 @@ if ($mensj1 || $error1) {
                             <!-- --------------------------------- -->
                             <div class="form-group">
                                 <label for="examen">Examen:</label>
-                                <select name="examen" class="form-control" required>
+                                <select name="examen" class="form-select"  required>
                                     <option disabled selected hidden>Seleccione la materia</option>
                                     <?php
                                     $sqlm = $conexion->query("SELECT * FROM examen WHERE id_examen_tipo BETWEEN 1 AND 4 ");

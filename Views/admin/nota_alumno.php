@@ -91,13 +91,14 @@ if ($alumno_id) {
                                 <th id="notas">Nota 3</th>
                                 <th id="notas">Nota 4</th>
                                 <th id="notas" class="border border-dark border-1 border-bottom-0" >Calif. Regular</th>
+                                 <!--____________________________
                                 <th id="notas">Calif.1° Ex.Final</th>
                                 <th id="notas">Calif.2° Ex.Final</th>
                                 <th id="notas">Calif. Final</th>
                                 <th id="notas">1°PeR. Ev.Dic</th>
                                 <th id="notas">2°PeR. Ev.Dic</th>
                                 <th id="notas">1°PeR. Ev.Feb</th>
-                                <th id="notas">2°PeR. Ev.Feb</th>
+                                <th id="notas">2°PeR. Ev.Feb</th>_____________________-->
                                 <th id="notas">Calif. Final</th>
                                 <th id="notas">Guardar</th>
                             </tr>
@@ -111,7 +112,7 @@ if ($alumno_id) {
                                         <input type="hidden" name="materia_id" value="<?php echo htmlspecialchars($materia['id_materia']); ?>">
                                         <input type="hidden" name="ciclo_lectivo" value="<?php echo htmlspecialchars($select_ciclo); ?>">
                                         
-                                        <!-- -------------CONSULTA PARA BUSCAR NOTA 1 Y LO MUESTRA EN EL "VALUE"---------------------- -->
+                                        <!-- -------------CONSULTA PARA BUSCAR NOTA 1 Y LO MUESTRA EN EL "VALUE"
                                          <p>esta vista la puede usar el profesor, por eso los otros campos entan deshabilitados</p>
                                          <p>para modificar los campos dasabilitados usar "Registra una nota"</p>
                                          <p>para ingresar datos en los campos desabilitados se tiene que crear una mesa listar los alumnos y agregar nota </p>
@@ -123,16 +124,20 @@ if ($alumno_id) {
                                            $sql_nota = "SELECT nota FROM nota WHERE id_persona = $alumno_id 
                                            AND id_materia = $mate 
                                            AND id_ciclo = $select_ciclo
-                                           AND id_examen_tipo = 1
+                                           AND id_examen_tipo id_examen_tipo BETWEEN 1 AND 4 
                                            ";
+                                           
                                            $result_nota = $conexion->query($sql_nota);    
                                            $nota1 = $result_nota->fetch_assoc(); 
+                                           $nota2 = $result_nota->fetch_assoc(); 
+                                    
                                            if(empty($nota1['nota'])){
                                             $nota1=0;
                                            }else{
                                             $nota1= $nota1['nota'];
                                             }                                                                         
                                         ?> 
+                                        
                                         <?php echo "bandera ".$alumno_id." ". $mate." ". $select_ciclo." ".$nota1?>
                                         <!-- -------------------------- -->
                                         <td><?php echo $index + 1; ?></td>
@@ -153,6 +158,7 @@ if ($alumno_id) {
                                         <td class="border border-dark border-1 border-top-0">
                                             <input size="4" type="text" name="" value="" placeholder="" class="form-control" disabled>
                                         </td>
+                                         <!--____________________________
                                         <td>
                                             <input size="4" type="text" name="" value="" placeholder="" class="form-control"disabled>
                                         </td>
@@ -173,7 +179,7 @@ if ($alumno_id) {
                                         </td>
                                         <td>
                                             <input size="4" type="text" name="" value="" placeholder="" class="form-control" disabled>
-                                        </td>
+                                        </td>_____________________-->
                                             
                                         <td><?php echo isset($estado_alumno[$materia['id_materia']]) ? htmlspecialchars($estado_alumno[$materia['id_materia']]) : 'libre'; ?></td>
                                         <td>
