@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Áreas Naturales</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../Area Naturales/img/LOGO.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/jquery.fancybox.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/owl.carousel.css">
+	<link rel="stylesheet" href="css/slit-slider.css">
+	<link rel="stylesheet" href="css/animate.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/vegetta.css">
+    <style>
+        .navbar-brand {
+            position: relative; /* Posición relativa para alinear elementos hijos */
+        }
+        .navbar-brand .logo {
+            max-width: 150px; /* Ajusta el tamaño máximo del logo */
+            height: auto; /* Permite que la altura se ajuste automáticamente */
+            display: block; /* Hace que la imagen se comporte como un bloque */
+            margin: 0 auto; /* Centra horizontalmente el logo */
+            transition: transform 0.3s ease; /* Transición suave para efectos */
+        } 
+        /* Efecto de escala al pasar el mouse */
+        .navbar-brand:hover .logo {
+            transform: scale(1.1); /* Aumenta ligeramente el tamaño al pasar el mouse */
+        }
+        .logo-cursos {
+            max-width: 200px; /* Ajusta el tamaño máximo del logo según tu diseño */
+            margin-bottom: 20px; /* Espacio inferior para separación */
+        }
+        .large-white-bold-shadow {
+            font-size: 48px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFFAF0;
+        }
+        .sec-title {
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        .sec-title h2 {
+            font-size: 36px;
+            color: #333;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .sec-title p {
+            color: #666;
+            font-size: 18px;
+        }
+        .project-wrapper {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .project-wrapper li {
+            width: 30%;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .project-wrapper li img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .project-wrapper li:hover img {
+            transform: scale(1.05);
+        }
+        .mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 20px;
+            opacity: 0;
+            transition: all 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .project-wrapper li:hover .mask {
+            opacity: 1;
+        }
+        .external {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .external li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .external li a {
+            color: #fff;
+        }
+        /*footer {
+            background-color: #1a472a;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 5px;
+        }
+        footer .social-icons a {
+            color: white;
+            margin: 0 10px;
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+        footer .social-icons a:hover {
+            color: #ffdd57;
+        }*/
+        footer {
+            background-color: rgb(25, 25, 25);
+            padding: 20px 0;
+            color: #fff;
+        }
+        .footer-content {
+            width: 790px;
+            margin: 0 auto;
+        }
+        .footer-content > div {
+            margin-bottom: 40px;
+        }
+        .footer-content > div > p:first-child {
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        .subscribe-form {
+            position: relative;
+        }
+        .subscribe.form-control {
+            background-color: transparent;
+            border: 1px solid #7f7f7f;
+        }
+        .subscribe.form-control:focus {
+            -webkit-box-shadow: none;
+               -moz-box-shadow: none;
+                    box-shadow: none;
+        }
+        .submit-icon {
+            background-color: #7f7f7f;
+            border: 0 none;
+            border-radius: 0;
+            color: #c1c1c1;
+            padding: 13px 20px;
+            position: absolute;
+            overflow: hidden;
+            right: 0;
+            top: 0;
+        }
+        .submit-icon .fa-paper-plane {
+            position: relative;
+            top: 0;
+
+            -webkit-transform: translateX(0);
+               -moz-transform: translateX(0);
+                -ms-transform: translateX(0);
+                 -o-transform: translateX(0);
+                    transform: translateX(0);
+
+            -webkit-transition: all 0.3s ease 0.2s;
+               -moz-transition: all 0.3s ease 0.2s;
+                -ms-transition: all 0.3s ease 0.2s;
+                 -o-transition: all 0.3s ease 0.2s;
+                    transition: all 0.3s ease 0.2s;
+        }
+        .submit-icon:hover .fa-paper-plane {
+            position: relative;
+            top: -37px;
+
+            -webkit-transform: translateX(30px);
+               -moz-transform: translateX(30px);
+                -ms-transform: translateX(30px);
+                 -o-transform: translateX(30px);
+                    transform: translateX(30px);
+        }
+        .footer-content .footer-social {
+            margin: 40px 0 35px;
+        }
+        .footer-social ul {
+            list-style: outside none none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .footer-social ul li {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        .footer-social ul li a {
+            color: #7f7f7f;
+            display: block;
+
+            -webkit-transition: all 0.2s ease 0s;
+               -moz-transition: all 0.2s ease 0s;
+                -ms-transition: all 0.2s ease 0s;
+                 -o-transition: all 0.2s ease 0s;
+                    transition: all 0.2s ease 0s;
+        }
+        .footer-social ul li a:hover {
+            color: #009EE3;
+        }
+        .footer-content > p {
+            color: #ababab;
+            font-size: 12px;
+        }
+        .container-form{
+            background-color: #252525;
+            width: 100%;
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            grid-gap: 50px;
+            margin-top: 90px;
+        }
+        .container-form h2{
+            margin-bottom: 15px;
+            font-size: 35px;
+        }
+        .container-form p{
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .container-form a{
+            font-size: 17px;
+            display: inline-block;
+            text-decoration: none;
+            width: 100%;
+            margin-bottom: 15px;
+            color: black;
+            font-weight: 700;
+        }
+        .container-form a i{
+            color: cadetblue;
+            margin-right: 10px;
+        }
+
+/*============================================================ 
+	Responsive Styles
+ ============================================================*/
+
+/*============================================================
+	For Small Desktop
+==============================================================*/
+
+@media (min-width: 980px) and (max-width: 1150px) {
+
+/*about*/
+    #about .welcome-block img {
+        margin-bottom: 30px;
+    }
+
+/* portfolio */
+    figcaption.mask {
+        bottom: -151px;
+    }
+
+    .testimonial-item > div:after {
+        bottom: -40px;
+    }
+}
+
+
+/*============================================================
+	Tablet (Portrait) Design for a width of 768px
+==============================================================*/
+
+@media (min-width: 768px) and (max-width: 979px) {
+
+/* home slider  */
+    .caption-content h2 {
+        font-size: 40px;
+    }
+
+    .caption-content p {
+        font-size: 25px;
+    }
+
+    .caption-content strong {
+        font-size: 45px;
+    }
+
+/* about */
+    .recent-works {
+        margin-bottom: 50px;
+    }
+
+    .service-item {
+        margin-bottom: 50px;
+    }
+
+/* portfolio */
+    .portfolio-item {
+        width: 48%;
+    }
+
+/* testimonial */
+    .testimonial-item {
+        width: 100%;
+    }
+
+    .testimonial-item {
+        width: 80%;
+    }
+
+    .testimonial-item > div:after {
+        bottom: -35px;
+    }
+
+/* price */
+    .price-table {
+        margin-bottom: 50px;
+    }
+
+/* contact form */
+    .contact-form {
+        margin-bottom: 50px;
+    }
+}
+
+
+/*============================================================
+	Mobile (Portrait) Design for a width of 320px
+==============================================================*/
+
+@media only screen and (max-width: 767px) {
+
+    body {
+        font-size: 14px;
+    }
+
+    .parallax {
+        background-position: centet tip !important;
+    }
+
+    .sec-title h2 {
+        font-size: 25px;
+    }
+
+    .sec-title h2:after {
+        left: 30%;
+    }
+
+/*navigation*/
+    .navbar-inverse .navbar-toggle {
+        border-color: #fff;
+    }
+
+    .navbar-inverse .navbar-toggle:hover,
+    .navbar-inverse .navbar-toggle:focus {
+        background-color: transparent;
+    }
+
+/* slider */
+    .caption-content h2 {
+        font-size: 18px;
+    }
+
+    .caption-content > span {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .caption-content p {
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+
+    .caption-content strong {
+        font-size: 22px;
+    }
+
+/* about */
+    .recent-works {
+        margin-bottom: 85px;
+    }
+
+    #about h3 {
+        font-size: 18px;
+        margin: 0 0 35px !important;
+    }
+
+    #about .owl-buttons {
+        margin-top: 20px;
+    }
+
+    #about .message-body {
+        margin-bottom: 45px;
+    }
+
+    #about .welcome-block img {
+        margin: 0 25px 15px 0;
+    }
+
+/* service */
+    .service-item {
+        width: 100%;
+    }
+
+/*portfolio*/
+    .portfolio-item {
+        margin: 0 auto 10px;
+        font-size: 14px;
+        width: 280px;
+    }
+
+    figcaption.mask {
+        bottom: -107px;
+        color: #fff;
+        padding: 15px;
+    }
+
+/* lightbox */
+    .fancybox-title h3 {
+        font-size: 20px;
+    }
+
+    .fancybox-title p {
+        font-size: 14px;
+    }
+
+/* testimonial */
+    .testimonial-item {
+        width: 95%;
+    }
+
+    .testimonial-item > div:before,
+    .testimonial-item > div:after {
+        background-image: none;
+    }
+
+    .testimonial-item > div > span {
+        margin: 30px 0 20px;
+    }
+
+/* price */
+    .price-table {
+        margin-bottom: 50px;
+    }
+
+/* follow us */
+    .social-button li:nth-child(2) {
+        margin: 0 25px;
+    }
+
+    .social-button li a {
+        height: 65px;
+        line-height: 71px;
+        width: 65px;
+    }
+
+/* contact form */
+    .contact-form {
+        margin-bottom: 50px;
+    }
+
+/* footer */
+    .footer-content {
+        width: 100%;
+    }
+
+    .footer-social ul li {
+        margin: 0 7px;
+    }
+}
+</style>
+</head>
+<body>
+    <header id="navigation" class="navbar-inverse navbar-fixed-top animated-header">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- logo -->
+                <h1 class="navbar-brand">
+                    <a href="../Inst_Vid_Silvestre/index.html">
+                        <img src="../Area Naturales/img/logo-vida.png" class="logo">
+                    </a>
+                </h1>
+                <!-- /logo -->
+            </div>
+            <!-- main nav -->
+            <nav class="collapse navbar-collapse navbar-right" role="navigation">
+                <ul id="nav" class="nav navbar-nav">
+                    <li><a href="../Inst_Vid_Silvestre/index.html">Home</a></li>
+                    <li><a href="../Inst_Vid_Silvestre/index.html">Carreras y Cursos</a></li>
+                    <li><a href="../Quienes Somos/Quienes somos.html">Nosotros</a></li>
+                    <li><a href="/Area Naturales/Area Natural.html">Areas Naturales</a></li>
+                    <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdZEXsTogp-0ugaeqg-TTREokSlqpypUDYZxWbFtR3USdEJxw/viewform">Pre-Inscripcion 2024!</a></li>
+                    <li><a href="https://institutovidasilvestre.com.ar/campus/login/index.php">Campus</a></li>
+                </ul>
+            </nav>
+            <!-- /main nav -->
+            
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="sec-title text-center wow animated fadeInDown">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <h2>Áreas Naturales</h2>
+                    <p>Descubre los hermosos paisajes y la rica biodiversidad de nuestras áreas naturales.</p>
+                </div>
+                <ul class="project-wrapper wow animated fadeInUp">
+                    <li class="portfolio-item">
+                        <img src="../Area Naturales/img/leoncito.jpg" alt="Área Natural 1">
+                        <figcaption class="mask">
+                            <h3>Bosque de Niebla</h3>
+                            <p>Un ecosistema mágico y único, envuelto en una densa neblina.</p>
+                        </figcaption>
+                        <ul class="external">
+                            <li><a class="fancybox" title="Bosque de Niebla"></a></li>
+                        </ul>
+                    </li>
+                    <li class="portfolio-item">
+                        <img src="../Area Naturales/img/carmelo.jpg" alt="Área Natural 1">
+                        <figcaption class="mask">
+                            <h3>Bosque de Niebla</h3>
+                            <p>Un ecosistema mágico y único, envuelto en una densa neblina.</p>
+                        </figcaption>
+                        <ul class="external">
+                            <li><a class="fancybox" title="Bosque de Niebla"></a></li>
+                        </ul>
+                    </li>
+                    <li class="portfolio-item">
+                        <img src="../Area Naturales/img/huaco01.jpg" alt="Área Natural 1">
+                        <figcaption class="mask">
+                            <h3>Bosque de Niebla</h3>
+                            <p>Un ecosistema mágico y único, envuelto en una densa neblina.</p>
+                        </figcaption>
+                        <ul class="external">
+                            <li><a class="fancybox" title="Bosque de Niebla"></a></li>
+                        </ul>
+                    </li>
+                    <li class="portfolio-item">
+                        <img src="../Area Naturales/img/Ischigualasto.jpg" alt="Área Natural 1">
+                        <figcaption class="mask">
+                            <h3>Bosque de Niebla</h3>
+                            <p>Un ecosistema mágico y único, envuelto en una densa neblina.</p>
+                        </figcaption>
+                        <ul class="external">
+                            <li><a class="fancybox" title="Bosque de Niebla"></a></li>
+                        </ul>
+                    </li>
+                    <li class="portfolio-item">
+                        <img src="../Area Naturales/img/lag_huanacache02.jpg" alt="Área Natural 1">
+                        <figcaption class="mask">
+                            <h3>Bosque de Niebla</h3>
+                            <p>Un ecosistema mágico y único, envuelto en una densa neblina.</p>
+                        </figcaption>
+                        <ul class="external">
+                            <li><a class="fancybox" title="Bosque de Niebla"></a></li>
+                        </ul>
+                    </li>
+                    <li class="portfolio-item">
+                        <img src="../Area Naturales/img/limos.jpg" alt="Área Natural 1">
+                        <figcaption class="mask">
+                            <h3>Bosque de Niebla</h3>
+                            <p>Un ecosistema mágico y único, envuelto en una densa neblina.</p>
+                        </figcaption>
+                        <ul class="external">
+                            <li><a class="fancybox" title="Bosque de Niebla"></a></li>
+                        </ul>
+                    </li>
+                    <li class="portfolio-item">
+                        <img src="../Area Naturales/img/morrillos04.jpg" alt="Área Natural 1">
+                        <figcaption class="mask">
+                            <h3>Bosque de Niebla</h3>
+                            <p>Un ecosistema mágico y único, envuelto en una densa neblina.</p>
+                        </figcaption>
+                        <ul class="external">
+                            <li><a class="fancybox" title="Bosque de Niebla"></a></li>
+                        </ul>
+                    </li>
+                    <li class="portfolio-item">
+                        <img src="../Area Naturales/img/parque_sarmiento01.jpg" alt="Área Natural 1">
+                        <figcaption class="mask">
+                            <h3>Bosque de Niebla</h3>
+                            <p>Un ecosistema mágico y único, envuelto en una densa neblina.</p>
+                        </figcaption>
+                        <ul class="external">
+                            <li><a class="fancybox" title="Bosque de Niebla"></a></li>
+                        </ul>
+                    </li>
+                    <li class="portfolio-item">
+                        <img src="../Area Naturales/img/pedernal07.jpg" alt="Área Natural 1">
+                        <figcaption class="mask">
+                            <h3>Bosque de Niebla</h3>
+                            <p>Un ecosistema mágico y único, envuelto en una densa neblina.</p>
+                        </figcaption>
+                        <ul class="external">
+                            <li><a class="fancybox" title="Bosque de Niebla"></a></li>
+                        </ul>
+                    </li>
+                    <li class="portfolio-item">
+                        <img src="../Area Naturales/img/Reserva1_SanGuillermo.jpg" alt="Área Natural 1">
+                        <figcaption class="mask">
+                            <h3>Bosque de Niebla</h3>
+                            <p>Un ecosistema mágico y único, envuelto en una densa neblina.</p>
+                        </figcaption>
+                        <ul class="external">
+                            <li><a class="fancybox" title="Bosque de Niebla"></a></li>
+                        </ul>
+                    </li>
+                    <li class="portfolio-item">
+                        <img src="../Area Naturales/img/tapia.jpg" alt="Área Natural 1">
+                        <figcaption class="mask">
+                            <h3>Bosque de Niebla</h3>
+                            <p>Un ecosistema mágico y único, envuelto en una densa neblina.</p>
+                        </figcaption>
+                        <ul class="external">
+                            <li><a class="fancybox" title="Bosque de Niebla"></a></li>
+                        </ul>
+                    </li>
+                    <li class="portfolio-item">
+                        <img src="../Area Naturales/img/valle_fertil04.jpg" alt="Área Natural 1">
+                        <figcaption class="mask">
+                            <h3>Bosque de Niebla</h3>
+                            <p>Un ecosistema mágico y único, envuelto en una densa neblina.</p>
+                        </figcaption>
+                        <ul class="external">
+                            <li><a class="fancybox" title="Bosque de Niebla"></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+        <div class="container">
+            <div class="row text-center">
+                <div class="footer-content">
+                    <div class="wow animated fadeInDown">
+                        <span>Caseros 34 (Norte) - Capital San Juan, Argentina</span>
+                        <br><br>
+                        <span>+54 9 (0264) 454-6406  |  +54 9 (0264) 415-9882  | <a href="mailto:cpguardap84@gmail.com">cpguardap84@gmail.com</a></span>
+                    </div>
+                    <p>Copyright © 2024 - <a href="../Inst_Vid_Silvestre/index.html">Instituto Superior Vida Silvestre</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+                   
