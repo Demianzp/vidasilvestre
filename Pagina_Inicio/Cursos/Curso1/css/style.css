@@ -245,102 +245,35 @@ h1.navbar-brand {
 
 /* service section */
 
-.service_section .container {
-  padding: 0 50px;
-}
-
-.service_detail h2 {
-  text-transform: uppercase;
-  color: #0c0b09;
-  font-weight: bold;
-}
-
-.service_detail h3 {
-  text-transform: uppercase;
-  color: #254a93;
+.service_img-container {
+  border-radius: 25px;
   position: relative;
+  width: 100%;
+  height: 300px; /* ajusta la altura según tus necesidades */
+  overflow: hidden;
 }
 
-.service_detail h3::after {
+.service_img-box {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
-  content: "";
-  height: 1.5px;
-  width: 45px;
-  background-color: #36bb25;
+  width: 100%;
+  height: 100%;
+  transition: opacity 1s;
+  opacity: 0;
 }
 
-.service_section .service_img-container {
-  display: flex;
-  flex-wrap: wrap;
-  padding-top: 40px;
+.service_img-box.active {
+  opacity: 1;
 }
 
-.service_section .service_img-container .service_img-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 300px;
-  height: 325px;
-  background-size: cover;
+.service_img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.service_img-container .service_img-box.i-box-1 {
-  width: 60%;
-  background-image: url(../images/Parque_nacional_san_guillermo_2.png);
-  border-radius: 25px;
-}
 
-.service_img-container .service_img-box.i-box-2 {
-  width: 40%;
-  background-image: url(../images/Laguna_de_Guanacache.png);
-  border-radius: 25px;
-}
-
-.service_img-container .service_img-box.i-box-3 {
-  width: 40%;
-  background-image: url(../images/Valle-Fertil.png);
-  border-radius: 25px;
-}
-
-.service_img-container .service_img-box.i-box-4 {
-  width: 60%;
-  background-image: url(../images/Reserva_natural_ischigualasto.png);
-  border-radius: 25px;
-}
-
-.service_section .service_img-container a,
-.service_section .service_img-container a:hover {
-  color: #fff;
-  text-transform: uppercase;
-  padding: 15px 40px;
-}
-
-.service_section .service_img-container .service_img-box:hover {
-  cursor: pointer;
-}
-
-.service_section .service_img-container .service_img-box:hover a {
-  background-color: #2561db;
-}
-
-.service_btn {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-}
-
-.service_btn a,
-.service_btn a:hover {
-  text-transform: uppercase;
-
-  color: #0c0b09;
-}
-
-.service_btn a img {
-  width: 25px;
-}
 
 /* end service section */
 

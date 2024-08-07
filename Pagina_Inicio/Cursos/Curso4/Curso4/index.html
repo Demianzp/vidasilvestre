@@ -56,7 +56,59 @@
             font-weight: bold;
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
   }
+  .imagen-con-info {
+  position: relative;
+}
 
+.info-imagen {
+  border-radius: 25px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.imagen-con-info:hover .info-imagen {
+  opacity: 1;
+}.imagen-con-info {
+  position: relative;
+}
+
+.info-imagen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.imagen-con-info:hover .info-imagen {
+  opacity: 1;
+}
+.titulo-difuminado {
+  font-size: 48px;
+  color: white;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3), 0 0 30px rgba(255, 255, 255, 0.2);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+  transition: all 0.5s ease;
+}
+
+.titulo-difuminado:hover {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.4);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
+}
   </style>
 </head>
 
@@ -80,7 +132,7 @@
               <li><a href="/Inst_Vid_Silvestre/index.html">Home</a></li>
               <li><a href="/Inst_Vid_Silvestre/index.html">Carreras y Cursos</a></li>
               <li><a href="/Quienes Somos/Quienes somos.html">Nosotros</a></li>
-              <li><a href="/Area Naturales/Area Natural.html">Areas Naturales</a></li>
+              <li><a href="/Area Naturales/Area Natural.html">Áreas Naturales</a></li>
               <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdZEXsTogp-0ugaeqg-TTREokSlqpypUDYZxWbFtR3USdEJxw/viewform">Pre-Inscripcion 2024!</a></li>
               <li><a href="https://institutovidasilvestre.com.ar/campus/login/index.php">Campus</a></li>
             </ul>
@@ -93,23 +145,14 @@
           <div class="slider_box">
             <div class="slider-detail">
               <div class="slider_detail-heading">
-                <h1>
+                <br><br>
+                <h1 class="titulo-difuminado">
                   INSTRUCTOR DE VIDA SILVESTRE Y NATURALEZA
                 </h1>
-              </div>
-              <div class="slider_detail-btn">
               </div>
             </div>
           </div>
         </div>
-      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
     </div>
   </section>
 
@@ -138,61 +181,59 @@
             <p>
               Te formará en la guía de grupos humanos, generando capacidades de comunicación y sensibilizando acerca de las problemáticas ecológicas que atraviesa el mundo, promoviendo el respeto por la naturaleza y fomentando una mirada del ser humano como parte de la misma.
             </p>
+            <br>
+            <section class="service_section ">
+              <div class="container">
+                <div class="service_img-container">
+                  <div class="service_img-box i-box-1 active">
+                    <img src="../Curso4/images/instructor-en-vida-silvestre5.jpg" alt="Imagen 1">
+                  </div>
+                  <div class="service_img-box i-box-2">
+                    <img src="../Curso4/images/instructor-en-vida-silvestre6.jpg" alt="Imagen 2">
+                  </div>
+                  <div class="service_img-box i-box-3">
+                    <img src="../Curso4/images/Instructor-en-vida-silvestre7.jpg" alt="Imagen 3">
+                  </div>
+                  <div class="service_img-box i-box-4">
+                    <img src="../Curso4/images/Instructor-en-vida-silvetre8.jpg" alt="Imagen 4">
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
-        </div>
+        </div> 
       </div>
     </div>
   </section>
   <!-- end welcome section -->
-
-  <!-- service section -->
-  <section class="service_section ">
-    <div class="container">
-      <div class="service_detail">
-        <h2>
-         Sectores Orientados
-        </h2>
-      </div>
-      <div class="service_img-container">
-        <div class="service_img-box i-box-1">
-        </div>
-        <div class="service_img-box i-box-2">
-        </div>
-        <div class="service_img-box i-box-3">
-        </div>
-        <div class="service_img-box i-box-4">
-        </div>
-      </div>
-    </div>
-  </section><br>
-
   <section class="layout_padding story_section">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
-        <div class=" col-md-6">
-          <div>
+        <div class="col-md-6">
+          <div class="imagen-con-info">
             <img style="border-radius: 25px;" class="img-fluid" src="images/Instructor-de-vida-silvestre3.jpg" alt="" />
-          </div>
-        </div>
-        <div class=" col-md-6">
-          <div class="story_detail">
-            <h2>
-             Perfil Tecnico orientado a que titulo saldra esa persona
-            </h2>
-            <p>
-              It is a long established fact that a reader will be distracted by the readable content of a page when
-              looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of
-              letters, as opposed to using 'Content here, content here', making it look like readable English. Many
-              desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a
-              search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved
-              over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-            </p>
+            <div class="info-imagen">
+              <h2>ORIENTACION DEL CURSADO</h2>
+              <ul>
+                <li>Conocimientos Biológicos</li>
+                <li>Estudio de la diversidad y procesos biológicos en ecosistemas áridos.
+                  Conocimientos Ecológicos</li>
+                <li>Principios ecológicos y conservación de ecosistemas áridos.
+                  Conocimientos Zoológicos</li>
+                <li>Fauna de ecosistemas áridos y estrategias de conservación.
+                  Conocimientos Botánicos</li>
+                <li>Flora adaptada a ecosistemas áridos y su importancia ecológica.
+                  Guía de Grupos Humanos</li>
+                <li>Liderazgo, comunicación y sensibilización en problemáticas ecológicas.
+                  Sensibilización sobre Problemáticas Ecológicas</li>
+                <li>Análisis de problemas ecológicos y promoción del respeto por la naturaleza<strong><em>.</em></strong></li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-
   <!-- end story section -->
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.js"></script>
@@ -242,7 +283,28 @@
       }
     });
   </script>
+<script>
+ // selecciona todos los elementos con clase service_img-box
+const imgBoxes = document.querySelectorAll('.service_img-box');
 
+// establece el índice del elemento activo
+let activeIndex = 0;
+
+// función para cambiar el elemento activo
+function changeActive() {
+  // elimina la clase active del elemento actual
+  imgBoxes[activeIndex].classList.remove('active');
+  
+  // incrementa el índice y lo resetea si es necesario
+  activeIndex = (activeIndex + 1) % imgBoxes.length;
+  
+  // agrega la clase active al nuevo elemento
+  imgBoxes[activeIndex].classList.add('active');
+}
+
+// llama a la función cada 5 segundos
+setInterval(changeActive, 5000);
+</script>
   <script>
     // This example adds a marker to indicate the position of Bondi Beach in Sydney,
     // Australia.
