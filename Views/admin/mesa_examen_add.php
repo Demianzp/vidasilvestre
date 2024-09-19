@@ -52,81 +52,79 @@ if ($mensaje || $error) {
 }
 ?>
 <?php require 'navbar.php'; ?>
-    <div class="container mt-3 " style="width: 40rem">
-        <div class="row d-flex justify-content-center ">
-            <div class="col ">
-                <div class="card rounded-2 border-0">
-                    <h5 class="card-header bg-dark text-white">Agregar Mesa de Examen</h5>
-                    <div class="card-body bg-light">
-                        <form action="" method="post">
-                         
-                          
-                            <div class="form-group">
-                                <label for="nombre_mesa">Nombre de Mesa:</label>
-                                <input type="text" name="nombre_mesa" autocomplete="off" class="form-control" placeholder="Ingrese Nombre" required>
-                            </div>
-                         <!-- ----------------------------- -->
-                            <div class="form-group">
-                                <label for="materia">Materia:</label>
-                                <select name="materia" id="materia" class="form-control" autocomplete="off" required>
-                                    <option value="" hidden sdisabled selected>Elija la materia</option>
-                                    <?php
-                                    require '../../conn/connection.php';
-                                    $query = "SELECT id_materia, Nombre FROM materia WHERE estado = 'Activo'";
-                                    $result_materias = $db->query($query);
-                                    while ($row = $result_materias->fetch(PDO::FETCH_ASSOC)) {
-                                        echo "<option value='" . $row['id_materia'] . "'>" . $row['Nombre'] . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <!-- ---------------------------- -->
-                            <div class="form-group">
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card rounded-2 border-0">
+                <h5 class="card-header bg-dark text-white text-center">Agregar Mesa de Examen</h5>
+                <div class="card-body bg-light">
+                    <form action="" method="post">
+                        <div class="form-group mb-3">
+                            <label for="nombre_mesa">Nombre de Mesa:</label>
+                            <input type="text" name="nombre_mesa" autocomplete="off" class="form-control" placeholder="Ingrese Nombre" required>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="materia">Materia:</label>
+                            <select name="materia" id="materia" class="form-control" autocomplete="off" required>
+                                <option value="" hidden disabled selected>Elija la materia</option>
+                                <?php
+                                require '../../conn/connection.php';
+                                $query = "SELECT id_materia, Nombre FROM materia WHERE estado = 'Activo'";
+                                $result_materias = $db->query($query);
+                                while ($row = $result_materias->fetch(PDO::FETCH_ASSOC)) {
+                                    echo "<option value='" . $row['id_materia'] . "'>" . $row['Nombre'] . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-sm-12 col-md-6 mb-3">
                                 <label for="fecha">Fecha Inicio:</label>
                                 <input type="date" name="fecha" autocomplete="off" class="form-control" required>
                             </div>
-                            <!-- ---------------------------- -->
-                            <div class="form-group">
+                            <div class="form-group col-sm-12 col-md-6 mb-3">
                                 <label for="fecha_fin">Fecha Fin:</label>
                                 <input type="date" name="fecha_fin" autocomplete="off" class="form-control" required>
                             </div>
-                            <!-- ---------------------------- -->
+                        </div>
 
-                            <div class="form-group">
-                                <label for="hora">Hora:</label>
-                                <input type="time" name="hora" autocomplete="off" class="form-control" required>
-                            </div>
-                            <!-- ---------------------------- -->
-                            <div class="form-group">
-                                <label for="id_tipo">Tipo de Materia:</label>
-                                <select name="id_tipo" class="form-control" autocomplete="off" required>
-                                    <option value="" hidden disabled selected>Seleccione su Tipo</option>
-                                    <option value="1">Regular</option>
-                                    <option value="2">Promocional</option>
-                                    <option value="3">Libre</option>
-                                </select>
-                            </div>
-                            <!-- ---------------------------- -->
-                            <div class="form-group">
-                                <label for="ciclo_lectivo">Ciclo Lectivo:</label>
-                                <select name="ciclo_lectivo" id="ciclo_lectivo" class="form-control" autocomplete="off" required>
-                                    <option value="" disabled selected>Seleccione el ciclo lectivo</option>
-                                    <?php
-                                    require '../../conn/connection.php';
-                                    $query_ciclos = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo";
-                                    $result_ciclos = $db->query($query_ciclos);
-                                    while ($row_ciclo = $result_ciclos->fetch(PDO::FETCH_ASSOC)) {
-                                        echo "<option value='" . $row_ciclo['id_ciclo'] . "'>" . $row_ciclo['nombre_ciclo'] . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <br>
-                            <input type="submit" class="btn btn-primary" value="Agregar Mesa">
-                        </form>
-                    </div>
+                        <div class="form-group mb-3">
+                            <label for="hora">Hora:</label>
+                            <input type="time" name="hora" autocomplete="off" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="id_tipo">Tipo de Materia:</label>
+                            <select name="id_tipo" class="form-control" autocomplete="off" required>
+                                <option value="" hidden disabled selected>Seleccione su Tipo</option>
+                                <option value="1">Regular</option>
+                                <option value="2">Promocional</option>
+                                <option value="3">Libre</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="ciclo_lectivo">Ciclo Lectivo:</label>
+                            <select name="ciclo_lectivo" id="ciclo_lectivo" class="form-control" autocomplete="off" required>
+                                <option value="" disabled selected>Seleccione el ciclo lectivo</option>
+                                <?php
+                                require '../../conn/connection.php';
+                                $query_ciclos = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo";
+                                $result_ciclos = $db->query($query_ciclos);
+                                while ($row_ciclo = $result_ciclos->fetch(PDO::FETCH_ASSOC)) {
+                                    echo "<option value='" . $row_ciclo['id_ciclo'] . "'>" . $row_ciclo['nombre_ciclo'] . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        
+                        <input type="submit" class="btn btn-primary w-100" value="Agregar Mesa">
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 <?php require 'footer.php'; ?>

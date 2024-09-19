@@ -1,7 +1,9 @@
 <?php session_start();
-if(!isset($_SESSION['nombre'])){
+if(!isset($_SESSION['id_persona'])){
   header("Location:../home.php");
 }
+//Cambie el nombre en la session por id_persona por que asi es mejor identificar el usuario.
+//me avisan si hay algun error de session.
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -106,15 +108,15 @@ if(!isset($_SESSION['nombre'])){
   <div style="height:60px">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container-fluid">
-        <a href="index.php" class="navbar-brand ">
-          <img class="d-line-block align-top " src="../../img/vida-silvestre.png" width="140px" style="margin-right:10px">
+        <a href="index.php" class="navbar-brand">
+          <img class="d-line-block align-top  ms-3" src="../../img/vida-silvestre.png" width="140px" style="margin-right:15px">
         </a>
         <!-- Toggle Btn-->
-        <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" class="navbar-toggler shadow-none border-0 bg-dark" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" class="navbar-toggler shadow-none border-0 bg-dark " aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <!-- ------------------------------------------------------- -->
-        <div class="collapse navbar-collapse d-flex" id="navbarNav">
+        <div class="collapse navbar-collapse d-flex  ms-3" id="navbarNav">
           <ul class="navbar-nav mr-auto flex-grow-1 bd-highlight">
 
             <div class="collapse navbar-collapse " id="navbarNav">
@@ -187,7 +189,7 @@ if(!isset($_SESSION['nombre'])){
                     </a>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <!-- <li><a class="dropdown-item" href="#"> <i class="fas fa-user-alt pe-2"></i>My Profile</a></li> -->
-                <li><a class="dropdown-item" href="#"> <i class="fas fa-cog pe-2"></i>Configuración</a></li>
+                <li><a class="dropdown-item" href="config_user.php"> <i class="fas fa-cog pe-2"></i>Configuración</a></li>
                 <li><a class="dropdown-item" href="javascript:cerrar()"> <i class="fa fa-power-off pe-2"></i>Cerrar Sesión</a></li>
               </ul>
               </li>
