@@ -93,7 +93,7 @@ if($_POST){
                 <div class="input-group-text bg-info">
                     <img src="../img/padlock-svgrepo-com.svg" alt="password-icon" style="height: 1rem" />
                 </div>
-                <input class="form-control bg-light" type="password" placeholder="Contraseña" name="contrasena" id="password" required />
+                <input class="form-control bg-light" type="password" placeholder="Contraseña" name="contrasena" id="passwordd" required />
                 <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
                     <i class="fas fa-eye p-1"></i>
                 </button>
@@ -108,5 +108,19 @@ if($_POST){
         </form>
     </div>
 </body>
+<script>
+    function togglePasswordVisibility() {
+    const passwordInput = document.getElementById('passwordd');
+    const toggleEye = document.getElementById('toggle-eye');
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleEye.innerHTML = '<i class="fas fa-eye-slash"></i>';
+    } else {
+        passwordInput.type = 'password';
+        toggleEye.innerHTML = '<i class="fas fa-eye"></i>';
+    }
+}
+</script>
 <script src="../js/contraseña.js"></script>
 </html>
