@@ -124,28 +124,19 @@ if(!isset($_SESSION['id_persona'])){
                 <!-- ------------------------------------------------------- -->
             <li class="nav-item dropdown pr-3">
               <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Consultar
+                Persona
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="alumno_index.php">Alumno</a></li>
-                <li><a class="dropdown-item" href="profe_index.php">Profesor</a></li>                
-                <li><a class="dropdown-item" href="materia_index.php">Materia</a></li>
-                <li><a class="dropdown-item" href="admin_index.php">Administrador</a></li>
-                <li><a class="dropdown-item" href="asigna_index.php">Listar Asignaciones</a></li>
-              </ul>
-            </li>
-                <!-- ------------------------------------------------------- -->
-            <li class="nav-item dropdown pr-3">
-              <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Registrar
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="alumno_crea.php">Alumno</a></li>
-                <li><a class="dropdown-item" href="profe_crea.php">Profesor</a></li>                
-                <li><a class="dropdown-item" href="materia_crea.php">Materia</a></li>
+                <li><a class="dropdown-item" href="profe_index.php">Profesor</a></li>   
                 <li><a class="dropdown-item" href="admin_index.php">Administrador</a></li>
               </ul>
             </li>
+            <!-- ---------------------------------- -->
+            <li class="nav-item  pr-3">
+              <a class="nav-link" href="materia_index.php">Materia</a>
+            </li>
+                
             <!-- ------------------------------------------------------- -->
             <li class="nav-item dropdown pr-3">
               <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

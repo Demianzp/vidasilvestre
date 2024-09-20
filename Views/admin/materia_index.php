@@ -12,11 +12,9 @@ if (isset($_GET['txtID'])) {
     header("Location:materia_index.php?mensaje=" . $mensaje);
     exit;
 }
-
 // Requerir la barra de navegación
 require 'navbar.php';
 ?>
-
 <!-- Sección de contenido -->
 <section class="content mt-3">
     <div class="row m-auto">

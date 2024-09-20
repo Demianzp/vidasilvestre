@@ -1,5 +1,7 @@
-<?php require 'navbar.php';
+<?php 
+require 'navbar.php';
 require '../../conn/connection.php';
+require 'functions.php';
 // Obtener el ID del alumno de la URL
 $alumno_id = isset($_GET['id']) ? $_GET['id'] : null;
 if ($alumno_id) {
@@ -87,6 +89,16 @@ if(isset($_POST['guarda_nota'])){
         }
     }
 ?>    
+<!-- ------------------------------------------- -->
+<?
+function existeNota($alumno_id, $id_materia, $db){
+    $nota = $db->prepare("select * from nota where id_materia = '$id_materia' and id_alumno = '$alumno_id'");
+    $nota->execute();
+    //si devuelve una fila significa que la nota ya es
+    $nota = $nota->rowCount();
+    return $nota;
+}
+?>
 <!-- ------------------------------------- -->
 <section class="content mt-3">
     <div class="row m-auto">
@@ -133,7 +145,8 @@ if(isset($_POST['guarda_nota'])){
                                     $examen = [];
                                     if ($resul_examen->num_rows > 0) {
                                         while ($row = $resul_examen->fetch_assoc()) {
-                                            $examen[] = $row;                                            
+                                            $examen[] = $row;
+                                            
                                             echo '<th id="fixed-size">'. $row['nombre_examen'] .'</th>';
                                             $id_examen_tipo=$row['id_examen_tipo'];
                                         }
@@ -146,79 +159,34 @@ if(isset($_POST['guarda_nota'])){
                         <tbody>                            
                             <?php foreach ($materias as $index => $materia): ?>
                                 <tr>
-                                    <form action="" method="post">
+                                    <form action="nota_procesa.php" method="post">
                                         <input type="hidden" name="alumno_id" value="<?php echo htmlspecialchars($alumno_id); ?>">
                                         <input type="hidden" name="materia_id" value="<?php echo htmlspecialchars($materia['id_materia']); ?>">
-                                        <input type="hidden" name="ciclo_lectivo" value="<?php echo htmlspecialchars($select_ciclo); ?>">                                          
-                                        <?php $id_materia=$materia['id_materia']; ?>
+                                        <input type="hidden" name="ciclo_lectivo" value="<?php echo htmlspecialchars($select_ciclo); ?>">     
+                                        <?php $id_materia=$materia['id_materia']; ?>     
+                                        <?php echo $id_materia.')'; ?>                              
                                         <!-- ------------------------------------------------------- -->
                                         <td><?php echo $index + 1; ?></td>
                                         <td><?php echo htmlspecialchars($materia['Nombre']); ?></td>
                                         <!-- ------------------------------------------------------- -->
-                                        <!-- <?php   
-                                        for($i = 1; $i < $id_examen_tipo+1; $i++) {                                                
+                                        <?php   
+                                        for($i = 1; $i < $id_examen_tipo+1; $i++) {
+                                                
                                         echo '
                                         <td>
                                         <input class="form-control" id="fixed-size" type="text" type="text" maxlength="5" name="evaluacion' . $i . 'alumno' . $index . '" class="txtnota">
                                         '.$id_materia.'-'.$alumno_id.'-'.$select_ciclo.'-'.$i;
-                                        '</td>';        
-                                        }
-                                        ?>  -->
-                                        <!-- -------------------------------------------------- -->
-                                          <?php   
-                                            $sql_examen2 = "SELECT * FROM examen ";
-                                            $resul_examen2 = $conexion->query($sql_examen2);
-                                            $examen2 = [];
-                                            if ($resul_examen2->num_rows > 0) {
-                                                $cont=1;
-                                                while ($row2 = $resul_examen2->fetch_assoc()) {
-                                                    $examen2[] = $row2;
-                                                    // ----------------------------------------------
-                                                    $id_examen_tipo=$row2['id_examen_tipo'];
-                                                    //echo $cont .'_';        
-                                                    // ----------------------------------------
-                                                    $mate=$materia['id_materia'];
-                                                    // --------------
-                                                    $sql_nota = "SELECT nota FROM nota WHERE id_persona = $alumno_id 
-                                                    AND id_materia = $mate 
-                                                    AND id_ciclo = $select_ciclo
-                                                    AND id_examen_tipo = $id_examen_tipo
-                                                    ";                                           
-                                                    $result_nota = $conexion->query($sql_nota);    
-                                                    $nota1 = $result_nota->fetch_assoc(); 
-                                                    // -----------
-                                                    if(empty($nota1['nota'])){
-                                                     $nota='';
-                                                    }else{
-                                                     $nota= $nota1['nota'];
-                                                    }
-                                                    // ------------------------------------------
-                                                    if($row2['tipo']==='mostrar'){
-                                                        ?>                                                   
-                                                        <td>                                                            
-                                                            <input id="fixed-size" type="text" name="nota" value="<?php echo $nota;?>" placeholder="" class="form-control" disabled>
-                                                            <?php echo $id_materia.'-'.$alumno_id.'-'.$select_ciclo.'-'.$cont;?>
-                                                        </td>
-                                                        <?php 
-                                                    }else{
-                                                        ?>                                                   
-                                                        <td>
-                                                            <input type="hidden" name="id_examen_tipo" value="<?php echo htmlspecialchars($id_examen_tipo); ?>">  
-                                                            <input id="fixed-size" type="text" name="puntaje" value="<?php echo $nota;?>" placeholder="" class="form-control">
-                                                            <?php echo $id_materia.'-'.$alumno_id.'-'.$select_ciclo.'-'.$cont;?>
-                                                        </td>
-                                                        <?php 
-                                                    }       
-                                                    $cont=$cont+1;     
-                                                }                                                
-                                            }
-                                        ?> 
+                                        '</td>';
+                                    
+                                          }
+                                        ?>
                                         <!-- <td> 
                                             <input value="" required min="0" name="puntaje" placeholder="Escriba la calificación" class="form-control">
                                             <input size="4" type="text" name="nota1" value="<?php echo $nota1;?>" placeholder="nota" class="form-control">
                                         </td>
                                        -->
-                                        <!-- <td><?php echo isset($estado_alumno[$materia['id_materia']]) ? htmlspecialchars($estado_alumno[$materia['id_materia']]) : 'libre'; ?></td> --> 
+                                        <!-- <td><?php echo isset($estado_alumno[$materia['id_materia']]) ? htmlspecialchars($estado_alumno[$materia['id_materia']]) : 'libre'; ?></td> -->
+                                        
                                         <td>
                                            <button type="submit" name="guarda_nota" class="btn btn-primary btn-sm" >Guardar</button>
                                         </td>
