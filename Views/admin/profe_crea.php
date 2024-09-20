@@ -14,12 +14,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $genero = trim($_POST["genero"]);
     $pais = "Argentina";
     $fecha_nacimiento = trim($_POST["fecha_nacimiento"]);
-    $fecha_ingreso = trim($_POST["fecha_ingreso"]);
     $passwordd = trim($_POST["passwordd"]);
     $legajo =  trim($_POST["legajo"]);
     $titulo = trim($_POST["titulo"]);
     $estado = "Activo"; // Valor predeterminado para estado
     $id_rol = "2"; // Valor predeterminado para alumno es 1.
+
+    // Obtener la fecha de ingreso actual
+    $fecha_ingreso = date('Y-m-d'); // Formato de fecha en 'Año-Mes-Día'
 
     $error = "";
 
@@ -69,7 +71,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 . "&ciudad=" . urlencode($ciudad)
                 . "&genero=" . urlencode($genero)
                 . "&fecha_nacimiento=" . urlencode($fecha_nacimiento)
-                . "&fecha_ingreso=" . urlencode($fecha_ingreso)
                 . "&legajo=". urlencode($legajo)
                 . "&titulo=". urlencode($titulo);
 
@@ -77,8 +78,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         } else {
             // Inserta datos en la base de datos
-            $sql = "INSERT INTO persona (nombre, apellido, fecha_nacimiento, DNI, celular, email_correo, direccion, fecha_ingreso, pais, ciudad, contraseña, id_rol, genero,legajo , titulo, estado) 
-                    VALUES (:nombre, :apellido, :fecha_nacimiento, :dni, :celular, :email, :direccion, :fecha_ingreso, :pais, :ciudad, :passwordd , :id_rol, :genero, :legajo,:titulo, :estado)";
+            $sql = "INSERT INTO persona (nombre, apellido, fecha_nacimiento, DNI, celular, email_correo, direccion, fecha_ingreso, pais, ciudad, contraseña, id_rol, genero, legajo, titulo, estado) 
+                    VALUES (:nombre, :apellido, :fecha_nacimiento, :dni, :celular, :email, :direccion, :fecha_ingreso, :pais, :ciudad, :passwordd , :id_rol, :genero, :legajo, :titulo, :estado)";
 
             $stmt = $db->prepare($sql);
             $stmt->bindParam(':nombre', $nombre);
@@ -88,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':celular', $celular);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':direccion', $direccion);
-            $stmt->bindParam(':fecha_ingreso', $fecha_ingreso);
+            $stmt->bindParam(':fecha_ingreso', $fecha_ingreso); // Usa la fecha actual
             $stmt->bindParam(':pais', $pais);
             $stmt->bindParam(':ciudad', $ciudad);
             $stmt->bindParam(':passwordd', $passwordd);
@@ -118,14 +119,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             . "&genero=" . urlencode($genero)
             . "&legajo=" . urlencode($legajo)
             . "&titulo=" . urlencode($titulo)
-            . "&fecha_nacimiento=" . urlencode($fecha_nacimiento)
-            . "&fecha_ingreso=" . urlencode($fecha_ingreso);
+            . "&fecha_nacimiento=" . urlencode($fecha_nacimiento);
 
         header("Location: " . $redirect_url);
         exit();
     }
 }
 ?>
+
 <!-- ---------------------------------------------------- -->
 <?php require 'navbar.php'; ?>
 <div class="container mt-3">
@@ -151,14 +152,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form id="formulario" method="post" action="">
                 <!-- --------------------------------- -->
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="nombre">Nombre:</label>
                             <input type="text" class="form-control" name="nombre" id="nombre" value="<?php echo htmlspecialchars($nombre); ?>" autocomplete="off" placeholder="Ingrese Nombre(s)" required>
                         </div>
                     </div>
                     <!-- --------------------------------- -->
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="apellido">Apellido:</label>
                             <input type="text" class="form-control" name="apellido" id="apellido" value="<?php echo htmlspecialchars($apellido); ?>" autocomplete="off" placeholder="Ingrese Apellido(s)" required>
@@ -167,14 +168,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <!-- --------------------------------- -->
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="dni">DNI:</label>
                             <input type="text" class="form-control" name="dni" id="dni" value="<?php echo htmlspecialchars($dni); ?>" autocomplete="off" placeholder="Ingrese su DNI" required>
                             <span id="dniOK"></span>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
 
                         <div class="form-group">
                             <label for="celular">Celular:</label>
@@ -214,7 +215,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </select>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="direccion">Dirección:</label>
                             <input type="text" class="form-control" name="direccion" id="direccion" value="<?php echo htmlspecialchars($direccion); ?>" autocomplete="off" placeholder="Ingrese Direcion" required>
@@ -223,14 +224,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <!-- --------------------------------- -->
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
                             <input type="date" class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" value="<?php echo htmlspecialchars($fecha_nacimiento); ?>" autocomplete="off" required>
                             <span id="edadError" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="genero">Género:</label>
                             <select name="genero" id="genero" autocomplete="off" class="form-control" required>
@@ -244,13 +245,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <!-- --------------------------------- -->
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="titulo">Titulo:</label>
                             <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Ingrese Titulo" autocomplete="off" value="<?php echo htmlspecialchars($titulo); ?> " required>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="legajo">Legajo:</label>
                             <input type="text" class="form-control" name="legajo" id="legajo" placeholder="Ingrese el n° de legajo" value="<?php echo htmlspecialchars($legajo); ?>" autocomplete="off" required>
@@ -259,7 +260,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <!-- --------------------------------- -->
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="email">Email:</label>
                             <input id="email" class="form-control" name="email" id="email"  placeholder="Ingrese Email" autocomplete="off" value="<?php echo htmlspecialchars($email); ?>" required>
@@ -268,7 +269,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
 
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="passwordd">Contraseña:</label>
                             <div class="input-group">

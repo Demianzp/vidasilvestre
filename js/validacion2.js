@@ -36,6 +36,7 @@ document.getElementById('dni').addEventListener('input', function(event) {
         valido.style.color = "red";
     }
 });
+
 document.getElementById('celular').addEventListener('input', function(event) {
     const campo = event.target;
     const valido = document.getElementById('celularOK');
@@ -54,6 +55,7 @@ document.getElementById('celular').addEventListener('input', function(event) {
         guardarBtn.disabled = true; // Deshabilitamos el botón si el número es incorrecto
     }
 });
+
 document.getElementById('email').addEventListener('input', function(event) {
     const campo = event.target;
     const valido = document.getElementById('emailOK');

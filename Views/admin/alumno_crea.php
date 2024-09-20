@@ -14,10 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $genero = trim($_POST["genero"]);
     $pais = "Argentina";
     $fecha_nacimiento = trim($_POST["fecha_nacimiento"]);
-    $fecha_ingreso = trim($_POST["fecha_ingreso"]);
     $passwordd = trim($_POST["passwordd"]);
     $estado = "Activo"; // Valor predeterminado para estado
     $id_rol = "1"; // Valor predeterminado para alumno es 1.
+
+    // Asignar automáticamente la fecha de ingreso
+    $fecha_ingreso = date("Y-m-d H:i:s"); // Fecha y hora actual en el formato YYYY-MM-DD HH:MM:SS
 
     $error = "";
 
@@ -66,8 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 . "&direccion=" . urlencode($direccion)
                 . "&ciudad=" . urlencode($ciudad)
                 . "&genero=" . urlencode($genero)
-                . "&fecha_nacimiento=" . urlencode($fecha_nacimiento)
-                . "&fecha_ingreso=" . urlencode($fecha_ingreso);
+                . "&fecha_nacimiento=" . urlencode($fecha_nacimiento);
 
             header("Location: " . $redirect_url);
             exit();
@@ -110,15 +111,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             . "&direccion=" . urlencode($direccion)
             . "&ciudad=" . urlencode($ciudad)
             . "&genero=" . urlencode($genero)
-            . "&fecha_nacimiento=" . urlencode($fecha_nacimiento)
-            . "&fecha_ingreso=" . urlencode($fecha_ingreso);
+            . "&fecha_nacimiento=" . urlencode($fecha_nacimiento);
 
         header("Location: " . $redirect_url);
         exit();
     }
 }
 ?>
-
 <?php require 'navbar.php'; ?>
 <div class="container mt-3">
     <div class="card rounded-2 border-0">
@@ -135,17 +134,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $ciudad = isset($_GET["ciudad"]) ? $_GET["ciudad"] : "";
             $genero = isset($_GET["genero"]) ? $_GET["genero"] : "";
             $fecha_nacimiento = isset($_GET["fecha_nacimiento"]) ? $_GET["fecha_nacimiento"] : "";
-            $fecha_ingreso = isset($_GET["fecha_ingreso"]) ? $_GET["fecha_ingreso"] : "";
             ?>
             <form id="formulario" action="" method="post" enctype="multipart/form-data">
+                <!-- Ajustamos el tamaño de las columnas para dispositivos móviles -->
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="nombre">Nombre:</label>
                             <input type="text" class="form-control" name="nombre" id="nombre" value="<?php echo htmlspecialchars($nombre); ?>" autocomplete="off" placeholder="Ingrese Nombre(s)" required>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="apellido">Apellido:</label>
                             <input type="text" class="form-control" name="apellido" id="apellido" value="<?php echo htmlspecialchars($apellido); ?>" autocomplete="off" placeholder="Ingrese Apellido(s)" required>
@@ -153,14 +152,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="dni">DNI:</label>
                             <input type="text" class="form-control" name="dni" id="dni" value="<?php echo htmlspecialchars($dni); ?>" autocomplete="off" placeholder="Ingrese su DNI" required>
                             <span id="dniOK"></span>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="celular">Celular:</label>
                             <input type="tel" class="form-control" name="celular" id="celular" value="<?php echo htmlspecialchars($celular); ?>" autocomplete="off" placeholder="Ingrese Telefono" required>
@@ -169,13 +168,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="direccion">Direccion:</label>
-                            <input type="text" class="form-control" name="direccion" id="direccion" value="<?php echo htmlspecialchars($direccion); ?>" autocomplete="off" placeholder="Ingrese su Direccion" required>
+                            <input type="text" class="form-control" name="direccion" id="direccion" value="<?php echo htmlspecialchars($direccion); ?>" autocomplete="off" placeholder="Ingrese Direccion" required>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="ciudad">Ciudad:</label>
                             <select name="ciudad" id="ciudad" class="form-control" autocomplete="off" required>
@@ -203,63 +202,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </select>
                         </div>
                     </div>
-                    <div class="col">
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" name="email" id="email" value="<?php echo htmlspecialchars($email); ?>" autocomplete="off" placeholder="Ingrese su email" required>
+                            <span id="emailOK"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="genero">Género:</label>
-                            <select name="genero" autocomplete="off" class="form-control" name="genero" id="genero" required>
-                                <option value="" disabled <?php echo ($genero == "") ? "selected" : ""; ?>>Seleccione su Género</option>
-                                <option value="Masculino" <?php echo ($genero == "Masculino") ? "selected" : ""; ?>>Masculino</option>
-                                <option value="Femenino" <?php echo ($genero == "Femenino") ? "selected" : ""; ?>>Femenino</option>
-                                <option value="Otros" <?php echo ($genero == "Otros") ? "selected" : ""; ?>>Otros</option>
+                            <select class="form-control" name="genero" id="genero" required>
+                                <option value="Femenino" <?php if ($genero == "Femenino") echo "selected"; ?>>Femenino</option>
+                                <option value="Masculino" <?php if ($genero == "Masculino") echo "selected"; ?>>Masculino</option>
+                                <option value="Otro" <?php if ($genero == "Otro") echo "selected"; ?>>Otro</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-                            <input type="date" class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" value="<?php echo htmlspecialchars($fecha_nacimiento); ?>" autocomplete="off" placeholder="Ingrese Fecha de Nacimiento" required>
-                            <span id="edadError" class="text-danger"></span>
+                            <input type="date" class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" value="<?php echo htmlspecialchars($fecha_nacimiento); ?>" required>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="fecha_ingreso">Fecha de Ingreso:</label>
-                            <input type="date" class="form-control" name="fecha_ingreso" id="fecha_ingreso" value="<?php echo htmlspecialchars($fecha_ingreso); ?>" autocomplete="off" placeholder="Ingrese Fecha de Ingreso" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" class="form-control" name="email" id="email" value="<?php echo htmlspecialchars($email); ?>" autocomplete="off" placeholder="Ingrese su correo electronico" required>
-                            <span id="emailOK"></span>
-                        </div>
-                    </div>
-                    <div class="col">
+                    <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="passwordd">Contraseña:</label>
                             <div class="input-group">
-                                <input class="form-control bg-light d-inline-block" type="password" placeholder="Contraseña" name="passwordd" id="passwordd" autocomplete="off" required />
+                                <input class="form-control bg-light" type="password" placeholder="Contraseña" name="passwordd" id="passwordd" autocomplete="off" required />
                                 <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
                                     <i class="fas fa-eye p-1"></i>
                                 </button>
                             </div>
-                            <span id="passwordError" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
+                <!-- --------------------------------- -->
+                <!-- Agregamos un botón para guardar con un evento JavaScript -->
                 <button type="button" class="btn btn-primary float-right" id="guardarBtn" onclick="validarFormulario()">Guardar</button>
                 <!-- Agregamos un div para mostrar un mensaje de confirmación -->
                 <div id="confirmacion" style="display: none;">
-                    <p>¿Seguro desea guardar los datos?</p>
+                    <p>¿Estás seguro de que deseas guardar los datos?</p>
                     <button type="button" class="btn btn-success" id="confirmarBtn">Sí</button>
                     <button type="button" class="btn btn-danger" id="cancelarBtn">No</button>
                 </div>
+            </form>
         </div>
-        </form>
     </div>
 </div>
 <script src="../../js/contraseña.js"></script>
