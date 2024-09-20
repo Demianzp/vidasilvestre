@@ -60,7 +60,7 @@ if ($alumno_id) {
            <table id="" class="table table-bordered table-sm">
                 <thead class="thead-dark">
                     <tr>
-                    <th id="notas">#</th>
+                        <th id="notas">#</th>
                         <th id="notas">Materia</th>
                         <th id="notas">Inscribir</th>                                
                     </tr>
@@ -71,7 +71,7 @@ if ($alumno_id) {
                     $result_estado = $conexion->query($sql_estado);    
                     $estado = $result_estado->fetch_assoc();
                     //$ciclo_estado = $estado['id_ciclo'];                            
-                 ?>
+                ?>
                  <!-- -------- -->
                 <tbody>
                 <?php foreach ($materias as $index => $materia): ?>
