@@ -56,6 +56,59 @@
             font-weight: bold;
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
   }
+  .imagen-con-info {
+  position: relative;
+}
+
+.info-imagen {
+  border-radius: 25px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.imagen-con-info:hover .info-imagen {
+  opacity: 1;
+}.imagen-con-info {
+  position: relative;
+}
+
+.info-imagen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.imagen-con-info:hover .info-imagen {
+  opacity: 1;
+}
+.titulo-difuminado {
+  font-size: 48px;
+  color: white;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3), 0 0 30px rgba(255, 255, 255, 0.2);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+  transition: all 0.5s ease;
+}
+
+.titulo-difuminado:hover {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.4);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
+}
   </style>
 
 </head>
@@ -80,7 +133,7 @@
               <li><a href="/Inst_Vid_Silvestre/index.html">Home</a></li>
               <li><a href="/Inst_Vid_Silvestre/index.html">Carreras y Cursos</a></li>
               <li><a href="/Quienes Somos/Quienes somos.html">Nosotros</a></li>
-              <li><a href="/Area Naturales/Area Natural.html">Areas Naturales</a></li>
+              <li><a href="/Area Naturales/Area Natural.html">Áreas Naturales</a></li>
               <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdZEXsTogp-0ugaeqg-TTREokSlqpypUDYZxWbFtR3USdEJxw/viewform">Pre-Inscripcion 2024!</a></li>
               <li><a href="https://institutovidasilvestre.com.ar/campus/login/index.php">Campus</a></li>
             </ul>
@@ -93,24 +146,14 @@
           <div class="slider_box">
             <div class="slider-detail">
               <div class="slider_detail-heading">
-                <h1><br>
-                  <br>
-                  PREVENCIÓN SÍSMICA ESCOLAR
+                <br><br>
+                <h1 class="titulo-difuminado">
+                  PREVENCION SISMICA ESCOLAR
                 </h1>
-              </div>
-              <div class="slider_detail-btn">
               </div>
             </div>
           </div>
         </div>
-      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
     </div>
   </section>
 
@@ -122,7 +165,7 @@
       <div class="row">
         <div class=" col-md-6">
           <div>
-            <img class="img-fluid" style="border-radius: 25px;" src="images/Terremoto1.jpg" alt="" />
+            <img class="img-fluid" style="border-radius: 25px;" src="images/Terremoto7.jpg" alt="" />
           </div>
         </div>
         <div class=" col-md-6">
@@ -139,74 +182,62 @@
               y premisas para la elaboración de un Plan de Emergencia Sísmica Escolar, entre otros protocolos y estrategias
               necesarias de aplicación en las instituciones educativas.
             </p>
+            <br>
+            <section class="service_section ">
+              <div class="container">
+                <div class="service_img-container">
+                  <div class="service_img-box i-box-1 active">
+                    <img src="images/Terremoto3.jpg" alt="Imagen 1">
+                  </div>
+                  <div class="service_img-box i-box-3">
+                    <img src="images/Terremoto5.jpg" alt="Imagen 3">
+                  </div>
+                  <div class="service_img-box i-box-4">
+                    <img src="images/Terremoto6.jpg" alt="Imagen 4">
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="layout_padding story_section">
+    <div class="container">
+      <div class="row">
+        <div class=" col-md-6">
+          <div class="imagen-con-info">
+            <img style="border-radius: 25px;" class="img-fluid" src="images/Terremoto1.jpg" alt="" />
+            <div class="info-imagen">
+              <h2>ORIENTACION DEL CURSADO</h2>
+              <p>
+                Este curso forma a docentes y profesionales afines a la educación en Prevención Sísmica, abordando la problemática
+              desde la ciencia y la ingeniería sismoresistente. Otorgando herramientas para el trabajo en el aula, con conceptos
+              psicológicos y premisas para la elaboración de un Plan de Emergencia Sísmica Escolar, entre otros protocolos y estrategias
+              necesarias de aplicación en las instituciones educativas.
+              </p>
+              <ul>
+                  <li>
+                    Conocimientos Científicos y Técnicos: Comprenderá los principios fundamentales de la sismología y la ingeniería sismoresistente, incluyendo el comportamiento de las estructuras ante movimientos telúricos y la evaluación de riesgos sísmicos.
+                  </li>
+                  <li>
+                    Aplicación Práctica en el Aula: Podrá integrar conceptos psicológicos y educativos para enseñar de manera efectiva sobre prevención sísmica a estudiantes de diferentes niveles educativos.
+                  </li>
+                  <li>
+                    Elaboración de Planes de Emergencia: Estará capacitado para desarrollar un Plan de Emergencia Sísmica Escolar adaptado a las características específicas de cada institución educativa, considerando protocolos de evacuación, puntos de encuentro seguros y acciones post-evento.
+                  </li>
+                  <li>
+                    Asesoramiento y Gestión Educativa: Estará en capacidad de asesorar a equipos directivos y pedagógicos en la implementación efectiva de medidas preventivas y de respuesta, promoviendo una cultura de seguridad sísmica dentro de la comunidad educativa.
+                  </li>
+                </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
   <!-- end welcome section -->
-
-  <!-- service section -->
-  <section class="service_section ">
-    <div class="container">
-      <div class="service_detail">
-        <h2>
-         Sectores Orientados
-        </h2>
-      </div>
-      <div class="service_img-container">
-        <div class="service_img-box i-box-1">
-        </div>
-        <div class="service_img-box i-box-2">
-        </div>
-        <div class="service_img-box i-box-3">
-        </div>
-        <div class="service_img-box i-box-4">
-        </div>
-      </div>
-    </div>
-  </section><br>
-
-  <section class="layout_padding story_section">
-    <div class="container-fluid">
-      <div class="row">
-        <div class=" col-md-6">
-          <div>
-            <img class="img-fluid" style="border-radius: 25px;" src="images/Terremoto7.jpg" alt="" />
-          </div>
-        </div>
-        <div class=" col-md-6">
-          <div class="story_detail">
-            <h2>
-             Perfil Tecnico orientado a que titulo saldra esa persona
-            </h2>
-            <p>
-              Este curso forma a docentes y profesionales afines a la educación en Prevención Sísmica, abordando la problemática
-              desde la ciencia y la ingeniería sismoresistente. Otorgando herramientas para el trabajo en el aula, con conceptos
-              psicológicos y premisas para la elaboración de un Plan de Emergencia Sísmica Escolar, entre otros protocolos y estrategias
-              necesarias de aplicación en las instituciones educativas.
-            </p>
-            <ol type = "I">
-              <li>
-                Conocimientos Científicos y Técnicos: Comprenderá los principios fundamentales de la sismología y la ingeniería sismoresistente, incluyendo el comportamiento de las estructuras ante movimientos telúricos y la evaluación de riesgos sísmicos.
-              </li>
-              <li>
-                Aplicación Práctica en el Aula: Podrá integrar conceptos psicológicos y educativos para enseñar de manera efectiva sobre prevención sísmica a estudiantes de diferentes niveles educativos.
-              </li>
-              <li>
-                Elaboración de Planes de Emergencia: Estará capacitado para desarrollar un Plan de Emergencia Sísmica Escolar adaptado a las características específicas de cada institución educativa, considerando protocolos de evacuación, puntos de encuentro seguros y acciones post-evento.
-              </li>
-              <li>
-                Asesoramiento y Gestión Educativa: Estará en capacidad de asesorar a equipos directivos y pedagógicos en la implementación efectiva de medidas preventivas y de respuesta, promoviendo una cultura de seguridad sísmica dentro de la comunidad educativa.
-              </li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- end story section -->
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js">
@@ -255,7 +286,29 @@
       }
     });
   </script>
+<script>
+   // selecciona todos los elementos con clase service_img-box
+const imgBoxes = document.querySelectorAll('.service_img-box');
 
+// establece el índice del elemento activo
+let activeIndex = 0;
+
+// función para cambiar el elemento activo
+function changeActive() {
+  // elimina la clase active del elemento actual
+  imgBoxes[activeIndex].classList.remove('active');
+  
+  // incrementa el índice y lo resetea si es necesario
+  activeIndex = (activeIndex + 1) % imgBoxes.length;
+  
+  // agrega la clase active al nuevo elemento
+  imgBoxes[activeIndex].classList.add('active');
+}
+
+// llama a la función cada 5 segundos
+setInterval(changeActive, 5000);
+
+</script>
   <script>
     // This example adds a marker to indicate the position of Bondi Beach in Sydney,
     // Australia.

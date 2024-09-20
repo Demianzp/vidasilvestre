@@ -164,7 +164,7 @@ if(isset($_POST['guarda_nota'])){
                                         '</td>';        
                                         }
                                         ?>  -->
-                                        <!-- -------------------------------------------------- -->
+                                        <!-- -----------------------f--------------------------- -->
                                           <?php   
                                             $sql_examen2 = "SELECT * FROM examen ";
                                             $resul_examen2 = $conexion->query($sql_examen2);
