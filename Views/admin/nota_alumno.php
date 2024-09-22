@@ -27,39 +27,83 @@ if ($alumno_id) {
 }
 //--------------------------------------------------------------------------- 
 if(isset($_POST['guarda_nota'])){
+    // ----------------------------------------
     $alumno_id = $_POST["alumno_id"];
     $materia_id = $_POST["materia_id"];
-    $ciclo_lectivo = $_POST["ciclo_lectivo"];
-    $id_examen_tipo = $_POST["id_examen_tipo"];
-    $puntaje = $_POST["puntaje"]; 
+    $ciclo_lectivo = $_POST["ciclo_lectivo"];    
+    $n1 = $_POST["n1"]; 
+    $n2 = $_POST["n2"]; 
+    $n3 = $_POST["n3"]; 
+    $n4 = $_POST["n4"]; 
+    $n5 = $_POST["n5"]; 
+    $n6 = $_POST["n6"];
+    $n7 = $_POST["n7"]; 
+    $n8 = $_POST["n8"]; 
+    $n9 = $_POST["n9"]; 
+    $n10 = $_POST["n10"]; 
+    $n11 = $_POST["n11"]; 
+    $n12 = $_POST["n12"];
+    $n13 = $_POST["n13"]; 
     $error = "";
-    try {
-        $sql = "INSERT INTO nota (id_persona, id_materia, id_ciclo, id_examen_tipo, nota) 
-                VALUES (:id_persona, :id_materia, :ciclo_lectivo, :id_examen_tipo, :puntaje)";
+    // -------------------------------    
+    $sql_nota = "SELECT * FROM nota WHERE id_persona = $alumno_id 
+                 AND id_materia = $materia_id
+                 AND id_ciclo = $ciclo_lectivo
+                 ";          
+    $resul_exa = $conexion->query($sql_nota);
+    $nota = $resul_exa->fetch_assoc();
+    if(isset($nota) && $nota['estado'] === 'activo'){  
+        $sql = "UPDATE nota 
+        SET n1=:n1,n2=:n2,n3=:n3,n4=:n4,n5=:n5,n6=:n6,n7=:n7,n8=:n8,n9=:n9,n10=:n10,n11=:n11,n12=:n12,n13=:n13
+        WHERE id_persona = :alumno_id
+        AND id_materia = :materia_id
+        AND id_ciclo = :ciclo_lectivo";
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(':id_persona', $alumno_id);
-        $stmt->bindParam(':id_materia', $materia_id);            
+        $stmt->bindParam(':n1', $n1);
+        $stmt->bindParam(':n2', $n2);
+        $stmt->bindParam(':n3', $n3);
+        $stmt->bindParam(':n4', $n4);
+        $stmt->bindParam(':n5', $n5);
+        $stmt->bindParam(':n6', $n6);
+        $stmt->bindParam(':n7', $n7);
+        $stmt->bindParam(':n8', $n8);
+        $stmt->bindParam(':n9', $n9);
+        $stmt->bindParam(':n10', $n10);
+        $stmt->bindParam(':n11', $n11);
+        $stmt->bindParam(':n12', $n12);
+        $stmt->bindParam(':n13', $n13);
+        $stmt->bindParam(':alumno_id', $alumno_id); 
+        $stmt->bindParam(':materia_id', $materia_id);
         $stmt->bindParam(':ciclo_lectivo', $ciclo_lectivo);
-        $stmt->bindParam(':id_examen_tipo', $id_examen_tipo);
-        $stmt->bindParam(':puntaje', $puntaje);
-        if ($stmt->execute()) {
-            echo '<script>
-                    var msj = "Asistencia registrada correctamente";
-                    window.location="alumno_index.php?mensaje="+ msj;
-                  </script>';
+        $stmt->execute();
+    }else{
+        try {  
+            $estado='activo';  
+            $sql =  "INSERT INTO nota (id_persona, id_materia, id_ciclo,n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11,n12,n13,estado) 
+            VALUES (:id_persona, :id_materia, :ciclo_lectivo, :n1,:n2,:n3,:n4,:n5,:n6,:n7,:n8,:n9,:n10,:n11,:n12,:n13,:estado)";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(':id_persona', $alumno_id);
+            $stmt->bindParam(':id_materia', $materia_id);            
+            $stmt->bindParam(':ciclo_lectivo', $ciclo_lectivo);
+            $stmt->bindParam(':n1', $n1);
+            $stmt->bindParam(':n2', $n2);
+            $stmt->bindParam(':n3', $n3);
+            $stmt->bindParam(':n4', $n4);
+            $stmt->bindParam(':n5', $n5);
+            $stmt->bindParam(':n6', $n6);
+            $stmt->bindParam(':n7', $n7);
+            $stmt->bindParam(':n8', $n8);
+            $stmt->bindParam(':n9', $n9);
+            $stmt->bindParam(':n10', $n10);
+            $stmt->bindParam(':n11', $n11);
+            $stmt->bindParam(':n12', $n12);
+            $stmt->bindParam(':n13', $n13);
+            $stmt->bindParam(':estado', $estado);    
+            $stmt->execute();                          
+        } catch (PDOException $e) {
+            $error = "Error en la base de datos: " . $e->getMessage();
             exit();
-        } else {
-            $error = "Error al ingresar nota.";
-        }       
-    } catch (PDOException $e) {
-        $error = "Error en la base de datos: " . $e->getMessage();
-        // Redirige a alumno_crea.php con el error y datos del formulario
-        // $redirect_url = "admin_index.php?error=" . urlencode($error)
-        //     . "&nombre=" . urlencode($nombre)
-        //     . "&apellido=" . urlencode($apellido)
-        //     . "&email=" . urlencode($email);
-        // header("Location: " . $redirect_url);
-        exit();
+        }
     }
 }
  //--------------BARRA DE CICLO LECTIVO ACTUAL----------------------  
@@ -121,9 +165,8 @@ if(isset($_POST['guarda_nota'])){
                 </div>
                 <!----------------------------------------------------------------->      
                 <div class="card-body table-responsive">
-                    <table id="" class="table table-bordered table-sm">
-                        <thead class="thead-dark">
-                            <!-- ------------------------------------------ -->    
+                    <table id="nota" class="table table-striped table-sm">
+                        <thead class="thead-dark"> 
                             <tr>        
                                 <th id="fixed-size2">id</th>
                                 <th id="fixed-size3">Materia</th>             
@@ -154,71 +197,44 @@ if(isset($_POST['guarda_nota'])){
                                         <!-- ------------------------------------------------------- -->
                                         <td><?php echo $index + 1; ?></td>
                                         <td><?php echo htmlspecialchars($materia['Nombre']); ?></td>
-                                        <!-- ------------------------------------------------------- -->
-                                        <!-- <?php   
-                                        for($i = 1; $i < $id_examen_tipo+1; $i++) {                                                
-                                        echo '
-                                        <td>
-                                        <input class="form-control" id="fixed-size" type="text" type="text" maxlength="5" name="evaluacion' . $i . 'alumno' . $index . '" class="txtnota">
-                                        '.$id_materia.'-'.$alumno_id.'-'.$select_ciclo.'-'.$i;
-                                        '</td>';        
-                                        }
-                                        ?>  -->
-                                        <!-- -----------------------f--------------------------- -->
-                                          <?php   
-                                            $sql_examen2 = "SELECT * FROM examen ";
-                                            $resul_examen2 = $conexion->query($sql_examen2);
-                                            $examen2 = [];
-                                            if ($resul_examen2->num_rows > 0) {
-                                                $cont=1;
-                                                while ($row2 = $resul_examen2->fetch_assoc()) {
-                                                    $examen2[] = $row2;
-                                                    // ----------------------------------------------
-                                                    $id_examen_tipo=$row2['id_examen_tipo'];
-                                                    //echo $cont .'_';        
-                                                    // ----------------------------------------
-                                                    $mate=$materia['id_materia'];
-                                                    // --------------
-                                                    $sql_nota = "SELECT nota FROM nota WHERE id_persona = $alumno_id 
-                                                    AND id_materia = $mate 
-                                                    AND id_ciclo = $select_ciclo
-                                                    AND id_examen_tipo = $id_examen_tipo
-                                                    ";                                           
-                                                    $result_nota = $conexion->query($sql_nota);    
-                                                    $nota1 = $result_nota->fetch_assoc(); 
-                                                    // -----------
-                                                    if(empty($nota1['nota'])){
-                                                     $nota='';
-                                                    }else{
-                                                     $nota= $nota1['nota'];
-                                                    }
-                                                    // ------------------------------------------
-                                                    if($row2['tipo']==='mostrar'){
-                                                        ?>                                                   
-                                                        <td>                                                            
-                                                            <input id="fixed-size" type="text" name="nota" value="<?php echo $nota;?>" placeholder="" class="form-control" disabled>
-                                                            <?php echo $id_materia.'-'.$alumno_id.'-'.$select_ciclo.'-'.$cont;?>
-                                                        </td>
-                                                        <?php 
-                                                    }else{
-                                                        ?>                                                   
-                                                        <td>
-                                                            <input type="hidden" name="id_examen_tipo" value="<?php echo htmlspecialchars($id_examen_tipo); ?>">  
-                                                            <input id="fixed-size" type="text" name="puntaje" value="<?php echo $nota;?>" placeholder="" class="form-control">
-                                                            <?php echo $id_materia.'-'.$alumno_id.'-'.$select_ciclo.'-'.$cont;?>
-                                                        </td>
-                                                        <?php 
-                                                    }       
-                                                    $cont=$cont+1;     
-                                                }                                                
-                                            }
-                                        ?> 
-                                        <!-- <td> 
-                                            <input value="" required min="0" name="puntaje" placeholder="Escriba la calificación" class="form-control">
-                                            <input size="4" type="text" name="nota1" value="<?php echo $nota1;?>" placeholder="nota" class="form-control">
-                                        </td>
-                                       -->
-                                        <!-- <td><?php echo isset($estado_alumno[$materia['id_materia']]) ? htmlspecialchars($estado_alumno[$materia['id_materia']]) : 'libre'; ?></td> --> 
+                                        <!-- --------------------- -->
+                                         <?php
+                                         $mate=$materia['id_materia'];
+                                         $sql_nota = "SELECT * FROM nota WHERE id_persona = $alumno_id 
+                                         AND id_materia = $mate
+                                         AND id_ciclo = $select_ciclo
+                                         ";                                           
+                                         $result_nota = $conexion->query($sql_nota);    
+                                         $nota = $result_nota->fetch_assoc(); 
+                                        // -------------------------                                       
+                                        if(empty($nota['n1'])){$nota1='';}else{$nota1= $nota['n1'];}
+                                        if(empty($nota['n2'])){$nota2='';}else{$nota2= $nota['n2'];}
+                                        if(empty($nota['n3'])){$nota3='';}else{$nota3= $nota['n3'];}
+                                        if(empty($nota['n4'])){$nota4='';}else{$nota4= $nota['n4'];}
+                                        if(empty($nota['n5'])){$nota5='';}else{$nota5= $nota['n5'];}
+                                        if(empty($nota['n6'])){$nota6='';}else{$nota6= $nota['n6'];}
+                                        if(empty($nota['n7'])){$nota7='';}else{$nota7= $nota['n7'];}
+                                        if(empty($nota['n8'])){$nota8='';}else{$nota8= $nota['n8'];}
+                                        if(empty($nota['n9'])){$nota9='';}else{$nota9= $nota['n9'];}
+                                        if(empty($nota['n10'])){$nota10='';}else{$nota10= $nota['n10'];}
+                                        if(empty($nota['n11'])){$nota11='';}else{$nota11= $nota['n11'];}
+                                        if(empty($nota['n12'])){$nota12='';}else{$nota12= $nota['n12'];}                                        
+                                        if(empty($nota['n13'])){$nota13='';}else{$nota13= $nota['n13'];}
+                                        ?>     
+                                        <!-- -------------------------------------------------- -->
+                                        <td><input id="fixed-size" type="text" name="n1" value="<?php echo $nota1; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size" type="text" name="n2" value="<?php echo $nota2; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size" type="text" name="n3" value="<?php echo $nota3; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size" type="text" name="n4" value="<?php echo $nota4; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size" type="text" name="n5" value="<?php echo $nota5; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size" type="text" name="n6" value="<?php echo $nota6; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size" type="text" name="n7" value="<?php echo $nota7; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size" type="text" name="n8" value="<?php echo $nota8; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size" type="text" name="n9" value="<?php echo $nota9; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size" type="text" name="n10" value="<?php echo $nota10; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size" type="text" name="n11" value="<?php echo $nota11; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size" type="text" name="n12" value="<?php echo $nota12; ?>" placeholder="" class="form-control"></td>                                         
+                                        <td><input id="fixed-size" type="text" name="n13" value="<?php echo $nota13; ?>" placeholder="" class="form-control"></td> 
                                         <td>
                                            <button type="submit" name="guarda_nota" class="btn btn-primary btn-sm" >Guardar</button>
                                         </td>
