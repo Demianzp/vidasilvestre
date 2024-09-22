@@ -11,17 +11,13 @@
         <label for="materia">Materia:</label>
         <input type="text" name="materia" required><br>
 
-        <label for="nota1">Nota 1:</label>
-        <input type="number" name="nota1" required><br>
-
-        <label for="nota2">Nota 2:</label>
-        <input type="number" name="nota2" required><br>
-
-        <label for="nota3">Nota 3:</label>
-        <input type="number" name="nota3" required><br>
-
-        <label for="nota4">Nota 4:</label>
-        <input type="number" name="nota4" required><br>
+        <?php
+        $num_notas = 4; // Puedes cambiar este número para agregar más o menos notas
+        for ($i = 1; $i <= $num_notas; $i++) {
+            echo "<label for='nota{$i}'>Nota {$i}:</label>";
+            echo "<input type='number' name='notas[]' step='0.01' required><br>";
+        }
+        ?>
 
         <input type="submit" name="submit" value="Agregar Notas">
     </form>
@@ -44,17 +40,27 @@
         // Obtener datos del formulario
         $alumno = $_POST['alumno'];
         $materia = $_POST['materia'];
-        $nota1 = $_POST['nota1'];
-        $nota2 = $_POST['nota2'];
-        $nota3 = $_POST['nota3'];
-        $nota4 = $_POST['nota4'];
+        $notas = $_POST['notas'];
 
-        // Preparar y ejecutar la consulta SQL
-        $sql = "INSERT INTO nota (alumno, materia, nota1, nota2, nota3, nota4) 
-                VALUES (?, ?, ?, ?, ?, ?)";
-        
+        // Preparar la consulta SQL
+        $sql = "INSERT INTO nota (alumno, materia";
+        $valores = "VALUES (?, ?";
+        $tipos = "ss";
+        $params = array($alumno, $materia);
+
+        for ($i = 0; $i < count($notas); $i++) {
+            $num = $i + 1;
+            $sql .= ", nota{$num}";
+            $valores .= ", ?";
+            $tipos .= "d";
+            $params[] = $notas[$i];
+        }
+
+        $sql .= ") " . $valores . ")";
+
+        // Preparar y ejecutar la consulta
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssdddd", $alumno, $materia, $nota1, $nota2, $nota3, $nota4);
+        $stmt->bind_param($tipos, ...$params);
         
         if ($stmt->execute()) {
             echo "Notas agregadas correctamente";
