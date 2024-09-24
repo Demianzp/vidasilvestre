@@ -16,7 +16,7 @@ $result = $db->query($query);
 <body>
     <div class="container mt-3">
         <div class="card rounded-2 border-0">
-            <h5 class="card-header bg-dark text-white">Listar Mesas de Examen  <a href="reporte.php"  class="btn btn-primary float-right mb-2" >PDF</a></h5>          
+            <h5 class="card-header bg-dark text-white">Listar Mesas de Examen  <a href="../admin/rep-mesa.php"  class="btn btn-primary float-right mb-2" >PDF</a></h5>          
             <div class="card-body bg-light">
             <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>

@@ -123,14 +123,13 @@ if(!isset($_SESSION['id_persona'])){
               <ul class="navbar-nav mr-auto ">
                 <!-- ------------------------------------------------------- -->
             <li class="nav-item dropdown pr-3">
-              <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Persona
+              <a class="nav-link " href="alumno_index.php" >
+              Alumno
               </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="alumno_index.php">Alumno</a></li>
-                <li><a class="dropdown-item" href="profe_index.php">Profesor</a></li>   
-                <li><a class="dropdown-item" href="admin_index.php">Administrador</a></li>
-              </ul>
+              <li class="nav-item dropdown pr-3">
+              <a class="nav-link " href="profe_index.php" >
+              Profesor
+              </a>
             </li>
             <!-- ---------------------------------- -->
             <li class="nav-item  pr-3">
@@ -150,14 +149,10 @@ if(!isset($_SESSION['id_persona'])){
             </li>
             <!-- ------------------------------------------------------- -->
             <li class="nav-item dropdown pr-3 ">
-              <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link " href="listadomesa.php" >
                 Mesa y Acta
               </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="mesa_examen_add.php">Mesa de Examen</a></li>
-                <li><a class="dropdown-item" href="listadomesa.php">Listado de Mesa de Examen</a></li>
-                <!-- <li><a class="dropdown-item" href="acta_nota.php">Acta</a></li> -->
-              </ul>
+              
             </li>
             <!-- ------------------------------------------------------- -->
             <li class="nav-item  pr-3">
