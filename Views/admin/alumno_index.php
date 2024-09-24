@@ -25,19 +25,21 @@ if(isset($_GET['txtID'])){
                         <form id="inscripcionForm" action="" method="post">
                             <table id="example" class="table table-striped table-sm" style="width:100%">
                                 <thead class="thead-dark">
-                                    <th>#</th>
-                                    <th>Apellidos</th>
-                                    <th>Nombres</th>
-                                    <th>Genero</th>
-                                    <th>DNI</th>
-                                    <th>Fecha de Ingreso</th>
-                                    <th>Fecha de Nacimiento</th>
-                                    <th>Celular</th>
-                                    <th>Departamento</th>
-                                    <!-- <th>Historial</th> -->
-                                    <th>Inscripciones</th> 
-                                    <th>Notas</th> 
-                                    <th>Acciones</th>               
+                                <tr>
+                            <th>ID</th>
+							<th>Apellido y Nombre</th>
+                            <th>DNI</th>
+							<th>Contacto</th>
+							 <th>Tipo de usuario</th>
+							<th>Estado</th>
+                            
+                           
+                            <th><center>Acciones</center></th>
+                            
+                            
+
+
+                          </tr>            
                                 </thead>
                                 <tbody>
                                     <?php                                    
@@ -52,14 +54,22 @@ if(isset($_GET['txtID'])){
                                     ?>
                                             <tr>
                                                 <th scope="row"><?php echo $alumno['id_persona'] ?></th>
-                                                <td><?php echo $alumno['apellido'] ?></td>
-                                                <td><?php echo $alumno['nombre'] ?></td>
-                                                <td><?php echo $alumno['genero'] ?></td>
-                                                <td><?php echo $alumno['DNI'] ?></td>
-                                                <td><?php echo $alumno['fecha_ingreso'] ?></td>
-                                                <td><?php echo $alumno['fecha_nacimiento'] ?></td>
-                                                <td><?php echo $alumno['celular'] ?></td> 
-                                                <td><?php echo $alumno['ciudad'] ?></td>  
+                                             
+                                               
+     <!-- ------------- -->  
+                                 
+                                  <td><?php echo $alumno['apellido']; ?> <?php echo $alumno['nombre'];?></td>
+                                  <td><?php echo $alumno['DNI'] ?></td>
+                                  <td><i class="fa-solid fa-envelope"></i>  <?php echo $alumno ['email_correo'];?><br>
+    
+                                  <i class="fa-solid fa-mobile-retro"></i>    <?php echo $alumno['celular'];?></td>
+                                  
+                                 
+    
+    
+    
+         <!-- ------------- -->                            
+
                                                 <td><a href="alumno_inscripcion.php?id=<?php echo $alumno['id_persona'];?>" class="btn btn-info btn-sm" type="button">Inscripciones</a> </td>
                                                 <td><div class="btn-group">
                                                 <a href="nota_alumno.php?id=<?php echo $alumno['id_persona'];?>" class="btn btn-info btn-sm" type="button">Estado</a>
@@ -68,6 +78,9 @@ if(isset($_GET['txtID'])){
                                                     <div class="btn-group">
 
                                                         
+                                                    <a href="alumno_edit.php?id=<?php echo $alumno['id_persona'];?>"class="btn btn-info btn-sm" type="button" title="ver">
+                                                    <i class="fa-solid fa-eye" style="color: #000000;"></i>
+                                                        </a>
 
                                                         <a href="alumno_edit.php?id=<?php echo $alumno['id_persona'];?>"class="btn btn-warning btn-sm" type="button" title="Editar">
                                                             <i class="fas fa-edit"></i>

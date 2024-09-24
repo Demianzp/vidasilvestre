@@ -26,9 +26,9 @@ $result = $db->query($query);
     <div class="container mt-3">
         <div class="card rounded-2 border-0">
             <di class="card-header pb-0 bg-dark text-white ">
-                <h5 class="card-header bg-dark text-white"> Mesas de Examen <a href="../../fpdf/rep-mesa.php" tanget="_blank" class="btn btn-danger  float-right mb-2 "> <i class="fa-solid fa-file-pdf"></i></a>
-                    <a href="../../fpdf/excel.php" tanget="_blank" class="btn btn-success float-right mb-2 mr-2"> <i class="fas fa-file-excel"></i></a>
-                </h5>
+                <h5 class="card-header bg-dark text-white"> Mesas de Examen 
+                <a class="btn btn-primary float-right mb-2" href="mesa_examen_add.php">Agregar Mesa</a>
+                    </h5>
             </di>
             <div class="card-body table-responsive">
                 <?php
@@ -59,7 +59,7 @@ $result = $db->query($query);
                             echo "<td>" . $row['nombre_mesa'] . "</td>";
                             echo "<td>" . $row['nombre_materia'] . "</td>";
                             echo "<td>" . $row['hora'] . "</td>";
-                            echo "<td>" . $row['fecha_i'] . "</td>";
+                            echo "<td>" . $row['fecha'] . "</td>";
                             echo "<td>" . $row['fecha_fin'] . "</td>";
                             echo "<td>" . $row['nombre_ciclo'] . "</td>";
                             echo "<td>" . $row['nombre_tipo'] . "</td>";    

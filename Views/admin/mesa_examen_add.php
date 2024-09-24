@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Inserta la mesa de examen en la base de datos
         try {
-            $stmt = $db->prepare("INSERT INTO mesa_examen (nombre_mesa, id_materia, id_ciclo, fecha_i, fecha_fin, hora, estado, id_tipo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $db->prepare("INSERT INTO mesa_examen (nombre_mesa, id_materia, id_ciclo, fecha, fecha_fin, hora, estado, id_tipo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->bindParam(1, $nombre_mesa);
             $stmt->bindParam(2, $id_materia);
             $stmt->bindParam(3, $ciclo_lectivo);
@@ -96,11 +96,10 @@ if ($mensaje || $error) {
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="id_tipo">Tipo de Materia:</label>
+                            <label for="id_tipo">Tipo de Mesa:</label>
                             <select name="id_tipo" class="form-control" autocomplete="off" required>
                                 <option value="" hidden disabled selected>Seleccione su Tipo</option>
                                 <option value="1">Regular</option>
-                                <option value="2">Promocional</option>
                                 <option value="3">Libre</option>
                             </select>
                         </div>

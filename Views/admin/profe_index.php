@@ -33,16 +33,13 @@ if (isset($_GET['txtID'])) {
                     <!-- <button type="submit" class="btn btn-primary">Buscar</button> ------->
                     <table id="example" class="table table-striped table-sm" style="width:100%">
                         <thead class="thead-dark">
-                            <th>#</th>
-                            <th>Apellidos</th>
-                            <th>Nombres</th>
-                            <th>Genero</th>
+                        <tr>
+                            <th>ID</th>
+							<th>Apellido y Nombre</th>
                             <th>DNI</th>
-                            <th>Fecha de Nacimiento</th>
-                            <th>Celular</th>
-                            <th>Departamento</th>
-                            <!-- <th>Asignar</th> -->
-                            <th>Acciones</th>
+							<th>Contacto</th>
+						
+                            <th><center>Acciones</center></th>
                         </thead>
                         <tbody>
                             <?php
@@ -58,13 +55,11 @@ if (isset($_GET['txtID'])) {
                             ?>
                                     <tr>
                                         <th scope="row"><?php echo $profesor['id_persona'] ?></th>
-                                        <td><?php echo $profesor['apellido'] ?></td>
-                                        <td><?php echo $profesor['nombre'] ?></td>
-                                        <td><?php echo $profesor['genero'] ?></td>
+                                        <td><?php echo $profesor['apellido'] ?><?php echo $profesor['nombre'] ?></td>
                                         <td><?php echo $profesor['DNI'] ?></td>
-                                        <td><?php echo $profesor['fecha_nacimiento'] ?></td>
-                                        <td><?php echo $profesor['celular'] ?></td>
-                                        <td><?php echo $profesor['ciudad'] ?></td>
+                                  <td><i class="fa-solid fa-envelope"></i>  <?php echo $profesor['email_correo'];?><br>
+    
+                                  <i class="fa-solid fa-mobile-retro"></i>    <?php echo $profesor['celular'];?></td>
                                         <!-- <td></td> -->
                                         <td class="text-center">
                                             <div class="btn-group">
