@@ -1,14 +1,15 @@
 <?php
 require 'navbar.php';
 require '../../conn/connection.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-// Obtener el ID del alumno de la URL
 $alumno_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 if (!$alumno_id) {
     die("ID de alumno no especificado.");
 }
 
-// Obtener datos del alumno y ciclo lectivo
 $nombre_completo = obtenerNombreCompletoAlumno($conexion, $alumno_id);
 $materias = obtenerMateriasActivas($conexion);
 $inscripciones_alumno = obtenerInscripcionesAlumno($conexion, $alumno_id);
@@ -19,7 +20,6 @@ $mensaje = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mensaje = manejarInscripcion($conexion, $_POST);
 }
-
 function obtenerNombreCompletoAlumno($conexion, $alumno_id) {
     $stmt = $conexion->prepare("SELECT CONCAT(nombre, ' ', apellido) AS nombre_completo FROM persona WHERE id_persona = ?");
     $stmt->bind_param("i", $alumno_id);
@@ -51,6 +51,29 @@ function obtenerCicloLectivoActual($conexion) {
     return $stmt->get_result()->fetch_assoc();
 }
 
+function verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id) {
+
+    $stmt = $conexion->prepare("SELECT id_correlativa FROM correlativa WHERE id_materia = ?");
+    $stmt->bind_param("i", $materia_id);
+    $stmt->execute();
+    $correlativa = $stmt->get_result()->fetch_assoc();
+    
+    if ($correlativa && $correlativa['id_correlativa']) {
+        $stmt = $conexion->prepare("SELECT AVG(n1 + n2 + n3 + n4 + n5 + n6 + n7 + n8 + n9 + n10 + n11 + n12 + n13) AS promedio 
+                                     FROM nota 
+                                     WHERE id_persona = ? AND id_materia = ? AND estado = 'Activo'");
+        $stmt->bind_param("ii", $alumno_id, $correlativa['id_correlativa']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            $nota = $result->fetch_assoc();
+            
+            return $nota['promedio'] >= 6; //Es un jemplo de 6 , necesito que este termiada la parte nota.
+        }
+    }
+    return true; 
+}
 function manejarInscripcion($conexion, $data) {
     $alumno_id = filter_input(INPUT_POST, 'alumno_id', FILTER_SANITIZE_NUMBER_INT);
     $materia_id = filter_input(INPUT_POST, 'materia_id', FILTER_SANITIZE_NUMBER_INT);
@@ -59,6 +82,10 @@ function manejarInscripcion($conexion, $data) {
 
     if (!$alumno_id || !$materia_id || !$ciclo_lectivo) {
         return "Datos de inscripción incompletos.";
+    }
+
+    if (!verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id)) {
+        return "No puedes inscribirte a esta materia porque no has aprobado la correlativa.";
     }
 
     $conexion->begin_transaction();
@@ -82,8 +109,6 @@ function manejarInscripcion($conexion, $data) {
     }
 }
 ?>
-
-<!-- HTML del formulario de inscripción -->
 <section class="content mt-3">
     <div class="row m-auto">
         <div class="col-sm">
@@ -93,11 +118,22 @@ function manejarInscripcion($conexion, $data) {
                 </div>
                 <div class="card-body table-responsive">
                     <p class="d-inline text-success">Ciclo lectivo actual: <?php echo htmlspecialchars($ciclo['nombre_ciclo']); ?></p>
-                    <?php if ($mensaje): ?>
-                        <div class="alert alert-info"><?php echo htmlspecialchars($mensaje); ?></div>
+                    <!-- Verificación si no hay materias -->
+                    <?php if (empty($materias)): ?>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Advertencia',
+                                    text: 'No hay materias disponibles para inscripción.',
+                                    timer: 3000,
+                                    showConfirmButton: false
+                                }).then(function() {
+                                    window.location.href = 'alumno_index.php';
+                                });
+                            });
+                        </script>
                     <?php endif; ?>
-                    
-                    <!-- Materias -->
                     <table class="table table-bordered table-sm">
                         <thead class="thead-dark">
                             <tr>
@@ -132,6 +168,8 @@ function manejarInscripcion($conexion, $data) {
         </div>
     </div>
 </section>
+
+<!-- SweetAlert para manejar mensajes -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         <?php if ($mensaje): ?>
@@ -139,11 +177,13 @@ function manejarInscripcion($conexion, $data) {
                 icon: '<?php echo strpos($mensaje, 'Error') !== false ? 'error' : 'success'; ?>',
                 title: '<?php echo strpos($mensaje, 'Error') !== false ? 'Error' : 'Éxito'; ?>',
                 text: '<?php echo htmlspecialchars($mensaje, ENT_QUOTES, 'UTF-8'); ?>',
-                timer: 3000,  // Mostrar el mensaje durante 3 segundos
+                timer: 3000,
                 showConfirmButton: false
             }).then(function() {
-                // Redirigir al archivo alumno_index.php después de mostrar el mensaje
-                window.location.href = 'alumno_index.php';
+               
+                if (<?php echo strpos($mensaje, 'Error') === false ? 'true' : 'false'; ?>) {
+                    window.location.href = 'alumno_index.php';
+                }
             });
         <?php endif; ?>
     });
