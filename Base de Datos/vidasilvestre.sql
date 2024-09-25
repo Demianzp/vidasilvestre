@@ -48,8 +48,7 @@ CREATE TABLE `alumno_materia` (
   `id_ciclo` int(11) DEFAULT NULL,
   `id_nota` int(11) DEFAULT NULL,
   `cod_correlativa` int(11) DEFAULT NULL,
-  `estado` varchar(15) NOT NULL,
-  `fecha_inscripcion` datetime DEFAULT NULL
+  `estado` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -99,6 +98,7 @@ CREATE TABLE `ciclo_lectivo` (
 --
 
 INSERT INTO `ciclo_lectivo` (`id_ciclo`, `nombre_ciclo`, `fecha_inicio`, `fecha_fin`, `Estado`, `created_at`, `updated_at`, `ciclo_actual`) VALUES
+
 (1, '2024', '2024-06-19', '2024-06-26', 'Activo', '2024-06-08 13:24:14', '2024-09-25 16:24:16', 1),
 (2, '2025', '2024-09-25', '2024-09-17', 'Activo', '2024-09-14 15:43:44', '2024-09-14 15:43:44', 0),
 (3, '2026', '2024-09-22', '2024-09-13', 'Activo', '2024-09-22 05:29:26', '2024-09-25 16:24:16', 0);
@@ -244,6 +244,36 @@ CREATE TABLE `nota` (
   `n13` float DEFAULT NULL,
   `estado` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `nota`
+--
+
+INSERT INTO `nota` (`id`, `id_persona`, `id_materia`, `id_ciclo`, `n1`, `n2`, `n3`, `n4`, `n5`, `n6`, `n7`, `n8`, `n9`, `n10`, `n11`, `n12`, `n13`, `estado`) VALUES
+(69, 7, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(70, 7, 1, 1, 1, 3, 2, 3, 4.5, 0, 2.3, 0, 0, 0, 0, 0, 0, 'activo'),
+(71, 7, 7778, 1, 0, 0, 0, 0, 0, 0, 0, 6.6, 0, 0, 0, 0, 0, 'activo'),
+(72, 7, 3, 1, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(73, 7, 4, 1, 7, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(74, 7, 5, 1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(75, 7, 5, 1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(76, 7, 3, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(77, 7, 3, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(78, 7, 4, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(79, 7, 1, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(80, 7, 1, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(81, 7, 5, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(82, 7, 7778, 2, 78, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(83, 7, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(84, 7, 1, 3, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 'activo'),
+(85, 7, 2, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(86, 7, 7778, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(87, 7, 5, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(88, 7, 4, 3, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(89, 7, 3, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(90, 7, 4, 3, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(91, 7, 4, 3, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(92, 7, 4, 3, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo');
 
 -- --------------------------------------------------------
 
@@ -473,7 +503,7 @@ ALTER TABLE `mesa_examen`
 -- AUTO_INCREMENT de la tabla `nota`
 --
 ALTER TABLE `nota`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`

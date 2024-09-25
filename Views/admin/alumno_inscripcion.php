@@ -5,14 +5,13 @@ require '../../conn/connection.php';
 // Obtener el ID del alumno de la URL
 $alumno_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 if (!$alumno_id) {
-    echo "ID de alumno no especificado.";
-    exit;
+    die("ID de alumno no especificado.");
 }
 
 // Obtener datos del alumno y ciclo lectivo
 $nombre_completo = obtenerNombreCompletoAlumno($conexion, $alumno_id);
 $materias = obtenerMateriasActivas($conexion);
-$estado_alumno = obtenerEstadoAlumno($conexion, $alumno_id);
+$inscripciones_alumno = obtenerInscripcionesAlumno($conexion, $alumno_id);
 $ciclo = obtenerCicloLectivoActual($conexion);
 $select_ciclo = $ciclo['id_ciclo'] ?? '';
 
@@ -22,31 +21,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 function obtenerNombreCompletoAlumno($conexion, $alumno_id) {
-    $stmt = $conexion->prepare("SELECT nombre, apellido FROM persona WHERE id_persona = ?");
+    $stmt = $conexion->prepare("SELECT CONCAT(nombre, ' ', apellido) AS nombre_completo FROM persona WHERE id_persona = ?");
     $stmt->bind_param("i", $alumno_id);
     $stmt->execute();
-    $result = $stmt->get_result();
-    $alumno = $result->fetch_assoc();
-    return $alumno ? htmlspecialchars($alumno['nombre'] . ' ' . $alumno['apellido']) : "Alumno no encontrado";
+    return $stmt->get_result()->fetch_assoc()['nombre_completo'] ?? "Alumno no encontrado";
 }
 
 function obtenerMateriasActivas($conexion) {
     $stmt = $conexion->prepare("SELECT id_materia, Nombre FROM materia WHERE estado = 'Activo'");
     $stmt->execute();
-    $result = $stmt->get_result();
-    return $result->fetch_all(MYSQLI_ASSOC);
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
-function obtenerEstadoAlumno($conexion, $alumno_id) {
-    $stmt = $conexion->prepare("SELECT id_materia, estado FROM alumno_materia WHERE id_persona = ?");
+function obtenerInscripcionesAlumno($conexion, $alumno_id) {
+    $stmt = $conexion->prepare("SELECT id_materia, id_ciclo, estado FROM alumno_materia WHERE id_persona = ?");
     $stmt->bind_param("i", $alumno_id);
     $stmt->execute();
     $result = $stmt->get_result();
-    $estado_alumno = [];
+    $inscripciones = [];
     while ($row = $result->fetch_assoc()) {
-        $estado_alumno[$row['id_materia']] = $row['estado'];
+        $inscripciones[$row['id_materia']][$row['id_ciclo']] = $row['estado'];
     }
-    return $estado_alumno;
+    return $inscripciones;
 }
 
 function obtenerCicloLectivoActual($conexion) {
@@ -61,50 +57,24 @@ function manejarInscripcion($conexion, $data) {
     $ciclo_lectivo = filter_input(INPUT_POST, 'ciclo_lectivo', FILTER_SANITIZE_NUMBER_INT);
     $fecha_inscripcion = date('Y-m-d H:i:s');
 
-    $errores = [];
-
-    if (!$alumno_id) {
-        $errores[] = "ID del alumno no especificado.";
-    }
-    if (!$materia_id) {
-        $errores[] = "ID de la materia no especificado.";
-    }
-    if (!$ciclo_lectivo) {
-        $errores[] = "ID del ciclo lectivo no especificado.";
-    }
-
-    if (!empty($errores)) {
-        return implode(' ', $errores);
+    if (!$alumno_id || !$materia_id || !$ciclo_lectivo) {
+        return "Datos de inscripción incompletos.";
     }
 
     $conexion->begin_transaction();
 
     try {
-        $stmt_check = $conexion->prepare("SELECT * FROM alumno_materia WHERE id_persona = ? AND id_materia = ? AND id_ciclo = ?");
-        $stmt_check->bind_param("iii", $alumno_id, $materia_id, $ciclo_lectivo);
-        $stmt_check->execute();
-        $result_check = $stmt_check->get_result();
-
-        if ($result_check->num_rows > 0) {
-            $stmt_update = $conexion->prepare("UPDATE alumno_materia SET estado = 'Inscripto', fecha_inscripcion = ? WHERE id_persona = ? AND id_materia = ? AND id_ciclo = ?");
-            $stmt_update->bind_param("siii", $fecha_inscripcion, $alumno_id, $materia_id, $ciclo_lectivo);
-            if ($stmt_update->execute()) {
-                $conexion->commit();
-                return "Inscripción actualizada.";
-            } else {
-                $conexion->rollback();
-                return "Error al actualizar la inscripción: " . $stmt_update->error;
-            }
+        $stmt = $conexion->prepare("INSERT INTO alumno_materia (id_persona, id_materia, id_ciclo, estado, fecha_inscripcion) 
+                                    VALUES (?, ?, ?, 'Inscripto', ?) 
+                                    ON DUPLICATE KEY UPDATE estado = 'Inscripto', fecha_inscripcion = ?");
+        $stmt->bind_param("iiiss", $alumno_id, $materia_id, $ciclo_lectivo, $fecha_inscripcion, $fecha_inscripcion);
+        
+        if ($stmt->execute()) {
+            $conexion->commit();
+            return "Inscripción realizada con éxito.";
         } else {
-            $stmt_insert = $conexion->prepare("INSERT INTO alumno_materia (id_persona, id_materia, id_ciclo, estado, fecha_inscripcion) VALUES (?, ?, ?, 'Inscripto', ?)");
-            $stmt_insert->bind_param("iiis", $alumno_id, $materia_id, $ciclo_lectivo, $fecha_inscripcion);
-            if ($stmt_insert->execute()) {
-                $conexion->commit();
-                return "Inscripción exitosa.";
-            } else {
-                $conexion->rollback();
-                return "Error al realizar la inscripción: " . $stmt_insert->error;
-            }
+            $conexion->rollback();
+            return "Error al realizar la inscripción: " . $stmt->error;
         }
     } catch (Exception $e) {
         $conexion->rollback();
@@ -119,11 +89,13 @@ function manejarInscripcion($conexion, $data) {
         <div class="col-sm">
             <div class="card rounded-2 border-0">
                 <div class="card-header bg-dark text-white pb-0">
-                    <h5 class="d-inline-block"><?php echo $nombre_completo; ?></h5>
+                    <h5 class="d-inline-block"><?php echo htmlspecialchars($nombre_completo); ?></h5>
                 </div>
                 <div class="card-body table-responsive">
                     <p class="d-inline text-success">Ciclo lectivo actual: <?php echo htmlspecialchars($ciclo['nombre_ciclo']); ?></p>
-                    <br>
+                    <?php if ($mensaje): ?>
+                        <div class="alert alert-info"><?php echo htmlspecialchars($mensaje); ?></div>
+                    <?php endif; ?>
                     
                     <!-- Materias -->
                     <table class="table table-bordered table-sm">
@@ -140,13 +112,13 @@ function manejarInscripcion($conexion, $data) {
                                 <td><?php echo $index + 1; ?></td>
                                 <td><?php echo htmlspecialchars($materia['Nombre']); ?></td>
                                 <td>
-                                    <?php if (isset($estado_alumno[$materia['id_materia']]) && $estado_alumno[$materia['id_materia']] == 'Inscripto'): ?>
+                                    <?php if (isset($inscripciones_alumno[$materia['id_materia']][$select_ciclo]) && $inscripciones_alumno[$materia['id_materia']][$select_ciclo] == 'Inscripto'): ?>
                                         <button class="btn btn-success btn-sm btn-block" disabled>Inscripto</button>
                                     <?php else: ?>
-                                        <form action="alumno_inscripcion.php?id=<?php echo htmlspecialchars($alumno_id); ?>" method="post">
-                                            <input type="hidden" name="alumno_id" value="<?php echo htmlspecialchars($alumno_id); ?>">
-                                            <input type="hidden" name="materia_id" value="<?php echo htmlspecialchars($materia['id_materia']); ?>">
-                                            <input type="hidden" name="ciclo_lectivo" value="<?php echo htmlspecialchars($select_ciclo); ?>">
+                                        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?id=' . $alumno_id; ?>" method="post">
+                                            <input type="hidden" name="alumno_id" value="<?php echo $alumno_id; ?>">
+                                            <input type="hidden" name="materia_id" value="<?php echo $materia['id_materia']; ?>">
+                                            <input type="hidden" name="ciclo_lectivo" value="<?php echo $select_ciclo; ?>">
                                             <button type="submit" class="btn btn-danger btn-sm btn-block">Inscribir</button>
                                         </form>
                                     <?php endif; ?>
