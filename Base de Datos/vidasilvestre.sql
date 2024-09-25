@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 23-09-2024 a las 00:59:56
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Servidor: localhost
+-- Tiempo de generación: 25-09-2024 a las 20:04:46
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -51,6 +51,16 @@ CREATE TABLE `alumno_materia` (
   `estado` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `alumno_materia`
+--
+
+INSERT INTO `alumno_materia` (`Id_alumno`, `id_persona`, `id_materia`, `id_ciclo`, `id_nota`, `cod_correlativa`, `estado`, `fecha_inscripcion`) VALUES
+(1, 7, 1, 3, NULL, NULL, 'Inscripto', '2024-09-25 17:57:40'),
+(2, 7, 3, 3, NULL, NULL, 'Inscripto', '2024-09-25 18:12:46'),
+(3, 2, 3, 1, NULL, NULL, 'Inscripto', '2024-09-25 19:58:11'),
+(4, 7, 4, 1, NULL, NULL, 'Inscripto', '2024-09-25 19:58:58');
+
 -- --------------------------------------------------------
 
 --
@@ -88,9 +98,10 @@ CREATE TABLE `ciclo_lectivo` (
 --
 
 INSERT INTO `ciclo_lectivo` (`id_ciclo`, `nombre_ciclo`, `fecha_inicio`, `fecha_fin`, `Estado`, `created_at`, `updated_at`, `ciclo_actual`) VALUES
-(1, '2024', '2024-06-19', '2024-06-26', 'Activo', '2024-06-08 13:24:14', '2024-09-22 05:29:31', 0),
+
+(1, '2024', '2024-06-19', '2024-06-26', 'Activo', '2024-06-08 13:24:14', '2024-09-25 16:24:16', 1),
 (2, '2025', '2024-09-25', '2024-09-17', 'Activo', '2024-09-14 15:43:44', '2024-09-14 15:43:44', 0),
-(3, '2026', '2024-09-22', '2024-09-13', 'Activo', '2024-09-22 05:29:26', '2024-09-22 05:29:31', 1);
+(3, '2026', '2024-09-22', '2024-09-13', 'Activo', '2024-09-22 05:29:26', '2024-09-25 16:24:16', 0);
 
 -- --------------------------------------------------------
 
@@ -103,6 +114,26 @@ CREATE TABLE `correlativa` (
   `id_materia` int(11) DEFAULT NULL,
   `id_correlativa` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `correlativa`
+--
+
+INSERT INTO `correlativa` (`cod_correlativa`, `id_materia`, `id_correlativa`) VALUES
+(1, 6, 5),
+(2, 7, 2),
+(3, 7, 5),
+(4, 8, 2),
+(5, 9, 3),
+(6, 9, 4),
+(7, 10, 2),
+(8, 10, 3),
+(9, 10, 4),
+(10, 10, 5),
+(11, 10, 6),
+(12, 10, 7),
+(13, 10, 8),
+(14, 10, 9);
 
 -- --------------------------------------------------------
 
@@ -146,24 +177,28 @@ CREATE TABLE `materia` (
   `Nombre` varchar(255) DEFAULT NULL,
   `descripcion` varchar(50) DEFAULT NULL,
   `horas` varchar(5) DEFAULT NULL,
-  `num_resolucion` varchar(11) DEFAULT NULL,
-  `plan_estudio` varchar(11) DEFAULT NULL,
+  `num_resolucion` varchar(15) DEFAULT NULL,
   `año_cursado` varchar(5) NOT NULL,
   `id_tipo` int(11) DEFAULT NULL,
-  `estado` varchar(11) DEFAULT NULL
+  `estado` varchar(11) DEFAULT NULL,
+  `plan_estudio` enum('1° Cuatrimestre','2° Cuatrimestre') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `materia`
 --
 
-INSERT INTO `materia` (`id_materia`, `Nombre`, `descripcion`, `horas`, `num_resolucion`, `plan_estudio`, `año_cursado`, `id_tipo`, `estado`) VALUES
-(1, 'lengua', 'd2', '2', '3', '1', '1', 2, 'Activo'),
-(2, 'matematicas', 'd2', '2', '3', '1', '1', 2, 'Activo'),
-(3, 'geografia', 'd2', '2', '3', '1', '1', 2, 'Activo'),
-(4, 'matematicas y geometria', '', '0', '', '1', '1', 1, 'Activo'),
-(5, 'Prevencion y manejo de fuego en areas protegidas', '', '0', '', '2', '1', 2, 'Activo'),
-(7778, 'locacion', '', '0', '', '1', '1', 1, 'Activo');
+INSERT INTO `materia` (`id_materia`, `Nombre`, `descripcion`, `horas`, `num_resolucion`, `año_cursado`, `id_tipo`, `estado`, `plan_estudio`) VALUES
+(1, 'Lengua', '--', '3', 'ASD23', '1', 2, 'Inactivo', '1° Cuatrimestre'),
+(2, 'Compresión y Producción de texto', 'CyPT', '3', 'ASD123', '1', 2, 'Activo', '1° Cuatrimestre'),
+(3, 'Biologia', '--', '3', 'ASD123', '1', 2, 'Activo', '1° Cuatrimestre'),
+(4, 'Ecologia', '--', '3', 'ASD123', '1', 2, 'Activo', '1° Cuatrimestre'),
+(5, 'Contexto socioeconomico ambiental', '--', '3', 'ASD123', '1', 2, 'Activo', '1° Cuatrimestre'),
+(6, 'Informatica Aplicada', '--', '3', 'ASD123', '2', 2, 'Activo', '2° Cuatrimestre'),
+(7, 'Educación Ambiental 1', '--', '3', 'ASD123', '2', 2, 'Activo', '2° Cuatrimestre'),
+(8, 'Geografia Regional', '--', '2', 'asd123', '1', 2, 'Activo', '2° Cuatrimestre'),
+(9, 'Prevencion y Manejo de Fuego en áreas protegidas ', '--', '2', 'ASD123', '1', 2, 'Activo', '2° Cuatrimestre'),
+(10, 'Practicas Profesionalizantes 1', '--', '3', 'ASD123', '1', 2, 'Activo', '2° Cuatrimestre');
 
 -- --------------------------------------------------------
 
@@ -426,7 +461,7 @@ ALTER TABLE `acta`
 -- AUTO_INCREMENT de la tabla `alumno_materia`
 --
 ALTER TABLE `alumno_materia`
-  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `asignar`
@@ -444,7 +479,7 @@ ALTER TABLE `ciclo_lectivo`
 -- AUTO_INCREMENT de la tabla `correlativa`
 --
 ALTER TABLE `correlativa`
-  MODIFY `cod_correlativa` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cod_correlativa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `examen`
@@ -456,7 +491,7 @@ ALTER TABLE `examen`
 -- AUTO_INCREMENT de la tabla `materia`
 --
 ALTER TABLE `materia`
-  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7779;
+  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `mesa_examen`
