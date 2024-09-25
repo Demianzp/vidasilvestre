@@ -1,6 +1,5 @@
 <?php require 'navbar.php';
 require '../../conn/connection.php';
-// Obtener el ID del alumno de la URL
 $alumno_id = isset($_GET['id']) ? $_GET['id'] : null;
 if ($alumno_id) {
     $sql_alumno = "SELECT * FROM persona WHERE id_persona = $alumno_id";
@@ -11,20 +10,32 @@ if ($alumno_id) {
     } else {
         $nombre_completo = "Alumno no encontrado";
     }
-    $sql = "SELECT * FROM materia where estado = 'Activo'";
+
+    $sql = "SELECT m.* FROM alumno_materia am
+            JOIN materia m ON am.id_materia = m.id_materia
+            WHERE am.id_persona = $alumno_id AND m.estado = 'Activo'";
     $result = $conexion->query($sql);
-    $materias = [];
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $materias[] = $row;
         }
     } else {
-        echo "No se encontraron materias.";
-    }       
-}else{
+        echo "<script>
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Sin materias',
+                    text: 'No se encontraron materias inscritas para este alumno.',
+                    confirmButtonColor: '#6a1b9a', // Color lila pastel
+                    confirmButtonText: 'Ok'
+                });
+              </script>";
+    }
+     
+} else {
     echo "ID de alumno no especificado."; 
     exit;
 }
+
 //--------------------------------------------------------------------------- 
 if(isset($_POST['guarda_nota'])){
     // ----------------------------------------
