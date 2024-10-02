@@ -151,8 +151,13 @@ if(!isset($_SESSION['id_persona'])){
             <li class="nav-item dropdown pr-3 ">
               <a class="nav-link " href="listadomesa.php" >
                 Mesa y Acta
-              </a>
-              
+              </a>              
+            </li>
+            <!-- ------------------------------------------------------- -->
+            <li class="nav-item dropdown pr-3 ">
+              <a class="nav-link " href="admin_index.php" >
+                Administrador
+              </a>              
             </li>
             <!-- ------------------------------------------------------- -->
             <li class="nav-item  pr-3">
