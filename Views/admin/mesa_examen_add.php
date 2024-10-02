@@ -79,6 +79,15 @@ if ($mensaje || $error) {
                             </select>
                         </div>
 
+                        <div class="form-group mb-3">
+                            <label for="id_tipo">Tipo de Mesa:</label>
+                            <select name="id_tipo" class="form-control" autocomplete="off" required>
+                                <option value="" hidden disabled selected>Seleccione su Tipo</option>
+                                <option value="1">Regular</option>
+                                <option value="3">Libre</option>
+                            </select>
+                        </div>
+
                         <div class="row">
                             <div class="form-group col-sm-12 col-md-6 mb-3">
                                 <label for="fecha">Fecha Inicio:</label>
@@ -90,21 +99,13 @@ if ($mensaje || $error) {
                             </div>
                         </div>
 
-                        <div class="form-group mb-3">
+                        <div class="row">
+                        <div class="form-group col-sm-12 col-md-6 mb-3">
                             <label for="hora">Hora:</label>
                             <input type="time" name="hora" autocomplete="off" class="form-control" required>
                         </div>
 
-                        <div class="form-group mb-3">
-                            <label for="id_tipo">Tipo de Mesa:</label>
-                            <select name="id_tipo" class="form-control" autocomplete="off" required>
-                                <option value="" hidden disabled selected>Seleccione su Tipo</option>
-                                <option value="1">Regular</option>
-                                <option value="3">Libre</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group mb-3">
+                        <div class="form-group col-sm-12 col-md-6 mb-3">
                             <label for="ciclo_lectivo">Ciclo Lectivo:</label>
                             <select name="ciclo_lectivo" id="ciclo_lectivo" class="form-control" autocomplete="off" required>
                                 <option value="" disabled selected>Seleccione el ciclo lectivo</option>
@@ -118,7 +119,7 @@ if ($mensaje || $error) {
                                 ?>
                             </select>
                         </div>
-                        
+                        </div>
                         <input type="submit" class="btn btn-primary w-100" value="Agregar Mesa">
                     </form>
                 </div>

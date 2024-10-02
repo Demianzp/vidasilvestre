@@ -78,7 +78,7 @@ if(isset($_GET['txtID'])){
                                                     <div class="btn-group">
 
                                                         
-                                                    <a href="alumno_edit.php?id=<?php echo $alumno['id_persona'];?>"class="btn btn-info btn-sm" type="button" title="ver">
+                                                    <a href="alumno_ver.php?id=<?php echo $alumno['id_persona'];?>" data-toggle="modal" data-backdrop="false"   class="btn btn-info btn-sm" type="button" title="ver">
                                                     <i class="fa-solid fa-eye" style="color: #000000;"></i>
                                                         </a>
 

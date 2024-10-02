@@ -28,6 +28,7 @@ $result = $db->query($query);
             <di class="card-header pb-0 bg-dark text-white ">
                 <h5 class="card-header bg-dark text-white"> Mesas de Examen 
                 <a class="btn btn-primary float-right mb-2" href="mesa_examen_add.php">Agregar Mesa</a>
+                <a class="btn btn-warning float-right mb-2" href="mesa_acta.php">Agregar Profesor</a>
                     </h5>
             </di>
             <div class="card-body table-responsive">
