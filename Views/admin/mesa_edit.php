@@ -18,15 +18,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['Id'];
     $nombre = $_POST['nombre_mesa'];
     $materia = $_POST['materia'];
-    $fecha_i = $_POST['fecha_i'];
+    $fecha = $_POST['fecha'];
     $fecha_fin = $_POST['fecha_fin'];
     $hora= $_POST['hora'];
     $tipo = $_POST['id_tipo'];
     $ciclo= $_POST['ciclo_lectivo'];
     // Consulta preparada para evitar inyección SQL
-    $sql = "UPDATE mesa_examen SET nombre_mesa=?, id_materia=?, fecha_i=?, fecha_fin=?, hora=?, id_ciclo=?, id_tipo=? WHERE id_mesa=?";
+    $sql = "UPDATE mesa_examen SET nombre_mesa=?, id_materia=?, fecha=?, fecha_fin=?, hora=?, id_ciclo=?, id_tipo=? WHERE id_mesa=?";
     $stmt = $conexion->prepare($sql);
-    $stmt->bind_param("siisiiii", $nombre, $materia, $fecha_i, $fecha_fin, $hora, $tipo, $ciclo, $id);
+    $stmt->bind_param("sisssiii", $nombre, $materia, $fecha, $fecha_fin, $hora, $tipo, $ciclo, $id);
     if ($stmt->execute()) {
         $mensaje = 'Registro actualizado correctamente.';
     } else {
@@ -73,22 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                             <!-- ---------------------------- -->
                             <div class="form-group">
-                                <label for="fecha_i">Fecha Inicio:</label>
-                                <input type="date" name="fecha_i" autocomplete="off" class="form-control" value="<?php echo $row['fecha_i']?>">
-                            </div>
-                            <!-- ---------------------------- -->
-                            <div class="form-group">
-                                <label for="fecha_fin">Fecha Fin:</label>
-                                <input type="date" name="fecha_fin" autocomplete="off" class="form-control" value="<?php echo $row['fecha_fin']?>">
-                            </div>
-                            <!-- ---------------------------- -->
-
-                            <div class="form-group">
-                                <label for="hora">Hora:</label>
-                                <input type="time" name="hora" autocomplete="off" class="form-control" value="<?php echo $row['hora']?>">
-                            </div>
-                            <!-- ---------------------------- -->
-                            <div class="form-group">
                                 <label for="id_tipo">Tipo de Materia:</label>
                                 <select name="id_tipo" class="form-control" autocomplete="off" required>
                                     <?php
@@ -98,12 +82,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     echo "<option hidden value=" . $rowt["id_tipo"] . ">" . $rowt["nombre_tipo"] . " </option>";
                                     ?>
                                     <option value="1">Regular</option>
-                                    <option value="2">Promocional</option>
-                                    <option value="3">Libre</option>
+                                    <option value="2">Libre</option>
                                 </select>
                             </div>
+                            <!-- ---------------------------- -->
+                            <div class="row">
+                            <div class="form-group col-sm-12 col-md-6 mb-3">
+                                <label for="fecha">Fecha Inicio:</label>
+                                <input type="date" name="fecha" autocomplete="off" class="form-control" value="<?php echo $row['fecha']?>">
+                            </div>
+                            
+                            <!-- ---------------------------- -->
+                            <div class="form-group col-sm-12 col-md-6 mb-3">
+                                <label for="fecha_fin">Fecha Fin:</label>
+                                <input type="date" name="fecha_fin" autocomplete="off" class="form-control" value="<?php echo $row['fecha_fin']?>">
+                            </div>
+                            </div>
+                            <!-- ---------------------------- -->
+                            <div class="row">
+                            <div class="form-group col-sm-12 col-md-6 mb-3">
+                                <label for="hora">Hora:</label>
+                                <input type="time" name="hora" autocomplete="off" class="form-control" value="<?php echo $row['hora']?>">
+                            </div>
+                            
                             <!-- --------------- habría q cambiarlo los 1ro, 2do.. año------------- -->
-                            <div class="form-group">
+                            <div class="form-group col-sm-12 col-md-6 mb-3">
                                 <label for="ciclo_lectivo">Ciclo Lectivo:</label>
                                 <select name="ciclo_lectivo" id="ciclo_lectivo" class="form-control" autocomplete="off" required>
                                     <?php
@@ -115,6 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     }
                                     ?>
                                 </select>
+                            </div>
                             </div>
                             <br>
                             <div class="form-group">
