@@ -133,13 +133,13 @@ if(!isset($_SESSION['id_persona'])){
             </li>
             <!-- ---------------------------------- -->
             <li class="nav-item  pr-3">
-              <a class="nav-link" href="materia_index.php">Materia</a>
+              <a class="nav-link" href="materia_index.php">Plan de estudio</a>
             </li>
                 
             <!-- ------------------------------------------------------- -->
             <li class="nav-item dropdown pr-3">
               <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Notas
+               Calificaciones
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="nota_eva.php">Registra una Nota</a></li>
@@ -149,10 +149,11 @@ if(!isset($_SESSION['id_persona'])){
             </li>
             <!-- ------------------------------------------------------- -->
             <li class="nav-item dropdown pr-3 ">
-              <a class="nav-link " href="listadomesa.php" >
-                Mesa y Acta
-              </a>
-              
+              <a class="nav-link " href="listadomesa.php">Mesa de examen</a>
+            </li>
+            <!-- ------------------------------------------------------- -->
+            <li class="nav-item dropdown pr-3 ">
+              <a class="nav-link " href="admin_index.php" >Administrador</a>              
             </li>
             <!-- ------------------------------------------------------- -->
             <li class="nav-item  pr-3">

@@ -1,6 +1,15 @@
 <?php
 require '../../conn/connection.php';
-
+//-------------BORRADO------------------ 
+if(isset($_GET['txtID'])){
+    $txtID=(isset($_GET['txtID']))?$_GET['txtID']:"";
+    $sentencia=$db->prepare("UPDATE persona SET estado = 'Inactivo' WHERE id_persona = :id" );
+    $sentencia->bindParam(':id',$txtID);
+    $sentencia->execute();
+    $mensaje="Registro Administrador Eliminado";
+    header("Location:admin_index.php?mensaje=".$mensaje);
+  }
+//<!-- ------------------------------------------ -->
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recolecta datos del formulario
     $nombre = $_POST["nombre"];
@@ -129,6 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $nombre = isset($_GET["nombre"]) ? $_GET["nombre"] : "";
                             $apellido = isset($_GET["apellido"]) ? $_GET["apellido"] : "";
                             $email = isset($_GET["email"]) ? $_GET["email"] : "";
+                            $genero="";
                             ?>
                             <form id="formulario" action="" method="post" enctype="multipart/form-data">
                                 <!-- --------------------------------- -->

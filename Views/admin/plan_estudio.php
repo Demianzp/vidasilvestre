@@ -20,21 +20,22 @@ require 'navbar.php';
     <div class="row m-auto">
         <div class="col-sm">
             <div class="card rounded-2 border-0">
-                <div class="card-header bg-dark text-white pb-0">
-                    <h5 class="d-inline-block">Listado de Materias y Correlativas</h5>
-                    <a class="btn btn-primary float-right mb-2" href="materia_crea.php">Registro de Materia</a>
-                    <a class="btn btn-warning float-right mb-" href="plan_estudio.php">Plan de estudio</a>
+                <div class="card-header bg-dark text-white ">
+                    <h5 class="d-inline-block">Plan de estudio</h5>
+                   
                 </div>
 
                 <!-- Tabla de materias -->
                 <div class="card-body table-responsive">
                     <table id="example" class="table table-striped table-sm" style="width:100%">
                         <thead class="thead-dark">
-                            <tr>
-                                <th>#</th>
+                        
+                        <tr>
+                        
                                 <th>Materia</th>
                                 <th>Correlativas</th>
-                                <th>Acciones</th>
+                                <th>Año</th>
+                                <th>Cuatrimestre</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,16 +56,14 @@ require 'navbar.php';
                                 foreach ($materias as $materia) {
                             ?>
                                     <tr>
-                                        <td><?php echo htmlspecialchars($materia['id_materia'], ENT_QUOTES, 'UTF-8'); ?></td>
+                          
                                         <td><?php echo htmlspecialchars($materia['Materia'], ENT_QUOTES, 'UTF-8'); ?></td>
                                         <td><?php echo htmlspecialchars($materia['Correlativas'] ? $materia['Correlativas'] : 'Sin correlativas', ENT_QUOTES, 'UTF-8'); ?></td>
                                         <td class="text-center">
-                                            <div class="btn-group">
-                                                <a href="materia_edit.php?id=<?php echo htmlspecialchars($materia['id_materia'], ENT_QUOTES, 'UTF-8'); ?>" class="btn btn-warning btn-sm" role="button"><i class="fas fa-edit"></i></a>
-                                                <a href="javascript:eliminar3(<?php echo $materia['id_materia']; ?>)" class="btn btn-danger btn-sm" title="Borrar" role="button">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </div>
+                                            
+                                        </td>
+                                        <td class="text-center">
+                                            
                                         </td>
                                     </tr>
                             <?php
