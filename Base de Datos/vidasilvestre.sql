@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 25-09-2024 a las 20:04:46
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 04-10-2024 a las 01:52:16
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -48,7 +48,8 @@ CREATE TABLE `alumno_materia` (
   `id_ciclo` int(11) DEFAULT NULL,
   `id_nota` int(11) DEFAULT NULL,
   `cod_correlativa` int(11) DEFAULT NULL,
-  `estado` varchar(15) NOT NULL
+  `estado` varchar(15) NOT NULL,
+  `fecha_inscripcion` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -56,10 +57,8 @@ CREATE TABLE `alumno_materia` (
 --
 
 INSERT INTO `alumno_materia` (`Id_alumno`, `id_persona`, `id_materia`, `id_ciclo`, `id_nota`, `cod_correlativa`, `estado`, `fecha_inscripcion`) VALUES
-(1, 7, 1, 3, NULL, NULL, 'Inscripto', '2024-09-25 17:57:40'),
-(2, 7, 3, 3, NULL, NULL, 'Inscripto', '2024-09-25 18:12:46'),
-(3, 2, 3, 1, NULL, NULL, 'Inscripto', '2024-09-25 19:58:11'),
-(4, 7, 4, 1, NULL, NULL, 'Inscripto', '2024-09-25 19:58:58');
+(5, 7, 2, 1, NULL, NULL, 'Inscripto', '2024-10-04'),
+(6, 7, 3, 1, NULL, NULL, 'Inscripto', '2024-10-04');
 
 -- --------------------------------------------------------
 
@@ -98,7 +97,6 @@ CREATE TABLE `ciclo_lectivo` (
 --
 
 INSERT INTO `ciclo_lectivo` (`id_ciclo`, `nombre_ciclo`, `fecha_inicio`, `fecha_fin`, `Estado`, `created_at`, `updated_at`, `ciclo_actual`) VALUES
-
 (1, '2024', '2024-06-19', '2024-06-26', 'Activo', '2024-06-08 13:24:14', '2024-09-25 16:24:16', 1),
 (2, '2025', '2024-09-25', '2024-09-17', 'Activo', '2024-09-14 15:43:44', '2024-09-14 15:43:44', 0),
 (3, '2026', '2024-09-22', '2024-09-13', 'Activo', '2024-09-22 05:29:26', '2024-09-25 16:24:16', 0);
@@ -250,10 +248,10 @@ CREATE TABLE `nota` (
 --
 
 INSERT INTO `nota` (`id`, `id_persona`, `id_materia`, `id_ciclo`, `n1`, `n2`, `n3`, `n4`, `n5`, `n6`, `n7`, `n8`, `n9`, `n10`, `n11`, `n12`, `n13`, `estado`) VALUES
-(69, 7, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(69, 7, 2, 1, 1, 2, 3, 4.5, 10, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
 (70, 7, 1, 1, 1, 3, 2, 3, 4.5, 0, 2.3, 0, 0, 0, 0, 0, 0, 'activo'),
 (71, 7, 7778, 1, 0, 0, 0, 0, 0, 0, 0, 6.6, 0, 0, 0, 0, 0, 'activo'),
-(72, 7, 3, 1, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(72, 7, 3, 1, 7, 2, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
 (73, 7, 4, 1, 7, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
 (74, 7, 5, 1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
 (75, 7, 5, 1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
@@ -461,7 +459,7 @@ ALTER TABLE `acta`
 -- AUTO_INCREMENT de la tabla `alumno_materia`
 --
 ALTER TABLE `alumno_materia`
-  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `asignar`
@@ -516,75 +514,6 @@ ALTER TABLE `persona`
 --
 ALTER TABLE `rol`
   MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de la tabla `tipo`
---
-ALTER TABLE `tipo`
-  MODIFY `id_tipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `acta`
---
-ALTER TABLE `acta`
-  ADD CONSTRAINT `fk_acta_ciclo` FOREIGN KEY (`id_ciclo`) REFERENCES `ciclo_lectivo` (`id_ciclo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_acta_mesa` FOREIGN KEY (`id_mesa`) REFERENCES `mesa_examen` (`id_mesa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_acta_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `alumno_materia`
---
-ALTER TABLE `alumno_materia`
-  ADD CONSTRAINT `fk_alumno_materia_ciclo` FOREIGN KEY (`id_ciclo`) REFERENCES `ciclo_lectivo` (`id_ciclo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_alumno_materia_correlativa` FOREIGN KEY (`cod_correlativa`) REFERENCES `materia` (`id_materia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_alumno_materia_materia` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_alumno_materia_nota` FOREIGN KEY (`id_nota`) REFERENCES `nota` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_alumno_materia_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `asignar`
---
-ALTER TABLE `asignar`
-  ADD CONSTRAINT `fk_asignar_materia` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_asignar_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `correlativa`
---
-ALTER TABLE `correlativa`
-  ADD CONSTRAINT `fk_correlativa_materia` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `materia`
---
-ALTER TABLE `materia`
-  ADD CONSTRAINT `fk_tipo` FOREIGN KEY (`id_tipo`) REFERENCES `tipo` (`id_tipo`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `mesa_examen`
---
-ALTER TABLE `mesa_examen`
-  ADD CONSTRAINT `fk_mesa_examen_ciclo` FOREIGN KEY (`id_ciclo`) REFERENCES `ciclo_lectivo` (`id_ciclo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_mesa_examen_materia` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_mesa_examen_tipo` FOREIGN KEY (`id_tipo`) REFERENCES `tipo` (`id_tipo`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `nota`
---
-ALTER TABLE `nota`
-  ADD CONSTRAINT `fk_nota_ciclo` FOREIGN KEY (`id_ciclo`) REFERENCES `ciclo_lectivo` (`id_ciclo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_nota_materia` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_nota_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `persona`
---
-ALTER TABLE `persona`
-  ADD CONSTRAINT `fk_rol` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
