@@ -88,7 +88,6 @@ if(isset($_POST['guarda_nota'])){
         $stmt->bindParam(':ciclo_lectivo', $ciclo_lectivo);
         $stmt->execute();
     }else{
-        //4
         try {  
             $estado='activo';  
             $sql =  "INSERT INTO nota (id_persona, id_materia, id_ciclo,n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11,n12,n13,estado) 
@@ -113,10 +112,13 @@ if(isset($_POST['guarda_nota'])){
             $stmt->bindParam(':estado', $estado);    
             $stmt->execute();                          
         } catch (PDOException $e) {
-            $error = "Error en la base de datos: " . $e->getMessage();
-            exit();
+            $error = "Error en la base de datos: " . $e->getMessage();           
         }
     }
+        echo '<script>
+                var id_alumno = $alumno_id;
+                window.location="nota_alumno.php?id="+id_alumno;
+              </script>';        
 }
  //--------------BARRA DE CICLO LECTIVO ACTUAL----------------------  
     if(!isset($_POST['buscar'])){
