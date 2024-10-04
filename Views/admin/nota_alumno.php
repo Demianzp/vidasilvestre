@@ -88,6 +88,7 @@ if(isset($_POST['guarda_nota'])){
         $stmt->bindParam(':ciclo_lectivo', $ciclo_lectivo);
         $stmt->execute();
     }else{
+        //4
         try {  
             $estado='activo';  
             $sql =  "INSERT INTO nota (id_persona, id_materia, id_ciclo,n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11,n12,n13,estado) 
