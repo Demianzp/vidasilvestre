@@ -1,0 +1,51 @@
+##Funcionalidades del Código
+Inicio de sesión y verificación
+
+Verifica si el alumno ha iniciado sesión. Si no, muestra un error y detiene la ejecución.
+Obtención de datos del alumno
+
+Obtiene el nombre completo del alumno a partir de la base de datos.
+Recupera las materias activas disponibles para inscripción.
+Recupera las inscripciones previas del alumno a otras materias.
+Obtiene el ciclo lectivo actual para asociar la inscripción a un periodo.
+Inscripción a materias
+
+Al enviar el formulario, verifica que los datos sean válidos (materia y ciclo lectivo).
+Si el alumno no tiene el rol de administrador, se verifica que tenga aprobada la correlativa necesaria para inscribirse.
+Si todo es válido, la inscripción se registra en la base de datos. Si ya estaba inscrito, se actualiza el estado.
+En caso de éxito, se muestra un mensaje al usuario.
+Manejo de correlativas
+
+Para inscribirse a una materia que tiene correlativa, se verifica si la correlativa fue aprobada con una calificación mínima de 6.
+Interfaz gráfica
+
+El nombre del alumno se muestra en la página, junto con un botón para ver las notas del alumno.
+Si no hay materias activas, se muestra un mensaje de advertencia utilizando SweetAlert.
+Las materias se agrupan por año de cursado y se listan en una tabla con la opción de inscribirse si aún no lo ha hecho.
+Manejo de transacciones
+
+La inscripción a materias utiliza transacciones para garantizar que si algo falla durante el proceso, se reviertan los cambios realizados.
+
+##Lo que falta implementar
+
+Recorrido y validación de materias correlativas:
+
+Aunque el sistema verifica una única correlativa, aún falta implementar el manejo de múltiples correlativas por materia (en caso de que existan).
+Mensajes de error detallados:
+
+Agregar más detalles a los mensajes de error en caso de fallos en la inscripción para mejorar la experiencia del usuario.
+Verificación de estado de la materia:
+
+Incluir una validación para verificar si la materia aún está activa o disponible antes de permitir la inscripción.
+Optimización del rendimiento:
+
+Mejorar las consultas a la base de datos para reducir la cantidad de llamadas y optimizar el rendimiento.
+Compatibilidad con diferentes ciclos lectivos:
+
+Incluir la posibilidad de inscribirse a materias de ciclos lectivos anteriores o futuros, si el sistema lo permite.
+Funciones adicionales de administración:
+
+Permitir al administrador gestionar (aprobar, rechazar, o desinscribir) las inscripciones de los alumnos directamente desde el sistema.
+Nombre del Archivo: inscripcion_materias.php
+
+Fecha de Última Actualización: 4 de octubre de 2024
