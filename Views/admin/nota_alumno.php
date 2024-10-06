@@ -13,7 +13,6 @@ if ($alumno_id) {
     } else {
         $nombre_completo = "Alumno no encontrado";
     }
-
     $sql = "SELECT m.* FROM alumno_materia am
             JOIN materia m ON am.id_materia = m.id_materia
             WHERE am.id_persona = $alumno_id AND m.estado = 'Activo'";
@@ -32,13 +31,11 @@ if ($alumno_id) {
                     confirmButtonText: 'Ok'
                 });
               </script>";
-    }
-     
+    }     
 } else {
     echo "ID de alumno no especificado."; 
     exit;
 }
-
 //--------------------------------------------------------------------------- 
 if(isset($_POST['guarda_nota'])) {
     // ----------------------------------------
@@ -58,13 +55,10 @@ if(isset($_POST['guarda_nota'])) {
     $n11 = $_POST["n11"]; 
     $n12 = $_POST["n12"];
     $n13 = $_POST["n13"]; 
-
     $notas = [$n1, $n2, $n3, $n4, $n5, $n6, $n7, $n8, $n9, $n10, $n11, $n12, $n13];
     foreach ($notas as &$nota) {
-        // Convertir a número y manejar el caso de valores vacíos
         $nota = !empty($nota) && is_numeric($nota) ? (float)$nota : null;
     }
-    // Desestructurar el array de notas
     list($n1, $n2, $n3, $n4, $n5, $n6, $n7, $n8, $n9, $n10, $n11, $n12, $n13) = $notas;
 
     $error = "";
@@ -73,8 +67,7 @@ if(isset($_POST['guarda_nota'])) {
                  AND id_materia = $materia_id
                  AND id_ciclo = $ciclo_lectivo";          
     $resul_exa = $conexion->query($sql_nota);
-    $nota = $resul_exa->fetch_assoc();
-    
+    $nota = $resul_exa->fetch_assoc();    
     if(isset($nota) && $nota['estado'] === 'activo'){  
         $sql = "UPDATE nota 
         SET n1=:n1,n2=:n2,n3=:n3,n4=:n4,n5=:n5,n6=:n6,n7=:n7,n8=:n8,n9=:n9,n10=:n10,n11=:n11,n12=:n12,n13=:n13
@@ -99,8 +92,7 @@ if(isset($_POST['guarda_nota'])) {
         $stmt->bindParam(':materia_id', $materia_id);
         $stmt->bindParam(':ciclo_lectivo', $ciclo_lectivo);
         $stmt->execute();
-    } else {
-       
+    } else {       
         try {  
             $estado='activo';  
             $sql =  "INSERT INTO nota (id_persona, id_materia, id_ciclo,n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11,n12,n13,estado) 
@@ -133,7 +125,6 @@ if(isset($_POST['guarda_nota'])) {
             window.location="nota_alumno.php?id="+id_alumno;
           </script>';        
 }
-
  //--------------BARRA DE CICLO LECTIVO ACTUAL----------------------  
     if(!isset($_POST['buscar'])){
         $sql_ciclo = "SELECT id_ciclo , nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 1 LIMIT 1";
@@ -169,9 +160,6 @@ if(isset($_POST['guarda_nota'])) {
                         <h5 class="col"><?php echo htmlspecialchars($nombre_completo); ?></h5>     
                         <div class="col mb-2">
                             <form id="miFormulario" action="" method="post" class="form-inline justify-content-end my-1">
-                                <!-- <button type="submit" name="buscar" class="btn btn-light btn border btn-sm ">
-                                    <i class="fa-solid fa-magnifying-glass "></i>
-                                </button> -->
                                 <select name="select_ciclo" class="form-control form-control-sm w-50" onchange="enviarFormulario()">
                                     <option value="" disabled selected class="text-secondary">Ciclo lectivo actual: <?php echo $ciclo['nombre_ciclo']; ?></option>
                                     <?php                          
@@ -235,19 +223,22 @@ if(isset($_POST['guarda_nota'])) {
                                          $result_nota = $conexion->query($sql_nota);    
                                          $nota = $result_nota->fetch_assoc(); 
                                         // -------------------------                                       
-                                        if(empty($nota['n1'])){$nota1='';}else{$nota1= $nota['n1'];}
-                                        if(empty($nota['n2'])){$nota2='';}else{$nota2= $nota['n2'];}
-                                        if(empty($nota['n3'])){$nota3='';}else{$nota3= $nota['n3'];}
-                                        if(empty($nota['n4'])){$nota4='';}else{$nota4= $nota['n4'];}
-                                        if(empty($nota['n5'])){$nota5='';}else{$nota5= $nota['n5'];}
-                                        if(empty($nota['n6'])){$nota6='';}else{$nota6= $nota['n6'];}
-                                        if(empty($nota['n7'])){$nota7='';}else{$nota7= $nota['n7'];}
-                                        if(empty($nota['n8'])){$nota8='';}else{$nota8= $nota['n8'];}
-                                        if(empty($nota['n9'])){$nota9='';}else{$nota9= $nota['n9'];}
-                                        if(empty($nota['n10'])){$nota10='';}else{$nota10= $nota['n10'];}
-                                        if(empty($nota['n11'])){$nota11='';}else{$nota11= $nota['n11'];}
-                                        if(empty($nota['n12'])){$nota12='';}else{$nota12= $nota['n12'];}                                        
-                                        if(empty($nota['n13'])){$nota13='';}else{$nota13= $nota['n13'];}
+                                        if(empty($nota['n1']))
+                                            {$nota1=null;
+                                            }else{$nota1= $nota['n1'];}
+
+                                        if(empty($nota['n2'])){$nota2=null;}else{$nota2= $nota['n2'];}
+                                        if(empty($nota['n3'])){$nota3=null;}else{$nota3= $nota['n3'];}
+                                        if(empty($nota['n4'])){$nota4=null;}else{$nota4= $nota['n4'];}
+                                        if(empty($nota['n5'])){$nota5=null;}else{$nota5= $nota['n5'];}
+                                        if(empty($nota['n6'])){$nota6=null;}else{$nota6= $nota['n6'];}
+                                        if(empty($nota['n7'])){$nota7=null;}else{$nota7= $nota['n7'];}
+                                        if(empty($nota['n8'])){$nota8=null;}else{$nota8= $nota['n8'];}
+                                        if(empty($nota['n9'])){$nota9=null;}else{$nota9= $nota['n9'];}
+                                        if(empty($nota['n10'])){$nota10=null;}else{$nota10= $nota['n10'];}
+                                        if(empty($nota['n11'])){$nota11=null;}else{$nota11= $nota['n11'];}
+                                        if(empty($nota['n12'])){$nota12=null;}else{$nota12= $nota['n12'];}                                        
+                                        if(empty($nota['n13'])){$nota13=null;}else{$nota13= $nota['n13'];}
                                         ?>     
                                         <!-- -------------------------------------------------- -->
                                         <td><input id="fixed-size" type="text" name="n1" value="<?php echo $nota1; ?>" placeholder="" class="form-control"></td> 
