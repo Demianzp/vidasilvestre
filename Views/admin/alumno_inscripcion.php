@@ -19,6 +19,10 @@ $select_ciclo = $ciclo['id_ciclo'] ?? '';
 $mensaje = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mensaje = manejarInscripcion($conexion, $_POST);
+    if($mensaje=='error'){
+        $error="No puedes inscribirte a esta materia porque no has aprobado la correlativa.";
+        $mensaje='';        
+    }
 }
 
 function obtenerNombreCompletoAlumno($conexion, $alumno_id) {
@@ -87,7 +91,7 @@ function manejarInscripcion($conexion, $data) {
     }
 
     if (!verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id)) {
-        return "No puedes inscribirte a esta materia porque no has aprobado la correlativa.";
+        return "error";
     }
 
     // Comprobamos si el usuario es administrador
@@ -97,7 +101,7 @@ function manejarInscripcion($conexion, $data) {
     $rol = $stmt->get_result()->fetch_assoc()['id_rol'];
 
     if ($rol != 3 && !verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id)) {
-        return "No puedes inscribirte a esta materia porque no has aprobado la correlativa.";
+        return "error";
     }
 
     $conexion->begin_transaction();
@@ -199,11 +203,35 @@ foreach ($materias as $materia) {
                 icon: '<?php echo strpos($mensaje, 'Error') !== false ? 'error' : 'success'; ?>',
                 title: '<?php echo strpos($mensaje, 'Error') !== false ? 'Error' : 'Éxito'; ?>',
                 text: '<?php echo htmlspecialchars($mensaje, ENT_QUOTES, 'UTF-8'); ?>',
-                timer: 3000,
-                showConfirmButton: true // Permite que el usuario cierre la alerta
+                timer: 1000,
+                showConfirmButton: false
+            }).then(() => {
+                const url = new URL(window.location);
+                url.searchParams.delete('mensaje');
+                window.history.replaceState(null, null, url);
+                location.reload();
             });
         <?php endif; ?>
     });
 </script>
+
+<script>
+      document.addEventListener("DOMContentLoaded", function() {
+        <?php if ($error): ?>
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "<?php echo $error; ?>",
+          timer: 1000,
+          showConfirmButton: false,
+          confirmButtonColor: "#d33"
+        }).then(() => {
+            const url = new URL(window.location);
+                url.searchParams.delete('error');
+                window.history.replaceState(null, null, url);
+        });
+        <?php endif; ?>
+      });
+    </script>
 
 <?php require 'footer.php'; ?>
