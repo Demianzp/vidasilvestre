@@ -1,24 +1,29 @@
 <?php
+ob_start(); // Inicia el buffer de salida
+//Aun no termino tengo que hacer y que recorra las materias corelativas 
 require 'navbar.php';
 require '../../conn/connection.php';
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$alumno_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-if (!$alumno_id) {
-    die("ID de alumno no especificado.");
+if (!isset($_SESSION['id_persona'])) {
+    die("Error: No has iniciado sesión.");
 }
 
+$alumno_id = $_SESSION['id_persona'];
 $nombre_completo = obtenerNombreCompletoAlumno($conexion, $alumno_id);
 $materias = obtenerMateriasActivas($conexion);
 $inscripciones_alumno = obtenerInscripcionesAlumno($conexion, $alumno_id);
 $ciclo = obtenerCicloLectivoActual($conexion);
 $select_ciclo = $ciclo['id_ciclo'] ?? '';
 
-$mensaje = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $mensaje = manejarInscripcion($conexion, $_POST);
+    $mensaje = manejarInscripcion($conexion, $_POST, $alumno_id);
+    $_SESSION['mensaje'] = $mensaje;
+    header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $alumno_id);
+    exit();
 }
 
 function obtenerNombreCompletoAlumno($conexion, $alumno_id) {
@@ -58,12 +63,10 @@ function verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id) {
     $stmt->execute();
     $correlativa = $stmt->get_result()->fetch_assoc();
 
-    // Si no hay correlativa, retorna verdadero (puede inscribirse)
     if (!$correlativa || !$correlativa['id_correlativa']) {
-        return true; 
+        return true;
     }
 
-    // Verificar la nota de la correlativa
     $stmt = $conexion->prepare("SELECT n8 FROM nota WHERE id_persona = ? AND id_materia = ? AND estado = 'Activo'");
     $stmt->bind_param("ii", $alumno_id, $correlativa['id_correlativa']);
     $stmt->execute();
@@ -71,26 +74,20 @@ function verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id) {
 
     if ($result->num_rows > 0) {
         $nota = $result->fetch_assoc();
-        return $nota['n8'] >= 6; // Verificar si la calificación final es igual o mayor a 6
+        return $nota['n8'] >= 6;
     }
-    return false; // Si no hay nota, no se puede inscribir
+    return false;
 }
 
-function manejarInscripcion($conexion, $data) {
-    $alumno_id = filter_input(INPUT_POST, 'alumno_id', FILTER_SANITIZE_NUMBER_INT);
+function manejarInscripcion($conexion, $data, $alumno_id) {
     $materia_id = filter_input(INPUT_POST, 'materia_id', FILTER_SANITIZE_NUMBER_INT);
     $ciclo_lectivo = filter_input(INPUT_POST, 'ciclo_lectivo', FILTER_SANITIZE_NUMBER_INT);
     $fecha_inscripcion = date('Y-m-d H:i:s');
 
-    if (!$alumno_id || !$materia_id || !$ciclo_lectivo) {
+    if (!$materia_id || !$ciclo_lectivo) {
         return "Datos de inscripción incompletos.";
     }
 
-    if (!verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id)) {
-        return "No puedes inscribirte a esta materia porque no has aprobado la correlativa.";
-    }
-
-    // Comprobamos si el usuario es administrador
     $stmt = $conexion->prepare("SELECT id_rol FROM persona WHERE id_persona = ?");
     $stmt->bind_param("i", $alumno_id);
     $stmt->execute();
@@ -107,7 +104,7 @@ function manejarInscripcion($conexion, $data) {
                                     VALUES (?, ?, ?, 'Inscripto', ?) 
                                     ON DUPLICATE KEY UPDATE estado = 'Inscripto', fecha_inscripcion = ?");
         $stmt->bind_param("iiiss", $alumno_id, $materia_id, $ciclo_lectivo, $fecha_inscripcion, $fecha_inscripcion);
-        
+
         if ($stmt->execute()) {
             $conexion->commit();
             return "Inscripción realizada con éxito.";
@@ -128,12 +125,14 @@ foreach ($materias as $materia) {
     $materias_por_año[$año_cursado][] = $materia;
 }
 ?>
+
 <section class="content mt-3">
     <div class="row m-auto">
         <div class="col-sm">
             <div class="card rounded-2 border-0">
                 <div class="card-header bg-dark text-white pb-0">
                     <h5 class="d-inline-block"><?php echo htmlspecialchars($nombre_completo); ?></h5>
+                    <a href="ver_nota.php?id=<?php echo $alumno_id; ?>" class="btn btn-info btn-sm float-right">Ver Notas</a>
                 </div>
                 <div class="card-body table-responsive">
                     <?php if (empty($materias)): ?>
@@ -149,7 +148,7 @@ foreach ($materias as $materia) {
                             });
                         </script>
                     <?php endif; ?>
-                    
+
                     <?php foreach ($materias_por_año as $año => $materias): ?>
                         <h4>Materias por Año: <?php echo htmlspecialchars($año); ?></h4>
                         <table class="table table-bordered table-sm">
@@ -159,51 +158,53 @@ foreach ($materias as $materia) {
                                     <th>Materia</th>
                                     <th>Cuatrimestre</th>
                                     <th>Ciclo Lectivo</th>
-                                    <th>Acciones</th> 
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach ($materias as $index => $materia): ?>
-                                <tr>
-                                    <td><?php echo $index + 1; ?></td>
-                                    <td><?php echo htmlspecialchars($materia['Nombre']); ?></td>
-                                    <td><?php echo htmlspecialchars($materia['plan_estudio']); ?></td>
-                                    <td><?php echo htmlspecialchars($ciclo['nombre_ciclo']); ?></td>
-                                    <td>
-                                        <?php if (isset($inscripciones_alumno[$materia['id_materia']][$select_ciclo]) && $inscripciones_alumno[$materia['id_materia']][$select_ciclo] == 'Inscripto'): ?>
-                                            <button class="btn btn-success btn-sm btn-block" disabled>Inscripto</button>
-                                        <?php else: ?>
-                                            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?id=' . $alumno_id; ?>" method="post">
-                                                <input type="hidden" name="alumno_id" value="<?php echo $alumno_id; ?>">
-                                                <input type="hidden" name="materia_id" value="<?php echo $materia['id_materia']; ?>">
-                                                <input type="hidden" name="ciclo_lectivo" value="<?php echo $select_ciclo; ?>">
-                                                <button type="submit" class="btn btn-danger btn-sm btn-block">Inscribir</button>
-                                            </form>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td><?php echo $index + 1; ?></td>
+                                        <td><?php echo htmlspecialchars($materia['Nombre']); ?></td>
+                                        <td><?php echo htmlspecialchars($materia['plan_estudio']); ?></td>
+                                        <td><?php echo htmlspecialchars($ciclo['nombre_ciclo']); ?></td>
+                                        <td>
+                                            <?php if (isset($inscripciones_alumno[$materia['id_materia']][$select_ciclo]) && $inscripciones_alumno[$materia['id_materia']][$select_ciclo] == 'Inscripto'): ?>
+                                                <button class="btn btn-success btn-sm btn-block" disabled>Inscripto</button>
+                                            <?php else: ?>
+                                                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?id=' . $alumno_id; ?>" method="post" class="d-inline">
+                                                    <input type="hidden" name="alumno_id" value="<?php echo $alumno_id; ?>">
+                                                    <input type="hidden" name="materia_id" value="<?php echo $materia['id_materia']; ?>">
+                                                    <input type="hidden" name="ciclo_lectivo" value="<?php echo $select_ciclo; ?>">
+                                                    <button type="submit" class="btn btn-danger btn-sm">Inscribir</button>
+                                                </form>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
                     <?php endforeach; ?>
+
+                    <?php if (isset($_SESSION['mensaje'])): ?>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    icon: 'info',
+                                    title: 'Resultado',
+                                    text: '<?php echo $_SESSION['mensaje']; ?>',
+                                    timer: 3000,
+                                    showConfirmButton: true
+                                });
+                            });
+                        </script>
+                        <?php unset($_SESSION['mensaje']); ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        <?php if ($mensaje): ?>
-            Swal.fire({
-                icon: '<?php echo strpos($mensaje, 'Error') !== false ? 'error' : 'success'; ?>',
-                title: '<?php echo strpos($mensaje, 'Error') !== false ? 'Error' : 'Éxito'; ?>',
-                text: '<?php echo htmlspecialchars($mensaje, ENT_QUOTES, 'UTF-8'); ?>',
-                timer: 3000,
-                showConfirmButton: true // Permite que el usuario cierre la alerta
-            });
-        <?php endif; ?>
-    });
-</script>
-
-<?php require 'footer.php'; ?>
+<?php
+ob_end_flush(); // Finaliza el buffer de salida

@@ -116,7 +116,7 @@ if(!isset($_SESSION['nombre'])){
                     <li><a class="dropdown-item" href="seleccionar_alumnos.php">Inscripcion a Materia</a></li>
                   </ul> -->
             </li>
-            <!-- ------------------------------------------------------- -->
+            <!-- ---------------------------------------------
             <li class="nav-item dropdown pr-3">
               <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Profesor
@@ -126,16 +126,16 @@ if(!isset($_SESSION['nombre'])){
                 <li><a class="dropdown-item" href="lista_A.php">Listado de Asignaciones</a></li>
               </ul>
             </li>
-            <!-- ------------------------------------------------------- -->
+            ----------------------------------
             <li class="nav-item  pr-3">
               <a class="nav-link" href="notas.view.php">Notas </a>
             </li>
             <li class="nav-item dropdown pr-3 ">
-              <!-- ------------------------------------------------------- -->
+               ---------------------------------------------
             <li class="nav-item  pr-3">
               <a class="nav-link " href="materia_index.php">Materias </a>
             </li>
-            <!-- ------------------------------------------------------- -->
+            ------------------------------------------------------- -->
             <li class="nav-item dropdown pr-3 ">
               <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Mesa y Acta
