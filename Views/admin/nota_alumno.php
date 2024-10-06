@@ -1,5 +1,8 @@
 <?php require 'navbar.php';
 require '../../conn/connection.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 $alumno_id = isset($_GET['id']) ? $_GET['id'] : null;
 if ($alumno_id) {
     $sql_alumno = "SELECT * FROM persona WHERE id_persona = $alumno_id";
@@ -37,7 +40,7 @@ if ($alumno_id) {
 }
 
 //--------------------------------------------------------------------------- 
-if(isset($_POST['guarda_nota'])){
+if(isset($_POST['guarda_nota'])) {
     // ----------------------------------------
     $alumno_id = $_POST["alumno_id"];
     $materia_id = $_POST["materia_id"];
@@ -55,14 +58,23 @@ if(isset($_POST['guarda_nota'])){
     $n11 = $_POST["n11"]; 
     $n12 = $_POST["n12"];
     $n13 = $_POST["n13"]; 
+
+    $notas = [$n1, $n2, $n3, $n4, $n5, $n6, $n7, $n8, $n9, $n10, $n11, $n12, $n13];
+    foreach ($notas as &$nota) {
+        // Convertir a número y manejar el caso de valores vacíos
+        $nota = !empty($nota) && is_numeric($nota) ? (float)$nota : null;
+    }
+    // Desestructurar el array de notas
+    list($n1, $n2, $n3, $n4, $n5, $n6, $n7, $n8, $n9, $n10, $n11, $n12, $n13) = $notas;
+
     $error = "";
     // -------------------------------    
     $sql_nota = "SELECT * FROM nota WHERE id_persona = $alumno_id 
                  AND id_materia = $materia_id
-                 AND id_ciclo = $ciclo_lectivo
-                 ";          
+                 AND id_ciclo = $ciclo_lectivo";          
     $resul_exa = $conexion->query($sql_nota);
     $nota = $resul_exa->fetch_assoc();
+    
     if(isset($nota) && $nota['estado'] === 'activo'){  
         $sql = "UPDATE nota 
         SET n1=:n1,n2=:n2,n3=:n3,n4=:n4,n5=:n5,n6=:n6,n7=:n7,n8=:n8,n9=:n9,n10=:n10,n11=:n11,n12=:n12,n13=:n13
@@ -87,7 +99,8 @@ if(isset($_POST['guarda_nota'])){
         $stmt->bindParam(':materia_id', $materia_id);
         $stmt->bindParam(':ciclo_lectivo', $ciclo_lectivo);
         $stmt->execute();
-    }else{
+    } else {
+       
         try {  
             $estado='activo';  
             $sql =  "INSERT INTO nota (id_persona, id_materia, id_ciclo,n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11,n12,n13,estado) 
@@ -115,11 +128,12 @@ if(isset($_POST['guarda_nota'])){
             $error = "Error en la base de datos: " . $e->getMessage();           
         }
     }
-        echo '<script>
-                var id_alumno = $alumno_id;
-                window.location="nota_alumno.php?id="+id_alumno;
-              </script>';        
+    echo '<script>
+            var id_alumno = ' . $alumno_id . ';
+            window.location="nota_alumno.php?id="+id_alumno;
+          </script>';        
 }
+
  //--------------BARRA DE CICLO LECTIVO ACTUAL----------------------  
     if(!isset($_POST['buscar'])){
         $sql_ciclo = "SELECT id_ciclo , nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 1 LIMIT 1";
