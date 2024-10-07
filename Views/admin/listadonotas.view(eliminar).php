@@ -3,7 +3,6 @@
 require 'functions.php';
 
 $permisos = ['Administrador','Profesor','Padre'];
-permisos($permisos);
 //consulta las materias
 $materias = $conn->prepare("select * from materias");
 $materias->execute();
