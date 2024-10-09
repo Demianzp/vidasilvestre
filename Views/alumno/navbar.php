@@ -92,7 +92,7 @@ if(!isset($_SESSION['nombre'])){
   <div style="height:60px">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container-fluid ml-2 ">
-        <a href="inicio.view.php" class="navbar-brand mb-0 pr-3 ">
+        <a href="alumno_index.php" class="navbar-brand mb-0 pr-3 ">
           <img class="d-line-block align-top " src="../../img/vida-silvestre.png" width="130px" style="margin-right:10px">
         </a>
         <!-- Toggle Btn-->
@@ -108,7 +108,7 @@ if(!isset($_SESSION['nombre'])){
                 <!-- ------------------------------------------------------- -->
                 <li class="nav-item  pr-3">
                   <a class="nav-link" href="alumno_index.php">
-                    Alumnos
+                   Materias Inscriptas
                   </a>
                   <!-- <ul class="dropdown-menu">
                      <li><a class="dropdown-item" href="inscripcion_alumno.php">Inscripcion Alumno</a></li>
@@ -138,19 +138,13 @@ if(!isset($_SESSION['nombre'])){
             ------------------------------------------------------- -->
             <li class="nav-item dropdown pr-3 ">
               <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Mesa y Acta
+              Finales
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="mesa_examen_add.php">Mesa de Examen</a></li>
-                <li><a class="dropdown-item" href="listadomesa.php">Listado de Mesa de Examen</a></li>
-                <!-- <li><a class="dropdown-item" href="acta_nota.php">Acta</a></li> -->
+                <li><a class="dropdown-item" href="#">Inscripcion Finales</a></li>
+                <li><a class="dropdown-item" href="#">Calificaciones</a></li>
               </ul>
             </li>
-            <!-- ------------------------------------------------------- -->
-            <li class="nav-item  pr-3">
-              <a class="nav-link" href="ciclo_lectivo.php">Cliclo lectivo</a>
-            </li>
-            <!-- ------------------------------------------------------- -->
           </ul>
           <!-- ------------------------------------------------------- -->
           <form class="form-inline d-flex justify-content-end">
@@ -178,4 +172,5 @@ if(!isset($_SESSION['nombre'])){
         </div>
       </div>
     </nav>
+  </div>
   </div>
