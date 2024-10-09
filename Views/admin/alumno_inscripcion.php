@@ -1,4 +1,5 @@
 <?php
+ob_start(); // Inicia el buffer de salida
 require 'navbar.php';
 require '../../conn/connection.php';
 ini_set('display_errors', 1);
@@ -16,13 +17,11 @@ $inscripciones_alumno = obtenerInscripcionesAlumno($conexion, $alumno_id);
 $ciclo = obtenerCicloLectivoActual($conexion);
 $select_ciclo = $ciclo['id_ciclo'] ?? '';
 
-$mensaje = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $mensaje = manejarInscripcion($conexion, $_POST);
-    if($mensaje=='error'){
-        $error="No puedes inscribirte a esta materia porque no has aprobado la correlativa.";
-        $mensaje='';        
-    }
+    $mensaje = manejarInscripcion($conexion, $_POST, $alumno_id);
+    $_SESSION['mensaje'] = $mensaje;
+    header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $alumno_id);
+    exit();
 }
 
 function obtenerNombreCompletoAlumno($conexion, $alumno_id) {
@@ -57,51 +56,54 @@ function obtenerCicloLectivoActual($conexion) {
 }
 
 function verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id) {
+    // Obtener todas las correlativas para la materia
     $stmt = $conexion->prepare("SELECT id_correlativa FROM correlativa WHERE id_materia = ?");
     $stmt->bind_param("i", $materia_id);
     $stmt->execute();
-    $correlativa = $stmt->get_result()->fetch_assoc();
-
-    // Si no hay correlativa, retorna verdadero (puede inscribirse)
-    if (!$correlativa || !$correlativa['id_correlativa']) {
-        return true; 
-    }
-
-    // Verificar la nota de la correlativa
-    $stmt = $conexion->prepare("SELECT n8 FROM nota WHERE id_persona = ? AND id_materia = ? AND estado = 'Activo'");
-    $stmt->bind_param("ii", $alumno_id, $correlativa['id_correlativa']);
-    $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        $nota = $result->fetch_assoc();
-        return $nota['n8'] >= 6; // Verificar si la calificación final es igual o mayor a 6
+    // Si no hay correlativas, se puede inscribir
+    if ($result->num_rows === 0) {
+        return true;
     }
-    return false; // Si no hay nota, no se puede inscribir
+
+    // Iterar sobre cada correlativa y verificar si está aprobada
+    while ($correlativa = $result->fetch_assoc()) {
+        $stmt = $conexion->prepare("SELECT n13 FROM nota WHERE id_persona = ? AND id_materia = ? AND estado = 'Activo'");
+        $stmt->bind_param("ii", $alumno_id, $correlativa['id_correlativa']);
+        $stmt->execute();
+        $nota_result = $stmt->get_result();
+
+        // Si la correlativa no tiene nota aprobada, retornar false
+        if ($nota_result->num_rows === 0) {
+            return false;
+        }
+
+        $nota = $nota_result->fetch_assoc();
+        if ($nota['n13'] < 6) {
+            return false; // Correlativa no aprobada
+        }
+    }
+    return true; // Todas las correlativas aprobadas
 }
 
-function manejarInscripcion($conexion, $data) {
-    $alumno_id = filter_input(INPUT_POST, 'alumno_id', FILTER_SANITIZE_NUMBER_INT);
+
+function manejarInscripcion($conexion, $data, $alumno_id) {
     $materia_id = filter_input(INPUT_POST, 'materia_id', FILTER_SANITIZE_NUMBER_INT);
     $ciclo_lectivo = filter_input(INPUT_POST, 'ciclo_lectivo', FILTER_SANITIZE_NUMBER_INT);
     $fecha_inscripcion = date('Y-m-d H:i:s');
 
-    if (!$alumno_id || !$materia_id || !$ciclo_lectivo) {
+    if (!$materia_id || !$ciclo_lectivo) {
         return "Datos de inscripción incompletos.";
     }
 
-    if (!verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id)) {
-        return "error";
-    }
-
-    // Comprobamos si el usuario es administrador
     $stmt = $conexion->prepare("SELECT id_rol FROM persona WHERE id_persona = ?");
     $stmt->bind_param("i", $alumno_id);
     $stmt->execute();
     $rol = $stmt->get_result()->fetch_assoc()['id_rol'];
 
     if ($rol != 3 && !verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id)) {
-        return "error";
+        return "No puedes inscribirte a esta materia porque no has aprobado la correlativa.";
     }
 
     $conexion->begin_transaction();
@@ -111,7 +113,7 @@ function manejarInscripcion($conexion, $data) {
                                     VALUES (?, ?, ?, 'Inscripto', ?) 
                                     ON DUPLICATE KEY UPDATE estado = 'Inscripto', fecha_inscripcion = ?");
         $stmt->bind_param("iiiss", $alumno_id, $materia_id, $ciclo_lectivo, $fecha_inscripcion, $fecha_inscripcion);
-        
+
         if ($stmt->execute()) {
             $conexion->commit();
             return "Inscripción realizada con éxito.";
@@ -124,6 +126,7 @@ function manejarInscripcion($conexion, $data) {
         return "Error: " . $e->getMessage();
     }
 }
+
 
 // Agrupar materias por año de cursado
 $materias_por_año = [];
@@ -190,48 +193,24 @@ foreach ($materias as $materia) {
                             </tbody>
                         </table>
                     <?php endforeach; ?>
+                    <?php if (isset($_SESSION['mensaje'])): ?>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    icon: 'info',
+                                    title: 'Resultado',
+                                    text: '<?php echo $_SESSION['mensaje']; ?>',
+                                    timer: null,
+                                    showConfirmButton: true
+                                });
+                            });
+                        </script>
+                        <?php unset($_SESSION['mensaje']); ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        <?php if ($mensaje): ?>
-            Swal.fire({
-                icon: '<?php echo strpos($mensaje, 'Error') !== false ? 'error' : 'success'; ?>',
-                title: '<?php echo strpos($mensaje, 'Error') !== false ? 'Error' : 'Éxito'; ?>',
-                text: '<?php echo htmlspecialchars($mensaje, ENT_QUOTES, 'UTF-8'); ?>',
-                timer: 1000,
-                showConfirmButton: false
-            }).then(() => {
-                const url = new URL(window.location);
-                url.searchParams.delete('mensaje');
-                window.history.replaceState(null, null, url);
-                location.reload();
-            });
-        <?php endif; ?>
-    });
-</script>
-
-<script>
-      document.addEventListener("DOMContentLoaded", function() {
-        <?php if ($error): ?>
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "<?php echo $error; ?>",
-          timer: 1000,
-          showConfirmButton: false,
-          confirmButtonColor: "#d33"
-        }).then(() => {
-            const url = new URL(window.location);
-                url.searchParams.delete('error');
-                window.history.replaceState(null, null, url);
-        });
-        <?php endif; ?>
-      });
-    </script>
-
-<?php require 'footer.php'; ?>
+<?
+ob_end_flush(); // Finaliza el buffer de salida

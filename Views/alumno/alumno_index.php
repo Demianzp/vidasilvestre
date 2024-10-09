@@ -1,6 +1,5 @@
 <?php
-ob_start(); // Inicia el buffer de salida
-//Aun no termino tengo que hacer y que recorra las materias corelativas 
+ob_start();
 require 'navbar.php';
 require '../../conn/connection.php';
 
@@ -58,26 +57,37 @@ function obtenerCicloLectivoActual($conexion) {
 }
 
 function verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id) {
+    // Obtener todas las correlativas para la materia
     $stmt = $conexion->prepare("SELECT id_correlativa FROM correlativa WHERE id_materia = ?");
     $stmt->bind_param("i", $materia_id);
     $stmt->execute();
-    $correlativa = $stmt->get_result()->fetch_assoc();
+    $result = $stmt->get_result();
 
-    if (!$correlativa || !$correlativa['id_correlativa']) {
+    // Si no hay correlativas, se puede inscribir
+    if ($result->num_rows === 0) {
         return true;
     }
 
-    $stmt = $conexion->prepare("SELECT n8 FROM nota WHERE id_persona = ? AND id_materia = ? AND estado = 'Activo'");
-    $stmt->bind_param("ii", $alumno_id, $correlativa['id_correlativa']);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Iterar sobre cada correlativa y verificar si está aprobada
+    while ($correlativa = $result->fetch_assoc()) {
+        $stmt = $conexion->prepare("SELECT n13 FROM nota WHERE id_persona = ? AND id_materia = ? AND estado = 'Activo'");
+        $stmt->bind_param("ii", $alumno_id, $correlativa['id_correlativa']);
+        $stmt->execute();
+        $nota_result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        $nota = $result->fetch_assoc();
-        return $nota['n8'] >= 6;
+        // Si la correlativa no tiene nota aprobada, retornar false
+        if ($nota_result->num_rows === 0) {
+            return false;
+        }
+
+        $nota = $nota_result->fetch_assoc();
+        if ($nota['n13'] < 6) {
+            return false; // Correlativa no aprobada
+        }
     }
-    return false;
+    return true; // Todas las correlativas aprobadas
 }
+
 
 function manejarInscripcion($conexion, $data, $alumno_id) {
     $materia_id = filter_input(INPUT_POST, 'materia_id', FILTER_SANITIZE_NUMBER_INT);
@@ -132,7 +142,7 @@ foreach ($materias as $materia) {
             <div class="card rounded-2 border-0">
                 <div class="card-header bg-dark text-white pb-0">
                     <h5 class="d-inline-block"><?php echo htmlspecialchars($nombre_completo); ?></h5>
-                    <a href="ver_nota.php?id=<?php echo $alumno_id; ?>" class="btn btn-info btn-sm float-right">Ver Notas</a>
+                    <a href="ver_nota.php?id=<?php echo $alumno_id; ?>" class="btn btn-info btn-sm float-right mb-2">Parciales-Notas</a>
                 </div>
                 <div class="card-body table-responsive">
                     <?php if (empty($materias)): ?>
@@ -193,7 +203,7 @@ foreach ($materias as $materia) {
                                     icon: 'info',
                                     title: 'Resultado',
                                     text: '<?php echo $_SESSION['mensaje']; ?>',
-                                    timer: 3000,
+                                    timer: null,
                                     showConfirmButton: true
                                 });
                             });
