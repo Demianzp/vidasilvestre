@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-10-2024 a las 01:52:16
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
+-- Tiempo de generación: 17-10-2024 a las 15:23:30
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,11 +29,22 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `acta` (
   `id_acta` int(11) NOT NULL,
-  `id_persona` int(11) DEFAULT NULL,
-  `id_mesa` int(11) DEFAULT NULL,
-  `id_ciclo` int(11) DEFAULT NULL,
-  `estado` varchar(11) DEFAULT NULL
+  `dni` int(11) NOT NULL,
+  `genero` varchar(11) NOT NULL,
+  `ape_nom` varchar(50) NOT NULL,
+  `escrito` varchar(11) NOT NULL,
+  `oral` varchar(11) NOT NULL,
+  `definitivo` varchar(11) NOT NULL,
+  `observacion` varchar(20) DEFAULT NULL,
+  `id_mesa` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `acta`
+--
+
+INSERT INTO `acta` (`id_acta`, `dni`, `genero`, `ape_nom`, `escrito`, `oral`, `definitivo`, `observacion`, `id_mesa`) VALUES
+(1, 44231783, 'Masculino', 'Perez Juan', '', '', '', 'dyyd', 0);
 
 -- --------------------------------------------------------
 
@@ -58,7 +69,8 @@ CREATE TABLE `alumno_materia` (
 
 INSERT INTO `alumno_materia` (`Id_alumno`, `id_persona`, `id_materia`, `id_ciclo`, `id_nota`, `cod_correlativa`, `estado`, `fecha_inscripcion`) VALUES
 (5, 7, 2, 1, NULL, NULL, 'Inscripto', '2024-10-04'),
-(6, 7, 3, 1, NULL, NULL, 'Inscripto', '2024-10-04');
+(6, 7, 3, 1, NULL, NULL, 'Inscripto', '2024-10-04'),
+(7, 9, 2, 1, NULL, NULL, 'Inscripto', '2024-10-16');
 
 -- --------------------------------------------------------
 
@@ -74,6 +86,13 @@ CREATE TABLE `asignar` (
   `fecha_b` date DEFAULT NULL,
   `Estado` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `asignar`
+--
+
+INSERT INTO `asignar` (`id_asignar`, `id_persona`, `id_materia`, `fecha_i`, `fecha_b`, `Estado`) VALUES
+(1, 13, 3, '2024-10-09', NULL, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -208,13 +227,23 @@ CREATE TABLE `mesa_examen` (
   `id_mesa` int(11) NOT NULL,
   `id_materia` int(11) DEFAULT NULL,
   `fecha` date DEFAULT NULL,
-  `nombre_mesa` varchar(20) DEFAULT NULL,
+  `nombre_mesa` varchar(30) DEFAULT NULL,
   `hora` time DEFAULT NULL,
   `id_ciclo` int(11) DEFAULT NULL,
-  `fecha_fin` date DEFAULT NULL,
   `id_tipo` int(11) DEFAULT NULL,
-  `estado` varchar(11) DEFAULT NULL
+  `estado` varchar(11) DEFAULT NULL,
+  `libro` varchar(20) NOT NULL,
+  `folio` int(11) DEFAULT NULL,
+  `id_t` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `mesa_examen`
+--
+
+INSERT INTO `mesa_examen` (`id_mesa`, `id_materia`, `fecha`, `nombre_mesa`, `hora`, `id_ciclo`, `id_tipo`, `estado`, `libro`, `folio`, `id_t`) VALUES
+(2, 3, '2024-10-18', 'mesa1', '16:00:00', 1, 1, 'Activo', '2', NULL, 6),
+(4, 4, '2024-10-21', 'mesa2', '16:00:00', 1, 1, 'Activo', '1', 5, 7);
 
 -- --------------------------------------------------------
 
@@ -251,7 +280,7 @@ INSERT INTO `nota` (`id`, `id_persona`, `id_materia`, `id_ciclo`, `n1`, `n2`, `n
 (69, 7, 2, 1, 1, 2, 3, 4.5, 10, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
 (70, 7, 1, 1, 1, 3, 2, 3, 4.5, 0, 2.3, 0, 0, 0, 0, 0, 0, 'activo'),
 (71, 7, 7778, 1, 0, 0, 0, 0, 0, 0, 0, 6.6, 0, 0, 0, 0, 0, 'activo'),
-(72, 7, 3, 1, 7, 2, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(72, 7, 3, 1, 7, 2, 90, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
 (73, 7, 4, 1, 7, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
 (74, 7, 5, 1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
 (75, 7, 5, 1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
@@ -308,7 +337,8 @@ INSERT INTO `persona` (`id_persona`, `nombre`, `apellido`, `fecha_nacimiento`, `
 (3, 'Facundo', 'Ramirez', '2014-06-20', 44231782, '26', 'aaadminjuan@gmail.com', '9 de julio y san juan', '2024-06-12', 'Argentina', 'Angaco', '123', 1, 'Masculino', NULL, NULL, 'Activo'),
 (7, 'Juan', 'Perez', '2014-06-20', 44231783, '26', 'adminjuan@gmail.com', '9 de julio y san juan', '2024-06-12', 'Argentina', 'Angaco', '123', 1, 'Masculino', NULL, NULL, 'Activo'),
 (9, 'maxi', 'olmos', '0000-00-00', 0, NULL, 'm@gmail.com', NULL, NULL, NULL, NULL, '123', 3, NULL, NULL, NULL, 'Activo'),
-(13, 'Demi', 'Perez', '2014-06-20', 44231783, '26', 'dem23@gmail.com', '9 de julio y san juan', '2024-06-12', 'Argentina', 'Angaco', '123456', 2, 'Masculino', 2332423, 'Preceptor', 'Activo');
+(13, 'Demi', 'Perez', '2014-06-20', 44231783, '26', 'dem23@gmail.com', '9 de julio y san juan', '2024-06-12', 'Argentina', 'Angaco', '123456', 2, 'Masculino', 2332423, 'Preceptor', 'Activo'),
+(14, 'dwe', 'ooo', '1998-10-02', 12555555, '7777777778', 'lucas@gmail.com', 'jf', '2024-10-16', 'Argentina', 'Jáchal', '123666', 2, 'Masculino', 1757, 'cer', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -350,6 +380,30 @@ INSERT INTO `tipo` (`id_tipo`, `nombre_tipo`) VALUES
 (2, 'Promocional'),
 (3, 'Libre');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tribunal`
+--
+
+CREATE TABLE `tribunal` (
+  `id_t` int(11) NOT NULL,
+  `presidente` varchar(50) NOT NULL,
+  `primer` varchar(50) DEFAULT NULL,
+  `segundo` varchar(50) DEFAULT NULL,
+  `fecha_1` date NOT NULL,
+  `fecha_2` date NOT NULL,
+  `observacion` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tribunal`
+--
+
+INSERT INTO `tribunal` (`id_t`, `presidente`, `primer`, `segundo`, `fecha_1`, `fecha_2`, `observacion`) VALUES
+(6, 'Demi Perez', '', '', '2024-10-18', '2024-10-18', ''),
+(7, 'dwe ooo', '', '', '2024-10-21', '2024-10-21', '');
+
 --
 -- Índices para tablas volcadas
 --
@@ -359,9 +413,7 @@ INSERT INTO `tipo` (`id_tipo`, `nombre_tipo`) VALUES
 --
 ALTER TABLE `acta`
   ADD PRIMARY KEY (`id_acta`),
-  ADD KEY `id_persona` (`id_persona`),
-  ADD KEY `id_mesa` (`id_mesa`),
-  ADD KEY `id_ciclo` (`id_ciclo`);
+  ADD UNIQUE KEY `id_mesa` (`id_mesa`);
 
 --
 -- Indices de la tabla `alumno_materia`
@@ -413,6 +465,7 @@ ALTER TABLE `materia`
 --
 ALTER TABLE `mesa_examen`
   ADD PRIMARY KEY (`id_mesa`),
+  ADD UNIQUE KEY `id_t` (`id_t`),
   ADD KEY `id_materia` (`id_materia`),
   ADD KEY `id_ciclo` (`id_ciclo`),
   ADD KEY `id_tipo` (`id_tipo`);
@@ -446,6 +499,12 @@ ALTER TABLE `tipo`
   ADD PRIMARY KEY (`id_tipo`);
 
 --
+-- Indices de la tabla `tribunal`
+--
+ALTER TABLE `tribunal`
+  ADD PRIMARY KEY (`id_t`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -453,19 +512,19 @@ ALTER TABLE `tipo`
 -- AUTO_INCREMENT de la tabla `acta`
 --
 ALTER TABLE `acta`
-  MODIFY `id_acta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_acta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `alumno_materia`
 --
 ALTER TABLE `alumno_materia`
-  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `asignar`
 --
 ALTER TABLE `asignar`
-  MODIFY `id_asignar` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_asignar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `ciclo_lectivo`
@@ -495,7 +554,7 @@ ALTER TABLE `materia`
 -- AUTO_INCREMENT de la tabla `mesa_examen`
 --
 ALTER TABLE `mesa_examen`
-  MODIFY `id_mesa` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_mesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `nota`
@@ -507,13 +566,19 @@ ALTER TABLE `nota`
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
   MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `tribunal`
+--
+ALTER TABLE `tribunal`
+  MODIFY `id_t` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

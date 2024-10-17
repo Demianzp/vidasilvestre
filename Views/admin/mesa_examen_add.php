@@ -14,9 +14,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_materia = $_POST['materia'];
     $nombre_mesa = isset($_POST['nombre_mesa']) ? $_POST['nombre_mesa'] : '';
     $fecha = $_POST['fecha'];
-    $fecha_fin = $_POST['fecha_fin'];
+    $libro = $_POST['libro'];
+    $folio = $_POST['folio'];
     $hora = $_POST['hora'];
     $id_tipo = $_POST['id_tipo'];
+    $id_t = $_POST['tribunal'];
     $ciclo_lectivo = $_POST['ciclo_lectivo'];
     $estado = "Activo";
 
@@ -26,15 +28,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Inserta la mesa de examen en la base de datos
         try {
-            $stmt = $db->prepare("INSERT INTO mesa_examen (nombre_mesa, id_materia, id_ciclo, fecha, fecha_fin, hora, estado, id_tipo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $db->prepare("INSERT INTO mesa_examen (nombre_mesa, id_materia, id_ciclo, fecha, folio, hora, estado, id_tipo, libro, id_t) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->bindParam(1, $nombre_mesa);
             $stmt->bindParam(2, $id_materia);
             $stmt->bindParam(3, $ciclo_lectivo);
             $stmt->bindParam(4, $fecha);
-            $stmt->bindParam(5, $fecha_fin);
+            $stmt->bindParam(5, $folio);
             $stmt->bindParam(6, $hora);
             $stmt->bindParam(7, $estado);
             $stmt->bindParam(8, $id_tipo);
+            $stmt->bindParam(9, $libro);
+            $stmt->bindParam(10, $id_t);
             if ($stmt->execute()) {
                 $mensaje = 'Registro cargado correctamente.';
             } else {
@@ -47,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 // Redirigir solo si hay mensajes para enviar
 if ($mensaje || $error) {
-    header("Location: listadomesa.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
+    header("Location: mesa_alumno.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
     exit();
 }
 ?>
@@ -88,16 +92,12 @@ if ($mensaje || $error) {
                             </select>
                         </div>
 
-                        <div class="row">
-                            <div class="form-group col-sm-12 col-md-6 mb-3">
-                                <label for="fecha">Fecha Inicio:</label>
+                        
+                        <div class="form-group mb-3">
+                                <label for="fecha">Fecha:</label>
                                 <input type="date" name="fecha" autocomplete="off" class="form-control" required>
                             </div>
-                            <div class="form-group col-sm-12 col-md-6 mb-3">
-                                <label for="fecha_fin">Fecha Fin:</label>
-                                <input type="date" name="fecha_fin" autocomplete="off" class="form-control" required>
-                            </div>
-                        </div>
+                    
 
                         <div class="row">
                         <div class="form-group col-sm-12 col-md-6 mb-3">
@@ -119,7 +119,31 @@ if ($mensaje || $error) {
                                 ?>
                             </select>
                         </div>
+                        <div class="row">
+                            <div class="form-group col-sm-12 col-md-6 mb-3">
+                                <label for="libro">Libro:</label>
+                                <input type="number" name="libro" autocomplete="off" class="form-control" >
+                            </div>
+                            <div class="form-group col-sm-12 col-md-6 mb-3">
+                                <label for="folio">Folio:</label>
+                                <input type="number" name="folio" autocomplete="off" class="form-control" >
+                            </div>
                         </div>
+                       
+                        </div>
+                        <div class="form-group">
+                                <label for="tribunal"><strong>Tribunal:</strong></label>
+                                <select name="tribunal" class="form-control" >
+                                    <option disabled selected hidden>Seleccione el tribunal</option>
+                                    <?php
+                                    $sqlt = $conexion->query("SELECT * FROM tribunal");
+                                    while ($resultadot = $sqlt->fetch_assoc()) {
+                                        echo "<option value='" . $resultadot["id_t"] . "'>" . $resultadot["presidente"] . " / " . $resultadot["fecha_1"] . " </option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                      
                         <input type="submit" class="btn btn-primary w-100" value="Agregar Mesa">
                     </form>
                 </div>
