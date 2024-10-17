@@ -1,33 +1,6 @@
 <?php
 require '../../conn/connection.php';
-$infoMessage = '';
-$errorMessage = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['id'])) {
-        $id_alumno = $_POST['id'];
-        $nombre = $_POST['nombre'];
-        $apellido = $_POST['apellido'];
-        $dni = $_POST['dni'];
-        $email = $_POST['email'];
-        $celular = $_POST['celular'];
-        $contrasena = $_POST['contrasena']; // Nuevo campo de contraseña
-        $consulta_actualizar = $db->prepare("UPDATE persona SET nombre = :nombre, apellido = :apellido, DNI = :dni, email_correo = :email, celular = :celular, contraseña = :contrasena WHERE id_persona = :id");
-        $consulta_actualizar->bindParam(':id', $id_alumno, PDO::PARAM_INT);
-        $consulta_actualizar->bindParam(':nombre', $nombre, PDO::PARAM_STR);
-        $consulta_actualizar->bindParam(':apellido', $apellido, PDO::PARAM_STR);
-        $consulta_actualizar->bindParam(':dni', $dni, PDO::PARAM_STR);
-        $consulta_actualizar->bindParam(':email', $email, PDO::PARAM_STR);
-        $consulta_actualizar->bindParam(':celular', $celular, PDO::PARAM_STR);
-        $consulta_actualizar->bindParam(':contrasena', $contrasena, PDO::PARAM_STR);
-        if ($consulta_actualizar->execute()) {
-            $infoMessage = 'Registro modificado correctamente';
-        } else {
-            $errorMessage = 'Error al editar el registro: ' . implode(', '. $consulta_actualizar->errorInfo());
-        }
-    } else {
-        $errorMessage = 'Falta el ID del alumno en el formulario.';
-    }
-}
+
 if (isset($_GET['id'])) {
     $id_alumno = $_GET['id'];
     $consulta_alumno = $db->prepare("SELECT * FROM persona WHERE id_persona = :id");
@@ -41,65 +14,133 @@ if (isset($_GET['id'])) {
 } else {
     die('Ha ocurrido un error');
 }
-// Redirigir solo si hay mensajes para enviar
-if ($infoMessage || $errorMessage) {
-    header("Location: alumno_index.php?mensaje=" . urlencode($infoMessage) . "&error=" . urlencode($errorMessage));
-    exit();
-}
 ?>
-<!-- ------------------------------------------------------------ -->
+   <!-- CSS en línea dentro del archivo PHP -->
+   
 <?php require 'navbar.php'; ?>
+
+      <body>
+        
+    
     <div class="container mt-3">
         <div class="row m-auto">
             <div class="col-sm">
                 <div class="card rounded-2 border-0">
-                    <h5 class="card-header bg-dark text-white">Edición de Alumnos</h5>
+                    <!-- Aquí puedes agregar el logo y otros datos que quieras que se muestren para la impresión -->
+                    <div class="text-center mb-4">
+                        <br>
+                        <img src="../../img/LOGO.png" alt="Logo" style="max-width: 50px;">
+                        <h5>Instituto Superior Vida Silvestre</h5>
+                    </div>
+
                     <div class="card-body bg-light">
-                        <form method="post" class="form" action="">
-                            <input type="hidden" class="form-control" name="id" value="<?php echo htmlspecialchars($alumno['id_persona']); ?>">
-                            <!-------------------------------------------------------------->
-                            <label>Nombres:</label>
-                            <input type="text" class="form-control" required name="nombre" autocomplete="off" value="<?php echo htmlspecialchars($alumno['nombre']); ?>" maxlength="45">
-                            <!-------------------------------------------------------------->
-                            <label>Apellidos:</label>
-                            <input type text="text" class ="form-control" required name="apellido" autocomplete="off" value="<?php echo htmlspecialchars($alumno['apellido']); ?>" maxlength="45">
-                            <!-------------------------------------------------------------->
-                            <label>DNI:</label>
-                            <input type="text" class="form-control" required name="dni" id="dni" autocomplete="off" value="<?php echo htmlspecialchars($alumno['DNI']); ?>" maxlength="8">
-                            <span id="dniOK"></span>
-                            <br>
-                            <!-------------------------------------------------------------->
-                            <label>Correo:</label>
-                            <input type="email" class="form-control" required name="email" id="email" autocomplete="off" value="<?php echo htmlspecialchars($alumno['email_correo']); ?>" maxlength="45">
-                            <span id="emailOK"></span>
-                            <br>
-                            <!-------------------------------------------------------------->
-                            <label>Celular:</label>
-                            <input type="tel" class="form-control" required name="celular" id="celular" autocomplete="off" value="<?php echo htmlspecialchars($alumno['celular']); ?>" maxlength="10">
-                            <span id="celularOK"></span>
-                            <br>
-                            <!-------------------------------------------------------------->
-                            <!-- Agregar un campo para la contraseña -->
-                            <label>Contraseña:</label>
-                            <div class="input-group">
-                                <input class="form-control bg-light" type="password" name="contrasena" id="password" required value="<?php echo htmlspecialchars($alumno['contraseña']); ?>" maxlength="10">
-                                <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
-                                    <i class="fas fa-eye p-1"></i>
-                                </button>
-                            </div>                            
-                            <!-------------------------------------------------------------->
-                            <br>                            
-                            <div class="mt-3">
-                                <button type="submit" class="btn btn-primary" name="modificar" onclick="return confirm('¿Seguro desea guardar los cambios?')">Guardar Cambios</button>
-                                <a class="btn btn-warning" href="alumno_index.php">Ver Listado</a>                            
-                            </div>  
-                        </form>
+                        <div class="form-group">
+                            <label><strong>Nombres y Apellidos:</strong></label>
+                            <p><?php echo htmlspecialchars($alumno['nombre']); ?>  <?php echo htmlspecialchars($alumno['apellido']); ?></p>
+                        </div>
+                        <div class="form-group">
+                            <label><strong>DNI:</strong></label>
+                            <p><?php echo htmlspecialchars($alumno['DNI']); ?></p>
+
+                            <label><strong>Fecha de nacimiento:</strong></label>
+                            <p><?php echo htmlspecialchars($alumno['fecha_nacimiento']); ?></p>
+
+                        </div>
+
+                      
+                        <div class="form-group">
+                            
+                        <label><strong>País:</strong></label>
+                            <p><?php echo htmlspecialchars($alumno['pais']); ?></p>
+
+                            <label><strong>Departamento:</strong></label>
+                            <p><?php echo htmlspecialchars($alumno['ciudad']); ?></p>
+
+                            <label><strong>Dirección:</strong></label>
+                            <p><?php echo htmlspecialchars($alumno['direccion']); ?></p>
+
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <label><strong>Correo:</strong></label>
+                            <p><?php echo htmlspecialchars($alumno['email_correo']); ?></p>
+                        </div>
+                        <div class="form-group">
+                            <label><strong>Celular:</strong></label>
+                            <p><?php echo htmlspecialchars($alumno['celular']); ?></p>
+                        </div>
+                        <br>
+                        <div class="mt-3">
+                            <a class="btn btn-warning" href="alumno_index.php">Regresar al Listado</a>
+                            <button class="btn btn-primary" onclick="window.print()">Imprimir</button>   
+                            <p class="nota" style="font-size: 12px; color: gray;">Nota: Asegúrate de que la opción "Imprimir encabezados y pies de página" esté desactivada en tu configuración de impresión para no mostrar la dirección del navegador.</p>                      
+                        </div>  
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="../../js/contraseña.js"></script>
-    <script src="../../js/validacion.js"></script>
-    <script src="../../js/validacion2.js"></script>
-    <?php require 'footer.php'; ?>
+   
+   
+
+</body>
+<style>
+@media print {
+    /* Ajusta los márgenes de la página */
+    @page {
+        margin: 10mm;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-size: 12px; /* Ajusta el tamaño de la fuente */
+    }
+
+    /* Oculta elementos innecesarios para la impresión */
+    .btn, .navbar, .footer, .nota {
+        display: none;
+    }
+
+    img {
+        max-width: 100px; /* Ajusta el tamaño del logo */
+        margin-bottom: 10px; /* Añadir algo de espacio entre el logo y el título */
+    }
+
+    h5, p {
+        text-align: center; /* Centra los títulos y párrafos para un mejor formato */
+    }
+
+    /* Elimina bordes innecesarios */
+    .card {
+        border: none;
+    }
+
+    .form-group {
+        margin-bottom: 5px; /* Reduce el espacio entre los elementos */
+    }
+
+    label {
+        font-weight: bold;
+        margin-right: 5px;
+        display: inline-block; /* Asegura que las etiquetas estén en línea */
+    }
+
+    p {
+        display: inline-block;
+        margin: 0;
+    }
+
+    .container {
+        width: 100%; /* Usa todo el ancho disponible */
+        padding: 0;
+    }
+
+    /* Opcional: Ajusta el tamaño de los elementos */
+    .form-group p {
+        font-size: 12px; /* Tamaño del texto de los párrafos */
+    }
+}
+</style>
