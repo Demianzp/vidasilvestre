@@ -19,6 +19,7 @@ if(!isset($_SESSION['id_persona'])){
   <!-- ---------FIN ARCHIVO CSS----------- -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  
   <!-- ------------DATATABLES----- -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
@@ -143,13 +144,18 @@ if(!isset($_SESSION['id_persona'])){
               </a>
               <ul class="dropdown-menu">
                 <!-- <li><a class="dropdown-item" href="nota_eva.php">Registra una Nota</a></li> -->
-                <li><a class="dropdown-item" href="nota_materia.php">Registra por Materia</a></li>
+                <li><a class="dropdown-item" href="nota_materia.php" >Registra por Materia</a></li>
                 <!-- <li><a class="dropdown-item" href="nota_alumno.php">Registra por Alumno</a></li> -->
               </ul>
             </li>
             <!-- ------------------------------------------------------- -->
             <li class="nav-item dropdown pr-3 ">
-              <a class="nav-link " href="listadomesa.php">Mesa de examen</a>
+              <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mesa de examen</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="listadomesa.php">Gestionar Tribunales</a></li> 
+                <li><a class="dropdown-item" href="mesa_alumno.php">Gestionar mesa y acta</a></li>
+                <li><a class="dropdown-item" href="mesa_acta.php">Gestionar notas</a></li>
+              </ul>
             </li>
             <!-- ------------------------------------------------------- -->
             <li class="nav-item dropdown pr-3 ">
@@ -157,7 +163,7 @@ if(!isset($_SESSION['id_persona'])){
             </li>
             <!-- ------------------------------------------------------- -->
             <li class="nav-item  pr-3">
-              <a class="nav-link" href="ciclo_lectivo.php">Cliclo lectivo</a>
+              <a class="nav-link" href="ciclo_lectivo.php">Ciclo lectivo</a>
             </li>
             <!-- ------------------------------------------------------- -->
           </ul>     

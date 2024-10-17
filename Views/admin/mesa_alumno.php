@@ -7,11 +7,20 @@ if(isset($_GET['txtID'])){
     $sentencia->bindParam(':id',$txtID);
     $sentencia->execute();
     $mensaje="Registro Eliminado";
-    header("Location:listadomesa.php?mensaje=".$mensaje);
+    header("Location:mesa_alumno.php?mensaje=".$mensaje);
   }
 
-// Realiza la consulta para obtener 
-$query ="SELECT * FROM tribunal";
+// Realiza la consulta para obtener las mesas de examen
+$query = "SELECT mesa_examen.*, 
+                 materia.nombre AS nombre_materia, 
+                 ciclo_lectivo.nombre_ciclo,
+                 nombre_tipo AS nombre_tipo,
+                 tribunal.presidente
+          FROM mesa_examen 
+          INNER JOIN materia ON mesa_examen.id_materia = materia.id_materia
+          LEFT JOIN ciclo_lectivo ON mesa_examen.id_ciclo = ciclo_lectivo.id_ciclo
+           LEFT JOIN tribunal ON mesa_examen.id_t = tribunal.id_t
+          LEFT JOIN tipo ON mesa_examen.id_tipo = tipo.id_tipo WHERE  mesa_examen.estado= 'Activo'";
 $result = $db->query($query);
 ?>
 <!-- --------------------------------------------------- -->
@@ -19,8 +28,9 @@ $result = $db->query($query);
     <div class="container mt-3">
         <div class="card rounded-2 border-0">
             <di class="card-header pb-0 bg-dark text-white ">
-                <h5 class="card-header bg-dark text-white">Gestión de tribunal
-                <a class="btn btn-warning float-right mb-2" href="mesa_tribunal.php">Agregar Tribunal</a>
+                <h5 class="card-header bg-dark text-white"> Mesas de Examen 
+                <a class="btn btn-warning float-right mb-2" href="mesa_examen_add.php">Agregar Mesa</a>
+                <a class="btn btn-primary float-right mb-2" href="alum_aconvocar.php">Agregar Alumnos</a>
                     </h5>
             </di>
             <div class="card-body table-responsive">
@@ -35,11 +45,15 @@ $result = $db->query($query);
                 <table id="example" class="table table-striped table-bordered  " cellspacing="0" width="100%">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Presidente</th>
-                            <th>Primer vocal</th>
-                            <th>Segundo vocal</th>
-                            <th>Fecha Inicio</th>
-                            <th>Fecha Fin</th>
+                            <th>Nombre de Mesa</th>
+                            <th>Presidente de mesa</th>
+                            <th>Materia</th>
+                            <th>Hora</th>
+                            <th>Fecha </th>
+                            <th>Libro</th>
+                            <th>Folio</th>
+                            <th>Ciclo Lectivo</th>
+                            <th>Tipo</th>
                             <th>Acciones </th>
                         </tr>
                     </thead>
@@ -47,18 +61,22 @@ $result = $db->query($query);
                         <?php
                         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                             echo "<tr>";
+                            echo "<td>" . $row['nombre_mesa'] . "</td>";
                             echo "<td>" . $row['presidente'] . "</td>";
-                            echo "<td>" . $row['primer'] . "</td>";
-                            echo "<td>" . $row['segundo'] . "</td>";
-                            echo "<td>" . $row['fecha_1'] . "</td>";
-                            echo "<td>" . $row['fecha_2'] . "</td>";
+                            echo "<td>" . $row['nombre_materia'] . "</td>";
+                            echo "<td>" . $row['hora'] . "</td>";
+                            echo "<td>" . $row['fecha'] . "</td>";
+                            echo "<td>" . $row['libro'] . "</td>";
+                            echo "<td>" . $row['folio'] . "</td>";
+                            echo "<td>" . $row['nombre_ciclo'] . "</td>";
+                            echo "<td>" . $row['nombre_tipo'] . "</td>";    
                         ?>
                         <td class="text-center">
                                                     <div class="btn-group">
-                                                        <a href="mesa_edit.php?id=<?php echo $row['id_t']; ?>" class="btn btn-warning btn-sm" title="Editar" role="button">
+                                                        <a href="mesa_edit.php?id=<?php echo $row['id_mesa']; ?>" class="btn btn-warning btn-sm" title="Editar" role="button">
                                                             <i class="fas fa-edit"></i>
                                                         </a>                                                         
-                                                        <a href="javascript:eliminar5(<?php echo $row['id_t'];?>)" class="btn btn-danger btn-sm" title="Borrar" role="button">
+                                                        <a href="javascript:eliminar5(<?php echo $row['id_mesa'];?>)" class="btn btn-danger btn-sm" title="Borrar" role="button">
                                                             <i class="fas fa-trash"></i>
                                                         </a>
                                                     </div>  
