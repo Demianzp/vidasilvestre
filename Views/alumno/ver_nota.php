@@ -5,7 +5,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$alumno_id = isset($_GET['id']) ? $_GET['id'] : null;
+
+
+$alumno_id = $_SESSION['id_persona'];
+
 
 // Función para obtener las notas
 function obtenerNotas($conexion, $alumno_id, $materia_id, $ciclo_id)
@@ -28,11 +31,11 @@ if ($alumno_id) {
     $result_alumno = $stmt_alumno->get_result();
 
     if ($result_alumno->num_rows > 0) {
-        $alumno = $result_alumno->fetch_assoc();
-        $nombre_completo = htmlspecialchars($alumno['nombre'] . ' ' . $alumno['apellido']);
-    } else {
-        $nombre_completo = "Alumno no encontrado";
-    }
+     $alumno = $result_alumno->fetch_assoc();
+     $nombre_completo = htmlspecialchars($alumno['nombre'] . ' ' . $alumno['apellido']);
+ } else {
+     $nombre_completo = "Alumno no encontrado";
+ }
 
     // Obtener el ciclo lectivo actual
     $sql_ciclo = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 1 LIMIT 1";
@@ -75,9 +78,9 @@ if ($alumno_id) {
                 });
               </script>";
     }
-} else {
-    echo "ID de alumno no especificado.";
-    exit;
+     } else {
+         echo "ID de alumno no especificado.";
+         exit;
 }
 
 //--------------BARRA DE CICLO LECTIVO----------------------
@@ -112,7 +115,7 @@ if ($alumno_id) {
                     </div>
                 </div>
                 <div class="card-body table-responsive">
-                    <table id="nota" class="table table-striped table-sm">
+                    <table id="" class="table table-striped table-sm">
                         <thead class="thead-dark">
                             <tr>
                                 <th>ID</th>

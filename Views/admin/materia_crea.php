@@ -8,16 +8,15 @@ function insertarMateria($db, $nombre, $descripcion, $horas, $num_resolucion, $p
         $stmt->execute([$nombre, $descripcion, $horas, $num_resolucion, $plan_estudio, $año_cursado, $id_tipo]);
         $materia_id = $db->lastInsertId();
 
-        if (isset($_POST['correlativas'])) {
+        if (!empty($_POST['correlativas'])) {
             $correlativas = $_POST['correlativas'];
             foreach ($correlativas as $correlativa) {
                 $stmt = $db->prepare("INSERT INTO correlativa (id_materia, id_correlativa) VALUES (?, ?)");
                 $stmt->execute([$materia_id, $correlativa]);
             }
-            $mensaje = "Materia ingresada con éxito. Correlativas guardadas.";
-        } else {
-            $mensaje = "Materia ingresada con éxito. No se agregaron correlativas.";
         }
+        $mensaje = "Materia ingresada con éxito.";        
+        
     } catch (PDOException $e) {
         $error = "Error al ingresar Materia: " . $e->getMessage();
     }
@@ -87,6 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmar'])) {
                                     <option value="" disabled selected>Seleccione el Cuatrimestre</option>
                                     <option value="1">1° Cuatrimestre</option>
                                     <option value="2">2° Cuatrimestre</option>
+                                    <option value="3">3° Anual</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -128,15 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmar'])) {
                                         <?php
                                         }
                                         ?>
-                                         <!-- Opción para no agregar correlativa -->
-                                            <tr>
-                                                <td colspan="3">
-                                                    <div class="form-check">
-                                                        <input type="checkbox" class="form-check-input" id="noCorrelativa" value="no">
-                                                        <label class="form-check-label" for="noCorrelativa">No agregar correlativa</label>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                        
                                     </tbody>
                                 </table>
                                 <button type="button" class="btn btn-primary float-right" id="continuarBtn">Continuar</button>

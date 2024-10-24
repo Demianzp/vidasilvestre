@@ -34,14 +34,7 @@ $result = $db->query($query);
                     </h5>
             </di>
             <div class="card-body table-responsive">
-                <?php
-                if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
-                    echo '<div class="alert alert-success"role="alert">' . htmlspecialchars($_GET['mensaje']) . '</div>';
-                }
-                if (isset($_GET['error']) && !empty($_GET['error'])) {
-                    echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['error']) . '</div>';
-                }
-                ?>
+               
                 <table id="example" class="table table-striped table-bordered  " cellspacing="0" width="100%">
                     <thead class="thead-dark">
                         <tr>

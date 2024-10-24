@@ -1,27 +1,33 @@
 <?php
 require '../../conn/connection.php';
 //-------------BORRADO------------------ 
-if(isset($_GET['txtID'])){
-    $txtID=(isset($_GET['txtID']))?$_GET['txtID']:"";
-    $sentencia=$db->prepare("UPDATE persona SET estado = 'Inactivo' WHERE id_persona = :id" );
-    $sentencia->bindParam(':id',$txtID);
+if (isset($_GET['txtID'])) {
+    $txtID = (isset($_GET['txtID'])) ? $_GET['txtID'] : "";
+    $sentencia = $db->prepare("UPDATE persona SET estado = 'Inactivo' WHERE id_persona = :id");
+    $sentencia->bindParam(':id', $txtID);
     $sentencia->execute();
-    $mensaje="Registro Administrador Eliminado";
-    header("Location:admin_index.php?mensaje=".$mensaje);
-  }
+    $mensaje = "Registro Administrador Eliminado";
+    header("Location:admin_index.php?mensaje=" . $mensaje);
+}
+//<!-- ------------------------------------------ -->
 //<!-- ------------------------------------------ -->
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recolecta datos del formulario
     $nombre = $_POST["nombre"];
     $apellido = $_POST["apellido"];
+    $dni  = $_POST["dni"];
     $email = $_POST["email"];
     $contrasena = $_POST["contrasena"];
-    $genero = $_POST["genero"]; // Nuevo campo
+    $genero = $_POST["genero"];
+    $celular = $_POST["celular"];
+    $direccion = $_POST["direccion"];
+    $ciudad = $_POST["ciudad"];
+    $fecha_nacimiento = $_POST["fecha_nacimiento"];
     $estado = "Activo"; // Valor predeterminado para estado
     $id_rol = "3"; // Valor predeterminado para administrador
-    $pais="Argentina";
-
+    $pais = "Argentina"; // Valor predeterminado
     $error = "";
+
     try {
         // Verificar si el correo electrónico ya existe
         $sql_check_email = "SELECT COUNT(*) FROM persona WHERE email_correo = :email";
@@ -40,18 +46,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         } else {
             // Inserta datos en la base de datos
-            $sql = "INSERT INTO persona (nombre, apellido, email_correo, contraseña, id_rol, estado, fecha_ingreso, genero,pais) 
-                    VALUES (:nombre, :apellido, :email, :contrasena, :id_rol, :estado, NOW(), :genero , :pais)";
+            $sql = "INSERT INTO persona 
+                    (nombre, apellido,DNI ,email_correo, contraseña, id_rol, estado, fecha_ingreso, genero, pais, celular, direccion, ciudad, fecha_nacimiento) 
+                    VALUES 
+                    (:nombre, :apellido, :dni ,:email, :contrasena, :id_rol, :estado, NOW(), :genero, :pais, :celular, :direccion, :ciudad, :fecha_nacimiento)";
 
             $stmt = $db->prepare($sql);
             $stmt->bindParam(':nombre', $nombre);
             $stmt->bindParam(':apellido', $apellido);
+            $stmt->bindParam(':dni', $dni);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':contrasena', $contrasena);
             $stmt->bindParam(':id_rol', $id_rol);
             $stmt->bindParam(':estado', $estado);
             $stmt->bindParam(':genero', $genero);
             $stmt->bindParam(':pais', $pais);
+            $stmt->bindParam(':celular', $celular);
+            $stmt->bindParam(':direccion', $direccion);
+            $stmt->bindParam(':ciudad', $ciudad);
+            $stmt->bindParam(':fecha_nacimiento', $fecha_nacimiento);
 
             if ($stmt->execute()) {
                 header("Location: admin_index.php?mensaje=" . urlencode("Administrador ingresado con éxito."));
@@ -133,82 +146,140 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <h5 class="card-header bg-dark text-white">Inscripción de Administrador</h5>
                         <div class="card-body bg-light">
                             <?php
-                            // Recupera el mensaje de error y los datos del formulario desde la URL
+                            /*Recupera el mensaje de error y los datos del formulario desde la URL
                             $error = isset($_GET["error"]) ? $_GET["error"] : "";
                             $nombre = isset($_GET["nombre"]) ? $_GET["nombre"] : "";
                             $apellido = isset($_GET["apellido"]) ? $_GET["apellido"] : "";
                             $email = isset($_GET["email"]) ? $_GET["email"] : "";
-                            $genero="";
+                            $genero = "";*/
                             ?>
-                            <form id="formulario" action="" method="post" enctype="multipart/form-data">
-                                <!-- --------------------------------- -->
-                                <div class="form-group">
-                                    <label for="nombre">Nombre:</label>
-                                    <input type="text" class="form-control" name="nombre" value="<?php echo htmlspecialchars($nombre); ?>" autocomplete="off" placeholder="Ingrese Nombre(s)" required>
+                            <form id="formulario" action="" method="post">
+                                <!-- Primera parte -->
+                                <div id="parte1">
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre:</label>
+                                        <input type="text" class="form-control" name="nombre" value="<?php echo htmlspecialchars($nombre); ?>" placeholder="Ingrese Nombre" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="apellido">Apellido:</label>
+                                        <input type="text" class="form-control" name="apellido" value="<?php echo htmlspecialchars($apellido); ?>" placeholder="Ingrese Apellido" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dni">DNI:</label>
+                                        <input type="text" class="form-control" name="dni" id="dni" placeholder="Ingrese su DNI" required>
+                                        <span id="dniOK"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                                        <input type="date" class="form-control" name="fecha_nacimiento" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email">Email:</label>
+                                        <input type="email" class="form-control" name="email" id="email" value="<?php echo htmlspecialchars($email); ?>" autocomplete="off" placeholder="Ingrese su email" required>
+                                        <span id="emailOK"></span>
+                                    </div>
                                 </div>
-                                <!-- --------------------------------- -->
+
                                 <div class="form-group">
-                                    <label for="apellido">Apellido:</label>
-                                    <input type="text" class="form-control" name="apellido" value="<?php echo htmlspecialchars($apellido); ?>" autocomplete="off" placeholder="Ingrese Apellido(s)" required>
+                                    <label for="passwordd">Contraseña:</label>
+                                    <div class="input-group">
+                                        <input class="form-control bg-light" type="password" placeholder="Contraseña" name="passwordd" id="passwordd" autocomplete="off" required />
+                                        <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
+                                            <i class="fas fa-eye p-1"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                <label for="genero">Género:</label>
-                            <select name="genero" id="genero" autocomplete="off" class="form-control" required>
-                                <option value="" disabled <?php echo ($genero == "") ? "selected" : ""; ?>>Seleccione su Género</option>
-                                <option value="Masculino" <?php echo ($genero == "Masculino") ? "selected" : ""; ?>>Masculino</option>
-                                <option value="Femenino" <?php echo ($genero == "Femenino") ? "selected" : ""; ?>>Femenino</option>
-                                <option value="Otros" <?php echo ($genero == "Otros") ? "selected" : ""; ?>>Otros</option>
-                            </select>
-                                </div>
-                                <!-- --------------------------------- -->
-                                <div class="form-group">
-                                    <label for="email">Email:</label>
-                                    <input type="email" class="form-control" name="email" id="email" value="<?php echo htmlspecialchars($email); ?>" autocomplete="off" placeholder="Ingrese su correo electronico" required>
-                                    <span id="emailOK"></span>
-                                </div>
-                                <!-- --------------------------------- -->
-                                <div class="form-group">
-                                <label for="contrasena">Contraseña:</label>
-                            <div class="input-group">
-                                <input class="form-control bg-light" type="password" placeholder="Contraseña" name="contrasena" id="passwordd" autocomplete="off" required />
-                                <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
-                                    <i class="fas fa-eye p-1"></i>
-                                </button>
-                            </div>
-                                </div>
-                                <!-- --------------------------------- -->
-                               
-                                <!-- --------------------------------- -->
-                                <button type="button" class="btn btn-primary float-right mb-3" id="guardarBtn" onclick="validarFormulario()">Guardar</button>
-                                <div id="confirmacion" style="display: none;" class="mb-3">
-                                    <p>¿Seguro desea guardar los datos?</p>
-                                    <button type="button" class="btn btn-success" id="confirmarBtn">Sí</button>
-                                    <button type="button" class="btn btn-danger" id="cancelarBtn">No</button>
+                                <button type="button" class="btn btn-primary" id="btnContinuar" onclick="mostrarSegundaParte()">Siguiente</button>
+
+
+
+                                <!-- Segunda parte -->
+                                <div id="parte2" style="display:none;">
+                                    <div class="form-group">
+                                        <label for="genero">Género:</label>
+                                        <select name="genero" class="form-control" required>
+                                            <option value="" disabled selected>Seleccione su Género</option>
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
+                                            <option value="Otros">Otros</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="celular">Celular:</label>
+                                        <input type="tel" class="form-control" name="celular" id="celular" autocomplete="off" placeholder="Ingrese Telefono" required>
+                                        <span id="celularOK"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ciudad">Ciudad:</label>
+                                        <select name="ciudad" id="ciudad" class="form-control" autocomplete="off" required>
+                                            <option value="" disabled <?php echo ($ciudad == "") ? "selected" : ""; ?>>Seleccione un departamento de San Juan</option>
+                                            <option value="Albardón" <?php echo ($ciudad == "Albardon") ? "selected" : ""; ?>>Albardón</option>
+                                            <option value="Angaco" <?php echo ($ciudad == "Angaco") ? "selected" : ""; ?>>Angaco</option>
+                                            <option value="Calingasta" <?php echo ($ciudad == "Calingasta") ? "selected" : ""; ?>>Calingasta</option>
+                                            <option value="Caucete" <?php echo ($ciudad == "Caucete") ? "selected" : ""; ?>>Caucete</option>
+                                            <option value="Chimbas" <?php echo ($ciudad == "Chimbas") ? "selected" : ""; ?>>Chimbas</option>
+                                            <option value="Capital" <?php echo ($ciudad == "Capital") ? "selected" : ""; ?>>Capital</option>
+                                            <option value="Iglesia" <?php echo ($ciudad == "Iglesia") ? "selected" : ""; ?>>Iglesia</option>
+                                            <option value="Jáchal" <?php echo ($ciudad == "Jáchal") ? "selected" : ""; ?>>Jáchal</option>
+                                            <option value="9 de Julio" <?php echo ($ciudad == "9 de Julio") ? "selected" : ""; ?>>9 de Julio</option>
+                                            <option value="Pocito" <?php echo ($ciudad == "Pocito") ? "selected" : ""; ?>>Pocito</option>
+                                            <option value="Rawson" <?php echo ($ciudad == "Rawson") ? "selected" : ""; ?>>Rawson</option>
+                                            <option value="Rivadavia" <?php echo ($ciudad == "Rivadavia") ? "selected" : ""; ?>>Rivadavia</option>
+                                            <option value="San Martín" <?php echo ($ciudad == "San Martín") ? "selected" : ""; ?>>San Martín</option>
+                                            <option value="Santa Lucía" <?php echo ($ciudad == "Santa Lucía") ? "selected" : ""; ?>>Santa Lucía</option>
+                                            <option value="Sarmiento" <?php echo ($ciudad == "Sarmiento") ? "selected" : ""; ?>>Sarmiento</option>
+                                            <option value="Ullum" <?php echo ($ciudad == "Ullum") ? "selected" : ""; ?>>Ullum</option>
+                                            <option value="Valle Fértil" <?php echo ($ciudad == "Valle Fértil") ? "selected" : ""; ?>>Valle Fértil</option>
+                                            <option value="Zonda" <?php echo ($ciudad == "Zonda") ? "selected" : ""; ?>>Zonda</option>
+                                            <option value="25 de Mayo" <?php echo ($ciudad == "25 de Mayo") ? "selected" : ""; ?>>25 de Mayo</option>
+                                            <!-- Agrega otros departamentos de San Juan aquí -->
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="direccion">Dirección:</label>
+                                        <input type="text" class="form-control" name="direccion" placeholder="Ingrese su dirección" required>
+                                    </div>
+
+                                   
+                                    <button type="submit" class="btn btn-success">Guardar</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <br><br><br>
         </div>
-    </div>
 </section>
 <script>
-document.getElementById('email').addEventListener('input', function(event) {
-    const campo = event.target;
-    const valido = document.getElementById('emailOK');
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
+   function mostrarSegundaParte() {
+    var parte1 = document.getElementById('parte1');
+    var parte2 = document.getElementById('parte2');
+    var inputsParte1 = parte1.querySelectorAll('input');
+    var valid = true;
 
-    if (emailRegex.test(campo.value)) {
-        valido.innerText = "Correo válido";
-        valido.style.color = "green";
+    inputsParte1.forEach(function(input) {
+        if (!input.checkValidity()) {
+            valid = false;
+        }
+    });
+
+    if (valid) {
+        parte1.style.display = 'none';
+        parte2.style.display = 'block';
+        document.getElementById('btnContinuar').style.display = 'none';
     } else {
-        valido.innerText = "Correo incorrecto";
-        valido.style.color = "red";
+        Swal.fire({
+            icon: 'error',
+            title: 'Campos incompletos',
+            text: 'Por favor, completa todos los campos antes de continuar.'
+        });
     }
-});
+}
 </script>
+<script src="../../js/alertas.js"></script>
 <script src="../../js/contraseña.js"></script>
 <script src="../../js/validacion.js"></script>
 <script src="../../js/validacion2.js"></script>
