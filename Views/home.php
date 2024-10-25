@@ -70,16 +70,32 @@ if($_POST){
             <img src="../img/LOGO.png" alt="login-icon" style="height: 15rem" />
         </div>        
         <!-- --------------------- -->
-         <p>m@gmail.com</p>
-         <p>123</p>
-        <a
-            name=""
-            id=""
-            class="btn btn-primary"
-            href="admin/carga_base_datos.php"
-            role="button"
-            >Carga Base Datos
-        </a>
+        <div class="row ">
+            <div class="col">
+                <p><b>Administrador</b></p>
+                <p>m@gmail.com</p>
+                <p>123</p>
+            </div>
+            <div class="col">
+                <p><b>Alumno</b></p>
+                <p>demi@gmail.com</p>
+                <p></p>
+                <p>123</p>
+                <a
+                    name=""
+                    id=""
+                    class="btn btn-primary"
+                    href="admin/carga_base_datos.php"
+                    role="button"
+                    >Carga Base Datos
+                </a>
+
+            </div>
+
+        </div>
+         
+
+        
         <!-- --------------------- -->
         <div class="text-center fs-1 fw-bold">Bienvenid@</div>
         <form method="post" class="form" action="">
