@@ -32,15 +32,9 @@ if (isset($_GET['txtID'])) {
                                     <th>Contacto</th>
                                     <th>Tipo de usuario</th>
                                     <th>Estado</th>
-
-
                                     <th>
                                         <center>Acciones</center>
                                     </th>
-
-
-
-
                                 </tr>
                             </thead>
                             <tbody>
@@ -56,8 +50,6 @@ if (isset($_GET['txtID'])) {
                                 ?>
                                         <tr>
                                             <th scope="row"><?php echo $alumno['id_persona'] ?></th>
-
-
                                             <!-- ------------- -->
 
                                             <td><?php echo $alumno['apellido']; ?> <?php echo $alumno['nombre']; ?></td>
@@ -66,13 +58,7 @@ if (isset($_GET['txtID'])) {
 
                                                 <i class="fa-solid fa-mobile-retro"></i> <?php echo $alumno['celular']; ?>
                                             </td>
-
-
-
-
-
                                             <!-- ------------- -->
-
                                             <td><a href="alumno_inscripcion.php?id=<?php echo $alumno['id_persona']; ?>" class="btn btn-info btn-sm" type="button">Inscripciones</a> </td>
                                             <td>
                                                 <div class="btn-group">
