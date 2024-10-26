@@ -134,7 +134,7 @@ $total_mensajes_no_leidos = $result['total_no_leidos'];
                   </a>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="alumno_inscripcion.php">Inscripcion a Materia</a></li>
-                    <li><a class="dropdown-item" href="#">Inscripcion a Finales</a></li>
+                    <li><a class="dropdown-item" href="inscripcion_finales.php">Inscripcion a Finales</a></li>
                   </ul>
                 </li>
                 <!-- ---------------------------------------------
@@ -181,12 +181,12 @@ $total_mensajes_no_leidos = $result['total_no_leidos'];
                         <li><a class="dropdown-item" href="javascript:cerrar()"> <i class="fa fa-power-off pe-2"></i>Cerrar Sesión</a></li>
                       </ul>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                       <a class="nav-link" href="notificaciones.php" title="Notificaciones">
                         <i class="fas fa-bell"></i>
                         <span class="badge bg-danger"><?php echo $total_mensajes_no_leidos; ?></span> <!-- Mostrar el conteo -->
                       </a>
-                    </li>
+                    </li> -->
                 </div>
           </ul>
           </form>
