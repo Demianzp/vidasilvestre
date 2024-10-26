@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 17-10-2024 a las 15:23:30
+-- Servidor: localhost
+-- Tiempo de generación: 26-10-2024 a las 03:09:34
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -57,8 +57,6 @@ CREATE TABLE `alumno_materia` (
   `id_persona` int(11) DEFAULT NULL,
   `id_materia` int(11) DEFAULT NULL,
   `id_ciclo` int(11) DEFAULT NULL,
-  `id_nota` int(11) DEFAULT NULL,
-  `cod_correlativa` int(11) DEFAULT NULL,
   `estado` varchar(15) NOT NULL,
   `fecha_inscripcion` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -67,10 +65,16 @@ CREATE TABLE `alumno_materia` (
 -- Volcado de datos para la tabla `alumno_materia`
 --
 
-INSERT INTO `alumno_materia` (`Id_alumno`, `id_persona`, `id_materia`, `id_ciclo`, `id_nota`, `cod_correlativa`, `estado`, `fecha_inscripcion`) VALUES
-(5, 7, 2, 1, NULL, NULL, 'Inscripto', '2024-10-04'),
-(6, 7, 3, 1, NULL, NULL, 'Inscripto', '2024-10-04'),
-(7, 9, 2, 1, NULL, NULL, 'Inscripto', '2024-10-16');
+INSERT INTO `alumno_materia` (`Id_alumno`, `id_persona`, `id_materia`, `id_ciclo`, `estado`, `fecha_inscripcion`) VALUES
+(5, 7, 2, 1, 'Inscripto', '2024-10-04'),
+(6, 7, 3, 1, 'Inscripto', '2024-10-04'),
+(7, 9, 2, 1, 'Inscripto', '2024-10-16'),
+(8, 2, 2, 1, 'Inscripto', '2024-10-25'),
+(9, 2, 3, 1, 'Inscripto', '2024-10-25'),
+(10, 13, 2, 1, 'Inscripto', '2024-10-26'),
+(11, 13, 3, 1, 'Inscripto', '2024-10-26'),
+(12, 13, 4, 1, 'Inscripto', '2024-10-26'),
+(13, 2, 4, 1, 'Inscripto', '2024-10-26');
 
 -- --------------------------------------------------------
 
@@ -186,6 +190,27 @@ INSERT INTO `examen` (`id_examen_tipo`, `nombre_examen`, `tipo`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `inscripcion`
+--
+
+CREATE TABLE `inscripcion` (
+  `id_inscripcion` int(11) NOT NULL,
+  `id_alumno` int(11) NOT NULL,
+  `id_mesa_examen` int(11) DEFAULT NULL,
+  `fecha_inscripcion` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `inscripcion`
+--
+
+INSERT INTO `inscripcion` (`id_inscripcion`, `id_alumno`, `id_mesa_examen`, `fecha_inscripcion`) VALUES
+(1, 2, 1, '2024-10-26 02:43:28'),
+(2, 2, 2, '2024-10-26 02:48:42');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `materia`
 --
 
@@ -242,8 +267,9 @@ CREATE TABLE `mesa_examen` (
 --
 
 INSERT INTO `mesa_examen` (`id_mesa`, `id_materia`, `fecha`, `nombre_mesa`, `hora`, `id_ciclo`, `id_tipo`, `estado`, `libro`, `folio`, `id_t`) VALUES
-(2, 3, '2024-10-18', 'mesa1', '16:00:00', 1, 1, 'Activo', '2', NULL, 6),
-(4, 4, '2024-10-21', 'mesa2', '16:00:00', 1, 1, 'Activo', '1', 5, 7);
+(1, 2, '2024-10-17', 'sss', '19:42:00', 1, 1, 'Activo', '222', 222, 6),
+(2, 3, '2024-10-24', 'Prueba_Alumno', '20:23:00', 1, 1, 'Activo', '2323', 1212, 7),
+(3, 4, '2024-10-31', 'Prueba_Alumno2', '22:07:00', 1, 3, 'Activo', '12312', 34324, 8);
 
 -- --------------------------------------------------------
 
@@ -280,7 +306,7 @@ INSERT INTO `nota` (`id`, `id_persona`, `id_materia`, `id_ciclo`, `n1`, `n2`, `n
 (69, 7, 2, 1, 1, 2, 3, 4.5, 10, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
 (70, 7, 1, 1, 1, 3, 2, 3, 4.5, 0, 2.3, 0, 0, 0, 0, 0, 0, 'activo'),
 (71, 7, 7778, 1, 0, 0, 0, 0, 0, 0, 0, 6.6, 0, 0, 0, 0, 0, 'activo'),
-(72, 7, 3, 1, 7, 2, 90, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(72, 7, 3, 1, 7, NULL, 9, 9, 6.75, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'activo'),
 (73, 7, 4, 1, 7, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
 (74, 7, 5, 1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
 (75, 7, 5, 1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
@@ -300,7 +326,27 @@ INSERT INTO `nota` (`id`, `id_persona`, `id_materia`, `id_ciclo`, `n1`, `n2`, `n
 (89, 7, 3, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
 (90, 7, 4, 3, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
 (91, 7, 4, 3, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(92, 7, 4, 3, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo');
+(92, 7, 4, 3, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
+(93, 13, 2, 1, 8, 9, 8, NULL, 8.33333, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'activo'),
+(94, 13, 3, 1, 8, 2, 8, NULL, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'activo'),
+(95, 13, 4, 1, 7, 9, 8, NULL, 6.33333, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'activo'),
+(96, 2, 3, 1, 8, 9, 8, NULL, 8.33333, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'activo'),
+(97, 2, 2, 1, 8, 9, 8, NULL, 8.33333, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'activo'),
+(98, 2, 4, 1, 8, 7, 7, NULL, 7.33333, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'activo');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `notificaciones`
+--
+
+CREATE TABLE `notificaciones` (
+  `id_notificacion` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `mensaje` text NOT NULL,
+  `fecha` datetime DEFAULT current_timestamp(),
+  `leido` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -337,8 +383,10 @@ INSERT INTO `persona` (`id_persona`, `nombre`, `apellido`, `fecha_nacimiento`, `
 (3, 'Facundo', 'Ramirez', '2014-06-20', 44231782, '26', 'aaadminjuan@gmail.com', '9 de julio y san juan', '2024-06-12', 'Argentina', 'Angaco', '123', 1, 'Masculino', NULL, NULL, 'Activo'),
 (7, 'Juan', 'Perez', '2014-06-20', 44231783, '26', 'adminjuan@gmail.com', '9 de julio y san juan', '2024-06-12', 'Argentina', 'Angaco', '123', 1, 'Masculino', NULL, NULL, 'Activo'),
 (9, 'maxi', 'olmos', '0000-00-00', 0, NULL, 'm@gmail.com', NULL, NULL, NULL, NULL, '123', 3, NULL, NULL, NULL, 'Activo'),
-(13, 'Demi', 'Perez', '2014-06-20', 44231783, '26', 'dem23@gmail.com', '9 de julio y san juan', '2024-06-12', 'Argentina', 'Angaco', '123456', 2, 'Masculino', 2332423, 'Preceptor', 'Activo'),
-(14, 'dwe', 'ooo', '1998-10-02', 12555555, '7777777778', 'lucas@gmail.com', 'jf', '2024-10-16', 'Argentina', 'Jáchal', '123666', 2, 'Masculino', 1757, 'cer', 'Activo');
+(13, 'Demi', 'Perez', '2014-06-20', 44231783, '26', 'demi@gmail.com', '9 de julio y san juan', '2024-06-12', 'Argentina', 'Angaco', '123', 1, 'Masculino', 2332423, 'Preceptor', 'Activo'),
+(14, 'dwe', 'ooo', '1998-10-02', 12555555, '7777777778', 'lucas@gmail.com', 'jf', '2024-10-16', 'Argentina', 'Jáchal', '123666', 2, 'Masculino', 1757, 'cer', 'Activo'),
+(15, 'ssss', 'gomez', '2000-10-17', 45476130, '2343242304', 'ssss23@gmail.com', '9 de julio y san juan', '2024-10-24', 'Argentina', 'Valle Fértil', NULL, 3, 'Masculino', NULL, NULL, 'Activo'),
+(16, 'Marcos', 'Gomez', '2000-01-31', 45356179, '2646773882', 'marcos45@gmail.com', '9 de julio', '2024-10-26', 'Argentina', 'Angaco', '123456', 2, 'Masculino', 98292, 'Lic.Sistema Operativo', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -402,7 +450,8 @@ CREATE TABLE `tribunal` (
 
 INSERT INTO `tribunal` (`id_t`, `presidente`, `primer`, `segundo`, `fecha_1`, `fecha_2`, `observacion`) VALUES
 (6, 'Demi Perez', '', '', '2024-10-18', '2024-10-18', ''),
-(7, 'dwe ooo', '', '', '2024-10-21', '2024-10-21', '');
+(7, 'dwe ooo', '', '', '2024-10-21', '2024-10-21', ''),
+(8, 'Marcos Gomez', 'dwe ooo', 'dwe ooo', '2024-10-31', '2024-10-30', '--');
 
 --
 -- Índices para tablas volcadas
@@ -422,9 +471,7 @@ ALTER TABLE `alumno_materia`
   ADD PRIMARY KEY (`Id_alumno`),
   ADD KEY `id_persona` (`id_persona`),
   ADD KEY `id_materia` (`id_materia`),
-  ADD KEY `id_ciclo` (`id_ciclo`),
-  ADD KEY `cod_correlativa` (`cod_correlativa`),
-  ADD KEY `fk_alumno_materia_nota` (`id_nota`);
+  ADD KEY `id_ciclo` (`id_ciclo`);
 
 --
 -- Indices de la tabla `asignar`
@@ -454,6 +501,14 @@ ALTER TABLE `examen`
   ADD PRIMARY KEY (`id_examen_tipo`);
 
 --
+-- Indices de la tabla `inscripcion`
+--
+ALTER TABLE `inscripcion`
+  ADD PRIMARY KEY (`id_inscripcion`),
+  ADD KEY `id_alumno` (`id_alumno`),
+  ADD KEY `id_mesa_examen` (`id_mesa_examen`);
+
+--
 -- Indices de la tabla `materia`
 --
 ALTER TABLE `materia`
@@ -478,6 +533,13 @@ ALTER TABLE `nota`
   ADD KEY `fk_nota_persona` (`id_persona`),
   ADD KEY `fk_nota_materia` (`id_materia`),
   ADD KEY `fk_nota_ciclo` (`id_ciclo`);
+
+--
+-- Indices de la tabla `notificaciones`
+--
+ALTER TABLE `notificaciones`
+  ADD PRIMARY KEY (`id_notificacion`),
+  ADD KEY `id_usuario` (`id_usuario`);
 
 --
 -- Indices de la tabla `persona`
@@ -518,7 +580,7 @@ ALTER TABLE `acta`
 -- AUTO_INCREMENT de la tabla `alumno_materia`
 --
 ALTER TABLE `alumno_materia`
-  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `asignar`
@@ -545,6 +607,12 @@ ALTER TABLE `examen`
   MODIFY `id_examen_tipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
+-- AUTO_INCREMENT de la tabla `inscripcion`
+--
+ALTER TABLE `inscripcion`
+  MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `materia`
 --
 ALTER TABLE `materia`
@@ -554,19 +622,25 @@ ALTER TABLE `materia`
 -- AUTO_INCREMENT de la tabla `mesa_examen`
 --
 ALTER TABLE `mesa_examen`
-  MODIFY `id_mesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_mesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `nota`
 --
 ALTER TABLE `nota`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+
+--
+-- AUTO_INCREMENT de la tabla `notificaciones`
+--
+ALTER TABLE `notificaciones`
+  MODIFY `id_notificacion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -578,7 +652,30 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `tribunal`
 --
 ALTER TABLE `tribunal`
-  MODIFY `id_t` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_t` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `inscripcion`
+--
+ALTER TABLE `inscripcion`
+  ADD CONSTRAINT `inscripcion_ibfk_1` FOREIGN KEY (`id_alumno`) REFERENCES `persona` (`id_persona`),
+  ADD CONSTRAINT `inscripcion_ibfk_2` FOREIGN KEY (`id_mesa_examen`) REFERENCES `mesa_examen` (`id_mesa`);
+
+--
+-- Filtros para la tabla `notificaciones`
+--
+ALTER TABLE `notificaciones`
+  ADD CONSTRAINT `notificaciones_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `persona` (`id_persona`);
+
+--
+-- Filtros para la tabla `persona`
+--
+ALTER TABLE `persona`
+  ADD CONSTRAINT `fkb_persona_rol` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
