@@ -142,7 +142,7 @@ foreach ($materias as $materia) {
             <div class="card rounded-2 border-0">
                 <div class="card-header bg-dark text-white pb-0">
                     <h5 class="d-inline-block"><?php echo htmlspecialchars($nombre_completo); ?></h5>
-                    <a href="ver_nota.php?id=<?php echo $alumno_id; ?>" class="btn btn-info btn-sm float-right mb-2">Parciales-Notas</a>
+                    <!-- <a href="ver_nota.php?id<?php //echo $alumno_id; ?>" class="btn btn-info btn-sm float-right mb-2">Parciales-Notas</a> -->
                 </div>
                 <div class="card-body table-responsive">
                     <?php if (empty($materias)): ?>

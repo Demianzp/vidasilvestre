@@ -1,10 +1,31 @@
-<?php session_start();
-if(!isset($_SESSION['nombre'])){
-  header("Location:../home.php");
+<?php
+session_start();
+require '../../conn/connection.php'; // Asegúrate de que la ruta sea correcta
+
+// Verifica si el usuario ha iniciado sesión
+if (!isset($_SESSION['id_persona'])) {
+  header("Location: ../home.php");
+  exit(); // Asegúrate de salir después de la redirección
 }
+
+$id_usuario = $_SESSION['id_persona'];
+
+// Consulta para contar los mensajes no leídos
+$query_count = "
+    SELECT COUNT(*) AS total_no_leidos 
+    FROM notificaciones 
+    WHERE id_usuario = ? AND leido = 0"; // Asume que tienes un campo 'leido' en la tabla
+
+$stmt_count = $db->prepare($query_count);
+$stmt_count->bindParam(1, $id_usuario);
+$stmt_count->execute();
+$result = $stmt_count->fetch(PDO::FETCH_ASSOC);
+
+$total_mensajes_no_leidos = $result['total_no_leidos'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -92,7 +113,7 @@ if(!isset($_SESSION['nombre'])){
   <div style="height:60px">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container-fluid ml-2 ">
-        <a href="alumno_index.php" class="navbar-brand mb-0 pr-3 ">
+        <a href="index.php" class="navbar-brand mb-0 pr-3 ">
           <img class="d-line-block align-top " src="../../img/vida-silvestre.png" width="130px" style="margin-right:10px">
         </a>
         <!-- Toggle Btn-->
@@ -106,17 +127,17 @@ if(!isset($_SESSION['nombre'])){
             <div class="collapse navbar-collapse " id="navbarNav">
               <ul class="navbar-nav mr-auto ">
                 <!-- ------------------------------------------------------- -->
-                <li class="nav-item  pr-3">
-                  <a class="nav-link" href="alumno_index.php">
-                   Materias Inscriptas
+                
+                <li class="nav-item dropdown pr-3 ">
+                  <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Inscripcion
                   </a>
-                  <!-- <ul class="dropdown-menu">
-                     <li><a class="dropdown-item" href="inscripcion_alumno.php">Inscripcion Alumno</a></li>
-                    <li><a class="dropdown-item" href="listadoalumnos.view.php">Listar Alumnos </a></li>
-                    <li><a class="dropdown-item" href="seleccionar_alumnos.php">Inscripcion a Materia</a></li>
-                  </ul> -->
-            </li>
-            <!-- ---------------------------------------------
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="alumno_inscripcion.php">Inscripcion a Materia</a></li>
+                    <li><a class="dropdown-item" href="inscripcion_finales.php">Inscripcion a Finales</a></li>
+                  </ul>
+                </li>
+                <!-- ---------------------------------------------
             <li class="nav-item dropdown pr-3">
               <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Profesor
@@ -136,37 +157,38 @@ if(!isset($_SESSION['nombre'])){
               <a class="nav-link " href="materia_index.php">Materias </a>
             </li>
             ------------------------------------------------------- -->
-            <li class="nav-item dropdown pr-3 ">
-              <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Finales
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Inscripcion Finales</a></li>
-                <li><a class="dropdown-item" href="#">Calificaciones</a></li>
-              </ul>
+            <li class="nav-item  pr-3">
+              <a class="nav-link " href="ver_nota.php">Calificaciones </a>
             </li>
-          </ul>
-          <!-- ------------------------------------------------------- -->
-          <form class="form-inline d-flex justify-content-end">
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <!-- iconos sacados de "fontawesome" -->
-                    <i class="fas fa-user pr-2"></i>
-                    Alumno:
-                    <?php if (isset($_SESSION['nombre']) && isset($_SESSION['apellido'])) : ?>                    
-                    <?php echo $_SESSION['nombre'] . ' ' . $_SESSION['apellido']; ?>
-                    <?php endif; ?>
-                    </a>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <!-- <li><a class="dropdown-item" href="#"> <i class="fas fa-user-alt pe-2"></i>My Profile</a></li> -->
-                <li><a class="dropdown-item" href="#"> <i class="fas fa-cog pe-2"></i>Configuración</a></li>
-                <li><a class="dropdown-item" href="javascript:cerrar()"> <i class="fa fa-power-off pe-2"></i>Cerrar Sesión</a></li>
+               
               </ul>
-              </li>
-            </div>
-            </ul>
+              <!-- ------------------------------------------------------- -->
+              <form class="form-inline d-flex justify-content-end">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <!-- iconos sacados de "fontawesome" -->
+                        <i class="fas fa-user pr-2"></i>
+                        Alumno:
+                        <?php if (isset($_SESSION['nombre']) && isset($_SESSION['apellido'])) : ?>
+                          <?php echo $_SESSION['nombre'] . ' ' . $_SESSION['apellido']; ?>
+                        <?php endif; ?>
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <!-- <li><a class="dropdown-item" href="#"> <i class="fas fa-user-alt pe-2"></i>My Profile</a></li> -->
+                        <li><a class="dropdown-item" href="config_user.php"> <i class="fas fa-cog pe-2"></i>Configuración</a></li>
+                        <li><a class="dropdown-item" href="javascript:cerrar()"> <i class="fa fa-power-off pe-2"></i>Cerrar Sesión</a></li>
+                      </ul>
+                    </li>
+                    <!-- <li class="nav-item">
+                      <a class="nav-link" href="notificaciones.php" title="Notificaciones">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge bg-danger"><?php echo $total_mensajes_no_leidos; ?></span> <!-- Mostrar el conteo -->
+                      </a>
+                    </li> -->
+                </div>
+          </ul>
           </form>
           <!-- ------------------------------------------------------- -->
         </div>

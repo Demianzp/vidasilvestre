@@ -13,7 +13,8 @@
             }
         }
         ?>
-            <h1 class="text-center">Centro Escolar Inicio</h1>
+            <h1 class="text-center"></h1>
+            
         </div>
     </div>
 <?php require 'footer.php'; ?>

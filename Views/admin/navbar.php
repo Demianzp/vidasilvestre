@@ -1,5 +1,5 @@
 <?php session_start();
-if(!isset($_SESSION['id_persona'])){
+if (!isset($_SESSION['id_persona'])) {
   header("Location:../home.php");
 }
 //Cambie el nombre en la session por id_persona por que asi es mejor identificar el usuario.
@@ -7,6 +7,7 @@ if(!isset($_SESSION['id_persona'])){
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +20,7 @@ if(!isset($_SESSION['id_persona'])){
   <!-- ---------FIN ARCHIVO CSS----------- -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  
+
   <!-- ------------DATATABLES----- -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
@@ -53,6 +54,9 @@ if(!isset($_SESSION['id_persona'])){
   <!-- -------------sweetalert2(alertas emergentes)------------------   -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../../js/alertas.js"></script>
+  <script src="../../js/contraseña.js"></script>
+  <script src="../../js/validacion.js"></script>
+  <script src="../../js/validacion2.js"></script>
   <!-- ------------------------------ -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Roboto&display=swap');
@@ -61,9 +65,10 @@ if(!isset($_SESSION['id_persona'])){
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <!-- ------------------------------- -->
 </head>
+
 <body>
-<!-- ---------------MENSAJE REGISTROS-------------- -->
-<?php
+  <!-- ---------------MENSAJE REGISTROS-------------- -->
+  <?php
   $mensaje = isset($_GET['mensaje']) ? $_GET['mensaje'] : '';
   $error = isset($_GET['error']) ? $_GET['error'] : '';
   ?>
@@ -122,75 +127,80 @@ if(!isset($_SESSION['id_persona'])){
 
             <div class="collapse navbar-collapse " id="navbarNav">
               <ul class="navbar-nav mr-auto ">
+
                 <!-- ------------------------------------------------------- -->
-            <li class="nav-item dropdown pr-3">
-              <a class="nav-link " href="alumno_index.php" >
-              Alumno
-              </a>
-              <li class="nav-item dropdown pr-3">
-              <a class="nav-link " href="profe_index.php" >
-              Profesor
-              </a>
-            </li>
-            <!-- ---------------------------------- -->
-            <li class="nav-item  pr-3">
-              <a class="nav-link" href="materia_index.php">Plan de estudio</a>
-            </li>
-                
-            <!-- ------------------------------------------------------- -->
-            <li class="nav-item dropdown pr-3">
-              <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-               Calificaciones
-              </a>
-              <ul class="dropdown-menu">
-                <!-- <li><a class="dropdown-item" href="nota_eva.php">Registra una Nota</a></li> -->
-                <li><a class="dropdown-item" href="nota_materia.php" >Registra por Materia</a></li>
-                <!-- <li><a class="dropdown-item" href="nota_alumno.php">Registra por Alumno</a></li> -->
+                <li class="nav-item dropdown pr-3">
+                  <a class="nav-link " href="alumno_index.php">
+                    Alumno
+                  </a>
+                <li class="nav-item dropdown pr-3">
+                  <a class="nav-link " href="profe_index.php">
+                    Profesor
+                  </a>
+                </li>
+                <!-- ---------------------------------- -->
+                <li class="nav-item  pr-3">
+                  <a class="nav-link" href="materia_index.php">Plan de estudio</a>
+                </li>
+
+                <!-- ------------------------------------------------------- -->
+                <li class="nav-item dropdown pr-3">
+                  <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Calificaciones
+                  </a>
+                  <ul class="dropdown-menu">
+                    <!-- <li><a class="dropdown-item" href="nota_eva.php">Registra una Nota</a></li> -->
+                    <li><a class="dropdown-item" href="nota_materia.php">Registra por Materia</a></li>
+                    <!-- <li><a class="dropdown-item" href="nota_alumno.php">Registra por Alumno</a></li> -->
+                  </ul>
+                </li>
+                <!-- ------------------------------------------------------- -->
+                <li class="nav-item dropdown pr-3 ">
+                  <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mesa de examen</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="listadomesa.php">Gestionar Tribunales</a></li>
+                    <li><a class="dropdown-item" href="mesa_alumno.php">Gestionar mesa y acta</a></li>
+                    <li><a class="dropdown-item" href="mesa_acta.php">Gestionar notas</a></li>
+                  </ul>
+                </li>
+                <!-- ------------------------------------------------------- -->
+                <li class="nav-item dropdown pr-3 ">
+                  <a class="nav-link " href="admin_index.php">Administrador</a>
+                </li>
+                <!-- ------------------------------------------------------- -->
+                <li class="nav-item  pr-3">
+                  <a class="nav-link" href="ciclo_lectivo.php">Ciclo lectivo</a>
+                </li>
+                <!-- ------------------------------------------------------- -->
               </ul>
-            </li>
-            <!-- ------------------------------------------------------- -->
-            <li class="nav-item dropdown pr-3 ">
-              <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mesa de examen</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="listadomesa.php">Gestionar Tribunales</a></li> 
-                <li><a class="dropdown-item" href="mesa_alumno.php">Gestionar mesa y acta</a></li>
-                <li><a class="dropdown-item" href="mesa_acta.php">Gestionar notas</a></li>
-              </ul>
-            </li>
-            <!-- ------------------------------------------------------- -->
-            <li class="nav-item dropdown pr-3 ">
-              <a class="nav-link " href="admin_index.php" >Administrador</a>              
-            </li>
-            <!-- ------------------------------------------------------- -->
-            <li class="nav-item  pr-3">
-              <a class="nav-link" href="ciclo_lectivo.php">Ciclo lectivo</a>
-            </li>
-            <!-- ------------------------------------------------------- -->
-          </ul>     
-          <!-- ------------------------------------------------------- -->
-          <form class="form-inline d-flex justify-content-end">
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <!-- iconos sacados de "fontawesome" -->
-                    <i class="fas fa-user pr-2"></i>
-                    Administrador:
-                    <?php if (isset($_SESSION['nombre']) && isset($_SESSION['apellido'])) : ?>                    
-                    <?php echo $_SESSION['nombre'] . ' ' . $_SESSION['apellido']; ?>
-                    <?php endif; ?>
-                    </a>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <!-- <li><a class="dropdown-item" href="#"> <i class="fas fa-user-alt pe-2"></i>My Profile</a></li> -->
-                <li><a class="dropdown-item" href="config_user.php"> <i class="fas fa-cog pe-2"></i>Configuración</a></li>
-                <li><a class="dropdown-item" href="javascript:cerrar()"> <i class="fa fa-power-off pe-2"></i>Cerrar Sesión</a></li>
-              </ul>
-              </li>
+              <form class="form-inline d-flex justify-content-end">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <!-- iconos sacados de "fontawesome" -->
+                        <i class="fas fa-user pr-2"></i>
+                        Administrador:
+                        <?php if (isset($_SESSION['nombre']) && isset($_SESSION['apellido'])) : ?>
+                          <?php echo $_SESSION['nombre'] . ' ' . $_SESSION['apellido']; ?>
+                        <?php endif; ?>
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="config_user.php"> <i class="fas fa-cog pe-2"></i>Configuración</a></li>
+                        <li><a class="dropdown-item" href="javascript:cerrar()"> <i class="fa fa-power-off pe-2"></i>Cerrar Sesión</a></li>
+                      </ul>
+                    </li>
+                    
+                    <!-- <li class="nav-item">
+                      <a class="nav-link" href="notificaciones.php" title="Notificaciones">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge bg-danger">3</span> <!-- Cambia el número por el conteo real de notificaciones -->
+                      </a>
+                    </li>-->
+                  </ul>
+                </div>
+              </form>
             </div>
-            </ul>
-          </form>
-          <!-- ------------------------------------------------------- -->
         </div>
-      </div>
     </nav>
   </div>

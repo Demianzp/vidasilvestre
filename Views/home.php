@@ -23,7 +23,7 @@ if($_POST){
                 $_SESSION['apellido'] = $usuario['apellido'];
                 // ------------------------------------------------
                 if ($usuario['id_rol'] == 1) {
-                    header('Location: alumno/alumno_index.php');
+                    header('Location: alumno/index.php');
                     exit;
                 }else if ($usuario['id_rol'] == 2){
                     header('Location: profe/index.php');
