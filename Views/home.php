@@ -79,7 +79,6 @@ if($_POST){
             <div class="col">
                 <p><b>Alumno</b></p>
                 <p>demi@gmail.com</p>
-                <p></p>
                 <p>123</p>
                 <a
                     name=""
@@ -89,6 +88,12 @@ if($_POST){
                     role="button"
                     >Carga Base Datos
                 </a>
+
+            </div>
+            <div class="col">
+                <p><b>Profesor</b></p>
+                <p>marcos45@gmail.com</p>
+                <p>123456</p>            
 
             </div>
 

@@ -5,6 +5,12 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// Verificar sesión
+if (!isset($_SESSION['id_persona'])) {
+    header('Location: login.php');
+    exit;
+}
+
 // Inicializar variables
 $select_ciclo = null;
 $selected_materia = null;
@@ -12,20 +18,20 @@ $alumnos = [];
 $materias = [];
 $ciclo = null;
 
-// Obtener ciclo lectivo actual o seleccionado
 try {
+    // Obtener ciclo lectivo actual o seleccionado
     if (!isset($_POST['buscar']) && !isset($_POST['guarda_nota'])) {
         $sql_ciclo = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 1 LIMIT 1";
         $stmt = $db->query($sql_ciclo);
         $ciclo = $stmt->fetch(PDO::FETCH_ASSOC);
-        $select_ciclo = $ciclo['id_ciclo'];
+        $select_ciclo = $ciclo ? $ciclo['id_ciclo'] : null;
     }
 
     if (isset($_POST['buscar']) || isset($_POST['guarda_nota'])) {
         $select_ciclo = !empty($_POST['select_ciclo']) ? $_POST['select_ciclo'] : 
                        (!empty($_POST['ciclo_lectivo']) ? $_POST['ciclo_lectivo'] : null);
         $selected_materia = !empty($_POST['select_materia']) ? $_POST['select_materia'] : 
-                          (!empty($_POST['materia_id']) ? $_POST['materia_id'] : null);
+                          (!empty($_POST['materia_id']) ? $_POST['materia_id'] : null);        
         
         if ($select_ciclo) {
             $sql_ciclo = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo WHERE id_ciclo = :id_ciclo";
@@ -36,7 +42,7 @@ try {
             $sql_ciclo = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 1 LIMIT 1";
             $stmt = $db->query($sql_ciclo);
             $ciclo = $stmt->fetch(PDO::FETCH_ASSOC);
-            $select_ciclo = $ciclo['id_ciclo'];
+            $select_ciclo = $ciclo ? $ciclo['id_ciclo'] : null;
         }
 
         // Obtener alumnos de la materia y ciclo lectivo seleccionados
@@ -56,73 +62,87 @@ try {
         }
     }
 
-    // Obtener todas las materias activas
-    $sql_materias = "SELECT * FROM materia WHERE estado = 'Activo' ORDER BY Nombre";
-    $stmt_materias = $db->query($sql_materias);
+    // Obtener materias del profesor
+    $id_persona = $_SESSION['id_persona'];
+    $sql_materias = "SELECT m.id_materia, m.Nombre, r.rol
+                    FROM asignar a
+                    INNER JOIN persona p ON a.id_persona = p.id_persona
+                    INNER JOIN materia m ON a.id_materia = m.id_materia
+                    INNER JOIN rol r ON p.id_rol = r.id_rol
+                    WHERE a.id_persona = :id_persona 
+                    AND m.estado = 'Activo' 
+                    AND a.estado = 'Activo'";
+
+    $stmt_materias = $db->prepare($sql_materias);
+    $stmt_materias->bindParam(':id_persona', $id_persona, PDO::PARAM_INT);
+    $stmt_materias->execute();
     $materias = $stmt_materias->fetchAll(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
-    // Manejo silencioso del error
+    error_log("Error en la base de datos: " . $e->getMessage());
+    $error_message = "Ha ocurrido un error al procesar la solicitud.";
 }
 
 // Procesar guardado de notas
 if (isset($_POST['guarda_nota'])) {
-    $alumno_id = $_POST["alumno_id"];
-    $materia_id = $_POST["materia_id"];
-    $ciclo_lectivo = $_POST["ciclo_lectivo"];    
+    $alumno_id = filter_input(INPUT_POST, "alumno_id", FILTER_SANITIZE_NUMBER_INT);
+    $materia_id = filter_input(INPUT_POST, "materia_id", FILTER_SANITIZE_NUMBER_INT);
+    $ciclo_lectivo = filter_input(INPUT_POST, "ciclo_lectivo", FILTER_SANITIZE_NUMBER_INT);    
     
-    // Obtener las notas del form
-    $notas = [];
-    for ($i = 1; $i <= 13; $i++) {
-        if ($i != 8) {
-            $nota = isset($_POST["n$i"]) ? $_POST["n$i"] : null;
-            $notas["n$i"] = !empty($nota) && is_numeric($nota) ? (float)$nota : null;
-        }
-    }
-
-    try {
-        // Verificar si ya existe la nota
-        $sql_nota = "SELECT * FROM nota WHERE id_persona = ? AND id_materia = ? AND id_ciclo = ?";
-        $stmt = $db->prepare($sql_nota);
-        $stmt->execute([$alumno_id, $materia_id, $ciclo_lectivo]);
-        $nota_existente = $stmt->fetch();
-
-        if ($nota_existente && $nota_existente['estado'] === 'activo') {
-            // Actualizar nota existente
-            $sql = "UPDATE nota SET " . 
-                   implode(', ', array_map(function($key) { return "$key = :$key"; }, array_keys($notas))) .
-                   " WHERE id_persona = :alumno_id AND id_materia = :materia_id AND id_ciclo = :ciclo_lectivo";
-        } else {
-            // Insertar nueva nota
-            $estado = 'activo';
-            $sql = "INSERT INTO nota (id_persona, id_materia, id_ciclo, " . implode(', ', array_keys($notas)) . ", estado) 
-                    VALUES (:alumno_id, :materia_id, :ciclo_lectivo, " . 
-                    implode(', ', array_map(function($key) { return ":$key"; }, array_keys($notas))) . 
-                    ", :estado)";
+    if ($alumno_id && $materia_id && $ciclo_lectivo) {
+        // Obtener las notas del form
+        $notas = [];
+        for ($i = 1; $i <= 13; $i++) {
+            if ($i != 8) {
+                $nota = filter_input(INPUT_POST, "n$i", FILTER_VALIDATE_FLOAT);
+                $notas["n$i"] = $nota !== false ? $nota : null;
+            }
         }
 
-        $stmt = $db->prepare($sql);
-        
-        // Bind parameters
-        $stmt->bindParam(':alumno_id', $alumno_id);
-        $stmt->bindParam(':materia_id', $materia_id);
-        $stmt->bindParam(':ciclo_lectivo', $ciclo_lectivo);
-        if (!$nota_existente) {
-            $stmt->bindParam(':estado', $estado);
+        try {
+            // Verificar si ya existe la nota
+            $sql_nota = "SELECT * FROM nota WHERE id_persona = ? AND id_materia = ? AND id_ciclo = ? AND estado = 'activo'";
+            $stmt = $db->prepare($sql_nota);
+            $stmt->execute([$alumno_id, $materia_id, $ciclo_lectivo]);
+            $nota_existente = $stmt->fetch();
+
+            if ($nota_existente) {
+                // Actualizar nota existente
+                $sql = "UPDATE nota SET " . 
+                       implode(', ', array_map(function($key) { return "$key = :$key"; }, array_keys($notas))) .
+                       " WHERE id_persona = :alumno_id AND id_materia = :materia_id AND id_ciclo = :ciclo_lectivo AND estado = 'activo'";
+            } else {
+                // Insertar nueva nota
+                $estado = 'activo';
+                $sql = "INSERT INTO nota (id_persona, id_materia, id_ciclo, " . implode(', ', array_keys($notas)) . ", estado) 
+                        VALUES (:alumno_id, :materia_id, :ciclo_lectivo, " . 
+                        implode(', ', array_map(function($key) { return ":$key"; }, array_keys($notas))) . 
+                        ", :estado)";
+            }
+
+            $stmt = $db->prepare($sql);
+            $params = [
+                ':alumno_id' => $alumno_id,
+                ':materia_id' => $materia_id,
+                ':ciclo_lectivo' => $ciclo_lectivo
+            ];
+            
+            if (!$nota_existente) {
+                $params[':estado'] = $estado;
+            }
+            
+            foreach ($notas as $key => $value) {
+                $params[":$key"] = $value;
+            }
+
+            $stmt->execute($params);
+        } catch (PDOException $e) {
+            error_log("Error al guardar notas: " . $e->getMessage());
+            $error_message = "Ha ocurrido un error al guardar las notas.";
         }
-        foreach ($notas as $key => $value) {
-            $stmt->bindParam(":$key", $notas[$key]);
-        }
-        
-        $stmt->execute();
-        
-       
-              
-    } catch (PDOException $e) {
-        // Manejo silencioso del error
     }
 }
-?>    
+?>   
 
 <section class="content mt-3">
     <div class="row m-auto">
