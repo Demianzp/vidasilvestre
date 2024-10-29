@@ -92,7 +92,7 @@ if(!isset($_SESSION['nombre'])){
   <div style="height:60px">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container-fluid ml-2 ">
-        <a href="inicio.view.php" class="navbar-brand mb-0 pr-3 ">
+        <a href="index.php" class="navbar-brand mb-0 pr-3 ">
           <img class="d-line-block align-top " src="../../img/vida-silvestre.png" width="130px" style="margin-right:10px">
         </a>
         <!-- Toggle Btn-->
@@ -105,54 +105,11 @@ if(!isset($_SESSION['nombre'])){
 
             <div class="collapse navbar-collapse " id="navbarNav">
               <ul class="navbar-nav mr-auto ">
-                <!-- ------------------------------------------------------- -->
                 <li class="nav-item  pr-3">
-                  <a class="nav-link" href="alumno_index.php">
-                    Alumnos
-                  </a>
-                  <!-- <ul class="dropdown-menu">
-                     <li><a class="dropdown-item" href="inscripcion_alumno.php">Inscripcion Alumno</a></li>
-                    <li><a class="dropdown-item" href="listadoalumnos.view.php">Listar Alumnos </a></li>
-                    <li><a class="dropdown-item" href="seleccionar_alumnos.php">Inscripcion a Materia</a></li>
-                  </ul> -->
-            </li>
-            <!-- ------------------------------------------------------- -->
-            <li class="nav-item dropdown pr-3">
-              <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Profesor
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="profe_index.php">Listado Profesor</a></li>
-                <li><a class="dropdown-item" href="lista_A.php">Listado de Asignaciones</a></li>
+                  <a class="nav-link" href="nota_materia.php">Mis Notas </a>
+                </li>
+                <li class="nav-item dropdown pr-3 ">             
               </ul>
-            </li>
-            <!-- ------------------------------------------------------- -->
-            <li class="nav-item  pr-3">
-              <a class="nav-link" href="notas.view.php">Notas </a>
-            </li>
-            <li class="nav-item dropdown pr-3 ">
-              <!-- ------------------------------------------------------- -->
-            <li class="nav-item  pr-3">
-              <a class="nav-link " href="materia_index.php">Materias </a>
-            </li>
-            <!-- ------------------------------------------------------- -->
-            <li class="nav-item dropdown pr-3 ">
-              <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Mesa y Acta
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="mesa_examen_add.php">Mesa de Examen</a></li>
-                <li><a class="dropdown-item" href="listadomesa.php">Listado de Mesa de Examen</a></li>
-                <!-- <li><a class="dropdown-item" href="acta_nota.php">Acta</a></li> -->
-              </ul>
-            </li>
-            <!-- ------------------------------------------------------- -->
-            <li class="nav-item  pr-3">
-              <a class="nav-link" href="ciclo_lectivo.php">Cliclo lectivo</a>
-            </li>
-            <!-- ------------------------------------------------------- -->
-          </ul>
-          <!-- ------------------------------------------------------- -->
           <form class="form-inline d-flex justify-content-end">
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav">
