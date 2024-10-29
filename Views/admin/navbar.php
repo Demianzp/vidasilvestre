@@ -124,10 +124,8 @@ if (!isset($_SESSION['id_persona'])) {
         <!-- ------------------------------------------------------- -->
         <div class="collapse navbar-collapse d-flex  ms-3" id="navbarNav">
           <ul class="navbar-nav mr-auto flex-grow-1 bd-highlight">
-
             <div class="collapse navbar-collapse " id="navbarNav">
               <ul class="navbar-nav mr-auto ">
-
                 <!-- ------------------------------------------------------- -->
                 <li class="nav-item dropdown pr-3">
                   <a class="nav-link " href="alumno_index.php">
@@ -141,18 +139,6 @@ if (!isset($_SESSION['id_persona'])) {
                 <!-- ---------------------------------- -->
                 <li class="nav-item  pr-3">
                   <a class="nav-link" href="materia_index.php">Plan de estudio</a>
-                </li>
-
-                <!-- ------------------------------------------------------- -->
-                <li class="nav-item dropdown pr-3">
-                  <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Calificaciones
-                  </a>
-                  <ul class="dropdown-menu">
-                    <!-- <li><a class="dropdown-item" href="nota_eva.php">Registra una Nota</a></li> -->
-                    <li><a class="dropdown-item" href="nota_materia.php">Registra por Materia</a></li>
-                    <!-- <li><a class="dropdown-item" href="nota_alumno.php">Registra por Alumno</a></li> -->
-                  </ul>
                 </li>
                 <!-- ------------------------------------------------------- -->
                 <li class="nav-item dropdown pr-3 ">
