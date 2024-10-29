@@ -249,20 +249,21 @@ if(isset($_POST['guarda_nota'])) {
                                             $nota13=null;
                                         }
                                         ?>
+                                        
                                         <!-- -------------------------------------------------- -->
-                                        <td><input id="fixed-size" type="text" name="n1" value="<?php echo $nota1; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size" type="text" name="n2" value="<?php echo $nota2; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size" type="text" name="n3" value="<?php echo $nota3; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size" type="text" name="n4" value="<?php echo $nota4; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size" type="text" name="n5" value="<?php echo $nota5; ?>" placeholder="" class="form-control" readonly></td> 
-                                        <td><input id="fixed-size" type="text" name="n6" value="<?php echo $nota6; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size" type="text" name="n7" value="<?php echo $nota7; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size" type="text" name="n8" value="<?php echo $nota8; ?>" placeholder="" class="form-control" readonly></td> 
-                                        <td><input id="fixed-size" type="text" name="n9" value="<?php echo $nota9; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size" type="text" name="n10" value="<?php echo $nota10; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size" type="text" name="n11" value="<?php echo $nota11; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size" type="text" name="n12" value="<?php echo $nota12; ?>" placeholder="" class="form-control"></td>                                         
-                                        <td><input id="fixed-size" type="text" name="n13" value="<?php echo $nota13; ?>" placeholder="" class="form-control" readonly></td> 
+                                        <td><input id="fixed-size"  name="n1"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota1; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n2"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota2; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n3"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota3; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n4"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota4; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n5"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota5; ?>" placeholder="" class="form-control" readonly></td> 
+                                        <td><input id="fixed-size"  name="n6"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota6; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n7"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota7; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n8"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota8; ?>" placeholder="" class="form-control" readonly></td> 
+                                        <td><input id="fixed-size"  name="n9"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota9; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n10" type="number" min="0" max="10" step="0.1" value="<?php echo $nota10; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n11" type="number" min="0" max="10" step="0.1" value="<?php echo $nota11; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n12" type="number" min="0" max="10" step="0.1" value="<?php echo $nota12; ?>" placeholder="" class="form-control"></td>                                         
+                                        <td><input id="fixed-size"  name="n13" type="number" min="0" max="10" step="0.1" value="<?php echo $nota13; ?>" placeholder="" class="form-control" readonly></td> 
                                         <td>
                                            <button type="submit" name="guarda_nota" class="btn btn-primary btn-sm" >Guardar</button>
                                         </td>
