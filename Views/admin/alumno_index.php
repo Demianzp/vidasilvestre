@@ -19,6 +19,7 @@ if (isset($_GET['txtID'])) {
                 <div class="card-header pb-0 bg-dark text-white ">
                     <h5 class="d-inline-block ">Listado de Alumnos</h5>
                     <a class="btn btn-primary float-right mb-2" href="alumno_crea.php">Agregar Alumno</a>
+                    <a class="btn btn-warning float-right mb-2 mr-2" href="nota_materia.php">Calificaciones</a>
                 </div>
                 <!-- -------------------- -->
                 <div class="card-body table-responsive">
