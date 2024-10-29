@@ -57,4 +57,21 @@ th, td {
     height: 30px;
     margin: auto; 
     text-align: center; 
-}                    
+}     
+#fixed-size4 {
+  width: 100px;
+  height: 30px;
+  margin: auto; 
+  text-align: center; 
+}                  
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -webkit-appearance: none; 
+  -moz-appearance: textfield;
+  appearance: none;
+  margin: 0;
+}
