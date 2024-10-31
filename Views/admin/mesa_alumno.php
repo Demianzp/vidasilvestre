@@ -30,7 +30,6 @@ $result = $db->query($query);
             <di class="card-header pb-0 bg-dark text-white ">
                 <h5 class="card-header bg-dark text-white"> Mesas de Examen 
                 <a class="btn btn-warning float-right mb-2" href="mesa_examen_add.php">Agregar Mesa</a>
-                <a class="btn btn-primary float-right mb-2" href="alum_aconvocar.php">Agregar Alumnos</a>
                     </h5>
             </di>
             <div class="card-body table-responsive">
@@ -71,6 +70,9 @@ $result = $db->query($query);
                                                         </a>                                                         
                                                         <a href="javascript:eliminar5(<?php echo $row['id_mesa'];?>)" class="btn btn-danger btn-sm" title="Borrar" role="button">
                                                             <i class="fas fa-trash"></i>
+                                                        </a>
+                                                        <a href="alum_aconvocar.php?id=<?php echo $row['id_mesa'];?>" class="btn btn-primary btn-sm" title="Alumno" role="button">
+                                                        <i class="fa-solid fa-user-plus"></i>
                                                         </a>
                                                     </div>  
                                                 </td>
