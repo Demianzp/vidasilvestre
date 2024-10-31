@@ -36,16 +36,11 @@ $result = $db->query($query);
 ?>
  <div class="card-body table-responsive">
                 <?php
-                if (isset($_GET['mensaje']) && !empty($_GET['mensaje'])) {
-                    echo '<div class="alert alert-success"role="alert">' . htmlspecialchars($_GET['mensaje']) . '</div>';
-                }
-                if (isset($_GET['error']) && !empty($_GET['error'])) {
-                    echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($_GET['error']) . '</div>';
-                }
+              
                 ?>
                 <table id="example" class="table table-striped table-bordered  " cellspacing="0" width="100%"><h5 class="d-inline-block "><strong>Mesa de examen</strong></h5>
                     <thead class="thead-dark">
-                        <tr>
+                            <th>Seleccionar</th>
                             <th>Nombre de Mesa</th>
                             <th>Presidente de mesa</th>
                             <th>Materia</th>
@@ -58,9 +53,11 @@ $result = $db->query($query);
                         </tr>
                     </thead>
                     <tbody>
+                    
                         <?php
                         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                             echo "<tr>";
+                            echo "<td>" . $row['id_mesa'] . "</td>";
                             echo "<td>" . $row['nombre_mesa'] . "</td>";
                             echo "<td>" . $row['presidente'] . "</td>";
                             echo "<td>" . $row['nombre_materia'] . "</td>";
