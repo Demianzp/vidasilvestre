@@ -69,6 +69,20 @@ function eliminar5 (id_mesa){
     });
 }
 
+function eliminar6 (id_mesa){
+  Swal.fire({
+      icon: "error",
+      title: "¿Borrar?",        
+      showCancelButton: true,
+      confirmButtonText: "Si",   
+      confirmButtonColor: "#007bff",
+      cancelButtonColor: '#dc3545',     
+    }).then((result) => {  
+          if (result.isConfirmed) { 
+            window.location = "../admin/mesa_alumno.php?txtID="+id_mesa;
+           }          
+    });
+}
 
 
 
