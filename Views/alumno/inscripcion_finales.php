@@ -1,11 +1,8 @@
 <?php
 ob_start(); // Inicia el buffer de salida
-session_start();
 require 'navbar.php';
 require '../../conn/connection.php';
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
 
 // Verificamos que el usuario ha iniciado sesión
 if (!isset($_SESSION['id_persona'])) {

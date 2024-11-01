@@ -1,8 +1,6 @@
 <?php require 'navbar.php';
 require '../../conn/connection.php';
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
 $alumno_id = isset($_GET['id']) ? $_GET['id'] : null;
 if ($alumno_id) {
     $sql_alumno = "SELECT * FROM persona WHERE id_persona = $alumno_id";

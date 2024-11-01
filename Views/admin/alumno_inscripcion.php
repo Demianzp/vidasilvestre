@@ -2,9 +2,7 @@
 ob_start(); // Inicia el buffer de salida
 require 'navbar.php';
 require '../../conn/connection.php';
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
 
 $alumno_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 if (!$alumno_id) {
