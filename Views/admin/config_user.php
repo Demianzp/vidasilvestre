@@ -1,5 +1,4 @@
 <?php
-session_start();
 require 'navbar.php';
 include('../../conn/connection.php');
 ini_set('display_errors', 1);
