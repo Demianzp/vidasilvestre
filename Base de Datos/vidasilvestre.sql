@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 26-10-2024 a las 03:09:34
+-- Tiempo de generación: 01-11-2024 a las 00:32:53
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -40,11 +40,10 @@ CREATE TABLE `acta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `acta`
+-- RELACIONES PARA LA TABLA `acta`:
+--   `id_mesa`
+--       `mesa_examen` -> `id_mesa`
 --
-
-INSERT INTO `acta` (`id_acta`, `dni`, `genero`, `ape_nom`, `escrito`, `oral`, `definitivo`, `observacion`, `id_mesa`) VALUES
-(1, 44231783, 'Masculino', 'Perez Juan', '', '', '', 'dyyd', 0);
 
 -- --------------------------------------------------------
 
@@ -60,6 +59,16 @@ CREATE TABLE `alumno_materia` (
   `estado` varchar(15) NOT NULL,
   `fecha_inscripcion` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELACIONES PARA LA TABLA `alumno_materia`:
+--   `id_persona`
+--       `persona` -> `id_persona`
+--   `id_materia`
+--       `materia` -> `id_materia`
+--   `id_ciclo`
+--       `ciclo_lectivo` -> `id_ciclo`
+--
 
 --
 -- Volcado de datos para la tabla `alumno_materia`
@@ -92,6 +101,14 @@ CREATE TABLE `asignar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- RELACIONES PARA LA TABLA `asignar`:
+--   `id_persona`
+--       `persona` -> `id_persona`
+--   `id_materia`
+--       `materia` -> `id_materia`
+--
+
+--
 -- Volcado de datos para la tabla `asignar`
 --
 
@@ -116,6 +133,10 @@ CREATE TABLE `ciclo_lectivo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- RELACIONES PARA LA TABLA `ciclo_lectivo`:
+--
+
+--
 -- Volcado de datos para la tabla `ciclo_lectivo`
 --
 
@@ -135,6 +156,12 @@ CREATE TABLE `correlativa` (
   `id_materia` int(11) DEFAULT NULL,
   `id_correlativa` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELACIONES PARA LA TABLA `correlativa`:
+--   `id_materia`
+--       `materia` -> `id_materia`
+--
 
 --
 -- Volcado de datos para la tabla `correlativa`
@@ -169,6 +196,10 @@ CREATE TABLE `examen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- RELACIONES PARA LA TABLA `examen`:
+--
+
+--
 -- Volcado de datos para la tabla `examen`
 --
 
@@ -201,6 +232,14 @@ CREATE TABLE `inscripcion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- RELACIONES PARA LA TABLA `inscripcion`:
+--   `id_alumno`
+--       `persona` -> `id_persona`
+--   `id_mesa_examen`
+--       `mesa_examen` -> `id_mesa`
+--
+
+--
 -- Volcado de datos para la tabla `inscripcion`
 --
 
@@ -223,8 +262,14 @@ CREATE TABLE `materia` (
   `año_cursado` varchar(5) NOT NULL,
   `id_tipo` int(11) DEFAULT NULL,
   `estado` varchar(11) DEFAULT NULL,
-  `plan_estudio` enum('1° Cuatrimestre','2° Cuatrimestre') NOT NULL
+  `plan_estudio` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELACIONES PARA LA TABLA `materia`:
+--   `id_tipo`
+--       `tipo` -> `id_tipo`
+--
 
 --
 -- Volcado de datos para la tabla `materia`
@@ -263,6 +308,18 @@ CREATE TABLE `mesa_examen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- RELACIONES PARA LA TABLA `mesa_examen`:
+--   `id_ciclo`
+--       `ciclo_lectivo` -> `id_ciclo`
+--   `id_materia`
+--       `materia` -> `id_materia`
+--   `id_t`
+--       `tribunal` -> `id_t`
+--   `id_tipo`
+--       `tipo` -> `id_tipo`
+--
+
+--
 -- Volcado de datos para la tabla `mesa_examen`
 --
 
@@ -299,54 +356,14 @@ CREATE TABLE `nota` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `nota`
+-- RELACIONES PARA LA TABLA `nota`:
+--   `id_persona`
+--       `persona` -> `id_persona`
+--   `id_materia`
+--       `materia` -> `id_materia`
+--   `id_ciclo`
+--       `ciclo_lectivo` -> `id_ciclo`
 --
-
-INSERT INTO `nota` (`id`, `id_persona`, `id_materia`, `id_ciclo`, `n1`, `n2`, `n3`, `n4`, `n5`, `n6`, `n7`, `n8`, `n9`, `n10`, `n11`, `n12`, `n13`, `estado`) VALUES
-(69, 7, 2, 1, 1, 2, 3, 4.5, 10, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(70, 7, 1, 1, 1, 3, 2, 3, 4.5, 0, 2.3, 0, 0, 0, 0, 0, 0, 'activo'),
-(71, 7, 7778, 1, 0, 0, 0, 0, 0, 0, 0, 6.6, 0, 0, 0, 0, 0, 'activo'),
-(72, 7, 3, 1, 7, NULL, 9, 9, 6.75, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'activo'),
-(73, 7, 4, 1, 7, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(74, 7, 5, 1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(75, 7, 5, 1, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(76, 7, 3, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(77, 7, 3, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(78, 7, 4, 2, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(79, 7, 1, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(80, 7, 1, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(81, 7, 5, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(82, 7, 7778, 2, 78, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(83, 7, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(84, 7, 1, 3, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 'activo'),
-(85, 7, 2, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(86, 7, 7778, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(87, 7, 5, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(88, 7, 4, 3, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(89, 7, 3, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(90, 7, 4, 3, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(91, 7, 4, 3, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(92, 7, 4, 3, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'activo'),
-(93, 13, 2, 1, 8, 9, 8, NULL, 8.33333, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'activo'),
-(94, 13, 3, 1, 8, 2, 8, NULL, 6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'activo'),
-(95, 13, 4, 1, 7, 9, 8, NULL, 6.33333, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'activo'),
-(96, 2, 3, 1, 8, 9, 8, NULL, 8.33333, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'activo'),
-(97, 2, 2, 1, 8, 9, 8, NULL, 8.33333, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'activo'),
-(98, 2, 4, 1, 8, 7, 7, NULL, 7.33333, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'activo');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `notificaciones`
---
-
-CREATE TABLE `notificaciones` (
-  `id_notificacion` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
-  `mensaje` text NOT NULL,
-  `fecha` datetime DEFAULT current_timestamp(),
-  `leido` tinyint(1) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -375,6 +392,12 @@ CREATE TABLE `persona` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- RELACIONES PARA LA TABLA `persona`:
+--   `id_rol`
+--       `rol` -> `id_rol`
+--
+
+--
 -- Volcado de datos para la tabla `persona`
 --
 
@@ -400,6 +423,10 @@ CREATE TABLE `rol` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- RELACIONES PARA LA TABLA `rol`:
+--
+
+--
 -- Volcado de datos para la tabla `rol`
 --
 
@@ -418,6 +445,10 @@ CREATE TABLE `tipo` (
   `id_tipo` int(11) NOT NULL,
   `nombre_tipo` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELACIONES PARA LA TABLA `tipo`:
+--
 
 --
 -- Volcado de datos para la tabla `tipo`
@@ -443,6 +474,10 @@ CREATE TABLE `tribunal` (
   `fecha_2` date NOT NULL,
   `observacion` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- RELACIONES PARA LA TABLA `tribunal`:
+--
 
 --
 -- Volcado de datos para la tabla `tribunal`
@@ -535,13 +570,6 @@ ALTER TABLE `nota`
   ADD KEY `fk_nota_ciclo` (`id_ciclo`);
 
 --
--- Indices de la tabla `notificaciones`
---
-ALTER TABLE `notificaciones`
-  ADD PRIMARY KEY (`id_notificacion`),
-  ADD KEY `id_usuario` (`id_usuario`);
-
---
 -- Indices de la tabla `persona`
 --
 ALTER TABLE `persona`
@@ -574,7 +602,7 @@ ALTER TABLE `tribunal`
 -- AUTO_INCREMENT de la tabla `acta`
 --
 ALTER TABLE `acta`
-  MODIFY `id_acta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_acta` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `alumno_materia`
@@ -628,13 +656,7 @@ ALTER TABLE `mesa_examen`
 -- AUTO_INCREMENT de la tabla `nota`
 --
 ALTER TABLE `nota`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
-
---
--- AUTO_INCREMENT de la tabla `notificaciones`
---
-ALTER TABLE `notificaciones`
-  MODIFY `id_notificacion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
@@ -659,6 +681,33 @@ ALTER TABLE `tribunal`
 --
 
 --
+-- Filtros para la tabla `acta`
+--
+ALTER TABLE `acta`
+  ADD CONSTRAINT `acta_ibfk_1` FOREIGN KEY (`id_mesa`) REFERENCES `mesa_examen` (`id_mesa`);
+
+--
+-- Filtros para la tabla `alumno_materia`
+--
+ALTER TABLE `alumno_materia`
+  ADD CONSTRAINT `alumno_materia_ibfk_1` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`),
+  ADD CONSTRAINT `alumno_materia_ibfk_2` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`),
+  ADD CONSTRAINT `alumno_materia_ibfk_3` FOREIGN KEY (`id_ciclo`) REFERENCES `ciclo_lectivo` (`id_ciclo`);
+
+--
+-- Filtros para la tabla `asignar`
+--
+ALTER TABLE `asignar`
+  ADD CONSTRAINT `asignar_ibfk_1` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`),
+  ADD CONSTRAINT `asignar_ibfk_2` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`);
+
+--
+-- Filtros para la tabla `correlativa`
+--
+ALTER TABLE `correlativa`
+  ADD CONSTRAINT `fkb_materia_correlativa` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`);
+
+--
 -- Filtros para la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
@@ -666,10 +715,27 @@ ALTER TABLE `inscripcion`
   ADD CONSTRAINT `inscripcion_ibfk_2` FOREIGN KEY (`id_mesa_examen`) REFERENCES `mesa_examen` (`id_mesa`);
 
 --
--- Filtros para la tabla `notificaciones`
+-- Filtros para la tabla `materia`
 --
-ALTER TABLE `notificaciones`
-  ADD CONSTRAINT `notificaciones_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `persona` (`id_persona`);
+ALTER TABLE `materia`
+  ADD CONSTRAINT `materia_ibfk_1` FOREIGN KEY (`id_tipo`) REFERENCES `tipo` (`id_tipo`);
+
+--
+-- Filtros para la tabla `mesa_examen`
+--
+ALTER TABLE `mesa_examen`
+  ADD CONSTRAINT `fkb_ciclo_mesa` FOREIGN KEY (`id_ciclo`) REFERENCES `ciclo_lectivo` (`id_ciclo`),
+  ADD CONSTRAINT `fkb_materia_mesa` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`),
+  ADD CONSTRAINT `fkb_tribunal_mesa` FOREIGN KEY (`id_t`) REFERENCES `tribunal` (`id_t`),
+  ADD CONSTRAINT `mesa_examen_ibfk_1` FOREIGN KEY (`id_tipo`) REFERENCES `tipo` (`id_tipo`);
+
+--
+-- Filtros para la tabla `nota`
+--
+ALTER TABLE `nota`
+  ADD CONSTRAINT `nota_ibfk_1` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`),
+  ADD CONSTRAINT `nota_ibfk_2` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`),
+  ADD CONSTRAINT `nota_ibfk_3` FOREIGN KEY (`id_ciclo`) REFERENCES `ciclo_lectivo` (`id_ciclo`);
 
 --
 -- Filtros para la tabla `persona`
