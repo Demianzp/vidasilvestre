@@ -3,9 +3,7 @@ ob_start();
 require 'navbar.php';
 require '../../conn/connection.php';
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
 
 if (!isset($_SESSION['id_persona'])) {
     die("Error: No has iniciado sesión.");

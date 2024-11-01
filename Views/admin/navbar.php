@@ -2,6 +2,9 @@
 if (!isset($_SESSION['id_persona'])) {
   header("Location:../home.php");
 }
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 //Cambie el nombre en la session por id_persona por que asi es mejor identificar el usuario.
 //me avisan si hay algun error de session.
 ?>

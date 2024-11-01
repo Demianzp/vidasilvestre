@@ -7,21 +7,9 @@ if (!isset($_SESSION['id_persona'])) {
   header("Location: ../home.php");
   exit(); // Asegúrate de salir después de la redirección
 }
-
-$id_usuario = $_SESSION['id_persona'];
-
-// Consulta para contar los mensajes no leídos
-$query_count = "
-    SELECT COUNT(*) AS total_no_leidos 
-    FROM notificaciones 
-    WHERE id_usuario = ? AND leido = 0"; // Asume que tienes un campo 'leido' en la tabla
-
-$stmt_count = $db->prepare($query_count);
-$stmt_count->bindParam(1, $id_usuario);
-$stmt_count->execute();
-$result = $stmt_count->fetch(PDO::FETCH_ASSOC);
-
-$total_mensajes_no_leidos = $result['total_no_leidos'];
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 ?>
 <!DOCTYPE html>
 <html lang="es">
