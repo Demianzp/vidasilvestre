@@ -2,9 +2,7 @@
 session_start();
 require 'navbar.php';
 include('../../conn/connection.php');
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
 
 // Verifica si el ID de la persona está en la sesión
 if (!isset($_SESSION['id_persona']) || empty($_SESSION['id_persona'])) {

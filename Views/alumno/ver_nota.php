@@ -1,14 +1,7 @@
 <?php
 require 'navbar.php';
 require '../../conn/connection.php';
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
-
 $alumno_id = $_SESSION['id_persona'];
-
 
 // Función para obtener las notas
 function obtenerNotas($conexion, $alumno_id, $materia_id, $ciclo_id)
