@@ -75,9 +75,18 @@ require 'navbar.php';
                                         </th>
                                         <td><?php echo htmlspecialchars($resultado['nombre'] . " " . $resultado['apellido']); ?></td>
                                         <td><?php echo htmlspecialchars($resultado['DNI']); ?></td>
-                                        <td></td>     
-                                        <td></td>   
-                                        <td></td>           
+                                        <td><input id='fixed-size' type='number' name='$key' 
+                                                               class='form-control form-control-sm' 
+                                                               min='0' max='10' step='0.01' 
+                                                               value='$valor' $readonly></td>     
+                                        <td><input id='fixed-size' type='number' name='$key' 
+                                                               class='form-control form-control-sm' 
+                                                               min='0' max='10' step='0.01' 
+                                                               value='$valor' $readonly></td>  </td>   
+                                        <td><input id='fixed-size' type='number' name='$key' 
+                                                               class='form-control form-control-sm' 
+                                                               min='0' max='10' step='0.01' 
+                                                               value='$valor' $readonly></td>  </td>           
             
                                     </tr>
                                 <?php endforeach; ?>

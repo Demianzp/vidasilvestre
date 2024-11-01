@@ -68,7 +68,7 @@ $result = $db->query($query);
                                                         <a href="mesa_edit.php?id=<?php echo $row['id_mesa']; ?>" class="btn btn-warning btn-sm" title="Editar" role="button">
                                                             <i class="fas fa-edit"></i>
                                                         </a>                                                         
-                                                        <a href="javascript:eliminar5(<?php echo $row['id_mesa'];?>)" class="btn btn-danger btn-sm" title="Borrar" role="button">
+                                                        <a href="javascript:eliminar6(<?php echo $row['id_mesa'];?>)" class="btn btn-danger btn-sm" title="Borrar" role="button">
                                                             <i class="fas fa-trash"></i>
                                                         </a>
                                                         <a href="alum_aconvocar.php?id=<?php echo $row['id_mesa'];?>" class="btn btn-primary btn-sm" title="Alumno" role="button">
