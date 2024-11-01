@@ -217,7 +217,6 @@ if (isset($_POST['guarda_nota'])) {
                                         if(empty($nota['n5'])){$nota5 =null;}else{$nota5= $nota['n5'];}
                                         if(empty($nota['n6'])){$nota6 =null;}else{$nota6= $nota['n6'];}
                                         if(empty($nota['n7'])){$nota7 =null;}else{$nota7= $nota['n7'];}
-                                        if(empty($nota['n8'])){$nota8 =null;}else{$nota8= $nota['n8'];}
                                         if(empty($nota['n9'])){$nota9 =null;}else{$nota9= $nota['n9'];}
                                        if(empty($nota['n10'])){$nota10=null;}else{$nota10= $nota['n10'];}
                                        if(empty($nota['n11'])){$nota11=null;}else{$nota11= $nota['n11'];}
@@ -231,7 +230,7 @@ if (isset($_POST['guarda_nota'])) {
                                         if (count($notas_filtradas) > 0) {
                                             $nota5 = array_sum($notas_filtradas) / count($notas_filtradas);
                                         } 
-                                        $nota13 = max($nota6, $nota7, $nota8, $nota9, $nota10, $nota11, $nota12);
+                                        $nota13 = max($nota6, $nota7, $nota9, $nota10, $nota11, $nota12);
                                         if (!($nota13 >= 4)){
                                             $nota13=null;
                                         }
