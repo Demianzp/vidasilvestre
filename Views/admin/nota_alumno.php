@@ -47,13 +47,13 @@ if(isset($_POST['guarda_nota'])) {
     $n5 = $_POST["n5"]; 
     $n6 = $_POST["n6"];
     $n7 = $_POST["n7"]; 
-    $n8 = $_POST["n8"]; 
+    // $n8 = $_POST["n8"]; 
     $n9 = $_POST["n9"]; 
     $n10 = $_POST["n10"]; 
     $n11 = $_POST["n11"]; 
     $n12 = $_POST["n12"];
     $n13 = $_POST["n13"]; 
-    $notas = [$n1, $n2, $n3, $n4, $n5, $n6, $n7, $n8, $n9, $n10, $n11, $n12, $n13];
+    $notas = [$n1, $n2, $n3, $n4, $n5, $n6, $n7,$n9, $n10, $n11, $n12, $n13];
     foreach ($notas as &$nota) {
         $nota = !empty($nota) && is_numeric($nota) ? (float)$nota : null;
     }
@@ -68,7 +68,7 @@ if(isset($_POST['guarda_nota'])) {
     $nota = $resul_exa->fetch_assoc();    
     if(isset($nota) && $nota['estado'] === 'activo'){  
         $sql = "UPDATE nota 
-        SET n1=:n1,n2=:n2,n3=:n3,n4=:n4,n5=:n5,n6=:n6,n7=:n7,n8=:n8,n9=:n9,n10=:n10,n11=:n11,n12=:n12,n13=:n13
+        SET n1=:n1,n2=:n2,n3=:n3,n4=:n4,n5=:n5,n6=:n6,n7=:n7,n9=:n9,n10=:n10,n11=:n11,n12=:n12,n13=:n13
         WHERE id_persona = :alumno_id
         AND id_materia = :materia_id
         AND id_ciclo = :ciclo_lectivo";
@@ -80,7 +80,6 @@ if(isset($_POST['guarda_nota'])) {
         $stmt->bindParam(':n5', $n5);
         $stmt->bindParam(':n6', $n6);
         $stmt->bindParam(':n7', $n7);
-        $stmt->bindParam(':n8', $n8);
         $stmt->bindParam(':n9', $n9);
         $stmt->bindParam(':n10', $n10);
         $stmt->bindParam(':n11', $n11);
@@ -93,8 +92,8 @@ if(isset($_POST['guarda_nota'])) {
     } else {       
         try {  
             $estado='activo';  
-            $sql =  "INSERT INTO nota (id_persona, id_materia, id_ciclo,n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11,n12,n13,estado) 
-            VALUES (:id_persona, :id_materia, :ciclo_lectivo, :n1,:n2,:n3,:n4,:n5,:n6,:n7,:n8,:n9,:n10,:n11,:n12,:n13,:estado)";
+            $sql =  "INSERT INTO nota (id_persona, id_materia, id_ciclo,n1,n2,n3,n4,n5,n6,n7,n9,n10,n11,n12,n13,estado) 
+            VALUES (:id_persona, :id_materia, :ciclo_lectivo, :n1,:n2,:n3,:n4,:n5,:n6,:n7,:n9,:n10,:n11,:n12,:n13,:estado)";
             $stmt = $db->prepare($sql);
             $stmt->bindParam(':id_persona', $alumno_id);
             $stmt->bindParam(':id_materia', $materia_id);            
@@ -106,7 +105,6 @@ if(isset($_POST['guarda_nota'])) {
             $stmt->bindParam(':n5', $n5);
             $stmt->bindParam(':n6', $n6);
             $stmt->bindParam(':n7', $n7);
-            $stmt->bindParam(':n8', $n8);
             $stmt->bindParam(':n9', $n9);
             $stmt->bindParam(':n10', $n10);
             $stmt->bindParam(':n11', $n11);
@@ -179,13 +177,13 @@ if(isset($_POST['guarda_nota'])) {
                 </div>
                 <!----------------------------------------------------------------->      
                 <div class="card-body table-responsive">
-                    <table id="nota" class="table table-striped table-sm">
+                    <table id="" class="table table-striped table-sm">
                         <thead class="thead-dark"> 
                             <tr>        
                                 <th id="fixed-size2">id</th>
                                 <th id="fixed-size3">Materia</th>             
                                 <?php   
-                                    $sql_examen = "SELECT * FROM examen ";
+                                    $sql_examen = "SELECT * FROM examen WHERE id_examen_tipo <> 8";
                                     $resul_examen = $conexion->query($sql_examen);
                                     $examen = [];
                                     if ($resul_examen->num_rows > 0) {
@@ -228,7 +226,7 @@ if(isset($_POST['guarda_nota'])) {
                                         if(empty($nota['n5'])){$nota5 =null;}else{$nota5= $nota['n5'];}
                                         if(empty($nota['n6'])){$nota6 =null;}else{$nota6= $nota['n6'];}
                                         if(empty($nota['n7'])){$nota7 =null;}else{$nota7= $nota['n7'];}
-                                        if(empty($nota['n8'])){$nota8 =null;}else{$nota8= $nota['n8'];}
+                                        // if(empty($nota['n8'])){$nota8 =null;}else{$nota8= $nota['n8'];}
                                         if(empty($nota['n9'])){$nota9 =null;}else{$nota9= $nota['n9'];}
                                        if(empty($nota['n10'])){$nota10=null;}else{$nota10= $nota['n10'];}
                                        if(empty($nota['n11'])){$nota11=null;}else{$nota11= $nota['n11'];}
@@ -242,7 +240,7 @@ if(isset($_POST['guarda_nota'])) {
                                         if (count($notas_filtradas) > 0) {
                                             $nota5 = array_sum($notas_filtradas) / count($notas_filtradas);
                                         } 
-                                        $nota13 = max($nota6, $nota7, $nota8, $nota9, $nota10, $nota11, $nota12);
+                                        $nota13 = max($nota6, $nota7, $nota9, $nota10, $nota11, $nota12);
                                         if (!($nota13 >= 4)){
                                             $nota13=null;
                                         }
@@ -256,7 +254,7 @@ if(isset($_POST['guarda_nota'])) {
                                         <td><input id="fixed-size"  name="n5"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota5; ?>" placeholder="" class="form-control" readonly></td> 
                                         <td><input id="fixed-size"  name="n6"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota6; ?>" placeholder="" class="form-control"></td> 
                                         <td><input id="fixed-size"  name="n7"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota7; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size"  name="n8"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota8; ?>" placeholder="" class="form-control" readonly></td> 
+                                        <!-- <td><input id="fixed-size"  name="n8"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota8; ?>" placeholder="" class="form-control" readonly></td>  -->
                                         <td><input id="fixed-size"  name="n9"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota9; ?>" placeholder="" class="form-control"></td> 
                                         <td><input id="fixed-size"  name="n10" type="number" min="0" max="10" step="0.1" value="<?php echo $nota10; ?>" placeholder="" class="form-control"></td> 
                                         <td><input id="fixed-size"  name="n11" type="number" min="0" max="10" step="0.1" value="<?php echo $nota11; ?>" placeholder="" class="form-control"></td> 
