@@ -5,12 +5,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Verificar sesión
-if (!isset($_SESSION['id_persona'])) {
-    header('Location: login.php');
-    exit;
-}
-
 // Inicializar variables
 $select_ciclo = null;
 $selected_materia = null;
@@ -18,20 +12,20 @@ $alumnos = [];
 $materias = [];
 $ciclo = null;
 
+// Obtener ciclo lectivo actual o seleccionado
 try {
-    // Obtener ciclo lectivo actual o seleccionado
     if (!isset($_POST['buscar']) && !isset($_POST['guarda_nota'])) {
         $sql_ciclo = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 1 LIMIT 1";
         $stmt = $db->query($sql_ciclo);
         $ciclo = $stmt->fetch(PDO::FETCH_ASSOC);
-        $select_ciclo = $ciclo ? $ciclo['id_ciclo'] : null;
+        $select_ciclo = $ciclo['id_ciclo'];
     }
 
     if (isset($_POST['buscar']) || isset($_POST['guarda_nota'])) {
         $select_ciclo = !empty($_POST['select_ciclo']) ? $_POST['select_ciclo'] : 
                        (!empty($_POST['ciclo_lectivo']) ? $_POST['ciclo_lectivo'] : null);
         $selected_materia = !empty($_POST['select_materia']) ? $_POST['select_materia'] : 
-                          (!empty($_POST['materia_id']) ? $_POST['materia_id'] : null);        
+                          (!empty($_POST['materia_id']) ? $_POST['materia_id'] : null);
         
         if ($select_ciclo) {
             $sql_ciclo = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo WHERE id_ciclo = :id_ciclo";
@@ -42,7 +36,7 @@ try {
             $sql_ciclo = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 1 LIMIT 1";
             $stmt = $db->query($sql_ciclo);
             $ciclo = $stmt->fetch(PDO::FETCH_ASSOC);
-            $select_ciclo = $ciclo ? $ciclo['id_ciclo'] : null;
+            $select_ciclo = $ciclo['id_ciclo'];
         }
 
         // Obtener alumnos de la materia y ciclo lectivo seleccionados
@@ -62,7 +56,7 @@ try {
         }
     }
 
-    // Obtener materias del profesor
+    // Obtener todas las materias activas
     $id_persona = $_SESSION['id_persona'];
     $sql_materias = "SELECT m.id_materia, m.Nombre, r.rol
                     FROM asignar a
@@ -72,77 +66,73 @@ try {
                     WHERE a.id_persona = :id_persona 
                     AND m.estado = 'Activo' 
                     AND a.estado = 'Activo'";
-
     $stmt_materias = $db->prepare($sql_materias);
     $stmt_materias->bindParam(':id_persona', $id_persona, PDO::PARAM_INT);
     $stmt_materias->execute();
     $materias = $stmt_materias->fetchAll(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
-    error_log("Error en la base de datos: " . $e->getMessage());
-    $error_message = "Ha ocurrido un error al procesar la solicitud.";
+    // Manejo silencioso del error
 }
 
 // Procesar guardado de notas
 if (isset($_POST['guarda_nota'])) {
-    $alumno_id = filter_input(INPUT_POST, "alumno_id", FILTER_SANITIZE_NUMBER_INT);
-    $materia_id = filter_input(INPUT_POST, "materia_id", FILTER_SANITIZE_NUMBER_INT);
-    $ciclo_lectivo = filter_input(INPUT_POST, "ciclo_lectivo", FILTER_SANITIZE_NUMBER_INT);    
+    $alumno_id = $_POST["alumno_id"];
+    $materia_id = $_POST["materia_id"];
+    $ciclo_lectivo = $_POST["ciclo_lectivo"];    
     
-    if ($alumno_id && $materia_id && $ciclo_lectivo) {
-        // Obtener las notas del form
-        $notas = [];
-        for ($i = 1; $i <= 13; $i++) {
-            if ($i != 8) {
-                $nota = filter_input(INPUT_POST, "n$i", FILTER_VALIDATE_FLOAT);
-                $notas["n$i"] = $nota !== false ? $nota : null;
-            }
-        }
-
-        try {
-            // Verificar si ya existe la nota
-            $sql_nota = "SELECT * FROM nota WHERE id_persona = ? AND id_materia = ? AND id_ciclo = ? AND estado = 'activo'";
-            $stmt = $db->prepare($sql_nota);
-            $stmt->execute([$alumno_id, $materia_id, $ciclo_lectivo]);
-            $nota_existente = $stmt->fetch();
-
-            if ($nota_existente) {
-                // Actualizar nota existente
-                $sql = "UPDATE nota SET " . 
-                       implode(', ', array_map(function($key) { return "$key = :$key"; }, array_keys($notas))) .
-                       " WHERE id_persona = :alumno_id AND id_materia = :materia_id AND id_ciclo = :ciclo_lectivo AND estado = 'activo'";
-            } else {
-                // Insertar nueva nota
-                $estado = 'activo';
-                $sql = "INSERT INTO nota (id_persona, id_materia, id_ciclo, " . implode(', ', array_keys($notas)) . ", estado) 
-                        VALUES (:alumno_id, :materia_id, :ciclo_lectivo, " . 
-                        implode(', ', array_map(function($key) { return ":$key"; }, array_keys($notas))) . 
-                        ", :estado)";
-            }
-
-            $stmt = $db->prepare($sql);
-            $params = [
-                ':alumno_id' => $alumno_id,
-                ':materia_id' => $materia_id,
-                ':ciclo_lectivo' => $ciclo_lectivo
-            ];
-            
-            if (!$nota_existente) {
-                $params[':estado'] = $estado;
-            }
-            
-            foreach ($notas as $key => $value) {
-                $params[":$key"] = $value;
-            }
-
-            $stmt->execute($params);
-        } catch (PDOException $e) {
-            error_log("Error al guardar notas: " . $e->getMessage());
-            $error_message = "Ha ocurrido un error al guardar las notas.";
+    // Obtener las notas del form
+    $notas = [];
+    for ($i = 1; $i <= 13; $i++) {
+        if ($i != 8) {
+            $nota = isset($_POST["n$i"]) ? $_POST["n$i"] : null;
+            $notas["n$i"] = !empty($nota) && is_numeric($nota) ? (float)$nota : null;
         }
     }
+
+    try {
+        // Verificar si ya existe la nota
+        $sql_nota = "SELECT * FROM nota WHERE id_persona = ? AND id_materia = ? AND id_ciclo = ?";
+        $stmt = $db->prepare($sql_nota);
+        $stmt->execute([$alumno_id, $materia_id, $ciclo_lectivo]);
+        $nota_existente = $stmt->fetch();
+
+        if ($nota_existente && $nota_existente['estado'] === 'activo') {
+            // Actualizar nota existente
+            $sql = "UPDATE nota SET " . 
+                   implode(', ', array_map(function($key) { return "$key = :$key"; }, array_keys($notas))) .
+                   " WHERE id_persona = :alumno_id AND id_materia = :materia_id AND id_ciclo = :ciclo_lectivo";
+        } else {
+            // Insertar nueva nota
+            $estado = 'activo';
+            $sql = "INSERT INTO nota (id_persona, id_materia, id_ciclo, " . implode(', ', array_keys($notas)) . ", estado) 
+                    VALUES (:alumno_id, :materia_id, :ciclo_lectivo, " . 
+                    implode(', ', array_map(function($key) { return ":$key"; }, array_keys($notas))) . 
+                    ", :estado)";
+        }
+
+        $stmt = $db->prepare($sql);
+        
+        // Bind parameters
+        $stmt->bindParam(':alumno_id', $alumno_id);
+        $stmt->bindParam(':materia_id', $materia_id);
+        $stmt->bindParam(':ciclo_lectivo', $ciclo_lectivo);
+        if (!$nota_existente) {
+            $stmt->bindParam(':estado', $estado);
+        }
+        foreach ($notas as $key => $value) {
+            $stmt->bindParam(":$key", $notas[$key]);
+        }
+        
+        $stmt->execute();
+        
+       
+              
+    } catch (PDOException $e) {
+        // Manejo silencioso del error
+    }
 }
-?>   
+?>    
 
 <section class="content mt-3">
     <div class="row m-auto">
@@ -190,7 +180,7 @@ if (isset($_POST['guarda_nota'])) {
 
                 <div class="card-body table-responsive">
                     <?php if (!empty($alumnos)): ?>
-                        <table class="table table-striped table-sm">
+                        <table id="" class="table table-striped table-sm">
                             <thead class="thead-dark"> 
                                 <tr>        
                                     <th id="fixed-size2">N°</th>
@@ -229,55 +219,49 @@ if (isset($_POST['guarda_nota'])) {
                                             $stmt->execute([$alumno['id_persona'], $selected_materia, $select_ciclo]);
                                             $nota = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                                            // Array para almacenar todas las notas
-                                            $notas_valores = [];
-                                            for ($i = 1; $i <= 13; $i++) {
-                                                if ($i != 8) {
-                                                    $notas_valores["n$i"] = isset($nota["n$i"]) ? $nota["n$i"] : null;
-                                                }
-                                            }
-
-                                            // Calcular promedios
-                                            $notas_parciales = array_filter(
-                                                [$notas_valores['n1'], $notas_valores['n2'], 
-                                                 $notas_valores['n3'], $notas_valores['n4']], 
-                                                function($nota) {
-                                                    return !is_null($nota) && $nota !== 0 && $nota !== '';
-                                                }
-                                            );
-
-                                            if (count($notas_parciales) > 0) {
-                                                $notas_valores['n5'] = round(array_sum($notas_parciales) / count($notas_parciales), 2);
-                                            }
-
-                                            $nota_final = max(
-                                                $notas_valores['n6'] ?? 0, 
-                                                $notas_valores['n7'] ?? 0, 
-                                                $notas_valores['n9'] ?? 0, 
-                                                $notas_valores['n10'] ?? 0, 
-                                                $notas_valores['n11'] ?? 0, 
-                                                $notas_valores['n12'] ?? 0
-                                            );
-                                            
-                                            $notas_valores['n13'] = ($nota_final >= 4) ? $nota_final : null;
-
-                                            // Mostrar campos de notas
-                                            foreach ($notas_valores as $key => $valor) {
-                                                $readonly = ($key == 'n5' || $key == 'n13') ? 'readonly' : '';
-                                                echo "<td>
-                                                        <input id='fixed-size' type='number' name='$key' 
-                                                               class='form-control form-control-sm' 
-                                                               min='0' max='10' step='0.01' 
-                                                               value='$valor' $readonly>
-                                                      </td>";
-                                            }
-                                            ?>
-                                            
-                                            <td>
-                                                <button type="submit" name="guarda_nota" class="btn btn-primary btn-sm">
-                                                    Guardar
-                                                </button>
-                                            </td>
+                                            // -------------------------                                       
+                                        if(empty($nota['n1'])){$nota1 =null;}else{$nota1= $nota['n1'];}
+                                        if(empty($nota['n2'])){$nota2 =null;}else{$nota2= $nota['n2'];}
+                                        if(empty($nota['n3'])){$nota3 =null;}else{$nota3= $nota['n3'];}
+                                        if(empty($nota['n4'])){$nota4 =null;}else{$nota4= $nota['n4'];}
+                                        if(empty($nota['n5'])){$nota5 =null;}else{$nota5= $nota['n5'];}
+                                        if(empty($nota['n6'])){$nota6 =null;}else{$nota6= $nota['n6'];}
+                                        if(empty($nota['n7'])){$nota7 =null;}else{$nota7= $nota['n7'];}
+                                        if(empty($nota['n9'])){$nota9 =null;}else{$nota9= $nota['n9'];}
+                                       if(empty($nota['n10'])){$nota10=null;}else{$nota10= $nota['n10'];}
+                                       if(empty($nota['n11'])){$nota11=null;}else{$nota11= $nota['n11'];}
+                                       if(empty($nota['n12'])){$nota12=null;}else{$nota12= $nota['n12'];}                                        
+                                       if(empty($nota['n13'])){$nota13=null;}else{$nota13= $nota['n13'];}
+                                        // -----------------------------------------------
+                                        $notas = [$nota1, $nota2, $nota3, $nota4];
+                                        $notas_filtradas = array_filter($notas, function($nota) {
+                                            return !is_null($nota) && $nota !== 0 && $nota !== '';
+                                        });
+                                        if (count($notas_filtradas) > 0) {
+                                            $nota5 = array_sum($notas_filtradas) / count($notas_filtradas);
+                                        } 
+                                        $nota13 = max($nota6, $nota7, $nota9, $nota10, $nota11, $nota12);
+                                        if (!($nota13 >= 4)){
+                                            $nota13=null;
+                                        }
+                                        ?>
+                                        
+                                        <!-- -------------------------------------------------- -->
+                                        <td><input id="fixed-size"  name="n1"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota1; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n2"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota2; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n3"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota3; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n4"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota4; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n5"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota5; ?>" placeholder="" class="form-control" readonly></td> 
+                                        <td><input id="fixed-size"  name="n6"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota6; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n7"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota7; ?>" placeholder="" class="form-control"></td>
+                                        <td><input id="fixed-size"  name="n9"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota9; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n10" type="number" min="0" max="10" step="0.1" value="<?php echo $nota10; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n11" type="number" min="0" max="10" step="0.1" value="<?php echo $nota11; ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n12" type="number" min="0" max="10" step="0.1" value="<?php echo $nota12; ?>" placeholder="" class="form-control"></td>                                         
+                                        <td><input id="fixed-size"  name="n13" type="number" min="0" max="10" step="0.1" value="<?php echo $nota13; ?>" placeholder="" class="form-control" readonly></td> 
+                                        <td>
+                                           <button type="submit" name="guarda_nota" class="btn btn-primary btn-sm" >Guardar</button>
+                                        </td>
                                         </form>
                                     </tr>
                                 <?php endforeach; ?>
