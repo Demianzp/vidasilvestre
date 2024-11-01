@@ -158,11 +158,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div id="parte1">
                                     <div class="form-group">
                                         <label for="nombre">Nombre:</label>
-                                        <input type="text" class="form-control" name="nombre" value="<?php echo htmlspecialchars($nombre); ?>" placeholder="Ingrese Nombre" required>
+                                        <input type="text" class="form-control" name="nombre"  placeholder="Ingrese Nombre" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="apellido">Apellido:</label>
-                                        <input type="text" class="form-control" name="apellido" value="<?php echo htmlspecialchars($apellido); ?>" placeholder="Ingrese Apellido" required>
+                                        <input type="text" class="form-control" name="apellido"  placeholder="Ingrese Apellido" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="dni">DNI:</label>
@@ -177,7 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                     <div class="form-group">
                                         <label for="email">Email:</label>
-                                        <input type="email" class="form-control" name="email" id="email" value="<?php echo htmlspecialchars($email); ?>" autocomplete="off" placeholder="Ingrese su email" required>
+                                        <input type="email" class="form-control" name="email" id="email"  autocomplete="off" placeholder="Ingrese su email" required>
                                         <span id="emailOK"></span>
                                     </div>
                                 </div>
