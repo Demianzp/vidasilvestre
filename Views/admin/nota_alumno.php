@@ -35,6 +35,54 @@ if ($alumno_id) {
     exit;
 }
 //--------------------------------------------------------------------------- 
+function actualizarNota($db, $alumno_id, $materia_id, $ciclo_lectivo, $n1,$n2,$n3,$n4,$n5,$n6,$n7,$n9,$n10,$n11,$n12,$n13) {
+    $sql = "UPDATE nota 
+        SET n1=:n1,n2=:n2,n3=:n3,n4=:n4,n5=:n5,n6=:n6,n7=:n7,n9=:n9,n10=:n10,n11=:n11,n12=:n12,n13=:n13
+        WHERE id_persona = :alumno_id
+        AND id_materia = :materia_id
+        AND id_ciclo = :ciclo_lectivo";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':n1', $n1);
+        $stmt->bindParam(':n2', $n2);
+        $stmt->bindParam(':n3', $n3);
+        $stmt->bindParam(':n4', $n4);
+        $stmt->bindParam(':n5', $n5);
+        $stmt->bindParam(':n6', $n6);
+        $stmt->bindParam(':n7', $n7);
+        $stmt->bindParam(':n9', $n9);
+        $stmt->bindParam(':n10', $n10);
+        $stmt->bindParam(':n11', $n11);
+        $stmt->bindParam(':n12', $n12);
+        $stmt->bindParam(':n13', $n13);
+        $stmt->bindParam(':alumno_id', $alumno_id); 
+        $stmt->bindParam(':materia_id', $materia_id);
+        $stmt->bindParam(':ciclo_lectivo', $ciclo_lectivo);
+        $stmt->execute();
+}
+function insertNota($db, $alumno_id, $materia_id, $ciclo_lectivo, $n1, $n2, $n3, $n4, $n5, $n6, $n7, $n9, $n10, $n11, $n12, $n13) {
+    $estado = 'activo';
+    $sql = "INSERT INTO nota (id_persona, id_materia, id_ciclo, n1, n2, n3, n4, n5, n6, n7, n9, n10, n11, n12, n13, estado) 
+            VALUES (:id_persona, :id_materia, :ciclo_lectivo, :n1, :n2, :n3, :n4, :n5, :n6, :n7, :n9, :n10, :n11, :n12, :n13, :estado)";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':id_persona', $alumno_id);
+    $stmt->bindParam(':id_materia', $materia_id);
+    $stmt->bindParam(':ciclo_lectivo', $ciclo_lectivo);
+    $stmt->bindParam(':n1', $n1);
+    $stmt->bindParam(':n2', $n2);
+    $stmt->bindParam(':n3', $n3);
+    $stmt->bindParam(':n4', $n4);
+    $stmt->bindParam(':n5', $n5);
+    $stmt->bindParam(':n6', $n6);
+    $stmt->bindParam(':n7', $n7);
+    $stmt->bindParam(':n9', $n9);
+    $stmt->bindParam(':n10', $n10);
+    $stmt->bindParam(':n11', $n11);
+    $stmt->bindParam(':n12', $n12);
+    $stmt->bindParam(':n13', $n13);
+    $stmt->bindParam(':estado', $estado);
+    $stmt->execute();
+}
+//--------------------------------------------
 if(isset($_POST['guarda_nota'])) {
     // ----------------------------------------
     $alumno_id = $_POST["alumno_id"];
@@ -65,52 +113,12 @@ if(isset($_POST['guarda_nota'])) {
                  AND id_ciclo = $ciclo_lectivo";          
     $resul_exa = $conexion->query($sql_nota);
     $nota = $resul_exa->fetch_assoc();    
-    if(isset($nota) && $nota['estado'] === 'activo'){  
-        $sql = "UPDATE nota 
-        SET n1=:n1,n2=:n2,n3=:n3,n4=:n4,n5=:n5,n6=:n6,n7=:n7,n9=:n9,n10=:n10,n11=:n11,n12=:n12,n13=:n13
-        WHERE id_persona = :alumno_id
-        AND id_materia = :materia_id
-        AND id_ciclo = :ciclo_lectivo";
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam(':n1', $n1);
-        $stmt->bindParam(':n2', $n2);
-        $stmt->bindParam(':n3', $n3);
-        $stmt->bindParam(':n4', $n4);
-        $stmt->bindParam(':n5', $n5);
-        $stmt->bindParam(':n6', $n6);
-        $stmt->bindParam(':n7', $n7);
-        $stmt->bindParam(':n9', $n9);
-        $stmt->bindParam(':n10', $n10);
-        $stmt->bindParam(':n11', $n11);
-        $stmt->bindParam(':n12', $n12);
-        $stmt->bindParam(':n13', $n13);
-        $stmt->bindParam(':alumno_id', $alumno_id); 
-        $stmt->bindParam(':materia_id', $materia_id);
-        $stmt->bindParam(':ciclo_lectivo', $ciclo_lectivo);
-        $stmt->execute();
+// --------------CONTROLA EL ENVIO DE FORMULARIO------------------
+    if(isset($nota) && $nota['estado'] === 'activo'){ 
+        actualizarNota($db, $alumno_id, $materia_id, $ciclo_lectivo, $n1,$n2,$n3,$n4,$n5,$n6,$n7,$n9,$n10,$n11,$n12,$n13);         
     } else {       
         try {  
-            $estado='activo';  
-            $sql =  "INSERT INTO nota (id_persona, id_materia, id_ciclo,n1,n2,n3,n4,n5,n6,n7,n9,n10,n11,n12,n13,estado) 
-            VALUES (:id_persona, :id_materia, :ciclo_lectivo, :n1,:n2,:n3,:n4,:n5,:n6,:n7,:n9,:n10,:n11,:n12,:n13,:estado)";
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam(':id_persona', $alumno_id);
-            $stmt->bindParam(':id_materia', $materia_id);            
-            $stmt->bindParam(':ciclo_lectivo', $ciclo_lectivo);
-            $stmt->bindParam(':n1', $n1);
-            $stmt->bindParam(':n2', $n2);
-            $stmt->bindParam(':n3', $n3);
-            $stmt->bindParam(':n4', $n4);
-            $stmt->bindParam(':n5', $n5);
-            $stmt->bindParam(':n6', $n6);
-            $stmt->bindParam(':n7', $n7);
-            $stmt->bindParam(':n9', $n9);
-            $stmt->bindParam(':n10', $n10);
-            $stmt->bindParam(':n11', $n11);
-            $stmt->bindParam(':n12', $n12);
-            $stmt->bindParam(':n13', $n13);
-            $stmt->bindParam(':estado', $estado);    
-            $stmt->execute();                          
+        insertNota($db, $alumno_id, $materia_id, $ciclo_lectivo, $n1,$n2,$n3,$n4,$n5,$n6,$n7,$n9,$n10,$n11,$n12,$n13);    
         } catch (PDOException $e) {
             $error = "Error en la base de datos: " . $e->getMessage();           
         }
@@ -120,7 +128,8 @@ if(isset($_POST['guarda_nota'])) {
             window.location="nota_alumno.php?id="+id_alumno;
           </script>';        
 }
- //--------------BARRA DE CICLO LECTIVO ACTUAL----------------------  
+
+//--------------BARRA DE CICLO LECTIVO ACTUAL----------------------  
     if(!isset($_POST['buscar'])){
         $sql_ciclo = "SELECT id_ciclo , nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 1 LIMIT 1";
         $result_ciclo = $conexion->query($sql_ciclo);
@@ -200,7 +209,7 @@ if(isset($_POST['guarda_nota'])) {
                         <tbody>                            
                             <?php foreach ($materias as $index => $materia): ?>
                                 <tr>
-                                    <form action="" method="post">
+                                    <form id="miFormulario" action="" method="post">
                                         <input type="hidden" name="alumno_id" value="<?php echo htmlspecialchars($alumno_id); ?>">
                                         <input type="hidden" name="materia_id" value="<?php echo htmlspecialchars($materia['id_materia']); ?>">
                                         <input type="hidden" name="ciclo_lectivo" value="<?php echo htmlspecialchars($select_ciclo); ?>">                                          
@@ -260,9 +269,24 @@ if(isset($_POST['guarda_nota'])) {
                                         <td><input id="fixed-size"  name="n12" type="number" min="0" max="10" step="0.1" value="<?php echo $nota12; ?>" placeholder="" class="form-control"></td>                                         
                                         <td><input id="fixed-size"  name="n13" type="number" min="0" max="10" step="0.1" value="<?php echo $nota13; ?>" placeholder="" class="form-control" readonly></td> 
                                         <td>
-                                           <button type="submit" name="guarda_nota" class="btn btn-primary btn-sm" >Guardar</button>
+                                            <input type="hidden" name="envio_numero" value="1">
+                                            <button type="submit" onclick="enviarDosVeces()" name="guarda_nota" class="btn btn-primary btn-sm" >Guardar</button>
                                         </td>
                                     </form>
+                                    <script>
+                                        function enviarDosVeces() {
+                                            const formulario = document.forms["miFormulario"];
+
+                                            // Primer envío
+                                            formulario.submit();
+                                        
+                                            // Segundo envío después de un breve retraso
+                                            setTimeout(() => {
+                                                formulario.envio_numero.value = 2; // Cambia el valor para el segundo envío
+                                                formulario.submit();
+                                            }, 500); // Ajusta el tiempo de retraso si es necesario
+                                        }
+                                    </script>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
