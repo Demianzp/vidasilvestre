@@ -3,6 +3,8 @@ ob_start();
 require 'navbar.php';
 require '../../conn/connection.php';
 
+
+
 if (!isset($_SESSION['id_persona'])) {
     die("Error: No has iniciado sesión.");
 }
@@ -21,23 +23,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
-function obtenerNombreCompletoAlumno($conexion, $alumno_id)
-{
+function obtenerNombreCompletoAlumno($conexion, $alumno_id) {
     $stmt = $conexion->prepare("SELECT CONCAT(nombre, ' ', apellido) AS nombre_completo FROM persona WHERE id_persona = ?");
     $stmt->bind_param("i", $alumno_id);
     $stmt->execute();
     return $stmt->get_result()->fetch_assoc()['nombre_completo'] ?? "Alumno no encontrado";
 }
 
-function obtenerMateriasActivas($conexion)
-{
+function obtenerMateriasActivas($conexion) {
     $stmt = $conexion->prepare("SELECT * FROM materia WHERE estado = 'Activo'");
     $stmt->execute();
     return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
-function obtenerInscripcionesAlumno($conexion, $alumno_id)
-{
+function obtenerInscripcionesAlumno($conexion, $alumno_id) {
     $stmt = $conexion->prepare("SELECT id_materia, id_ciclo, estado FROM alumno_materia WHERE id_persona = ?");
     $stmt->bind_param("i", $alumno_id);
     $stmt->execute();
@@ -49,65 +48,89 @@ function obtenerInscripcionesAlumno($conexion, $alumno_id)
     return $inscripciones;
 }
 
-function obtenerCicloLectivoActual($conexion)
-{
+function obtenerCicloLectivoActual($conexion) {
     $stmt = $conexion->prepare("SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 1 LIMIT 1");
     $stmt->execute();
     return $stmt->get_result()->fetch_assoc();
 }
-function manejarInscripcion($conexion, $data, $alumno_id)
-{
-    $materias_ids = filter_input(INPUT_POST, 'materias_ids', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+
+function verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id) {
+    
+    $stmt = $conexion->prepare("SELECT id_correlativa FROM correlativa WHERE id_materia = ?");
+    $stmt->bind_param("i", $materia_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    
+    if ($result->num_rows === 0) {
+        return true;
+    }
+
+    
+    while ($correlativa = $result->fetch_assoc()) {
+        $stmt = $conexion->prepare("SELECT n13 FROM nota WHERE id_persona = ? AND id_materia = ? AND estado = 'Activo'");
+        $stmt->bind_param("ii", $alumno_id, $correlativa['id_correlativa']);
+        $stmt->execute();
+        $nota_result = $stmt->get_result();
+
+        
+        if ($nota_result->num_rows === 0) {
+            return false;
+        }
+
+        $nota = $nota_result->fetch_assoc();
+        if ($nota['n13'] < 6) {
+            return false; // Correlativas no aprobadas
+        }
+    }
+    return true; 
+}
+function manejarInscripcion($conexion, $data, $alumno_id) {
+    $materia_id = filter_input(INPUT_POST, 'materia_id', FILTER_SANITIZE_NUMBER_INT);
     $ciclo_lectivo = filter_input(INPUT_POST, 'ciclo_lectivo', FILTER_SANITIZE_NUMBER_INT);
     $fecha_inscripcion = date('Y-m-d H:i:s');
 
-    if (empty($materias_ids) || !$ciclo_lectivo) {
+    if (!$materia_id || !$ciclo_lectivo) {
         return "Datos de inscripción incompletos.";
+    }
+
+
+    $stmt = $conexion->prepare("SELECT n13 FROM nota WHERE id_persona = ? AND id_materia = ?");
+    $stmt->bind_param("ii", $alumno_id, $materia_id);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $nota = $resultado->fetch_assoc();
+
+  
+    if ($nota && $nota['n13'] > 4) {
+        return "No puedes inscribirte en esta materia porque ya la has aprobado.";
+    }
+
+   
+    if (!verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id)) {
+        return "No puedes inscribirte a esta materia porque no has aprobado todas las correlativas.";
     }
 
     $conexion->begin_transaction();
 
     try {
-        foreach ($materias_ids as $materia_id) {
-            // Verificar si el alumno ya aprobó la materia
-            $stmt = $conexion->prepare("SELECT n13 FROM nota WHERE id_persona = ? AND id_materia = ?");
-            $stmt->bind_param("ii", $alumno_id, $materia_id);
-            $stmt->execute();
-            $resultado = $stmt->get_result();
-            $nota = $resultado->fetch_assoc();
+        $stmt = $conexion->prepare("INSERT INTO alumno_materia (id_persona, id_materia, id_ciclo, estado, fecha_inscripcion) 
+                                    VALUES (?, ?, ?, 'Inscripto', ?) 
+                                    ON DUPLICATE KEY UPDATE estado = 'Inscripto', fecha_inscripcion = ?");
+        $stmt->bind_param("iiiss", $alumno_id, $materia_id, $ciclo_lectivo, $fecha_inscripcion, $fecha_inscripcion);
 
-            if ($nota && $nota['n13'] > 4) {
-                continue; // Saltar esta materia, ya aprobada
-            }
-
-            // Verificar el rol para las correlativas
-            $stmt = $conexion->prepare("SELECT id_rol FROM persona WHERE id_persona = ?");
-            $stmt->bind_param("i", $alumno_id);
-            $stmt->execute();
-            $rol = $stmt->get_result()->fetch_assoc()['id_rol'];
-
-            // Si el rol no es Admin y las correlativas no están aprobadas, cancelar inscripción
-            if ($rol != 3 && !verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id)) {
-                continue; // No se inscribe a esta materia
-            }
-
-            // Insertar o actualizar inscripción
-            $stmt = $conexion->prepare("INSERT INTO alumno_materia (id_persona, id_materia, id_ciclo, estado, fecha_inscripcion) 
-                                        VALUES (?, ?, ?, 'Inscripto', ?) 
-                                        ON DUPLICATE KEY UPDATE estado = 'Inscripto', fecha_inscripcion = ?");
-            $stmt->bind_param("iiiss", $alumno_id, $materia_id, $ciclo_lectivo, $fecha_inscripcion, $fecha_inscripcion);
-            $stmt->execute();
+        if ($stmt->execute()) {
+            $conexion->commit();
+            return "Inscripción realizada con éxito.";
+        } else {
+            $conexion->rollback();
+            return "Error al realizar la inscripción: " . $stmt->error;
         }
-
-        $conexion->commit();
-        return "Inscripciones realizadas con éxito.";
     } catch (Exception $e) {
         $conexion->rollback();
         return "Error: " . $e->getMessage();
     }
 }
-
-// Aquí se incluiría la parte HTML para el formulario
 
 // Agrupar materias por año de cursado
 $materias_por_año = [];
@@ -123,6 +146,7 @@ foreach ($materias as $materia) {
             <div class="card rounded-2 border-0">
                 <div class="card-header bg-dark text-white pb-0">
                     <h5 class="d-inline-block"><?php echo htmlspecialchars($nombre_completo); ?></h5>
+                    <!-- <a href="ver_nota.php?id<?php //echo $alumno_id; ?>" class="btn btn-info btn-sm float-right mb-2">Parciales-Notas</a> -->
                 </div>
                 <div class="card-body table-responsive">
                     <?php if (empty($materias)): ?>
@@ -162,20 +186,20 @@ foreach ($materias as $materia) {
                                             <?php if (isset($inscripciones_alumno[$materia['id_materia']][$select_ciclo]) && $inscripciones_alumno[$materia['id_materia']][$select_ciclo] == 'Inscripto'): ?>
                                                 <button class="btn btn-success btn-sm btn-block" disabled>Inscripto</button>
                                             <?php else: ?>
-                                                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?id=' . $alumno_id; ?>" method="post">
+                                                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?id=' . $alumno_id; ?>" method="post" class="d-inline">
                                                     <input type="hidden" name="alumno_id" value="<?php echo $alumno_id; ?>">
-                                                    <input type="hidden" name="materias_ids[]" value="<?php echo $materia['id_materia']; ?>">
+                                                    <input type="hidden" name="materia_id" value="<?php echo $materia['id_materia']; ?>">
                                                     <input type="hidden" name="ciclo_lectivo" value="<?php echo $select_ciclo; ?>">
-                                                    <button type="submit" class="btn btn-danger btn-sm btn-block">Inscribir</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm">Inscribir</button>
                                                 </form>
                                             <?php endif; ?>
                                         </td>
-
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
                     <?php endforeach; ?>
+
                     <?php if (isset($_SESSION['mensaje'])): ?>
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
@@ -195,5 +219,6 @@ foreach ($materias as $materia) {
         </div>
     </div>
 </section>
-<?
-ob_end_flush(); // Finaliza el buffer de salida
+
+<?php
+ob_end_flush(); 
