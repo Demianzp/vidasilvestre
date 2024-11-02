@@ -1,6 +1,29 @@
 <?php require 'navbar.php';
 require '../../conn/connection.php';
-
+//--------------BARRA DE CICLO LECTIVO ACTUAL----------------------  
+if(!isset($_POST['buscar'])){
+    $sql_ciclo = "SELECT id_ciclo , nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 1 LIMIT 1";
+    $result_ciclo = $conexion->query($sql_ciclo);
+    $ciclo = $result_ciclo->fetch_assoc();
+    $select_ciclo = $ciclo['id_ciclo'];   
+}
+if(isset($_POST['buscar'])){
+    if(!empty($_POST['select_ciclo'])){
+        $select_ciclo = $_POST['select_ciclo'];
+        // ----------------------------------------------------                
+        $sql_ciclo = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo WHERE id_ciclo = $select_ciclo";
+        $result_ciclo = $conexion->query($sql_ciclo);
+        $ciclo = $result_ciclo->fetch_assoc();
+    }else {
+        $sql_ciclo = "SELECT id_ciclo , nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 1 LIMIT 1";
+        $result_ciclo = $conexion->query($sql_ciclo);
+        $ciclo = $result_ciclo->fetch_assoc();
+        $select_ciclo = $ciclo['id_ciclo'];
+        // ********************************************
+        //LA VARIABLE $select_ciclo LLEVA EL CICLO LECTIVO A TODA LA PAGINA
+        // ********************************************
+    }
+}
 $alumno_id = isset($_GET['id']) ? $_GET['id'] : null;
 if ($alumno_id) {
     $sql_alumno = "SELECT * FROM persona WHERE id_persona = $alumno_id";
@@ -15,6 +38,7 @@ if ($alumno_id) {
             JOIN materia m ON am.id_materia = m.id_materia
             WHERE am.id_persona = $alumno_id 
             AND m.estado = 'Activo'
+            AND am.id_ciclo=$select_ciclo
             ";
     $result = $conexion->query($sql);
     if ($result->num_rows > 0) {
@@ -130,8 +154,6 @@ if(isset($_POST['guarda_nota'])) {
             window.location="nota_alumno.php?id="+id_alumno;
           </script>';        
 }
-
-
 ?>    
 <!-- ------------------------------------- -->
 <section class="content mt-3">
@@ -139,8 +161,31 @@ if(isset($_POST['guarda_nota'])) {
         <div class="col-sm">
             <div class="card rounded-2 border-0">
                 <div class="card-header bg-dark text-white pb-0 ">    
-                    <h5 class="d-inline-block"><?php echo htmlspecialchars($nombre_completo); ?></h5> 
-                    <a class="btn btn-warning float-right mb-2" href="nota_alumno_ciclo.php?id=<?php echo $alumno_id; ?>">Listar por Ciclo Lectivo</a>          
+                    <div class="row">                
+                        <h5 class="col-md-4"><?php echo htmlspecialchars($nombre_completo); ?></h5> 
+                        <div class="col-md-5 d-flex justify-content-end ">
+                            <a class="btn btn-primary mb-2" href="nota_alumno.php?id=<?php echo $alumno_id; ?>">Todas las Notas</a> 
+                        </div>                           
+                        <div class="col-md-3 ">                        
+                            <form id="miFormulario" action="" method="post" class="form-inline justify-content-end ">
+                                <select name="select_ciclo" class="form-control  w-100" onchange="enviarFormulario()">
+                                    <option value="" disabled selected class="text-secondary">Ciclo lectivo actual: <?php echo $ciclo['nombre_ciclo']; ?></option>
+                                        <?php                          
+                                        $stmt = $db->query("SELECT * FROM ciclo_lectivo");
+                                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                            echo "<option value='{$row["id_ciclo"]}'>{$row["nombre_ciclo"]}</option>";
+                                        }
+                                    ?>                                    
+                                </select>
+                                <input type="hidden" name="buscar" >
+                                <script>
+                                    function enviarFormulario() {
+                                        document.getElementById("miFormulario").submit();
+                                    }
+                                </script>
+                            </form>
+                        </div>             
+                    </div>
                 </div>
                 <!----------------------------------------------------------------->      
                 <div class="card-body table-responsive">
@@ -170,7 +215,8 @@ if(isset($_POST['guarda_nota'])) {
                                 <tr>
                                     <form id="miFormulario" action="" method="post">
                                         <input type="hidden" name="alumno_id" value="<?php echo htmlspecialchars($alumno_id); ?>">
-                                        <input type="hidden" name="materia_id" value="<?php echo htmlspecialchars($materia['id_materia']); ?>">                                  
+                                        <input type="hidden" name="materia_id" value="<?php echo htmlspecialchars($materia['id_materia']); ?>">
+                                        <input type="hidden" name="ciclo_lectivo" value="<?php echo htmlspecialchars($select_ciclo); ?>">                                          
                                         <?php $id_materia=$materia['id_materia']; ?>
                                         <!-- ------------------------------------------------------- -->
                                         <td><?php echo $index + 1; ?></td>
@@ -180,7 +226,7 @@ if(isset($_POST['guarda_nota'])) {
                                          $mate=$materia['id_materia'];
                                          $sql_nota = "SELECT * FROM nota WHERE id_persona = $alumno_id 
                                          AND id_materia = $mate
-                                         
+                                         AND id_ciclo = $select_ciclo
                                          ";                                           
                                          $result_nota = $conexion->query($sql_nota);    
                                          $nota = $result_nota->fetch_assoc(); 
