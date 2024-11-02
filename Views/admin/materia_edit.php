@@ -50,66 +50,68 @@ if ($infoMessage || $errorMessage) {
 ?>
 <!-- -------------------------------------------- -->
 <?php require 'navbar.php'; ?>
-    <div class="container mt-3">
-        <div class="row m-auto">
-            <div class="col-sm">
-                <div class="card rounded-2 border-0">
-                    <h5 class="card-header bg-dark text-white">Edición de Materia</h5>
-                    <div class="card-body bg-light">
-                        <form method="post" class="form" action="">
-                            <input type="hidden" class="form-control" name="id" value="<?php echo htmlspecialchars($materia['id_materia']); ?>">
-                            <!-------------------------------------------------------------->
-                            <label>Nombres:</label>
-                            <input type="text" class="form-control" required name="nombre" autocomplete="off" value="<?php echo htmlspecialchars($materia['Nombre']); ?>" maxlength="45">
-                            <!-------------------------------------------------------------->
-                            <label>Descripción:</label>
-                            <input type text="text" class="form-control" required name="descripcion" autocomplete="off" value="<?php echo htmlspecialchars($materia['descripcion']); ?>" maxlength="45">
-                            <!-------------------------------------------------------------->
-                            <label>Horas de cursada:</label>
-                            <input type="text" class="form-control" required name="horas" id="horas" autocomplete="off" value="<?php echo htmlspecialchars($materia['horas']); ?>" maxlength="8">
-                            <span id="horasOK"></span>
-                            <br>
-                          <label>Número de resolución:</label>  
-                          <input type="text" class="form-control" required name="num_resolucion" id="num_resolucion" autocomplete="off" value="<?php echo htmlspecialchars($materia['num_resolucion']); ?>" maxlength="10">
-                            <span id="num_resolucionOK"></span>
-                            <br>
-                             <!-------------------------------------------------------------->
-                             <label>Año de Cursado:</label>
-                             <select  name="año" id="año" class="form-control" autocomplete="off" required>
-                                    <option value="" disabled>Seleccione su Tipo</option>
-                                    <option value="1" <?php echo ($materia['año_cursado'] == 1) ? 'selected' : ''; ?>>1° Año</option>
-                                    <option value="2" <?php echo ($materia['año_cursado'] == 2) ? 'selected' : ''; ?>>2° Año</option>
-                                    <option value="3" <?php echo ($materia['año_cursado'] == 3) ? 'selected' : ''; ?>>3° Año</option>
-                                </select>
-                            <span id="añoOK"></span>
-                            <br>
-                            <!-------------------------------------------------------------->
-                            <label for="plan_estudio">Cuatrimestre</label>
-                             <select name="plan_estudio"   id="plan_estudio" class="form-control" autocomplete="off" required>
-                                    <option value="" disabled>Seleccione el Cuatrimestre</option>
-                                    <option value="1" <?php echo ($materia['plan_estudio'] == 1) ? 'selected' : ''; ?>>1° Cuatrimestre</option>
-                                    <option value="2" <?php echo ($materia['plan_estudio'] == 2) ? 'selected' : ''; ?>>2° Cuatrimestre</option>
-                                </select>                           
-                            <!-------------------------------------------------------------->
-                            <div class="form-group">
-                                <label for="id_tipo">Tipo de Materia:</label>
-                                <select name="id_tipo" class="form-control" autocomplete="off" required>
-                                    <option value="" disabled>Seleccione su Tipo</option>
-                                    <option value="1" <?php echo ($materia['id_tipo'] == 1) ? 'selected' : ''; ?>>Regular</option>
-                                    <option value="2" <?php echo ($materia['id_tipo'] == 2) ? 'selected' : ''; ?>>Promocional</option>
-                                    <option value="3" <?php echo ($materia['id_tipo'] == 3) ? 'selected' : ''; ?>>Libre</option>
-                                </select>
-                            </div>
-                            <!-------------------------------------------------------------->
-                            <div class="mt-3 mb-2">
-                                <button type="submit" class="btn btn-primary" name="modificar" onclick="return confirm('¿Estás seguro de guardar los cambios?')">Guardar Cambios</button>
-                                <a class="btn btn-warning" href="materia_index.php">Ver Listado</a>
-                            </div>
-                        </form>
-                    </div>
+<div class="container mt-3">
+    <div class="row m-auto">
+        <div class="col-sm">
+            <div class="card rounded-2 border-0">
+                <h5 class="card-header bg-dark text-white">Edición de Materia</h5>
+                <div class="card-body bg-light">
+                    <form method="post" class="form" action="">
+                        <input type="hidden" class="form-control" name="id" value="<?php echo htmlspecialchars($materia['id_materia']); ?>">
+                        <!-------------------------------------------------------------->
+                        <label>Nombres:</label>
+                        <input type="text" class="form-control" required name="nombre" autocomplete="off" value="<?php echo htmlspecialchars($materia['Nombre']); ?>" maxlength="45">
+                        <!-------------------------------------------------------------->
+                        <label>Descripción:</label>
+                        <input type text="text" class="form-control" required name="descripcion" autocomplete="off" value="<?php echo htmlspecialchars($materia['descripcion']); ?>" maxlength="45">
+                        <!-------------------------------------------------------------->
+                        <label>Horas de cursada:</label>
+                        <input type="text" class="form-control" required name="horas" id="horas" autocomplete="off" value="<?php echo htmlspecialchars($materia['horas']); ?>" maxlength="8">
+                        <span id="horasOK"></span>
+                        <br>
+                        <label>Número de resolución:</label>
+                        <input type="text" class="form-control" required name="num_resolucion" id="num_resolucion" autocomplete="off" value="<?php echo htmlspecialchars($materia['num_resolucion']); ?>" maxlength="10">
+                        <span id="num_resolucionOK"></span>
+                        <br>
+                        <!-------------------------------------------------------------->
+                        <label>Año de Cursado:</label>
+                        <select name="año" id="año" class="form-control" autocomplete="off" required>
+                            <option value="" disabled>Seleccione su Tipo</option>
+                            <option value="1" <?php echo ($materia['año_cursado'] == 1) ? 'selected' : ''; ?>>1° Año</option>
+                            <option value="2" <?php echo ($materia['año_cursado'] == 2) ? 'selected' : ''; ?>>2° Año</option>
+                            <option value="3" <?php echo ($materia['año_cursado'] == 3) ? 'selected' : ''; ?>>3° Año</option>
+                        </select>
+                        <span id="añoOK"></span>
+                        <br>
+                        <!-------------------------------------------------------------->
+                        <label for="plan_estudio">Cuatrimestre</label>
+                        <select name="plan_estudio" id="plan_estudio" class="form-control" autocomplete="off" required>
+                            <option value="" disabled>Seleccione el Cuatrimestre</option>
+                            <option value="1° Cuatrimestre" <?php echo ($materia['plan_estudio'] == '1° Cuatrimestre') ? 'selected' : ''; ?>>1° Cuatrimestre</option>
+                            <option value="2° Cuatrimestre" <?php echo ($materia['plan_estudio'] == '2° Cuatrimestre') ? 'selected' : ''; ?>>2° Cuatrimestre</option>
+                            <option value="Anual" <?php echo ($materia['plan_estudio'] == 'Anual') ? 'selected' : ''; ?>>Anual</option>
+                        </select>
+
+                        <!-------------------------------------------------------------->
+                        <div class="form-group">
+                            <label for="id_tipo">Tipo de Materia:</label>
+                            <select name="id_tipo" class="form-control" autocomplete="off" required>
+                                <option value="" disabled>Seleccione su Tipo</option>
+                                <option value="1" <?php echo ($materia['id_tipo'] == 1) ? 'selected' : ''; ?>>Regular</option>
+                                <option value="2" <?php echo ($materia['id_tipo'] == 2) ? 'selected' : ''; ?>>Promocional</option>
+                                <option value="3" <?php echo ($materia['id_tipo'] == 3) ? 'selected' : ''; ?>>Libre</option>
+                            </select>
+                        </div>
+                        <!-------------------------------------------------------------->
+                        <div class="mt-3 mb-2">
+                            <button type="submit" class="btn btn-primary" name="modificar" onclick="return confirm('¿Estás seguro de guardar los cambios?')">Guardar Cambios</button>
+                            <a class="btn btn-warning" href="materia_index.php">Ver Listado</a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-<?php require 'footer.php'; ?>   
+<?php require 'footer.php'; ?>
