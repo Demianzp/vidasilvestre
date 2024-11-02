@@ -55,38 +55,36 @@ function obtenerCicloLectivoActual($conexion) {
 }
 
 function verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id) {
-    // Obtener todas las correlativas para la materia
+    
     $stmt = $conexion->prepare("SELECT id_correlativa FROM correlativa WHERE id_materia = ?");
     $stmt->bind_param("i", $materia_id);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Si no hay correlativas, se puede inscribir
+    
     if ($result->num_rows === 0) {
         return true;
     }
 
-    // Iterar sobre cada correlativa y verificar si está aprobada
+    
     while ($correlativa = $result->fetch_assoc()) {
         $stmt = $conexion->prepare("SELECT n13 FROM nota WHERE id_persona = ? AND id_materia = ? AND estado = 'Activo'");
         $stmt->bind_param("ii", $alumno_id, $correlativa['id_correlativa']);
         $stmt->execute();
         $nota_result = $stmt->get_result();
 
-        // Si la correlativa no tiene nota aprobada, retornar false
+        
         if ($nota_result->num_rows === 0) {
             return false;
         }
 
         $nota = $nota_result->fetch_assoc();
         if ($nota['n13'] < 6) {
-            return false; // Correlativa no aprobada
+            return false; // Correlativas no aprobadas
         }
     }
-    return true; // Todas las correlativas aprobadas
+    return true; 
 }
-
-
 function manejarInscripcion($conexion, $data, $alumno_id) {
     $materia_id = filter_input(INPUT_POST, 'materia_id', FILTER_SANITIZE_NUMBER_INT);
     $ciclo_lectivo = filter_input(INPUT_POST, 'ciclo_lectivo', FILTER_SANITIZE_NUMBER_INT);
@@ -96,13 +94,21 @@ function manejarInscripcion($conexion, $data, $alumno_id) {
         return "Datos de inscripción incompletos.";
     }
 
-    $stmt = $conexion->prepare("SELECT id_rol FROM persona WHERE id_persona = ?");
-    $stmt->bind_param("i", $alumno_id);
-    $stmt->execute();
-    $rol = $stmt->get_result()->fetch_assoc()['id_rol'];
 
-    if ($rol != 3 && !verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id)) {
-        return "No puedes inscribirte a esta materia porque no has aprobado la correlativa.";
+    $stmt = $conexion->prepare("SELECT n13 FROM nota WHERE id_persona = ? AND id_materia = ?");
+    $stmt->bind_param("ii", $alumno_id, $materia_id);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $nota = $resultado->fetch_assoc();
+
+  
+    if ($nota && $nota['n13'] > 4) {
+        return "No puedes inscribirte en esta materia porque ya la has aprobado.";
+    }
+
+   
+    if (!verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id)) {
+        return "No puedes inscribirte a esta materia porque no has aprobado todas las correlativas.";
     }
 
     $conexion->begin_transaction();
@@ -215,4 +221,4 @@ foreach ($materias as $materia) {
 </section>
 
 <?php
-ob_end_flush(); // Finaliza el buffer de salida
+ob_end_flush(); 
