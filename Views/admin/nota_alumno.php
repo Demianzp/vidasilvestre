@@ -1,6 +1,29 @@
 <?php require 'navbar.php';
 require '../../conn/connection.php';
-
+//--------------BARRA DE CICLO LECTIVO ACTUAL----------------------  
+if(!isset($_POST['buscar'])){
+    $sql_ciclo = "SELECT id_ciclo , nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 1 LIMIT 1";
+    $result_ciclo = $conexion->query($sql_ciclo);
+    $ciclo = $result_ciclo->fetch_assoc();
+    $select_ciclo = $ciclo['id_ciclo'];   
+}
+if(isset($_POST['buscar'])){
+    if(!empty($_POST['select_ciclo'])){
+        $select_ciclo = $_POST['select_ciclo'];
+        // ----------------------------------------------------                
+        $sql_ciclo = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo WHERE id_ciclo = $select_ciclo";
+        $result_ciclo = $conexion->query($sql_ciclo);
+        $ciclo = $result_ciclo->fetch_assoc();
+    }else {
+        $sql_ciclo = "SELECT id_ciclo , nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 1 LIMIT 1";
+        $result_ciclo = $conexion->query($sql_ciclo);
+        $ciclo = $result_ciclo->fetch_assoc();
+        $select_ciclo = $ciclo['id_ciclo'];
+        // ********************************************
+        //LA VARIABLE $select_ciclo LLEVA EL CICLO LECTIVO A TODA LA PAGINA
+        // ********************************************
+    }
+}
 $alumno_id = isset($_GET['id']) ? $_GET['id'] : null;
 if ($alumno_id) {
     $sql_alumno = "SELECT * FROM persona WHERE id_persona = $alumno_id";
@@ -130,8 +153,6 @@ if(isset($_POST['guarda_nota'])) {
             window.location="nota_alumno.php?id="+id_alumno;
           </script>';        
 }
-
-
 ?>    
 <!-- ------------------------------------- -->
 <section class="content mt-3">
@@ -170,7 +191,8 @@ if(isset($_POST['guarda_nota'])) {
                                 <tr>
                                     <form id="miFormulario" action="" method="post">
                                         <input type="hidden" name="alumno_id" value="<?php echo htmlspecialchars($alumno_id); ?>">
-                                        <input type="hidden" name="materia_id" value="<?php echo htmlspecialchars($materia['id_materia']); ?>">                                  
+                                        <input type="hidden" name="materia_id" value="<?php echo htmlspecialchars($materia['id_materia']); ?>">
+                                        <input type="hidden" name="ciclo_lectivo" value="<?php echo htmlspecialchars($select_ciclo); ?>">                                  
                                         <?php $id_materia=$materia['id_materia']; ?>
                                         <!-- ------------------------------------------------------- -->
                                         <td><?php echo $index + 1; ?></td>
@@ -180,7 +202,7 @@ if(isset($_POST['guarda_nota'])) {
                                          $mate=$materia['id_materia'];
                                          $sql_nota = "SELECT * FROM nota WHERE id_persona = $alumno_id 
                                          AND id_materia = $mate
-                                         
+                                         AND id_ciclo = $select_ciclo
                                          ";                                           
                                          $result_nota = $conexion->query($sql_nota);    
                                          $nota = $result_nota->fetch_assoc(); 
