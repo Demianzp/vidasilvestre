@@ -38,6 +38,7 @@ if ($alumno_id) {
             JOIN materia m ON am.id_materia = m.id_materia
             WHERE am.id_persona = $alumno_id 
             AND m.estado = 'Activo'
+            AND am.id_ciclo=$select_ciclo
             ";
     $result = $conexion->query($sql);
     if ($result->num_rows > 0) {
@@ -160,8 +161,31 @@ if(isset($_POST['guarda_nota'])) {
         <div class="col-sm">
             <div class="card rounded-2 border-0">
                 <div class="card-header bg-dark text-white pb-0 ">    
-                    <h5 class="d-inline-block"><?php echo htmlspecialchars($nombre_completo); ?></h5> 
-                    <a class="btn btn-warning float-right mb-2" href="nota_alumno_ciclo.php?id=<?php echo $alumno_id; ?>">Listar por Ciclo Lectivo</a>          
+                    <div class="row">                
+                        <h5 class="col-md-4"><?php echo htmlspecialchars($nombre_completo); ?></h5> 
+                        <!-- <div class="col-md-5 d-flex justify-content-end ">
+                            <a class="btn btn-primary mb-2" href="nota_alumno.php?id=<?php echo $alumno_id; ?>">Todas las Notas</a> 
+                        </div>                            -->
+                        <div class="col-md-8 justify-content-end mb-2">                        
+                            <form id="miFormulario" action="" method="post" class="form-inline justify-content-end ">
+                                <select name="select_ciclo" class="form-control  w-25" onchange="enviarFormulario()">
+                                    <option value="" disabled selected class="text-secondary">Ciclo lectivo actual: <?php echo $ciclo['nombre_ciclo']; ?></option>
+                                        <?php                          
+                                        $stmt = $db->query("SELECT * FROM ciclo_lectivo");
+                                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                            echo "<option value='{$row["id_ciclo"]}'>{$row["nombre_ciclo"]}</option>";
+                                        }
+                                    ?>                                    
+                                </select>
+                                <input type="hidden" name="buscar" >
+                                <script>
+                                    function enviarFormulario() {
+                                        document.getElementById("miFormulario").submit();
+                                    }
+                                </script>
+                            </form>
+                        </div>             
+                    </div>
                 </div>
                 <!----------------------------------------------------------------->      
                 <div class="card-body table-responsive">
@@ -229,44 +253,28 @@ if(isset($_POST['guarda_nota'])) {
                                             $nota5 = array_sum($notas_filtradas) / count($notas_filtradas);
                                         } 
                                         $nota13 = max($nota6, $nota7, $nota9, $nota10, $nota11, $nota12);
-                                        if (!($nota13 >= 4)){
-                                            $nota13=null;
-                                        }
+                                       
                                         ?>
                                         
                                         <!-- -------------------------------------------------- -->
-                                        <td><input id="fixed-size"  name="n1"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota1; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size"  name="n2"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota2; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size"  name="n3"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota3; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size"  name="n4"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota4; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size"  name="n5"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota5; ?>" placeholder="" class="form-control" readonly></td> 
-                                        <td><input id="fixed-size"  name="n6"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota6; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size"  name="n7"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota7; ?>" placeholder="" class="form-control"></td> 
-                                        <!-- <td><input id="fixed-size"  name="n8"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota8; ?>" placeholder="" class="form-control" readonly></td>  -->
-                                        <td><input id="fixed-size"  name="n9"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota9; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size"  name="n10" type="number" min="0" max="10" step="0.1" value="<?php echo $nota10; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size"  name="n11" type="number" min="0" max="10" step="0.1" value="<?php echo $nota11; ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size"  name="n12" type="number" min="0" max="10" step="0.1" value="<?php echo $nota12; ?>" placeholder="" class="form-control"></td>                                         
-                                        <td><input id="fixed-size"  name="n13" type="number" min="0" max="10" step="0.1" value="<?php echo $nota13; ?>" placeholder="" class="form-control" readonly></td> 
-                                        <td>
-                                            <input type="hidden" name="envio_numero" value="1">
-                                            <button type="submit" onclick="enviarDosVeces()" name="guarda_nota" class="btn btn-primary btn-sm" >Guardar</button>
+                                        <td><input id="fixed-size"  name="n1"  type="number" min="0" max="10" step="0.1" value="<?php echo htmlspecialchars($nota1 ); ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n2"  type="number" min="0" max="10" step="0.1" value="<?php echo htmlspecialchars($nota2 ); ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n3"  type="number" min="0" max="10" step="0.1" value="<?php echo htmlspecialchars($nota3 ); ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n4"  type="number" min="0" max="10" step="0.1" value="<?php echo htmlspecialchars($nota4 ); ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n5"  type="number" min="0" max="10" step="0.1" value="<?php echo htmlspecialchars($nota5 ); ?>" placeholder="" class="form-control" readonly></td> 
+                                        <td><input id="fixed-size"  name="n6"  type="number" min="0" max="10" step="0.1" oninput="sincronizarInput6(this.value)"value="<?php echo htmlspecialchars($nota6 ); ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n7"  type="number" min="0" max="10" step="0.1" oninput="sincronizarInput7(this.value)"value="<?php echo htmlspecialchars($nota7 ); ?>" placeholder="" class="form-control"></td>
+                                        <td><input id="fixed-size"  name="n9"  type="number" min="0" max="10" step="0.1" oninput="sincronizarInput9(this.value)"value="<?php echo htmlspecialchars($nota9 ); ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n10" type="number" min="0" max="10" step="0.1" oninput="sincronizarInput10(this.value)"value="<?php echo htmlspecialchars($nota10); ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n11" type="number" min="0" max="10" step="0.1" oninput="sincronizarInput11(this.value)"value="<?php echo htmlspecialchars($nota11); ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n12" type="number" min="0" max="10" step="0.1" oninput="sincronizarInput12(this.value)"value="<?php echo htmlspecialchars($nota12); ?>" placeholder="" class="form-control"></td>                                         
+                                        <td><input id="fixed-size"  name="n13" type="number" min="0" max="10" step="0.1" value="<?php echo htmlspecialchars($nota13); ?>" placeholder="" class="form-control" readonly></td> 
+                                        <td class="btn-group px-0 mx-0"> 
+                                           <button type="submit" name="guarda_nota" class="btn btn-primary btn-sm mr-1" >Guardar</button>
+                                           <button type="submit" name="guarda_nota" class="btn btn-success btn-sm" >Confirmar</button>
                                         </td>
                                     </form>
-                                    <script>
-                                        function enviarDosVeces() {
-                                            const formulario = document.forms["miFormulario"];
-
-                                            // Primer envío
-                                            formulario.submit();
-                                        
-                                            // Segundo envío después de un breve retraso
-                                            setTimeout(() => {
-                                                formulario.envio_numero.value = 2; // Cambia el valor para el segundo envío
-                                                formulario.submit();
-                                            }, 500); // Ajusta el tiempo de retraso si es necesario
-                                        }
-                                    </script>
+                                    
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
