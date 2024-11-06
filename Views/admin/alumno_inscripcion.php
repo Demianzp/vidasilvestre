@@ -48,6 +48,7 @@ function obtenerCicloLectivoActual($conexion) {
     $stmt->execute();
     return $stmt->get_result()->fetch_assoc();
 }
+
 function verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id) {
     // Obtener todas las correlativas para la materia
     $stmt = $conexion->prepare("SELECT id_correlativa FROM correlativa WHERE id_materia = ?");
@@ -60,7 +61,8 @@ function verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id) {
     }
     // Iterar sobre cada correlativa y verificar si está aprobada
     while ($correlativa = $result->fetch_assoc()) {
-        $stmt = $conexion->prepare("SELECT n13 FROM nota WHERE id_persona = ? AND id_materia = ? AND estado = 'Activo'");
+
+        $stmt = $conexion->prepare("SELECT n5 FROM nota WHERE id_persona = ? AND id_materia = ? AND estado = 'Activo'");
         $stmt->bind_param("ii", $alumno_id, $correlativa['id_correlativa']);
         $stmt->execute();
         $nota_result = $stmt->get_result();
@@ -70,12 +72,13 @@ function verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id) {
         }
 
         $nota = $nota_result->fetch_assoc();
-        if ($nota['n13'] < 6) {
-            return false; // Correlativa no aprobada
+        if ($nota['n5'] > 6) {
+            return false;
         }
     }
-    return true; // Todas las correlativas aprobadas
+    return true;
 }
+
 function manejarInscripcion($conexion, $data, $alumno_id) {
     $materia_id = filter_input(INPUT_POST, 'materia_id', FILTER_SANITIZE_NUMBER_INT);
     $ciclo_lectivo = filter_input(INPUT_POST, 'ciclo_lectivo', FILTER_SANITIZE_NUMBER_INT);
