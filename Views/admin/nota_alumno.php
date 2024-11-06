@@ -1,28 +1,17 @@
 <?php require 'navbar.php';
 require '../../conn/connection.php';
 //--------------BARRA DE CICLO LECTIVO ACTUAL----------------------  
-if(!isset($_POST['buscar'])){
+if(isset($_POST['guarda_nota'])|| isset($_POST['buscar'])){
+    $select_ciclo = $_POST['select_ciclo'];
+    // ----------------------------------------------------                
+    $sql_ciclo = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo WHERE id_ciclo = $select_ciclo";
+    $result_ciclo = $conexion->query($sql_ciclo);
+    $ciclo = $result_ciclo->fetch_assoc();
+}else {
     $sql_ciclo = "SELECT id_ciclo , nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 1 LIMIT 1";
     $result_ciclo = $conexion->query($sql_ciclo);
     $ciclo = $result_ciclo->fetch_assoc();
-    $select_ciclo = $ciclo['id_ciclo'];   
-}
-if(isset($_POST['buscar'])){
-    if(!empty($_POST['select_ciclo'])){
-        $select_ciclo = $_POST['select_ciclo'];
-        // ----------------------------------------------------                
-        $sql_ciclo = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo WHERE id_ciclo = $select_ciclo";
-        $result_ciclo = $conexion->query($sql_ciclo);
-        $ciclo = $result_ciclo->fetch_assoc();
-    }else {
-        $sql_ciclo = "SELECT id_ciclo , nombre_ciclo FROM ciclo_lectivo WHERE ciclo_actual = 1 LIMIT 1";
-        $result_ciclo = $conexion->query($sql_ciclo);
-        $ciclo = $result_ciclo->fetch_assoc();
-        $select_ciclo = $ciclo['id_ciclo'];
-        // ********************************************
-        //LA VARIABLE $select_ciclo LLEVA EL CICLO LECTIVO A TODA LA PAGINA
-        // ********************************************
-    }
+    $select_ciclo = $ciclo['id_ciclo'];
 }
 $alumno_id = isset($_GET['id']) ? $_GET['id'] : null;
 if ($alumno_id) {
@@ -51,7 +40,7 @@ if ($alumno_id) {
                     icon: 'info',
                     title: 'Sin materias',
                     text: 'No se encontraron materias inscritas para este alumno.',
-                    confirmButtonColor: '#6a1b9a', // Color lila pastel
+                    confirmButtonColor: '#6a1b9a',
                     confirmButtonText: 'Ok'
                 });
               </script>";
@@ -60,7 +49,7 @@ if ($alumno_id) {
     echo "ID de alumno no especificado."; 
     exit;
 }
-//--------------------------------------------------------------------------- 
+
 function actualizarNota($db, $alumno_id, $materia_id, $ciclo_lectivo, $n1,$n2,$n3,$n4,$n5,$n6,$n7,$n9,$n10,$n11,$n12,$n13) {
     $sql = "UPDATE nota 
         SET n1=:n1,n2=:n2,n3=:n3,n4=:n4,n5=:n5,n6=:n6,n7=:n7,n9=:n9,n10=:n10,n11=:n11,n12=:n12,n13=:n13
@@ -85,6 +74,7 @@ function actualizarNota($db, $alumno_id, $materia_id, $ciclo_lectivo, $n1,$n2,$n
         $stmt->bindParam(':ciclo_lectivo', $ciclo_lectivo);
         $stmt->execute();
 }
+
 function insertNota($db, $alumno_id, $materia_id, $ciclo_lectivo, $n1, $n2, $n3, $n4, $n5, $n6, $n7, $n9, $n10, $n11, $n12, $n13) {
     $estado = 'activo';
     $sql = "INSERT INTO nota (id_persona, id_materia, id_ciclo, n1, n2, n3, n4, n5, n6, n7, n9, n10, n11, n12, n13, estado) 
@@ -108,9 +98,8 @@ function insertNota($db, $alumno_id, $materia_id, $ciclo_lectivo, $n1, $n2, $n3,
     $stmt->bindParam(':estado', $estado);
     $stmt->execute();
 }
-//--------------------------------------------
+
 if(isset($_POST['guarda_nota'])) {
-    // ----------------------------------------
     $alumno_id = $_POST["alumno_id"];
     $materia_id = $_POST["materia_id"];
     $ciclo_lectivo = $_POST["ciclo_lectivo"];    
@@ -126,6 +115,7 @@ if(isset($_POST['guarda_nota'])) {
     $n11 = $_POST["n11"]; 
     $n12 = $_POST["n12"];
     $n13 = $_POST["n13"]; 
+    
     $notas = [$n1, $n2, $n3, $n4, $n5, $n6, $n7,$n9, $n10, $n11, $n12, $n13];
     foreach ($notas as &$nota) {
         $nota = !empty($nota) && is_numeric($nota) ? (float)$nota : null;
@@ -133,26 +123,22 @@ if(isset($_POST['guarda_nota'])) {
     list($n1, $n2, $n3, $n4, $n5, $n6, $n7, $n9, $n10, $n11, $n12, $n13) = $notas;
 
     $error = "";
-    // -------------------------------    
+    
     $sql_nota = "SELECT * FROM nota WHERE id_persona = $alumno_id 
                  AND id_materia = $materia_id
                  AND id_ciclo = $ciclo_lectivo";          
     $resul_exa = $conexion->query($sql_nota);
     $nota = $resul_exa->fetch_assoc();    
-// --------------CONTROLA EL ENVIO DE FORMULARIO------------------
+
     if(isset($nota) && $nota['estado'] === 'activo'){ 
         actualizarNota($db, $alumno_id, $materia_id, $ciclo_lectivo, $n1,$n2,$n3,$n4,$n5,$n6,$n7,$n9,$n10,$n11,$n12,$n13);         
     } else {       
         try {  
-        insertNota($db, $alumno_id, $materia_id, $ciclo_lectivo, $n1,$n2,$n3,$n4,$n5,$n6,$n7,$n9,$n10,$n11,$n12,$n13);    
+            insertNota($db, $alumno_id, $materia_id, $ciclo_lectivo, $n1,$n2,$n3,$n4,$n5,$n6,$n7,$n9,$n10,$n11,$n12,$n13);    
         } catch (PDOException $e) {
             $error = "Error en la base de datos: " . $e->getMessage();           
         }
-    }
-    echo '<script>
-            var id_alumno = ' . $alumno_id . ';
-            window.location="nota_alumno.php?id="+id_alumno;
-          </script>';        
+    }        
 }
 ?>    
 <!-- ------------------------------------- -->
@@ -162,25 +148,23 @@ if(isset($_POST['guarda_nota'])) {
             <div class="card rounded-2 border-0">
                 <div class="card-header bg-dark text-white pb-0 ">    
                     <div class="row">                
-                        <h5 class="col-md-4"><?php echo htmlspecialchars($nombre_completo); ?></h5> 
-                        <!-- <div class="col-md-5 d-flex justify-content-end ">
-                            <a class="btn btn-primary mb-2" href="nota_alumno.php?id=<?php echo $alumno_id; ?>">Todas las Notas</a> 
-                        </div>                            -->
+                        <h5 class="col-md-4"><?php echo htmlspecialchars($nombre_completo); ?></h5>                          
                         <div class="col-md-8 justify-content-end mb-2">                        
-                            <form id="miFormulario" action="" method="post" class="form-inline justify-content-end ">
-                                <select name="select_ciclo" class="form-control  w-25" onchange="enviarFormulario()">
-                                    <option value="" disabled selected class="text-secondary">Ciclo lectivo actual: <?php echo $ciclo['nombre_ciclo']; ?></option>
-                                        <?php                          
-                                        $stmt = $db->query("SELECT * FROM ciclo_lectivo");
-                                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                            echo "<option value='{$row["id_ciclo"]}'>{$row["nombre_ciclo"]}</option>";
-                                        }
+                            <form id="miForm" action="" method="post" class="form-inline justify-content-end ">
+                                <select name="select_ciclo" class="form-control w-25" onchange="enviarFormulario()">
+                                    <option value="" disabled class="text-secondary">Ciclo lectivo actual: <?php echo $ciclo['nombre_ciclo']; ?></option>
+                                    <?php                          
+                                    $stmt = $db->query("SELECT * FROM ciclo_lectivo");
+                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                        $selected = ($row["id_ciclo"] == $select_ciclo) ? 'selected' : '';
+                                        echo "<option value='{$row["id_ciclo"]}' {$selected}>{$row["nombre_ciclo"]}</option>";
+                                    }
                                     ?>                                    
                                 </select>
-                                <input type="hidden" name="buscar" >
+                                <input type="hidden" name="buscar">
                                 <script>
                                     function enviarFormulario() {
-                                        document.getElementById("miFormulario").submit();
+                                        document.getElementById("miForm").submit();
                                     }
                                 </script>
                             </form>
@@ -209,28 +193,26 @@ if(isset($_POST['guarda_nota'])) {
                                 <th id="fixed-size">Guardar</th>
                             </tr>
                         </thead>
-                        <!------------------------------------------------------------------->
                         <tbody>                            
                             <?php foreach ($materias as $index => $materia): ?>
                                 <tr>
                                     <form id="miFormulario" action="" method="post">
                                         <input type="hidden" name="alumno_id" value="<?php echo htmlspecialchars($alumno_id); ?>">
                                         <input type="hidden" name="materia_id" value="<?php echo htmlspecialchars($materia['id_materia']); ?>">
-                                        <input type="hidden" name="ciclo_lectivo" value="<?php echo htmlspecialchars($select_ciclo); ?>">                                  
+                                        <input type="hidden" name="ciclo_lectivo" value="<?php echo htmlspecialchars($select_ciclo); ?>">
+                                        <input type="hidden" name="select_ciclo" value="<?php echo htmlspecialchars($select_ciclo); ?>">                                  
                                         <?php $id_materia=$materia['id_materia']; ?>
-                                        <!-- ------------------------------------------------------- -->
                                         <td><?php echo $index + 1; ?></td>
                                         <td><?php echo htmlspecialchars($materia['Nombre']); ?></td>
-                                        <!-- --------------------- -->
-                                         <?php
-                                         $mate=$materia['id_materia'];
-                                         $sql_nota = "SELECT * FROM nota WHERE id_persona = $alumno_id 
-                                         AND id_materia = $mate
-                                         AND id_ciclo = $select_ciclo
-                                         ";                                           
-                                         $result_nota = $conexion->query($sql_nota);    
-                                         $nota = $result_nota->fetch_assoc(); 
-                                        // -------------------------                                       
+                                        <?php
+                                        $mate=$materia['id_materia'];
+                                        $sql_nota = "SELECT * FROM nota WHERE id_persona = $alumno_id 
+                                        AND id_materia = $mate
+                                        AND id_ciclo = $select_ciclo
+                                        ";                                           
+                                        $result_nota = $conexion->query($sql_nota);    
+                                        $nota = $result_nota->fetch_assoc(); 
+                                        
                                         if(empty($nota['n1'])){$nota1 =null;}else{$nota1= $nota['n1'];}
                                         if(empty($nota['n2'])){$nota2 =null;}else{$nota2= $nota['n2'];}
                                         if(empty($nota['n3'])){$nota3 =null;}else{$nota3= $nota['n3'];}
@@ -238,12 +220,13 @@ if(isset($_POST['guarda_nota'])) {
                                         if(empty($nota['n5'])){$nota5 =null;}else{$nota5= $nota['n5'];}
                                         if(empty($nota['n6'])){$nota6 =null;}else{$nota6= $nota['n6'];}
                                         if(empty($nota['n7'])){$nota7 =null;}else{$nota7= $nota['n7'];}
-                                        // if(empty($nota['n8'])){$nota8 =null;}else{$nota8= $nota['n8'];}
                                         if(empty($nota['n9'])){$nota9 =null;}else{$nota9= $nota['n9'];}
-                                       if(empty($nota['n10'])){$nota10=null;}else{$nota10= $nota['n10'];}
-                                       if(empty($nota['n11'])){$nota11=null;}else{$nota11= $nota['n11'];}
-                                       if(empty($nota['n12'])){$nota12=null;}else{$nota12= $nota['n12'];}                                        
-                                       if(empty($nota['n13'])){$nota13=null;}else{$nota13= $nota['n13'];}
+                                        if(empty($nota['n10'])){$nota10=null;}else{$nota10= $nota['n10'];}
+                                        if(empty($nota['n11'])){$nota11=null;}else{$nota11= $nota['n11'];}
+                                        if(empty($nota['n12'])){$nota12=null;}else{$nota12= $nota['n12'];}  
+                                        if(empty($nota['n12'])){$nota12=null;}else{$nota12= $nota['n12'];}                                        
+                                        if(empty($nota['n13'])){$nota13=null;}else{$nota13= $nota['n13'];}
+                                        
                                         // -----------------------------------------------
                                         $notas = [$nota1, $nota2, $nota3, $nota4];
                                         $notas_filtradas = array_filter($notas, function($nota) {
@@ -253,7 +236,6 @@ if(isset($_POST['guarda_nota'])) {
                                             $nota5 = array_sum($notas_filtradas) / count($notas_filtradas);
                                         } 
                                         $nota13 = max($nota6, $nota7, $nota9, $nota10, $nota11, $nota12);
-                                       
                                         ?>
                                         
                                         <!-- -------------------------------------------------- -->
@@ -262,19 +244,18 @@ if(isset($_POST['guarda_nota'])) {
                                         <td><input id="fixed-size"  name="n3"  type="number" min="0" max="10" step="0.1" value="<?php echo htmlspecialchars($nota3 ); ?>" placeholder="" class="form-control"></td> 
                                         <td><input id="fixed-size"  name="n4"  type="number" min="0" max="10" step="0.1" value="<?php echo htmlspecialchars($nota4 ); ?>" placeholder="" class="form-control"></td> 
                                         <td><input id="fixed-size"  name="n5"  type="number" min="0" max="10" step="0.1" value="<?php echo htmlspecialchars($nota5 ); ?>" placeholder="" class="form-control" readonly></td> 
-                                        <td><input id="fixed-size"  name="n6"  type="number" min="0" max="10" step="0.1" oninput="sincronizarInput6(this.value)"value="<?php echo htmlspecialchars($nota6 ); ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size"  name="n7"  type="number" min="0" max="10" step="0.1" oninput="sincronizarInput7(this.value)"value="<?php echo htmlspecialchars($nota7 ); ?>" placeholder="" class="form-control"></td>
-                                        <td><input id="fixed-size"  name="n9"  type="number" min="0" max="10" step="0.1" oninput="sincronizarInput9(this.value)"value="<?php echo htmlspecialchars($nota9 ); ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size"  name="n10" type="number" min="0" max="10" step="0.1" oninput="sincronizarInput10(this.value)"value="<?php echo htmlspecialchars($nota10); ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size"  name="n11" type="number" min="0" max="10" step="0.1" oninput="sincronizarInput11(this.value)"value="<?php echo htmlspecialchars($nota11); ?>" placeholder="" class="form-control"></td> 
-                                        <td><input id="fixed-size"  name="n12" type="number" min="0" max="10" step="0.1" oninput="sincronizarInput12(this.value)"value="<?php echo htmlspecialchars($nota12); ?>" placeholder="" class="form-control"></td>                                         
+                                        <td><input id="fixed-size"  name="n6"  type="number" min="0" max="10" step="0.1" value="<?php echo htmlspecialchars($nota6 ); ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n7"  type="number" min="0" max="10" step="0.1" value="<?php echo htmlspecialchars($nota7 ); ?>" placeholder="" class="form-control"></td>
+                                        <td><input id="fixed-size"  name="n9"  type="number" min="0" max="10" step="0.1" value="<?php echo htmlspecialchars($nota9 ); ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n10" type="number" min="0" max="10" step="0.1" value="<?php echo htmlspecialchars($nota10); ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n11" type="number" min="0" max="10" step="0.1" value="<?php echo htmlspecialchars($nota11); ?>" placeholder="" class="form-control"></td> 
+                                        <td><input id="fixed-size"  name="n12" type="number" min="0" max="10" step="0.1" value="<?php echo htmlspecialchars($nota12); ?>" placeholder="" class="form-control"></td>                                         
                                         <td><input id="fixed-size"  name="n13" type="number" min="0" max="10" step="0.1" value="<?php echo htmlspecialchars($nota13); ?>" placeholder="" class="form-control" readonly></td> 
                                         <td class="btn-group px-0 mx-0"> 
                                            <button type="submit" name="guarda_nota" class="btn btn-primary btn-sm mr-1" >Guardar</button>
                                            <button type="submit" name="guarda_nota" class="btn btn-success btn-sm" >Confirmar</button>
                                         </td>
                                     </form>
-                                    
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -284,4 +265,4 @@ if(isset($_POST['guarda_nota'])) {
         </div>   
     </div>
 </section>
-<?php require 'footer.php'; ?>
+<?php require 'footer.php'; ?>     
