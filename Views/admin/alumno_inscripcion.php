@@ -188,9 +188,9 @@ foreach ($materias as $materia) {
                                             <button class="btn btn-primary btn-sm btn-block mx-0 px-0" disabled>Inscripto</button>                                                                                        
                                         <?php elseif (isset($nota13) && $nota13 >= 4 && isset($nota5) && $nota5 >= 6): ?>
                                             <button class="btn btn-success btn-sm btn-block mx-0 px-0" disabled>Aprobado <?php echo "(".$nota13." ".$numeros[$nota_redondeada_abajo].")";?></button>
-                                        <?php elseif (isset($nota13) && $nota13 < 4 && $select_ciclo == $nota['id_ciclo'] || isset($nota5) && $nota5 < 6 && $select_ciclo == $nota['id_ciclo']): ?>
+                                        <?php elseif ((isset($nota13) && $nota13 < 4 && $select_ciclo == $nota['id_ciclo']) && (isset($nota5) && $nota5 < 6 && $select_ciclo == $nota['id_ciclo'])): ?>
                                             <button class="btn btn-warning btn-sm btn-block mx-0 px-0" disabled>Libre</button>
-                                        <?php elseif (isset($nota5) && $nota5 >= 6 && $select_ciclo == $nota['id_ciclo']): ?>
+                                        <?php elseif ((isset($nota5) && $nota5 >= 6)  && ((isset($nota13) && $nota13 < 4) || !isset($nota13))): ?>
                                             <button class="btn btn-secondary btn-sm btn-block mx-0 px-0" disabled>Regular</button>
                                         <?php else: ?>
                                             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?id=' . htmlspecialchars($alumno_id); ?>" method="post">
