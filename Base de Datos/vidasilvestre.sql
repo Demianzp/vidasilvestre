@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 01-11-2024 a las 00:32:53
+-- Tiempo de generación: 12-11-2024 a las 01:07:20
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -39,12 +39,6 @@ CREATE TABLE `acta` (
   `id_mesa` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- RELACIONES PARA LA TABLA `acta`:
---   `id_mesa`
---       `mesa_examen` -> `id_mesa`
---
-
 -- --------------------------------------------------------
 
 --
@@ -61,16 +55,6 @@ CREATE TABLE `alumno_materia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELACIONES PARA LA TABLA `alumno_materia`:
---   `id_persona`
---       `persona` -> `id_persona`
---   `id_materia`
---       `materia` -> `id_materia`
---   `id_ciclo`
---       `ciclo_lectivo` -> `id_ciclo`
---
-
---
 -- Volcado de datos para la tabla `alumno_materia`
 --
 
@@ -83,7 +67,8 @@ INSERT INTO `alumno_materia` (`Id_alumno`, `id_persona`, `id_materia`, `id_ciclo
 (10, 13, 2, 1, 'Inscripto', '2024-10-26'),
 (11, 13, 3, 1, 'Inscripto', '2024-10-26'),
 (12, 13, 4, 1, 'Inscripto', '2024-10-26'),
-(13, 2, 4, 1, 'Inscripto', '2024-10-26');
+(13, 2, 4, 1, 'Inscripto', '2024-10-26'),
+(14, 13, 5, 1, 'Inscripto', '2024-11-02');
 
 -- --------------------------------------------------------
 
@@ -99,14 +84,6 @@ CREATE TABLE `asignar` (
   `fecha_b` date DEFAULT NULL,
   `Estado` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELACIONES PARA LA TABLA `asignar`:
---   `id_persona`
---       `persona` -> `id_persona`
---   `id_materia`
---       `materia` -> `id_materia`
---
 
 --
 -- Volcado de datos para la tabla `asignar`
@@ -133,10 +110,6 @@ CREATE TABLE `ciclo_lectivo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELACIONES PARA LA TABLA `ciclo_lectivo`:
---
-
---
 -- Volcado de datos para la tabla `ciclo_lectivo`
 --
 
@@ -154,34 +127,36 @@ INSERT INTO `ciclo_lectivo` (`id_ciclo`, `nombre_ciclo`, `fecha_inicio`, `fecha_
 CREATE TABLE `correlativa` (
   `cod_correlativa` int(11) NOT NULL,
   `id_materia` int(11) DEFAULT NULL,
-  `id_correlativa` int(11) DEFAULT NULL
+  `id_correlativa` int(11) DEFAULT NULL,
+  `año_cursado` int(11) DEFAULT NULL,
+  `plan_estudio` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELACIONES PARA LA TABLA `correlativa`:
---   `id_materia`
---       `materia` -> `id_materia`
---
 
 --
 -- Volcado de datos para la tabla `correlativa`
 --
 
-INSERT INTO `correlativa` (`cod_correlativa`, `id_materia`, `id_correlativa`) VALUES
-(1, 6, 5),
-(2, 7, 2),
-(3, 7, 5),
-(4, 8, 2),
-(5, 9, 3),
-(6, 9, 4),
-(7, 10, 2),
-(8, 10, 3),
-(9, 10, 4),
-(10, 10, 5),
-(11, 10, 6),
-(12, 10, 7),
-(13, 10, 8),
-(14, 10, 9);
+INSERT INTO `correlativa` (`cod_correlativa`, `id_materia`, `id_correlativa`, `año_cursado`, `plan_estudio`) VALUES
+(102, 7, 1, NULL, NULL),
+(105, 10, 1, NULL, NULL),
+(106, 11, 2, NULL, NULL),
+(107, 11, 6, NULL, NULL),
+(108, 12, 7, NULL, NULL),
+(109, 13, 5, NULL, NULL),
+(110, 13, 8, NULL, NULL),
+(111, 5, 4, NULL, NULL),
+(112, 6, 1, NULL, NULL),
+(113, 6, 4, NULL, NULL),
+(114, 8, 2, NULL, NULL),
+(115, 8, 3, NULL, NULL),
+(116, 9, 1, NULL, NULL),
+(117, 9, 2, NULL, NULL),
+(118, 9, 3, NULL, NULL),
+(119, 9, 4, NULL, NULL),
+(120, 9, 5, NULL, NULL),
+(121, 9, 6, NULL, NULL),
+(122, 9, 7, NULL, NULL),
+(123, 9, 8, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -194,10 +169,6 @@ CREATE TABLE `examen` (
   `nombre_examen` varchar(255) NOT NULL,
   `tipo` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELACIONES PARA LA TABLA `examen`:
---
 
 --
 -- Volcado de datos para la tabla `examen`
@@ -232,14 +203,6 @@ CREATE TABLE `inscripcion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELACIONES PARA LA TABLA `inscripcion`:
---   `id_alumno`
---       `persona` -> `id_persona`
---   `id_mesa_examen`
---       `mesa_examen` -> `id_mesa`
---
-
---
 -- Volcado de datos para la tabla `inscripcion`
 --
 
@@ -259,33 +222,30 @@ CREATE TABLE `materia` (
   `descripcion` varchar(50) DEFAULT NULL,
   `horas` varchar(5) DEFAULT NULL,
   `num_resolucion` varchar(15) DEFAULT NULL,
-  `año_cursado` varchar(5) NOT NULL,
+  `año_cursado` varchar(20) NOT NULL,
   `id_tipo` int(11) DEFAULT NULL,
   `estado` varchar(11) DEFAULT NULL,
   `plan_estudio` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELACIONES PARA LA TABLA `materia`:
---   `id_tipo`
---       `tipo` -> `id_tipo`
---
-
---
 -- Volcado de datos para la tabla `materia`
 --
 
 INSERT INTO `materia` (`id_materia`, `Nombre`, `descripcion`, `horas`, `num_resolucion`, `año_cursado`, `id_tipo`, `estado`, `plan_estudio`) VALUES
-(1, 'Lengua', '--', '3', 'ASD23', '1', 2, 'Inactivo', '1° Cuatrimestre'),
-(2, 'Compresión y Producción de texto', 'CyPT', '3', 'ASD123', '1', 2, 'Activo', '1° Cuatrimestre'),
-(3, 'Biologia', '--', '3', 'ASD123', '1', 2, 'Activo', '1° Cuatrimestre'),
-(4, 'Ecologia', '--', '3', 'ASD123', '1', 2, 'Activo', '1° Cuatrimestre'),
-(5, 'Contexto socioeconomico ambiental', '--', '3', 'ASD123', '1', 2, 'Activo', '1° Cuatrimestre'),
-(6, 'Informatica Aplicada', '--', '3', 'ASD123', '2', 2, 'Activo', '2° Cuatrimestre'),
-(7, 'Educación Ambiental 1', '--', '3', 'ASD123', '2', 2, 'Activo', '2° Cuatrimestre'),
-(8, 'Geografia Regional', '--', '2', 'asd123', '1', 2, 'Activo', '2° Cuatrimestre'),
-(9, 'Prevencion y Manejo de Fuego en áreas protegidas ', '--', '2', 'ASD123', '1', 2, 'Activo', '2° Cuatrimestre'),
-(10, 'Practicas Profesionalizantes 1', '--', '3', 'ASD123', '1', 2, 'Activo', '2° Cuatrimestre');
+(1, 'Compresion y Produccion de Texto', '--', '2', '--ssss', '1° Año', 1, 'Activo', '1° Cuatrimestre'),
+(2, 'Biologia', '--', '2', '--', '1° Año', 1, 'Activo', '1° Cuatrimestre'),
+(3, 'Ecologia', '--', '2', '--', '1° Año', 1, 'Activo', '1° Cuatrimestre'),
+(4, 'Contexto Socioeconomico ambiental', '--s', '2', '--', '1° Año', 1, 'Activo', '1° Cuatrimestre'),
+(5, 'Informatica Aplicada', '--', '2', '--', '1° Año', 1, 'Activo', '2° Cuatrimestre'),
+(6, 'Educacion Ambiental', '--', '2', '--', '1° Año', 1, 'Activo', '2° Cuatrimestre'),
+(7, 'Geografia Regional', '--', '2', '--', '1° Año', 1, 'Activo', '2° Cuatrimestre'),
+(8, 'Prevencion y Manejo de Fuego en areas protegidas', '--', '2', '-', '1° Año', 1, 'Activo', '2° Cuatrimestre'),
+(9, 'Practicas Profesionalizantes 1', '--', '2', '--', '1° Año', 1, 'Activo', 'Anual'),
+(10, 'Ingles Tecnico 1', '--', '2', '--', '2° Año', 1, 'Activo', '1° Cuatrimestre'),
+(11, 'Educacion Ambienta 2', '--', '3', '--', '2° Año', 1, 'Activo', '1° Cuatrimestre'),
+(12, 'Geografía Regional 2', '--', '2', '--', '2° Año', 1, 'Activo', '1° Cuatrimestre'),
+(13, 'Primeros Auxilios', '--sss', '3', '--', '2° Año', 1, 'Activo', '1° Cuatrimestre');
 
 -- --------------------------------------------------------
 
@@ -308,25 +268,11 @@ CREATE TABLE `mesa_examen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELACIONES PARA LA TABLA `mesa_examen`:
---   `id_ciclo`
---       `ciclo_lectivo` -> `id_ciclo`
---   `id_materia`
---       `materia` -> `id_materia`
---   `id_t`
---       `tribunal` -> `id_t`
---   `id_tipo`
---       `tipo` -> `id_tipo`
---
-
---
 -- Volcado de datos para la tabla `mesa_examen`
 --
 
 INSERT INTO `mesa_examen` (`id_mesa`, `id_materia`, `fecha`, `nombre_mesa`, `hora`, `id_ciclo`, `id_tipo`, `estado`, `libro`, `folio`, `id_t`) VALUES
-(1, 2, '2024-10-17', 'sss', '19:42:00', 1, 1, 'Activo', '222', 222, 6),
-(2, 3, '2024-10-24', 'Prueba_Alumno', '20:23:00', 1, 1, 'Activo', '2323', 1212, 7),
-(3, 4, '2024-10-31', 'Prueba_Alumno2', '22:07:00', 1, 3, 'Activo', '12312', 34324, 8);
+(1, 6, '2024-11-08', 'sdas', '18:45:00', 1, 1, 'Activo', '324324', 32432, 6);
 
 -- --------------------------------------------------------
 
@@ -356,14 +302,11 @@ CREATE TABLE `nota` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELACIONES PARA LA TABLA `nota`:
---   `id_persona`
---       `persona` -> `id_persona`
---   `id_materia`
---       `materia` -> `id_materia`
---   `id_ciclo`
---       `ciclo_lectivo` -> `id_ciclo`
+-- Volcado de datos para la tabla `nota`
 --
+
+INSERT INTO `nota` (`id`, `id_persona`, `id_materia`, `id_ciclo`, `n1`, `n2`, `n3`, `n4`, `n5`, `n6`, `n7`, `n8`, `n9`, `n10`, `n11`, `n12`, `n13`, `estado`) VALUES
+(1, 13, 5, 1, 6, 7, 7, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'activo');
 
 -- --------------------------------------------------------
 
@@ -392,12 +335,6 @@ CREATE TABLE `persona` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELACIONES PARA LA TABLA `persona`:
---   `id_rol`
---       `rol` -> `id_rol`
---
-
---
 -- Volcado de datos para la tabla `persona`
 --
 
@@ -423,10 +360,6 @@ CREATE TABLE `rol` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELACIONES PARA LA TABLA `rol`:
---
-
---
 -- Volcado de datos para la tabla `rol`
 --
 
@@ -447,17 +380,13 @@ CREATE TABLE `tipo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELACIONES PARA LA TABLA `tipo`:
---
-
---
 -- Volcado de datos para la tabla `tipo`
 --
 
 INSERT INTO `tipo` (`id_tipo`, `nombre_tipo`) VALUES
 (1, 'Regular'),
-(2, 'Promocional'),
-(3, 'Libre');
+(2, 'Libre'),
+(3, 'Promocional');
 
 -- --------------------------------------------------------
 
@@ -474,10 +403,6 @@ CREATE TABLE `tribunal` (
   `fecha_2` date NOT NULL,
   `observacion` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELACIONES PARA LA TABLA `tribunal`:
---
 
 --
 -- Volcado de datos para la tabla `tribunal`
@@ -608,7 +533,7 @@ ALTER TABLE `acta`
 -- AUTO_INCREMENT de la tabla `alumno_materia`
 --
 ALTER TABLE `alumno_materia`
-  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `asignar`
@@ -626,7 +551,7 @@ ALTER TABLE `ciclo_lectivo`
 -- AUTO_INCREMENT de la tabla `correlativa`
 --
 ALTER TABLE `correlativa`
-  MODIFY `cod_correlativa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `cod_correlativa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 
 --
 -- AUTO_INCREMENT de la tabla `examen`
@@ -644,19 +569,19 @@ ALTER TABLE `inscripcion`
 -- AUTO_INCREMENT de la tabla `materia`
 --
 ALTER TABLE `materia`
-  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `mesa_examen`
 --
 ALTER TABLE `mesa_examen`
-  MODIFY `id_mesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_mesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `nota`
 --
 ALTER TABLE `nota`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`

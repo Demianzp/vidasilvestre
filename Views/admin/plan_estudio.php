@@ -1,6 +1,6 @@
 <?php
 // Conexión a la base de datos
-require '../../conn/connection.php'; 
+require '../../conn/connection.php';
 
 //-------------BORRADO------------------ 
 if (isset($_GET['txtID'])) {
@@ -22,16 +22,13 @@ require 'navbar.php';
             <div class="card rounded-2 border-0">
                 <div class="card-header bg-dark text-white ">
                     <h5 class="d-inline-block">Plan de estudio</h5>
-                   
                 </div>
 
                 <!-- Tabla de materias -->
                 <div class="card-body table-responsive">
                     <table id="example" class="table table-striped table-sm" style="width:100%">
                         <thead class="thead-dark">
-                        
-                        <tr>
-                        
+                            <tr>
                                 <th>Materia</th>
                                 <th>Correlativas</th>
                                 <th>Año</th>
@@ -41,13 +38,13 @@ require 'navbar.php';
                         <tbody>
                             <?php
                             try {
-                                $query = "SELECT m.id_materia, m.Nombre AS Materia,
+                                $query = "SELECT m.id_materia, m.Nombre AS Materia, m.año_cursado AS Año, m.plan_estudio AS Cuatrimestre,
                                                  GROUP_CONCAT(cor.Nombre ORDER BY cor.Nombre ASC SEPARATOR ', ') AS Correlativas
                                           FROM materia m
                                           LEFT JOIN correlativa co ON m.id_materia = co.id_materia
                                           LEFT JOIN materia cor ON co.id_correlativa = cor.id_materia
                                           WHERE m.estado = 'Activo'
-                                          GROUP BY m.id_materia, m.Nombre
+                                          GROUP BY m.id_materia, m.Nombre, m.año_cursado, m.plan_estudio
                                           ORDER BY m.id_materia ASC";
                                 $stmt = $db->prepare($query);
                                 $stmt->execute();
@@ -56,15 +53,10 @@ require 'navbar.php';
                                 foreach ($materias as $materia) {
                             ?>
                                     <tr>
-                          
                                         <td><?php echo htmlspecialchars($materia['Materia'], ENT_QUOTES, 'UTF-8'); ?></td>
                                         <td><?php echo htmlspecialchars($materia['Correlativas'] ? $materia['Correlativas'] : 'Sin correlativas', ENT_QUOTES, 'UTF-8'); ?></td>
-                                        <td class="text-center">
-                                            
-                                        </td>
-                                        <td class="text-center">
-                                            
-                                        </td>
+                                        <td class="text-center"><?php echo htmlspecialchars($materia['Año'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                        <td class="text-center"><?php echo htmlspecialchars($materia['Cuatrimestre'], ENT_QUOTES, 'UTF-8'); ?></td>
                                     </tr>
                             <?php
                                 }
