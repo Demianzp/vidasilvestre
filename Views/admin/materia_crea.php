@@ -15,8 +15,7 @@ function insertarMateria($db, $nombre, $descripcion, $horas, $num_resolucion, $p
                 $stmt->execute([$materia_id, $correlativa]);
             }
         }
-        $mensaje = "Materia ingresada con éxito.";        
-        
+        $mensaje = "Materia ingresada con éxito.";
     } catch (PDOException $e) {
         $error = "Error al ingresar Materia: " . $e->getMessage();
     }
@@ -59,15 +58,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmar'])) {
                             </div>
                             <div class="form-group">
                                 <label for="descripcion">Descripción:</label>
-                                <input type="text" class="form-control" name="descripcion" placeholder="Ingrese Descripcion" id="descripcion" autocomplete="off" >
+                                <input type="text" class="form-control" name="descripcion" placeholder="Ingrese Descripcion" id="descripcion" autocomplete="off">
                             </div>
                             <div class="form-group">
                                 <label for="horas">Horas de cursada:</label>
-                                <input type="number" class="form-control" name="horas" id="horas" placeholder="Ingrese las horas" autocomplete="off" >
+                                <input type="number" class="form-control" name="horas" id="horas" placeholder="Ingrese las horas" autocomplete="off">
                             </div>
                             <div class="form-group">
                                 <label for="num_resolucion">Número de Resolución:</label>
-                                <input type="text" class="form-control" id="num_resolucion" name="num_resolucion" placeholder="Ingrese N° de Resolucion (Máx. 11 caracteres)" maxlength="15" autocomplete="off" >
+                                <input type="text" class="form-control" id="num_resolucion" name="num_resolucion" placeholder="Ingrese N° de Resolucion (Máx. 11 caracteres)" maxlength="15" autocomplete="off">
                                 <small class="form-text text-muted">Máximo 15 caracteres.</small>
                             </div>
 
@@ -75,64 +74,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmar'])) {
                                 <label for="año">Año de Cursado(*)</label>
                                 <select name="año" id="año" class="form-control" autocomplete="off" required>
                                     <option value="" disabled selected>Seleccione Año de Cursado</option>
-                                    <option value="1">1° Año</option>
-                                    <option value="2">2° Año</option>
-                                    <option value="3">3° Año</option>
+                                    <option value="1° Año">1° Año</option>
+                                    <option value="2° Año">2° Año</option>
+                                    <option value="3° Año">3° Año</option>
                                 </select>
                             </div>
+
                             <div class="form-group">
                                 <label for="plan_estudio">Cuatrimestre(*)</label>
                                 <select name="plan_estudio" id="plan_estudio" class="form-control" autocomplete="off" required>
                                     <option value="" disabled selected>Seleccione el Cuatrimestre</option>
-                                    <option value="1">1° Cuatrimestre</option>
-                                    <option value="2">2° Cuatrimestre</option>
-                                    <option value="3">3° Anual</option>
+                                    <option value="1° Cuatrimestre">1° Cuatrimestre</option>
+                                    <option value="2° Cuatrimestre">2° Cuatrimestre</option>
+                                    <option value=" Anual"> Anual</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="id_tipo">Tipo de Materia(*)</label>
                                 <select name="id_tipo" id="id_tipo" class="form-control" autocomplete="off" required>
                                     <option value="" disabled selected>Seleccione su Tipo</option>
-                                    <option value="1">Promocional</option>
-                                    <option value="2">Regular</option>
-                                    <option value="3">Libre</option>
+                                    <option value="1">Regular</option>
+                                    <option value="2">Libre</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col">
                             <div class="card rounded-2 ">
-                            <h5 class="card-header bg-dark text-white">Agrega Correlativa/a(*)</h5>
-                            <div class="card-body ">
-                                <table id="" class="table table-striped table-sm" style="width:100%">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Materia</th>
-                                            <th>Seleccione</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        $sql = $db->query("SELECT * FROM materia WHERE estado = 'Activo'");
-                                        while ($resultado = $sql->fetch(PDO::FETCH_ASSOC)) {
-                                        ?>
+                                <h5 class="card-header bg-dark text-white">Agrega Correlativa/a(*)</h5>
+                                <div class="card-body ">
+                                    <table id="" class="table table-striped table-sm" style="width:100%">
+                                        <thead class="thead-dark">
                                             <tr>
-                                                <td><?php echo $resultado["id_materia"] ?></td>
-                                                <td><?php echo $resultado["Nombre"] ?></td>
-                                                <td>
-                                                    <div class="form-check checkbox-xl d-flex justify-content-center">
-                                                        <input type="checkbox" class="form-check-input" name="correlativas[]" value="<?php echo $resultado["id_materia"]; ?>" >
-                                                    </div>
-                                                </td>
+                                                <th>ID</th>
+                                                <th>Materia</th>
+                                                <th>Seleccione</th>
                                             </tr>
-                                        <?php
-                                        }
-                                        ?>
-                                        
-                                    </tbody>
-                                </table>
-                                <button type="button" class="btn btn-primary float-right" id="continuarBtn">Continuar</button>
-                            </div>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $sql = $db->query("SELECT * FROM materia WHERE estado = 'Activo'");
+                                            while ($resultado = $sql->fetch(PDO::FETCH_ASSOC)) {
+                                            ?>
+                                                <tr>
+                                                    <td><?php echo $resultado["id_materia"] ?></td>
+                                                    <td><?php echo $resultado["Nombre"] ?></td>
+                                                    <td>
+                                                        <div class="form-check checkbox-xl d-flex justify-content-center">
+                                                            <input type="checkbox" class="form-check-input" name="correlativas[]" value="<?php echo $resultado["id_materia"]; ?>">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php
+                                            }
+                                            ?>
+
+                                        </tbody>
+                                    </table>
+                                    <button type="button" class="btn btn-primary float-right" id="continuarBtn">Continuar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -154,53 +153,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirmar'])) {
             </form>
         </div>
     </div>
-  <script>
-    document.getElementById('continuarBtn').addEventListener('click', function() {
-    document.getElementById('formulario-ingreso').style.display = 'none';
-    document.getElementById('confirmacion').style.display = 'block';
+    <script>
+        document.getElementById('continuarBtn').addEventListener('click', function() {
+            document.getElementById('formulario-ingreso').style.display = 'none';
+            document.getElementById('confirmacion').style.display = 'block';
 
-    document.getElementById('confirmarNombre').textContent = document.getElementById('nombre').value;
-    document.getElementById('confirmarDescripcion').textContent = document.getElementById('descripcion').value;
-    document.getElementById('confirmarHoras').textContent = document.getElementById('horas').value;
-    document.getElementById('confirmarResolucion').textContent = document.getElementById('num_resolucion').value;
-    document.getElementById('confirmarAño').textContent = document.getElementById('año').value;
-    document.getElementById('confirmarPlan').textContent = document.getElementById('plan_estudio').value;
+            document.getElementById('confirmarNombre').textContent = document.getElementById('nombre').value;
+            document.getElementById('confirmarDescripcion').textContent = document.getElementById('descripcion').value;
+            document.getElementById('confirmarHoras').textContent = document.getElementById('horas').value;
+            document.getElementById('confirmarResolucion').textContent = document.getElementById('num_resolucion').value;
+            document.getElementById('confirmarAño').textContent = document.getElementById('año').value;
+            document.getElementById('confirmarPlan').textContent = document.getElementById('plan_estudio').value;
 
-    // Obtener texto del select de Tipo de Materia
-    var tipoSelect = document.getElementById('id_tipo');
-    var tipoText = tipoSelect.options[tipoSelect.selectedIndex].text;
-    document.getElementById('confirmarTipo').textContent = tipoText;
+            // Obtener texto del select de Tipo de Materia
+            var tipoSelect = document.getElementById('id_tipo');
+            var tipoText = tipoSelect.options[tipoSelect.selectedIndex].text;
+            document.getElementById('confirmarTipo').textContent = tipoText;
 
-    let correlativasSeleccionadas = Array.from(document.querySelectorAll('input[name="correlativas[]"]:checked'))
-        .map(el => el.parentElement.parentElement.previousElementSibling.textContent)
-        .join(', ');
-    document.getElementById('confirmarCorrelativas').textContent = correlativasSeleccionadas || 'Sin correlativas';
+            let correlativasSeleccionadas = Array.from(document.querySelectorAll('input[name="correlativas[]"]:checked'))
+                .map(el => el.parentElement.parentElement.previousElementSibling.textContent)
+                .join(', ');
+            document.getElementById('confirmarCorrelativas').textContent = correlativasSeleccionadas || 'Sin correlativas';
 
-    document.querySelector('input[name="nombre"]').value = document.getElementById('nombre').value;
-    document.querySelector('input[name="descripcion"]').value = document.getElementById('descripcion').value;
-    document.querySelector('input[name="horas"]').value = document.getElementById('horas').value;
-    document.querySelector('input[name="num_resolucion"]').value = document.getElementById('num_resolucion').value;
-    document.querySelector('input[name="año"]').value = document.getElementById('año').value;
-    document.querySelector('input[name="plan_estudio"]').value = document.getElementById('plan_estudio').value;
-    document.querySelector('input[name="id_tipo"]').value = document.getElementById('id_tipo').value;
-    
-    // Actualizar correlativas ocultas
-    document.querySelectorAll('.form-check.d-none input[name="correlativas[]"]').forEach(el => el.parentElement.remove());
-    document.querySelectorAll('input[name="correlativas[]"]:checked').forEach(el => {
-        let hiddenCheckbox = document.createElement('input');
-        hiddenCheckbox.type = 'checkbox';
-        hiddenCheckbox.className = 'form-check-input d-none';
-        hiddenCheckbox.name = 'correlativas[]';
-        hiddenCheckbox.value = el.value;
-        hiddenCheckbox.checked = true;
-        document.querySelector('.form-check.d-none').appendChild(hiddenCheckbox);
-    });
-});
+            document.querySelector('input[name="nombre"]').value = document.getElementById('nombre').value;
+            document.querySelector('input[name="descripcion"]').value = document.getElementById('descripcion').value;
+            document.querySelector('input[name="horas"]').value = document.getElementById('horas').value;
+            document.querySelector('input[name="num_resolucion"]').value = document.getElementById('num_resolucion').value;
+            document.querySelector('input[name="año"]').value = document.getElementById('año').value;
+            document.querySelector('input[name="plan_estudio"]').value = document.getElementById('plan_estudio').value;
+            document.querySelector('input[name="id_tipo"]').value = document.getElementById('id_tipo').value;
 
-document.getElementById('cancelarBtn').addEventListener('click', function() {
-    document.getElementById('confirmacion').style.display = 'none';
-    document.getElementById('formulario-ingreso').style.display = 'block';
-});
-  </script>
+            // Actualizar correlativas ocultas
+            document.querySelectorAll('.form-check.d-none input[name="correlativas[]"]').forEach(el => el.parentElement.remove());
+            document.querySelectorAll('input[name="correlativas[]"]:checked').forEach(el => {
+                let hiddenCheckbox = document.createElement('input');
+                hiddenCheckbox.type = 'checkbox';
+                hiddenCheckbox.className = 'form-check-input d-none';
+                hiddenCheckbox.name = 'correlativas[]';
+                hiddenCheckbox.value = el.value;
+                hiddenCheckbox.checked = true;
+                document.querySelector('.form-check.d-none').appendChild(hiddenCheckbox);
+            });
+        });
+
+        document.getElementById('cancelarBtn').addEventListener('click', function() {
+            document.getElementById('confirmacion').style.display = 'none';
+            document.getElementById('formulario-ingreso').style.display = 'block';
+        });
+    </script>
 </div>
 <?php require 'footer.php'; ?>
