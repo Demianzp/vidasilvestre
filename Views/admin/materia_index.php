@@ -16,14 +16,16 @@ if (isset($_GET['txtID'])) {
 require 'navbar.php';
 ?>
 <!-- Sección de contenido -->
-<section class="content mt-3">
+<section class="content mt-4">
     <div class="row m-auto">
         <div class="col-sm">
             <div class="card rounded-2 border-0">
                 <div class="card-header bg-dark text-white pb-0">
                     <h5 class="d-inline-block">Listado de Materias y Correlativas</h5>
-                    <a class="btn btn-primary float-right mb-2" href="materia_crea.php">Registro de Materia</a>
-                    <a class="btn btn-warning float-right mb-" href="plan_estudio.php">Plan de estudio</a>
+                    <div class="d-flex flex-wrap float-lg-right">
+                    <a class="btn btn-primary float-right me-2 mb-2 " href="materia_crea.php">Registro de Materia</a>
+                    <a class="btn btn-warning float-right mb-2" href="plan_estudio.php">Plan de estudio</a>
+                    </div>
                 </div>
 
                 <!-- Tabla de materias -->
