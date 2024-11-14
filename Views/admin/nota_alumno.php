@@ -156,7 +156,11 @@ if(isset($_POST['guarda_nota'])){
                                 <select name="select_ciclo" class="form-control form-control-sm w-50" onchange="enviarFormulario()">
                                     <option value="" disabled selected class="text-secondary">Ciclo lectivo actual: <?php echo $ciclo['nombre_ciclo']; ?></option>
                                     <?php                          
-                                    $stmt = $db->query("SELECT * FROM ciclo_lectivo");
+                                    $stmt = $db->query("SELECT DISTINCT c.*
+                                        FROM ciclo_lectivo c
+                                        JOIN alumno_materia am ON c.id_ciclo = am.id_ciclo
+                                        WHERE c.id_ciclo = am.id_ciclo
+                                        ORDER BY c.id_ciclo");
                                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                         echo "<option value='{$row["id_ciclo"]}'>{$row["nombre_ciclo"]}</option>";
                                     }
@@ -229,16 +233,7 @@ if(isset($_POST['guarda_nota'])){
                                         if(empty($nota['n11'])){$nota11=null;}else{$nota11= $nota['n11'];}
                                         if(empty($nota['n12'])){$nota12=null;}else{$nota12= $nota['n12'];}  
                                         if(empty($nota['n12'])){$nota12=null;}else{$nota12= $nota['n12'];}                                        
-                                        if(empty($nota['n13'])){$nota13=null;}else{$nota13= $nota['n13'];}
-                                        // ---------------------------------
-                                        // $notas = [$nota1, $nota2, $nota3, $nota4];
-                                        // $notas_filtradas = array_filter($notas, function($nota) {
-                                        //     return !is_null($nota) && $nota !== 0 && $nota !== '';
-                                        // });
-                                        // if (count($notas_filtradas) > 0) {
-                                        //     $nota5 = array_sum($notas_filtradas) / count($notas_filtradas);
-                                        // } 
-                                        // $nota13 = max($nota6, $nota7, $nota9, $nota10, $nota11, $nota12);                                        
+                                        if(empty($nota['n13'])){$nota13=null;}else{$nota13= $nota['n13'];}                                 
                                         ?>
                                         <!-- -------------------------------------------------- -->
                                         <td><input id="fixed-size"  name="n1"  type="number" min="0" max="10" step="0.1" value="<?php echo htmlspecialchars($nota1); ?>" placeholder="" class="form-control"></td> 
