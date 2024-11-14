@@ -127,7 +127,28 @@ foreach ($materias as $materia) {
         <div class="col-sm">
             <div class="card rounded-2 border-0">
                 <div class="card-header bg-dark text-white pb-0">
-                    <h5 class="d-inline-block"><?php echo htmlspecialchars($nombre_completo); ?></h5>
+                    <div class="row">
+                    <h5 class="col"><?php echo htmlspecialchars($nombre_completo); ?></h5>
+                    <div class="col mb-2">
+                            <form id="miFormulario" action="" method="post" class="form-inline justify-content-end my-1">
+                                <select name="select_ciclo" class="form-control form-control-sm w-50" onchange="enviarFormulario()">
+                                    <option value="" disabled selected class="text-secondary">Ciclo lectivo actual: <?php echo $ciclo['nombre_ciclo']; ?></option>
+                                    <?php                          
+                                    $stmt = $db->query("SELECT * FROM ciclo_lectivo");
+                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                        echo "<option value='{$row["id_ciclo"]}'>{$row["nombre_ciclo"]}</option>";
+                                    }
+                                    ?>
+                                </select>
+                                <input type="hidden" name="buscar" >
+                                <script>
+                                    function enviarFormulario() {
+                                        document.getElementById("miFormulario").submit();
+                                    }
+                                </script>
+                            </form>
+                        </div> 
+                    </div>
                 </div>
                 <div class="card-body table-responsive">
                     <?php if (empty($materias)): ?>
@@ -186,11 +207,11 @@ foreach ($materias as $materia) {
                                     <td >                                        
                                         <?php if (isset($inscripciones_alumno[$materia['id_materia']][$select_ciclo]) && $inscripciones_alumno[$materia['id_materia']][$select_ciclo] == 'Inscripto' && !isset($nota13)&&!isset($nota5)): ?>
                                             <button class="btn btn-primary btn-sm btn-block mx-0 px-0" disabled>Inscripto</button>                                                                                        
-                                        <?php elseif (isset($nota13) && $nota13 >= 4 && isset($nota5) && $nota5 >= 6): ?>
+                                        <?php elseif ((isset($nota13) && $nota13 >= 4) && (isset($nota5) && $nota5 >= 6)): ?>
                                             <button class="btn btn-success btn-sm btn-block mx-0 px-0" disabled>Aprobado <?php echo "(".$nota13." ".$numeros[$nota_redondeada_abajo].")";?></button>
-                                        <?php elseif ((isset($nota13) && $nota13 < 4 && $select_ciclo == $nota['id_ciclo']) && (isset($nota5) && $nota5 < 6 && $select_ciclo == $nota['id_ciclo'])): ?>
+                                        <?php elseif ((isset($nota13) && $nota13 < 4 && $select_ciclo == $nota['id_ciclo']) || (isset($nota5) && $nota5 < 6 && $select_ciclo == $nota['id_ciclo'])): ?>
                                             <button class="btn btn-warning btn-sm btn-block mx-0 px-0" disabled>Libre</button>
-                                        <?php elseif ((isset($nota5) && $nota5 >= 6)  && ((isset($nota13) && $nota13 < 4) || !isset($nota13))): ?>
+                                        <?php elseif ((isset($nota5) && $nota5 >= 6 && $select_ciclo == $nota['id_ciclo'])): ?>
                                             <button class="btn btn-secondary btn-sm btn-block mx-0 px-0" disabled>Regular</button>
                                         <?php else: ?>
                                             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?id=' . htmlspecialchars($alumno_id); ?>" method="post">

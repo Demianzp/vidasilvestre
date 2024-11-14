@@ -82,54 +82,85 @@ if (isset($_POST['guarda_nota'])) {
     $ciclo_lectivo = $_POST["ciclo_lectivo"];    
     
     // Obtener las notas del form
-    $notas = [];
-    for ($i = 1; $i <= 13; $i++) {
-        if ($i != 8) {
-            $nota = isset($_POST["n$i"]) ? $_POST["n$i"] : null;
-            $notas["n$i"] = !empty($nota) && is_numeric($nota) ? (float)$nota : null;
-        }
-    }
-
-    try {
-        // Verificar si ya existe la nota
-        $sql_nota = "SELECT * FROM nota WHERE id_persona = ? AND id_materia = ? AND id_ciclo = ?";
-        $stmt = $db->prepare($sql_nota);
-        $stmt->execute([$alumno_id, $materia_id, $ciclo_lectivo]);
-        $nota_existente = $stmt->fetch();
-
-        if ($nota_existente && $nota_existente['estado'] === 'activo') {
-            // Actualizar nota existente
-            $sql = "UPDATE nota SET " . 
-                   implode(', ', array_map(function($key) { return "$key = :$key"; }, array_keys($notas))) .
-                   " WHERE id_persona = :alumno_id AND id_materia = :materia_id AND id_ciclo = :ciclo_lectivo";
-        } else {
-            // Insertar nueva nota
-            $estado = 'activo';
-            $sql = "INSERT INTO nota (id_persona, id_materia, id_ciclo, " . implode(', ', array_keys($notas)) . ", estado) 
-                    VALUES (:alumno_id, :materia_id, :ciclo_lectivo, " . 
-                    implode(', ', array_map(function($key) { return ":$key"; }, array_keys($notas))) . 
-                    ", :estado)";
-        }
-
+    $n1 = $_POST["n1"]; 
+    $n2 = $_POST["n2"]; 
+    $n3 = $_POST["n3"]; 
+    $n4 = $_POST["n4"]; 
+    //$n5 = $_POST["n5"]; 
+    $n6 = $_POST["n6"];
+    $n7 = $_POST["n7"]; 
+    $n9 = $_POST["n9"]; 
+    $n10 = $_POST["n10"]; 
+    $n11 = $_POST["n11"]; 
+    $n12 = $_POST["n12"];
+    //$n13 = $_POST["n13"]; 
+    $error = "";
+    // ------------------
+    $notas = [$n1, $n2, $n3, $n4];
+    $notas_filtradas = array_filter($notas, function($nota) {
+        return !is_null($nota) && $nota !== 0 && $nota !== '';
+    });
+    if (count($notas_filtradas) > 0) {
+        $n5 = array_sum($notas_filtradas) / count($notas_filtradas);
+    } 
+    $n13 = max($n6, $n7, $n9, $n10, $n11, $n12);
+    // -------------------------------    
+    $sql_nota = "SELECT * FROM nota WHERE id_persona = $alumno_id 
+                 AND id_materia = $materia_id
+                 AND id_ciclo = $ciclo_lectivo
+                 ";          
+    $resul_exa = $conexion->query($sql_nota);
+    $nota = $resul_exa->fetch_assoc();
+    if(isset($nota) && $nota['estado'] === 'activo'){  
+        $sql = "UPDATE nota 
+        SET n1=:n1,n2=:n2,n3=:n3,n4=:n4,n5=:n5,n6=:n6,n7=:n7,n9=:n9,n10=:n10,n11=:n11,n12=:n12,n13=:n13
+        WHERE id_persona = :alumno_id
+        AND id_materia = :materia_id
+        AND id_ciclo = :ciclo_lectivo";
         $stmt = $db->prepare($sql);
-        
-        // Bind parameters
-        $stmt->bindParam(':alumno_id', $alumno_id);
+        $stmt->bindParam(':n1', $n1);
+        $stmt->bindParam(':n2', $n2);
+        $stmt->bindParam(':n3', $n3);
+        $stmt->bindParam(':n4', $n4);
+        $stmt->bindParam(':n5', $n5);
+        $stmt->bindParam(':n6', $n6);
+        $stmt->bindParam(':n7', $n7);
+        $stmt->bindParam(':n9', $n9);
+        $stmt->bindParam(':n10', $n10);
+        $stmt->bindParam(':n11', $n11);
+        $stmt->bindParam(':n12', $n12);
+        $stmt->bindParam(':n13', $n13);
+        $stmt->bindParam(':alumno_id', $alumno_id); 
         $stmt->bindParam(':materia_id', $materia_id);
         $stmt->bindParam(':ciclo_lectivo', $ciclo_lectivo);
-        if (!$nota_existente) {
-            $stmt->bindParam(':estado', $estado);
-        }
-        foreach ($notas as $key => $value) {
-            $stmt->bindParam(":$key", $notas[$key]);
-        }
-        
         $stmt->execute();
-        
-       
-              
-    } catch (PDOException $e) {
-        // Manejo silencioso del error
+    }else{
+        try {  
+            $estado='activo';  
+            $sql =  "INSERT INTO nota (id_persona, id_materia, id_ciclo,n1,n2,n3,n4,n5,n6,n7,n9,n10,n11,n12,n13,estado) 
+            VALUES (:id_persona, :id_materia, :ciclo_lectivo, :n1,:n2,:n3,:n4,:n5,:n6,:n7,:n9,:n10,:n11,:n12,:n13,:estado)";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(':id_persona', $alumno_id);
+            $stmt->bindParam(':id_materia', $materia_id);            
+            $stmt->bindParam(':ciclo_lectivo', $ciclo_lectivo);
+            $stmt->bindParam(':n1', $n1);
+            $stmt->bindParam(':n2', $n2);
+            $stmt->bindParam(':n3', $n3);
+            $stmt->bindParam(':n4', $n4);
+            $stmt->bindParam(':n5', $n5);
+            $stmt->bindParam(':n6', $n6);
+            $stmt->bindParam(':n7', $n7);
+            $stmt->bindParam(':n9', $n9);
+            $stmt->bindParam(':n10', $n10);
+            $stmt->bindParam(':n11', $n11);
+            $stmt->bindParam(':n12', $n12);
+            $stmt->bindParam(':n13', $n13);
+            $stmt->bindParam(':estado', $estado);    
+            $stmt->execute();                          
+        } catch (PDOException $e) {
+            $error = "Error en la base de datos: " . $e->getMessage();
+            exit();
+        }
     }
 }
 ?>    
@@ -228,24 +259,12 @@ if (isset($_POST['guarda_nota'])) {
                                         if(empty($nota['n6'])){$nota6 =null;}else{$nota6= $nota['n6'];}
                                         if(empty($nota['n7'])){$nota7 =null;}else{$nota7= $nota['n7'];}
                                         if(empty($nota['n9'])){$nota9 =null;}else{$nota9= $nota['n9'];}
-                                       if(empty($nota['n10'])){$nota10=null;}else{$nota10= $nota['n10'];}
-                                       if(empty($nota['n11'])){$nota11=null;}else{$nota11= $nota['n11'];}
-                                       if(empty($nota['n12'])){$nota12=null;}else{$nota12= $nota['n12'];}                                        
-                                       if(empty($nota['n13'])){$nota13=null;}else{$nota13= $nota['n13'];}
-                                        // -----------------------------------------------
-                                        $notas = [$nota1, $nota2, $nota3, $nota4];
-                                        $notas_filtradas = array_filter($notas, function($nota) {
-                                            return !is_null($nota) && $nota !== 0 && $nota !== '';
-                                        });
-                                        if (count($notas_filtradas) > 0) {
-                                            $nota5 = array_sum($notas_filtradas) / count($notas_filtradas);
-                                        } 
-                                        $nota13 = max($nota6, $nota7, $nota9, $nota10, $nota11, $nota12);
-                                        if (!($nota13 >= 4)){
-                                            $nota13=null;
-                                        }
-                                        ?>
-                                        
+                                        if(empty($nota['n10'])){$nota10=null;}else{$nota10= $nota['n10'];}
+                                        if(empty($nota['n11'])){$nota11=null;}else{$nota11= $nota['n11'];}
+                                        if(empty($nota['n12'])){$nota12=null;}else{$nota12= $nota['n12'];}                                        
+                                        if(empty($nota['n13'])){$nota13=null;}else{$nota13= $nota['n13'];}
+
+                                        ?>                                        
                                         <!-- -------------------------------------------------- -->
                                         <td><input id="fixed-size"  name="n1"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota1; ?>" placeholder="" class="form-control"></td> 
                                         <td><input id="fixed-size"  name="n2"  type="number" min="0" max="10" step="0.1" value="<?php echo $nota2; ?>" placeholder="" class="form-control"></td> 
