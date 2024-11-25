@@ -60,6 +60,7 @@ error_reporting(E_ALL);
   <script src="../../js/contraseña.js"></script>
   <script src="../../js/validacion.js"></script>
   <script src="../../js/validacion2.js"></script>
+  <script src="../../js/botones.js"></script>
   <!-- ------------------------------ -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Roboto&display=swap');
@@ -149,7 +150,6 @@ error_reporting(E_ALL);
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="listadomesa.php">Gestionar Tribunales</a></li>
                     <li><a class="dropdown-item" href="mesa_alumno.php">Gestionar mesa y acta</a></li>
-                    <li><a class="dropdown-item" href="mesa_acta.php">Gestionar notas</a></li>
                   </ul>
                 </li>
                 <!-- ------------------------------------------------------- -->
