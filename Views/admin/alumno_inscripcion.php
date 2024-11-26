@@ -70,10 +70,9 @@ function verificarCorrelativaAprobada($conexion, $alumno_id, $materia_id) {
         if ($nota_result->num_rows === 0) {
             return false;
         }
-
         $nota = $nota_result->fetch_assoc();
-        if ($nota['n5'] > 6) {
-            return false;
+        if ($nota['n5'] < 6) {
+            return false; // Correlativa no aprobada
         }
     }
     return true;
