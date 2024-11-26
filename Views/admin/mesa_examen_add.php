@@ -20,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_tipo = $_POST['id_tipo'];
     $id_t = $_POST['tribunal'];
     $ciclo_lectivo = $_POST['ciclo_lectivo'];
+    $periodo = $_POST['periodo'];
     $estado = "Activo";
 
     // Verifica que el campo 'nombre_mesa' no sea nulo
@@ -28,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Inserta la mesa de examen en la base de datos
         try {
-            $stmt = $db->prepare("INSERT INTO mesa_examen (nombre_mesa, id_materia, id_ciclo, fecha, folio, hora, estado, id_tipo, libro, id_t) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $db->prepare("INSERT INTO mesa_examen (nombre_mesa, id_materia, id_ciclo, fecha, folio, hora, estado, id_tipo, libro, id_t, periodo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->bindParam(1, $nombre_mesa);
             $stmt->bindParam(2, $id_materia);
             $stmt->bindParam(3, $ciclo_lectivo);
@@ -39,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(8, $id_tipo);
             $stmt->bindParam(9, $libro);
             $stmt->bindParam(10, $id_t);
+            $stmt->bindParam(10, $periodo);
             if ($stmt->execute()) {
                 $mensaje = 'Registro cargado correctamente.';
             } else {
@@ -54,6 +56,7 @@ if ($mensaje || $error) {
     header("Location: mesa_alumno.php?mensaje=" . urlencode($mensaje) . "&error=" . urlencode($error));
     exit();
 }
+
 ?>
 <?php require 'navbar.php'; ?>
 <div class="container mt-3">
@@ -92,11 +95,24 @@ if ($mensaje || $error) {
                             </select>
                         </div>
 
-                        
-                        <div class="form-group mb-3">
-                                <label for="fecha">Fecha:</label>
-                                <input type="date" name="fecha" autocomplete="off" class="form-control" required>
+                        <div class="row">
+                            <div class="form-group col-sm-12 col-md-6 mb-3">
+                            <label for="fecha">Fecha:</label>
+                            <input type="date" name="fecha" autocomplete="off" class="form-control" required>
                             </div>
+                            <div class="form-group col-sm-12 col-md-6 mb-3">
+                            <label for="periodo">Periodo de examen:</label>
+                            <select name="periodo"  class="form-control" autocomplete="off" required>
+                                                    <option value=""  selected>Seleccione...</option>
+                                                    <option value="6">Calif. 1º Ex. Final</option>
+                                                    <option value="7">Calif. 2º Ex. Final</option>
+                                                    <option value="9">1º Per. Ev. Dic. final</option>
+                                                    <option value="10">2º Per. Ev. Dic. final</option>
+                                                    <option value="11">1º Per. Ev. Dic. final</option>
+                                                    <option value="12">2º Per. Ev. Dic. final</option>
+                                                </select>
+                            </div>
+                        
                     
 
                         <div class="row">

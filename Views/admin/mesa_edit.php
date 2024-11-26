@@ -25,10 +25,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $libro= $_POST['libro'];
     $folio= $_POST['folio'];
     $tribunal= $_POST['tribunal'];
+    $periodo= $_POST['periodo'];
     // Consulta preparada para evitar inyección SQL
-    $sql = "UPDATE mesa_examen SET id_materia= ?, fecha=?, nombre_mesa=?, hora=?, id_ciclo=?, id_tipo=? ,libro=? ,folio=? ,id_t=? WHERE id_mesa=?";
+    $sql = "UPDATE mesa_examen SET id_materia= ?, fecha=?, nombre_mesa=?, hora=?, id_ciclo=?, id_tipo=? ,libro=? ,folio=? ,id_t=?, periodo=? WHERE id_mesa=?";
     $stmt = $conexion->prepare($sql);
-    $stmt->bind_param("isssiissii", $materia, $fecha, $nombre, $hora, $tipo, $ciclo, $libro, $folio, $tribunal, $id);
+    $stmt->bind_param("isssiissisi", $materia, $fecha, $nombre, $hora, $tipo, $ciclo, $libro, $folio, $tribunal, $periodo, $id);
     if ($stmt->execute()) {
         $mensaje = 'Registro actualizado correctamente.';
     } else {
@@ -88,9 +89,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <option value="3">Promocional</option>
                                 </select>
                             </div>
-                            <!-- ---------------------------- -->
-                           
-                            <div class="form-group ">
+                          
+                             <!-- ---------------------------- -->
+                             <div class="row">
+                            <div class="form-group col-sm-12 col-md-6 mb-3">
                             <label for="ciclo_lectivo">Ciclo Lectivo:</label>
                                 <select name="ciclo_lectivo" id="ciclo_lectivo" class="form-control" autocomplete="off" disabled>
                                     <?php
@@ -104,6 +106,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </select>
                             </div>
                             
+                            <!-- --------------------------- -->
+                               <div class="form-group col-sm-12 col-md-6 mb-3">
+                                
+                                <label for="periodo">Periodo de examen:</label>
+                            <select name="periodo"  class="form-control" autocomplete="off" required>
+                                                    <option value=""  selected>Seleccione...</option>
+                                                    <option value="6">Calif. 1º Ex. Final</option>
+                                                    <option value="7">Calif. 2º Ex. Final</option>
+                                                    <option value="9">1º Per. Ev. Dic. final</option>
+                                                    <option value="10">2º Per. Ev. Dic. final</option>
+                                                    <option value="11">1º Per. Ev. Dic. final</option>
+                                                    <option value="12">2º Per. Ev. Dic. final</option>
+                                                </select>
+                                             </div>
+                        
                             <!-- ---------------------------- -->
                             <div class="row">
                             <div class="form-group col-sm-12 col-md-6 mb-3">
