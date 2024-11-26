@@ -16,23 +16,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validar datos del formulario
     $id = $_POST['Id'];
-    $nombre = $_POST['nombre_mesa'];
     $materia = $_POST['materia'];
-    $fecha = $_POST['fecha'];
-    $fecha_fin = $_POST['fecha_fin'];
+    $fecha = $_POST['fecha']; 
+    $nombre = $_POST['nombre_mesa'];
     $hora= $_POST['hora'];
     $tipo = $_POST['id_tipo'];
     $ciclo= $_POST['ciclo_lectivo'];
+    $libro= $_POST['libro'];
+    $folio= $_POST['folio'];
+    $tribunal= $_POST['tribunal'];
     // Consulta preparada para evitar inyección SQL
-    $sql = "UPDATE mesa_examen SET nombre_mesa=?, id_materia=?, fecha=?, fecha_fin=?, hora=?, id_ciclo=?, id_tipo=? WHERE id_mesa=?";
+    $sql = "UPDATE mesa_examen SET id_materia= ?, fecha=?, nombre_mesa=?, hora=?, id_ciclo=?, id_tipo=? ,libro=? ,folio=? ,id_t=? WHERE id_mesa=?";
     $stmt = $conexion->prepare($sql);
-    $stmt->bind_param("sisssiii", $nombre, $materia, $fecha, $fecha_fin, $hora, $tipo, $ciclo, $id);
+    $stmt->bind_param("isssiissii", $materia, $fecha, $nombre, $hora, $tipo, $ciclo, $libro, $folio, $tribunal, $id);
     if ($stmt->execute()) {
         $mensaje = 'Registro actualizado correctamente.';
     } else {
         $error = 'Error al actualizar el registro: '. $stmt->error;
     }
-    header("Location: listadomesa.php?mensaje=". urlencode($mensaje). "&error=". urlencode($error));
+    header("Location: mesa_alumno.php?mensaje=". urlencode($mensaje). "&error=". urlencode($error));
     exit();
 
 }
@@ -50,12 +52,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                           
                             <div class="form-group">
                                 <label for="nombre_mesa">Nombre de Mesa:</label>
-                                <input type="text" name="nombre_mesa" autocomplete="off" class="form-control" value="<?php echo $row['nombre_mesa']?>">
+                                <input type="text" name="nombre_mesa" autocomplete="off" class="form-control" value="<?php echo $row['nombre_mesa']?>"disabled>
                             </div>
                          <!-- ----------------------------- -->
                             <div class="form-group">
                                 <label for="materia">Materia:</label>
-                                <select name="materia" id="materia" class="form-control" autocomplete="off" required>
+                                <select name="materia" id="materia" class="form-control" autocomplete="off" disabled>
                                     <?php
                                     $sqlM = "SELECT * FROM materia WHERE  estado = 'Activo' AND id_materia=" . $row['id_materia'];
                                     $resultadoM = $conexion->query($sqlM);
@@ -74,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <!-- ---------------------------- -->
                             <div class="form-group">
                                 <label for="id_tipo">Tipo de Materia:</label>
-                                <select name="id_tipo" class="form-control" autocomplete="off" required>
+                                <select name="id_tipo" class="form-control" autocomplete="off" disabled>
                                     <?php
                                 $sqlt = "SELECT * FROM tipo WHERE id_tipo= " . $row['id_tipo'];
                                     $resultadoM = $conexion->query($sqlt);
@@ -83,32 +85,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     ?>
                                     <option value="1">Regular</option>
                                     <option value="2">Libre</option>
+                                    <option value="3">Promocional</option>
                                 </select>
                             </div>
                             <!-- ---------------------------- -->
-                            <div class="row">
-                            <div class="form-group col-sm-12 col-md-6 mb-3">
-                                <label for="fecha">Fecha Inicio:</label>
-                                <input type="date" name="fecha" autocomplete="off" class="form-control" value="<?php echo $row['fecha']?>">
-                            </div>
-                            
-                            <!-- ---------------------------- -->
-                            <div class="form-group col-sm-12 col-md-6 mb-3">
-                                <label for="fecha_fin">Fecha Fin:</label>
-                                <input type="date" name="fecha_fin" autocomplete="off" class="form-control" value="<?php echo $row['fecha_fin']?>">
-                            </div>
-                            </div>
-                            <!-- ---------------------------- -->
-                            <div class="row">
-                            <div class="form-group col-sm-12 col-md-6 mb-3">
-                                <label for="hora">Hora:</label>
-                                <input type="time" name="hora" autocomplete="off" class="form-control" value="<?php echo $row['hora']?>">
-                            </div>
-                            
-                            <!-- --------------- habría q cambiarlo los 1ro, 2do.. año------------- -->
-                            <div class="form-group col-sm-12 col-md-6 mb-3">
-                                <label for="ciclo_lectivo">Ciclo Lectivo:</label>
-                                <select name="ciclo_lectivo" id="ciclo_lectivo" class="form-control" autocomplete="off" required>
+                           
+                            <div class="form-group ">
+                            <label for="ciclo_lectivo">Ciclo Lectivo:</label>
+                                <select name="ciclo_lectivo" id="ciclo_lectivo" class="form-control" autocomplete="off" disabled>
                                     <?php
                         
                                     $query_ciclos = "SELECT id_ciclo, nombre_ciclo FROM ciclo_lectivo";
@@ -119,11 +103,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     ?>
                                 </select>
                             </div>
+                            
+                            <!-- ---------------------------- -->
+                            <div class="row">
+                            <div class="form-group col-sm-12 col-md-6 mb-3">
+                                <label for="hora">Hora:</label>
+                                <input type="time" name="hora" autocomplete="off" class="form-control" value="<?php echo $row['hora']?>">
                             </div>
+                            
+                            <!-- --------------- habría q cambiarlo los 1ro, 2do.. año------------- -->
+                               <div class="form-group col-sm-12 col-md-6 mb-3">
+                                
+                                <label for="fecha">Fecha:</label>
+                                <input type="date" name="fecha" autocomplete="off" class="form-control" value="<?php echo $row['fecha']?>">
+                             </div>
+                             <!-- ---------------------------- -->
+                             <div class="row">
+                             <div class="form-group col-sm-12 col-md-6 mb-3">
+                                <label for="libro">Libro:</label>
+                                <input type="number" name="libro" autocomplete="off" class="form-control" value="<?php echo $row['libro']?>">
+                             </div>
+                             <div class="form-group col-sm-12 col-md-6 mb-3">
+                                <label for="folio">Folio:</label>
+                                <input type="number" name="folio" autocomplete="off" class="form-control" value="<?php echo $row['folio']?>" >
+                             </div>
+                                </div>
+                       
+                              
+                               <div class="form-group">
+                                <label for="tribunal"><strong>Tribunal:</strong></label>
+                                <select name="tribunal" class="form-control" disabled>
+                                  
+                                    <?php
+                                    $sqlt = $conexion->query("SELECT * FROM tribunal");
+                                    while ($resultadot = $sqlt->fetch_assoc()) {
+                                        echo "<option value='" . $resultadot["id_t"] . "'>" . $resultadot["presidente"] . " / " . $resultadot["fecha_1"] . " </option>";
+                                    }
+                                    ?>
+                                </select>
+                              </div>
+                              <!-- ---------------------------- -->
+                              </div>
                             <br>
                             <div class="form-group">
                             <button type="submit" class="btn btn-primary">Actualizar</button>
-                            <a class="btn btn-warning" href="listadomesa.php">Volver</a>
+                            <a class="btn btn-warning" href="mesa_alumno.php">Volver</a>
                         </div>
                         </form>
                     </div>
