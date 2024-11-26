@@ -91,7 +91,11 @@ if ($alumno_id) {
                                 <select name="select_ciclo" class="form-control form-control-sm w-50" onchange="enviarFormulario()">
                                     <option value="" disabled selected class="text-secondary">Ciclo lectivo actual: <?php echo htmlspecialchars($ciclo['nombre_ciclo']); ?></option>
                                     <?php
-                                    $stmt = $conexion->query("SELECT * FROM ciclo_lectivo WHERE ciclo_actual = 0"); // Excluye el ciclo actual
+                                    $stmt = $conexion->query("SELECT DISTINCT c.*
+                                        FROM ciclo_lectivo c
+                                        JOIN alumno_materia am ON c.id_ciclo = am.id_ciclo
+                                        WHERE c.id_ciclo = am.id_ciclo
+                                        ORDER BY c.id_ciclo"); // Excluye el ciclo actual
                                     while ($row = $stmt->fetch_assoc()) {
                                         echo "<option value='{$row["id_ciclo"]}'>{$row["nombre_ciclo"]}</option>";
                                     }
@@ -120,7 +124,7 @@ if ($alumno_id) {
                                 <th>Calif. Regular</th>
                                 <th>Calif. 1º Ex. Final</th>
                                 <th>Calif. 2º Ex. Final</th>
-                                <th>Calif. Final</th>
+                                
                                 <th>1º Per. Ev. Dic.</th>
                                 <th>2º Per. Ev. Dic.</th>
                                 <th>1º Per. Ev. Feb.</th>
@@ -148,7 +152,7 @@ if ($alumno_id) {
                                         echo '<td>' . (isset($nota['n5']) ? htmlspecialchars($nota['n5']) : '-') . '</td>'; // Regular
                                         echo '<td>' . (isset($nota['n6']) ? htmlspecialchars($nota['n6']) : '-') . '</td>'; // 1º Ex. Final
                                         echo '<td>' . (isset($nota['n7']) ? htmlspecialchars($nota['n7']) : '-') . '</td>'; // 2º Ex. Final
-                                        echo '<td>' . (isset($nota['n8']) ? htmlspecialchars($nota['n8']) : '-') . '</td>'; // Final
+                                       
                                         echo '<td>' . (isset($nota['n9']) ? htmlspecialchars($nota['n9']) : '-') . '</td>'; // 1º Per. Ev. Dic.
                                         echo '<td>' . (isset($nota['n10']) ? htmlspecialchars($nota['n10']) : '-') . '</td>'; // 2º Per. Ev. Dic.
                                         echo '<td>' . (isset($nota['n11']) ? htmlspecialchars($nota['n11']) : '-') . '</td>'; // 1º Per. Ev. Feb.

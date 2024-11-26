@@ -129,7 +129,7 @@ foreach ($materias as $materia) {
                     <div class="row">
                     <h5 class="col"><?php echo htmlspecialchars($nombre_completo); ?></h5>
                     <div class="col mb-2">
-                            <form id="miFormulario" action="" method="post" class="form-inline justify-content-end my-1">
+                            <!-- <form id="miFormulario" action="" method="post" class="form-inline justify-content-end my-1">
                                 <select name="select_ciclo" class="form-control form-control-sm w-50" onchange="enviarFormulario()">
                                     <option value="" disabled selected class="text-secondary">Ciclo lectivo actual: <?php echo $ciclo['nombre_ciclo']; ?></option>
                                     <?php                          
@@ -145,7 +145,7 @@ foreach ($materias as $materia) {
                                         document.getElementById("miFormulario").submit();
                                     }
                                 </script>
-                            </form>
+                            </form> -->
                         </div> 
                     </div>
                 </div>
