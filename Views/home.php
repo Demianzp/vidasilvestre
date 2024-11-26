@@ -11,7 +11,7 @@ if($_POST){
         $email = $_POST['email'];
         $contrasena = $_POST['contrasena'];
         if (!empty($email) && !empty($contrasena)) {
-            $sql = "SELECT * FROM persona WHERE email_correo = :email AND contraseña = :contrasena";
+            $sql = "SELECT * FROM persona WHERE email_correo = :email AND contraseña = :contrasena AND estado='Activo'";
             $stmt = $db->prepare($sql);
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
             $stmt->bindParam(':contrasena', $contrasena, PDO::PARAM_STR);
