@@ -14,8 +14,8 @@ document.getElementById('formulario').addEventListener('submit', function(event)
     const contrasena = document.getElementById('passwordd').value;
     let error = false;
 
-    if (contrasena.length < 6) {
-        document.getElementById('passwordError').innerText = 'La contraseña debe tener al menos 6 caracteres.';
+    if (contrasena.length < 4) {
+        document.getElementById('passwordError').innerText = 'La contraseña debe tener al menos 4 caracteres.';
         error = true;
     } else {
         document.getElementById('passwordError').innerText = '';

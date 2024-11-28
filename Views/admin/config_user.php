@@ -5,7 +5,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Verifica si el ID de la persona está en la sesión
 if (!isset($_SESSION['id_persona']) || empty($_SESSION['id_persona'])) {
     die('Error: No se ha encontrado el ID de la persona en la sesión.');
 }
@@ -33,12 +32,12 @@ function mostrarMensaje($tipo, $titulo, $texto)
 
 function procesarFormulario($db, $id_persona)
 {
-    $correo = $_POST['correo'];
-    $celular = $_POST['celular'];
-    $direccion = $_POST['direccion'];
-    $contrasena_actual = $_POST['current_password'];
-    $nueva_contrasena = $_POST['new_password'];
-    $confirmar_contrasena = $_POST['confirm_password'];
+    $correo = !empty($_POST['correo']) ? $_POST['correo'] : null;
+    $celular = !empty($_POST['celular']) ? $_POST['celular'] : null;
+    $direccion = !empty($_POST['direccion']) ? $_POST['direccion'] : null;
+    $contrasena_actual = !empty($_POST['current_password']) ? $_POST['current_password'] : null;
+    $nueva_contrasena = !empty($_POST['new_password']) ? $_POST['new_password'] : null;
+    $confirmar_contrasena = !empty($_POST['confirm_password']) ? $_POST['confirm_password'] : null;
 
     $stmt = $db->prepare("SELECT email_correo, celular, direccion, contraseña FROM persona WHERE id_persona = ?");
     $stmt->execute([$id_persona]);
@@ -52,6 +51,7 @@ function procesarFormulario($db, $id_persona)
     $campos = [];
     $valores = [];
 
+    // Comparar con los valores actuales y agregar a la actualización si son diferentes
     if ($correo !== $usuario_actual['email_correo']) {
         $campos[] = 'email_correo = ?';
         $valores[] = $correo;
@@ -64,31 +64,35 @@ function procesarFormulario($db, $id_persona)
         $campos[] = 'direccion = ?';
         $valores[] = $direccion;
     }
+
+    // Procesamiento de la contraseña
     if (!empty($nueva_contrasena)) {
         if (!verificarContrasenaActual($db, $id_persona, $contrasena_actual)) {
             mostrarMensaje('error', 'Error', 'La contraseña actual es incorrecta.');
             return;
         }
-
-        if (strlen($nueva_contrasena) < 6) {
-            mostrarMensaje('warning', 'Advertencia', 'La nueva contraseña debe tener al menos 6 caracteres.');
+        if (strlen($nueva_contrasena) < 4) {
+            mostrarMensaje('warning', 'Advertencia', 'La nueva contraseña debe tener al menos 4 caracteres.');
             return;
         }
-
         if ($nueva_contrasena !== $confirmar_contrasena) {
             mostrarMensaje('error', 'Error', 'Las contraseñas nuevas no coinciden.');
             return;
         }
-
         $campos[] = 'contraseña = ?';
         $valores[] = $nueva_contrasena;
     }
+
     if (!empty($campos)) {
         $valores[] = $id_persona;
         $sql = "UPDATE persona SET " . implode(', ', $campos) . " WHERE id_persona = ?";
         $stmt = $db->prepare($sql);
-        $stmt->execute($valores);
-        mostrarMensaje('success', 'Éxito', 'Datos actualizados correctamente.');
+        try {
+            $stmt->execute($valores);
+            mostrarMensaje('success', 'Éxito', 'Datos actualizados correctamente.');
+        } catch (PDOException $e) {
+            mostrarMensaje('error', 'Error', 'Error al actualizar los datos: ' . $e->getMessage());
+        }
     } else {
         mostrarMensaje('info', 'Info', 'No se realizaron cambios.');
     }
@@ -106,7 +110,7 @@ if (!$usuario) {
     die('Error: No se encontraron datos para el ID proporcionado.');
 }
 ?>
-<body>
+<!-- ----------------- -->
     <div class="container mt-4">
         <div class="card">
             <div class="card-header">
@@ -150,19 +154,27 @@ if (!$usuario) {
                                 <div class="accordion-body">
                                     <div class="mb-3">
                                         <label for="correo" class="form-label">Correo</label>
-                                        <input type="email" class="form-control" id="correo" name="correo" value="<?= htmlspecialchars($usuario['email_correo']); ?>" required autocomplete="off">
+                                        <input type="email" class="form-control" id="correo" name="correo" 
+                                            value="<?= htmlspecialchars($usuario['email_correo'] ?? ''); ?>" 
+                                            autocomplete="off">
                                     </div>
                                     <div class="mb-3">
                                         <label for="celular" class="form-label">Celular</label>
-                                        <input type="text" class="form-control" id="celular" name="celular" value="<?= htmlspecialchars($usuario['celular']); ?>" required autocomplete="off">
+                                        <input type="text" class="form-control" id="celular" name="celular" 
+                                            value="<?= htmlspecialchars($usuario['celular'] ?? ''); ?>" 
+                                            autocomplete="off">
                                     </div>
                                     <div class="mb-3">
                                         <label for="Ciudad" class="form-label">Ciudad</label>
-                                        <input type="text" class="form-control" id="Ciudad" name="Ciudad" value="<?= htmlspecialchars($usuario['ciudad']); ?>" required autocomplete="off">
+                                        <input type="text" class="form-control" id="Ciudad" name="Ciudad" 
+                                            value="<?= htmlspecialchars($usuario['ciudad'] ?? ''); ?>" 
+                                            autocomplete="off">
                                     </div>
                                     <div class="mb-3">
                                         <label for="direccion" class="form-label">Dirección</label>
-                                        <input type="text" class="form-control" id="direccion" name="direccion" value="<?= htmlspecialchars($usuario['direccion']); ?>" required autocomplete="off">
+                                        <input type="text" class="form-control" id="direccion" name="direccion" 
+                                            value="<?= htmlspecialchars($usuario['direccion'] ?? ''); ?>" 
+                                            autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -180,22 +192,33 @@ if (!$usuario) {
                                         <label for="current_password" class="form-label">Contraseña Actual</label>
                                         <input type="password" class="form-control" id="current_password" name="current_password">
                                     </div>
-                                    <div class="mb-3 position-relative">
+                                    <div class="mb-3">
                                         <label for="new_password" class="form-label">Nueva Contraseña</label>
-                                        <input type="password" class="form-control" id="new_password" name="new_password" oninput="validatePasswordLength()">
-                                        <button type="button" class="btn btn-secondary position-absolute top-50 end-0 translate-middle-y" onclick="togglePasswordVisibility('new_password', this)">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
+                                        <div class="input-group">
+                                            <input 
+                                                type="password" class="form-control" id="new_password"  name="new_password" 
+                                                oninput="validatePasswordLength()" placeholder="Ingrese su contraseña">
+                                            <span class="input-group-text" onclick="togglePasswordVisibility('new_password', this)" style="cursor: pointer;">
+                                                <i class="fas fa-eye"></i>
+                                            </span>
+                                        </div>
                                         <div id="passwordHelp" class="form-text text-danger" style="display: none;">
-                                            La contraseña debe tener al menos 6 caracteres.
+                                            La contraseña debe tener al menos 4 caracteres.
                                         </div>
                                     </div>
-                                    <div class="mb-3 position-relative">
+                                    <div class="mb-3">
                                         <label for="confirm_password" class="form-label">Confirmar Nueva Contraseña</label>
-                                        <input type="password" class="form-control" id="confirm_password" name="confirm_password">
-                                        <button type="button" class="btn btn-secondary position-absolute top-50 end-0 translate-middle-y" onclick="togglePasswordVisibility('confirm_password', this)">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
+                                        <div class="input-group">
+                                            <input 
+                                                type="password" 
+                                                class="form-control" 
+                                                id="confirm_password" 
+                                                name="confirm_password" 
+                                                placeholder="Confirme su contraseña">
+                                            <span class="input-group-text" onclick="togglePasswordVisibility('confirm_password', this)" style="cursor: pointer;">
+                                                <i class="fas fa-eye"></i>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -208,23 +231,17 @@ if (!$usuario) {
             </div>
         </div>
     </div>
-
-    <!-- Include Bootstrap and SweetAlert scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function togglePasswordVisibility(id, button) {
             const input = document.getElementById(id);
             const type = input.type === 'password' ? 'text' : 'password';
             input.type = type;
-            button.innerHTML = type === 'password' ? '<i class="bi bi-eye"></i>' : '<i class="bi bi-eye-slash"></i>';
+            button.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
         }
 
         function validatePasswordLength() {
             const password = document.getElementById('new_password').value;
             const message = document.getElementById('passwordHelp');
-            message.style.display = password.length < 6 ? 'block' : 'none';
+            message.style.display = password.length < 4 ? 'block' : 'none';
         }
     </script>
-</body>
-</html>

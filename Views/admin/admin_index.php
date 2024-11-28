@@ -1,6 +1,36 @@
 <?php
 require '../../conn/connection.php';
-//-------------BORRADO------------------ 
+if (isset($_POST['update'])) {
+    $id_persona = $_POST['id_persona'];
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $dni = $_POST['dni'];
+    $email = $_POST['email'];
+
+    try {
+        $sql = "UPDATE persona SET 
+                nombre = :nombre,
+                apellido = :apellido,
+                DNI = :dni,
+                email_correo = :email
+                WHERE id_persona = :id_persona";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':nombre', $nombre);
+        $stmt->bindParam(':apellido', $apellido);
+        $stmt->bindParam(':dni', $dni);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':id_persona', $id_persona);
+        if ($stmt->execute()) {
+            header("Location: admin_index.php?mensaje=" . urlencode("Administrador actualizado con éxito."));
+            exit();
+        }
+    } catch (PDOException $e) {
+        header("Location: admin_index.php?error=" . urlencode("Error al actualizar: " . $e->getMessage()));
+        exit();
+    }
+}
+// Handle Delete
 if (isset($_GET['txtID'])) {
     $txtID = (isset($_GET['txtID'])) ? $_GET['txtID'] : "";
     $sentencia = $db->prepare("UPDATE persona SET estado = 'Inactivo' WHERE id_persona = :id");
@@ -9,28 +39,20 @@ if (isset($_GET['txtID'])) {
     $mensaje = "Registro Administrador Eliminado";
     header("Location:admin_index.php?mensaje=" . $mensaje);
 }
-//<!-- ------------------------------------------ -->
-//<!-- ------------------------------------------ -->
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recolecta datos del formulario
+// Handle Create
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['update'])) {
     $nombre = $_POST["nombre"];
     $apellido = $_POST["apellido"];
-    $dni  = $_POST["dni"];
+    $dni = $_POST["dni"];
     $email = $_POST["email"];
     $contrasena = $_POST["contrasena"];
-    $genero = $_POST["genero"];
-    $celular = $_POST["celular"];
-    $direccion = $_POST["direccion"];
-    $ciudad = $_POST["ciudad"];
-    $fecha_nacimiento = $_POST["fecha_nacimiento"];
-    $estado = "Activo"; // Valor predeterminado para estado
-    $id_rol = "3"; // Valor predeterminado para administrador
-    $pais = "Argentina"; // Valor predeterminado
+    $estado = "Activo";
+    $id_rol = "3";
+    $pais = "Argentina";
     $error = "";
-
     try {
-        // Verificar si el correo electrónico ya existe
-        $sql_check_email = "SELECT COUNT(*) FROM persona WHERE email_correo = :email";
+        // Check if email exists
+        $sql_check_email = "SELECT COUNT(*) FROM persona WHERE email_correo = :email AND estado = 'Activo'";
         $stmt_check_email = $db->prepare($sql_check_email);
         $stmt_check_email->bindParam(':email', $email);
         $stmt_check_email->execute();
@@ -45,11 +67,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: " . $redirect_url);
             exit();
         } else {
-            // Inserta datos en la base de datos
             $sql = "INSERT INTO persona 
-                    (nombre, apellido,DNI ,email_correo, contraseña, id_rol, estado, fecha_ingreso, genero, pais, celular, direccion, ciudad, fecha_nacimiento) 
+                    (nombre, apellido, DNI, email_correo, contraseña, id_rol, estado, fecha_ingreso, pais) 
                     VALUES 
-                    (:nombre, :apellido, :dni ,:email, :contrasena, :id_rol, :estado, NOW(), :genero, :pais, :celular, :direccion, :ciudad, :fecha_nacimiento)";
+                    (:nombre, :apellido, :dni, :email, :contrasena, :id_rol, :estado, NOW(), :pais)";
 
             $stmt = $db->prepare($sql);
             $stmt->bindParam(':nombre', $nombre);
@@ -59,38 +80,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':contrasena', $contrasena);
             $stmt->bindParam(':id_rol', $id_rol);
             $stmt->bindParam(':estado', $estado);
-            $stmt->bindParam(':genero', $genero);
             $stmt->bindParam(':pais', $pais);
-            $stmt->bindParam(':celular', $celular);
-            $stmt->bindParam(':direccion', $direccion);
-            $stmt->bindParam(':ciudad', $ciudad);
-            $stmt->bindParam(':fecha_nacimiento', $fecha_nacimiento);
-
             if ($stmt->execute()) {
                 header("Location: admin_index.php?mensaje=" . urlencode("Administrador ingresado con éxito."));
                 exit();
-            } else {
-                $error = "Error al ingresar Administrador.";
             }
         }
     } catch (PDOException $e) {
         $error = "Error en la base de datos: " . $e->getMessage();
-        $redirect_url = "admin_index.php?error=" . urlencode($error)
-            . "&nombre=" . urlencode($nombre)
-            . "&apellido=" . urlencode($apellido)
-            . "&email=" . urlencode($email);
-        header("Location: " . $redirect_url);
+        header("Location: admin_index.php?error=" . urlencode($error));
         exit();
     }
 }
 ?>
-
-<!-- ------------------------------ -->
+<!-- ------------------------- -->
 <?php require 'navbar.php'; ?>
 <section class="content mt-3">
     <div class="row m-auto">
         <div class="col-sm">
-            <!-- -------------------- -->
             <div class="row">
                 <div class="col">
                     <div class="card rounded-2 border-0 mb-3">
@@ -103,13 +110,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <th>Apellidos</th>
                                         <th>Nombres</th>
                                         <th>E-mail</th>
+                                        <th>DNI</th>
                                         <th>Acciones</th>
                                     </thead>
                                     <tbody>
                                         <?php
                                         try {
-                                            $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
-                                            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                             $query = "SELECT * FROM persona WHERE id_rol = 3 AND estado = 'Activo'";
                                             $stmt = $db->prepare($query);
                                             $stmt->execute();
@@ -121,9 +127,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     <td><?php echo $persona['apellido'] ?></td>
                                                     <td><?php echo $persona['nombre'] ?></td>
                                                     <td><?php echo $persona['email_correo'] ?></td>
+                                                    <td><?php echo $persona['DNI'] ?></td>
                                                     <td class="text-center">
                                                         <div class="btn-group">
-                                                            <a href="javascript:eliminar4(<?php echo $persona['id_persona']; ?>)" class="btn btn-danger btn-sm" type="button" title="Borrar">
+                                                            <button onclick="editarAdmin(<?php echo $persona['id_persona']; ?>, 
+                                                                '<?php echo $persona['nombre']; ?>', 
+                                                                '<?php echo $persona['apellido']; ?>', 
+                                                                '<?php echo $persona['DNI']; ?>', 
+                                                                '<?php echo $persona['email_correo']; ?>')" 
+                                                                class="btn btn-warning btn-sm" 
+                                                                type="button" 
+                                                                title="Editar">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <a href="javascript:eliminar4(<?php echo $persona['id_persona']; ?>)" 
+                                                            class="btn btn-danger btn-sm" 
+                                                            type="button" 
+                                                            title="Borrar">
                                                                 <i class="fas fa-trash"></i>
                                                             </a>
                                                         </div>
@@ -145,105 +165,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="card rounded-2 border-0">
                         <h5 class="card-header bg-dark text-white">Inscripción de Administrador</h5>
                         <div class="card-body bg-light">
-                            <?php
-                            /*Recupera el mensaje de error y los datos del formulario desde la URL
-                            $error = isset($_GET["error"]) ? $_GET["error"] : "";
-                            $nombre = isset($_GET["nombre"]) ? $_GET["nombre"] : "";
-                            $apellido = isset($_GET["apellido"]) ? $_GET["apellido"] : "";
-                            $email = isset($_GET["email"]) ? $_GET["email"] : "";
-                            $genero = "";*/
-                            ?>
                             <form id="formulario" action="" method="post">
-                                <!-- Primera parte -->
                                 <div id="parte1">
                                     <div class="form-group">
                                         <label for="nombre">Nombre:</label>
-                                        <input type="text" class="form-control" name="nombre"  placeholder="Ingrese Nombre" required>
+                                        <input type="text" class="form-control" name="nombre" placeholder="Ingrese Nombre" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="apellido">Apellido:</label>
-                                        <input type="text" class="form-control" name="apellido"  placeholder="Ingrese Apellido" required>
+                                        <input type="text" class="form-control" name="apellido" placeholder="Ingrese Apellido">
                                     </div>
                                     <div class="form-group">
                                         <label for="dni">DNI:</label>
-                                        <input type="text" class="form-control" name="dni" id="dni" placeholder="Ingrese su DNI" required>
+                                        <input type="text" class="form-control" name="dni" id="dni" placeholder="Ingrese su DNI" >
                                         <span id="dniOK"></span>
                                     </div>
-
-                                    <div class="form-group">
-                                        <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-                                        <input type="date" class="form-control" name="fecha_nacimiento" required>
-                                    </div>
-
                                     <div class="form-group">
                                         <label for="email">Email:</label>
-                                        <input type="email" class="form-control" name="email" id="email"  autocomplete="off" placeholder="Ingrese su email" required>
+                                        <input type="email" class="form-control" name="email" id="email" autocomplete="off" placeholder="Ingrese su email" required>
                                         <span id="emailOK"></span>
                                     </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="passwordd">Contraseña:</label>
-                                    <div class="input-group">
-                                        <input class="form-control bg-light" type="password" placeholder="Contraseña" name="passwordd" id="passwordd" autocomplete="off" required />
-                                        <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
-                                            <i class="fas fa-eye p-1"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-primary" id="btnContinuar" onclick="mostrarSegundaParte()">Siguiente</button>
-
-
-
-                                <!-- Segunda parte -->
-                                <div id="parte2" style="display:none;">
                                     <div class="form-group">
-                                        <label for="genero">Género:</label>
-                                        <select name="genero" class="form-control" required>
-                                            <option value="" disabled selected>Seleccione su Género</option>
-                                            <option value="Masculino">Masculino</option>
-                                            <option value="Femenino">Femenino</option>
-                                            <option value="Otros">Otros</option>
-                                        </select>
+                                        <label for="contrasena">Contraseña:</label>
+                                        <div class="input-group">
+                                            <input class="form-control bg-light" type="password" placeholder="Contraseña" name="contrasena" id="contrasena" autocomplete="off" required />
+                                            <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
+                                                <i class="fas fa-eye p-1"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="celular">Celular:</label>
-                                        <input type="tel" class="form-control" name="celular" id="celular" autocomplete="off" placeholder="Ingrese Telefono" required>
-                                        <span id="celularOK"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ciudad">Ciudad:</label>
-                                        <select name="ciudad" id="ciudad" class="form-control" autocomplete="off" required>
-                                            <option value="" disabled <?php echo ($ciudad == "") ? "selected" : ""; ?>>Seleccione un departamento de San Juan</option>
-                                            <option value="Albardón" <?php echo ($ciudad == "Albardon") ? "selected" : ""; ?>>Albardón</option>
-                                            <option value="Angaco" <?php echo ($ciudad == "Angaco") ? "selected" : ""; ?>>Angaco</option>
-                                            <option value="Calingasta" <?php echo ($ciudad == "Calingasta") ? "selected" : ""; ?>>Calingasta</option>
-                                            <option value="Caucete" <?php echo ($ciudad == "Caucete") ? "selected" : ""; ?>>Caucete</option>
-                                            <option value="Chimbas" <?php echo ($ciudad == "Chimbas") ? "selected" : ""; ?>>Chimbas</option>
-                                            <option value="Capital" <?php echo ($ciudad == "Capital") ? "selected" : ""; ?>>Capital</option>
-                                            <option value="Iglesia" <?php echo ($ciudad == "Iglesia") ? "selected" : ""; ?>>Iglesia</option>
-                                            <option value="Jáchal" <?php echo ($ciudad == "Jáchal") ? "selected" : ""; ?>>Jáchal</option>
-                                            <option value="9 de Julio" <?php echo ($ciudad == "9 de Julio") ? "selected" : ""; ?>>9 de Julio</option>
-                                            <option value="Pocito" <?php echo ($ciudad == "Pocito") ? "selected" : ""; ?>>Pocito</option>
-                                            <option value="Rawson" <?php echo ($ciudad == "Rawson") ? "selected" : ""; ?>>Rawson</option>
-                                            <option value="Rivadavia" <?php echo ($ciudad == "Rivadavia") ? "selected" : ""; ?>>Rivadavia</option>
-                                            <option value="San Martín" <?php echo ($ciudad == "San Martín") ? "selected" : ""; ?>>San Martín</option>
-                                            <option value="Santa Lucía" <?php echo ($ciudad == "Santa Lucía") ? "selected" : ""; ?>>Santa Lucía</option>
-                                            <option value="Sarmiento" <?php echo ($ciudad == "Sarmiento") ? "selected" : ""; ?>>Sarmiento</option>
-                                            <option value="Ullum" <?php echo ($ciudad == "Ullum") ? "selected" : ""; ?>>Ullum</option>
-                                            <option value="Valle Fértil" <?php echo ($ciudad == "Valle Fértil") ? "selected" : ""; ?>>Valle Fértil</option>
-                                            <option value="Zonda" <?php echo ($ciudad == "Zonda") ? "selected" : ""; ?>>Zonda</option>
-                                            <option value="25 de Mayo" <?php echo ($ciudad == "25 de Mayo") ? "selected" : ""; ?>>25 de Mayo</option>
-                                            <!-- Agrega otros departamentos de San Juan aquí -->
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="direccion">Dirección:</label>
-                                        <input type="text" class="form-control" name="direccion" placeholder="Ingrese su dirección" required>
-                                    </div>
-
-                                   
                                     <button type="submit" class="btn btn-success">Guardar</button>
                                 </div>
                             </form>
@@ -252,33 +202,95 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
         </div>
+    </div>
 </section>
+<!-- Modal de Edición -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title" id="editModalLabel">Editar Administrador</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm" action="" method="post">
+                    <input type="hidden" name="id_persona" id="edit_id_persona">
+                    <input type="hidden" name="update" value="1">                    
+                    <div class="form-group">
+                        <label for="edit_nombre">Nombre:</label>
+                        <input type="text" class="form-control" name="nombre" id="edit_nombre" required>
+                    </div>                    
+                    <div class="form-group">
+                        <label for="edit_apellido">Apellido:</label>
+                        <input type="text" class="form-control" name="apellido" id="edit_apellido" >
+                    </div>                    
+                    <div class="form-group">
+                        <label for="edit_dni">DNI:</label>
+                        <input type="text" class="form-control" name="dni" id="edit_dni" >
+                    </div>                    
+                    <div class="form-group">
+                        <label for="edit_email">Email:</label>
+                        <input type="email" class="form-control" name="email" id="edit_email" required>
+                    </div>                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-   function mostrarSegundaParte() {
-    var parte1 = document.getElementById('parte1');
-    var parte2 = document.getElementById('parte2');
-    var inputsParte1 = parte1.querySelectorAll('input');
-    var valid = true;
+function editarAdmin(id, nombre, apellido, dni, email) {
+    // Rellenar el formulario con los datos
+    document.getElementById('edit_id_persona').value = id;
+    document.getElementById('edit_nombre').value = nombre;
+    document.getElementById('edit_apellido').value = apellido;
+    document.getElementById('edit_dni').value = dni;
+    document.getElementById('edit_email').value = email;
+    $('#editModal').modal('show');
+}
+document.getElementById('editForm').addEventListener('submit', function(e) {
+    return true;
+});
+document.addEventListener('DOMContentLoaded', function() {
+    const passwordInput = document.getElementById('contrasena');
+    const toggleEyeBtn = document.getElementById('toggle-eye');
 
-    inputsParte1.forEach(function(input) {
-        if (!input.checkValidity()) {
-            valid = false;
-        }
-    });
-
-    if (valid) {
-        parte1.style.display = 'none';
-        parte2.style.display = 'block';
-        document.getElementById('btnContinuar').style.display = 'none';
-    } else {
-        Swal.fire({
-            icon: 'error',
-            title: 'Campos incompletos',
-            text: 'Por favor, completa todos los campos antes de continuar.'
+    // Check if elements exist
+    if (passwordInput && toggleEyeBtn) {
+        toggleEyeBtn.addEventListener('click', function() {
+            // Toggle password visibility
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                // Replace eye icon with eye-slash
+                this.innerHTML = '<i class="fas fa-eye-slash p-1"></i>';
+            } else {
+                passwordInput.type = 'password';
+                // Replace eye-slash with eye
+                this.innerHTML = '<i class="fas fa-eye p-1"></i>';
+            }
         });
     }
-}
+
+    // Modal close buttons
+    const modalCloseButtons = document.querySelectorAll('.modal .close, .modal [data-dismiss="modal"]');
+    modalCloseButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const modal = this.closest('.modal');
+            if (modal) {
+                // Using jQuery to hide the modal
+                $(modal).modal('hide');
+            }
+        });
+    });
+});
 </script>
+
 <script src="../../js/alertas.js"></script>
 <script src="../../js/contraseña.js"></script>
 <script src="../../js/validacion.js"></script>

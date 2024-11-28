@@ -1,11 +1,8 @@
-<!-- base datos cami -->
 <?php
-// Variables de conexión a la base de datos
-$db_host = 'localhost'; // Host de la base de datos
-$db_name = 'vidasilvestre'; // Nombre de la base de datos
-$db_user = 'root'; // Usuario de la base de datos
-$db_password = ''; // Contraseña de la base de datos
-
+$db_host = 'localhost';
+$db_name = 'vidasilvestre';
+$db_user = 'root';
+$db_password = '';
 try {
     $db = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

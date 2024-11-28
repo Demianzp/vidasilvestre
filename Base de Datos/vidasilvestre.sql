@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-11-2024 a las 17:28:38
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Tiempo de generación: 28-11-2024 a las 10:38:16
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -38,16 +38,6 @@ CREATE TABLE `acta` (
   `id_mesa` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `acta`
---
-
-INSERT INTO `acta` (`id_acta`, `dni`, `ape_nom`, `escrito`, `oral`, `definitivo`, `asistencia`, `id_mesa`) VALUES
-(397, 44231782, '3', '9', '0', '9', 'Presente', 10),
-(398, 44231783, '13', '8', '0', '8', 'Presente', 10),
-(401, 44231783, '7', '5', '0', '5', 'Presente', 8),
-(402, 44231782, '3', '6', '0', '6', 'Presente', 8);
-
 -- --------------------------------------------------------
 
 --
@@ -63,36 +53,6 @@ CREATE TABLE `alumno_materia` (
   `fecha_inscripcion` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `alumno_materia`
---
-
-INSERT INTO `alumno_materia` (`Id_alumno`, `id_persona`, `id_materia`, `id_ciclo`, `estado`, `fecha_inscripcion`) VALUES
-(5, 7, 2, 1, 'Inscripto', '2024-10-04'),
-(6, 7, 3, 1, 'Inscripto', '2024-10-04'),
-(7, 9, 2, 1, 'Inscripto', '2024-10-16'),
-(8, 2, 2, 1, 'Inscripto', '2024-10-25'),
-(9, 2, 3, 1, 'Inscripto', '2024-10-25'),
-(10, 13, 2, 1, 'Inscripto', '2024-10-26'),
-(11, 13, 3, 1, 'Inscripto', '2024-10-26'),
-(12, 13, 4, 1, 'Inscripto', '2024-10-26'),
-(13, 2, 4, 1, 'Inscripto', '2024-10-26'),
-(14, 13, 5, 1, 'Inscripto', '2024-11-02'),
-(15, 13, 1, 1, 'Inscripto', '2024-11-14'),
-(16, 3, 1, 1, 'Inscripto', '2024-11-24'),
-(17, 3, 2, 1, 'Inscripto', '2024-11-24'),
-(18, 3, 3, 1, 'Inscripto', '2024-11-24'),
-(19, 17, 1, 1, 'Inscripto', '2024-11-25'),
-(20, 17, 2, 1, 'Inscripto', '2024-11-25'),
-(21, 17, 3, 1, 'Inscripto', '2024-11-25'),
-(22, 17, 4, 1, 'Inscripto', '2024-11-25'),
-(23, 17, 5, 1, 'Inscripto', '2024-11-25'),
-(24, 17, 6, 1, 'Inscripto', '2024-11-25'),
-(25, 17, 7, 1, 'Inscripto', '2024-11-25'),
-(26, 17, 8, 1, 'Inscripto', '2024-11-25'),
-(27, 17, 10, 1, 'Inscripto', '2024-11-25'),
-(28, 17, 5, 2, 'Inscripto', '2024-11-25');
-
 -- --------------------------------------------------------
 
 --
@@ -107,14 +67,6 @@ CREATE TABLE `asignar` (
   `fecha_b` date DEFAULT NULL,
   `Estado` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `asignar`
---
-
-INSERT INTO `asignar` (`id_asignar`, `id_persona`, `id_materia`, `fecha_i`, `fecha_b`, `Estado`) VALUES
-(1, 13, 3, '2024-10-09', NULL, 'Activo'),
-(2, 16, 1, '2024-11-25', NULL, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -155,32 +107,6 @@ CREATE TABLE `correlativa` (
   `año_cursado` int(11) DEFAULT NULL,
   `plan_estudio` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `correlativa`
---
-
-INSERT INTO `correlativa` (`cod_correlativa`, `id_materia`, `id_correlativa`, `año_cursado`, `plan_estudio`) VALUES
-(102, 7, 1, NULL, NULL),
-(105, 10, 1, NULL, NULL),
-(106, 11, 2, NULL, NULL),
-(107, 11, 6, NULL, NULL),
-(108, 12, 7, NULL, NULL),
-(109, 13, 5, NULL, NULL),
-(110, 13, 8, NULL, NULL),
-(111, 5, 4, NULL, NULL),
-(112, 6, 1, NULL, NULL),
-(113, 6, 4, NULL, NULL),
-(114, 8, 2, NULL, NULL),
-(115, 8, 3, NULL, NULL),
-(116, 9, 1, NULL, NULL),
-(117, 9, 2, NULL, NULL),
-(118, 9, 3, NULL, NULL),
-(119, 9, 4, NULL, NULL),
-(120, 9, 5, NULL, NULL),
-(121, 9, 6, NULL, NULL),
-(122, 9, 7, NULL, NULL),
-(123, 9, 8, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -226,20 +152,6 @@ CREATE TABLE `inscripcion` (
   `fecha_inscripcion` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `inscripcion`
---
-
-INSERT INTO `inscripcion` (`id_inscripcion`, `id_alumno`, `id_mesa_examen`, `fecha_inscripcion`) VALUES
-(1, 2, 1, '2024-10-26 02:43:28'),
-(2, 2, 2, '2024-10-26 02:48:42'),
-(4, 7, 8, '2024-11-18 19:28:59'),
-(5, 3, 8, '2024-11-24 23:12:56'),
-(6, 3, 10, '2024-11-24 23:19:23'),
-(7, 13, 10, '2024-11-24 23:21:25'),
-(8, 13, 7, '2024-11-26 16:05:44'),
-(9, 13, 7, '2024-11-26 16:17:25');
-
 -- --------------------------------------------------------
 
 --
@@ -257,25 +169,6 @@ CREATE TABLE `materia` (
   `estado` varchar(11) DEFAULT NULL,
   `plan_estudio` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `materia`
---
-
-INSERT INTO `materia` (`id_materia`, `Nombre`, `descripcion`, `horas`, `num_resolucion`, `año_cursado`, `id_tipo`, `estado`, `plan_estudio`) VALUES
-(1, 'Compresion y Produccion de Texto', '--', '2', '--ssss', '1° Año', 1, 'Activo', '1° Cuatrimestre'),
-(2, 'Biologia', '--', '2', '--', '1° Año', 1, 'Activo', '1° Cuatrimestre'),
-(3, 'Ecologia', '--', '2', '--', '1° Año', 1, 'Activo', '1° Cuatrimestre'),
-(4, 'Contexto Socioeconomico ambiental', '--s', '2', '--', '1° Año', 1, 'Activo', '1° Cuatrimestre'),
-(5, 'Informatica Aplicada', '--', '2', '--', '1° Año', 1, 'Activo', '2° Cuatrimestre'),
-(6, 'Educacion Ambiental', '--', '2', '--', '1° Año', 1, 'Activo', '2° Cuatrimestre'),
-(7, 'Geografia Regional', '--', '2', '--', '1° Año', 1, 'Activo', '2° Cuatrimestre'),
-(8, 'Prevencion y Manejo de Fuego en areas protegidas', '--', '2', '-', '1° Año', 1, 'Activo', '2° Cuatrimestre'),
-(9, 'Practicas Profesionalizantes 1', '--', '2', '--', '1° Año', 1, 'Activo', 'Anual'),
-(10, 'Ingles Tecnico 1', '--', '2', '--', '2° Año', 1, 'Activo', '1° Cuatrimestre'),
-(11, 'Educacion Ambienta 2', '--', '3', '--', '2° Año', 1, 'Activo', '1° Cuatrimestre'),
-(12, 'Geografía Regional 2', '--', '2', '--', '2° Año', 1, 'Activo', '1° Cuatrimestre'),
-(13, 'Primeros Auxilios', '--sss', '3', '--', '2° Año', 1, 'Activo', '1° Cuatrimestre');
 
 -- --------------------------------------------------------
 
@@ -297,15 +190,6 @@ CREATE TABLE `mesa_examen` (
   `id_t` int(11) NOT NULL,
   `periodo` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `mesa_examen`
---
-
-INSERT INTO `mesa_examen` (`id_mesa`, `id_materia`, `fecha`, `nombre_mesa`, `hora`, `id_ciclo`, `id_tipo`, `estado`, `libro`, `folio`, `id_t`, `periodo`) VALUES
-(7, 5, '2024-11-08', 'mesa', '12:00:00', 1, 1, 'Activo', '1223', 156, 6, '6'),
-(8, 2, '2024-11-07', 'hereer', '12:00:00', 1, 1, 'Activo', '857', 111, 8, '6'),
-(10, 3, '2024-11-19', 'mesa2', '13:10:00', 1, 1, 'Activo', '166', 5888, 7, '6');
 
 -- --------------------------------------------------------
 
@@ -334,25 +218,6 @@ CREATE TABLE `nota` (
   `estado` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `nota`
---
-
-INSERT INTO `nota` (`id`, `id_persona`, `id_materia`, `id_ciclo`, `n1`, `n2`, `n3`, `n4`, `n5`, `n6`, `n7`, `n8`, `n9`, `n10`, `n11`, `n12`, `n13`, `estado`) VALUES
-(1, 13, 5, 1, 6, 7, 6, 9, 7, 0, 0, NULL, 0, 0, 0, 0, 0, 'activo'),
-(2, 13, 1, 1, 0, 0, 0, 8, 8, 0, 0, NULL, 0, 0, 0, 0, 0, 'activo'),
-(3, 13, 4, 1, 0, 0, 0, 5, 5, 0, 0, NULL, 0, 0, 0, 0, 0, 'activo'),
-(4, 13, 2, 1, 0, 0, 9, 0, 9, 0, 0, NULL, 0, 0, 0, 0, 0, 'activo'),
-(5, 13, 3, 1, 0, 0, 0, 6, 6, 8, 0, NULL, 0, 0, 0, 0, 0, 'activo'),
-(6, 7, 2, 1, 6, 0, 9, 0, 7.5, 5, 0, NULL, 0, 0, 0, 0, 0, 'activo'),
-(7, 3, 2, 1, 9, 0, 6, 0, 7.5, 6, 0, NULL, 0, 0, 0, 0, 0, 'activo'),
-(8, 3, 3, 1, 9, 8, 0, 0, 8.5, 9, 0, NULL, 0, 0, 0, 0, 0, 'activo'),
-(9, 7, 3, 1, 0, 9, 0, 8, 8.5, 0, 0, NULL, 0, 0, 0, 0, 0, 'activo'),
-(10, 17, 1, 1, 0, 7, 5, 0, 6, 0, 3, NULL, 0, 0, 4, 0, 4, 'activo'),
-(11, 17, 2, 1, 0, 0, 7, 0, 7, 0, 0, NULL, 0, 7, 0, 0, 7, 'activo'),
-(12, 17, 3, 1, 0, 0, 7, 0, 7, 0, 0, NULL, 0, 7, 0, 0, 7, 'activo'),
-(13, 17, 4, 1, 0, 0, 7, 0, 7, 0, 0, NULL, 0, 7, 0, 0, 7, 'activo');
-
 -- --------------------------------------------------------
 
 --
@@ -361,10 +226,10 @@ INSERT INTO `nota` (`id`, `id_persona`, `id_materia`, `id_ciclo`, `n1`, `n2`, `n
 
 CREATE TABLE `persona` (
   `id_persona` int(11) NOT NULL,
-  `nombre` varchar(35) NOT NULL,
-  `apellido` varchar(35) NOT NULL,
-  `fecha_nacimiento` date NOT NULL,
-  `DNI` int(11) NOT NULL,
+  `nombre` varchar(35) DEFAULT NULL,
+  `apellido` varchar(35) DEFAULT NULL,
+  `fecha_nacimiento` date DEFAULT NULL,
+  `DNI` int(11) DEFAULT NULL,
   `celular` varchar(15) DEFAULT NULL,
   `email_correo` varchar(100) DEFAULT NULL,
   `direccion` varchar(55) DEFAULT NULL,
@@ -384,15 +249,7 @@ CREATE TABLE `persona` (
 --
 
 INSERT INTO `persona` (`id_persona`, `nombre`, `apellido`, `fecha_nacimiento`, `DNI`, `celular`, `email_correo`, `direccion`, `fecha_ingreso`, `pais`, `ciudad`, `contraseña`, `id_rol`, `genero`, `legajo`, `titulo`, `estado`) VALUES
-(2, 'Luis', 'Mercado', '2014-06-20', 44231781, '26', 'aadminjuan@gmail.com', '9 de julio y san juan', '2024-06-12', 'Argentina', 'Angaco', '123', 1, 'Masculino', NULL, NULL, 'Activo'),
-(3, 'Facundo', 'Ramirez', '2014-06-20', 44231782, '26', 'aaadminjuan@gmail.com', '9 de julio y san juan', '2024-06-12', 'Argentina', 'Angaco', '123', 1, 'Masculino', NULL, NULL, 'Activo'),
-(7, 'Juan', 'Perez', '2014-06-20', 44231783, '26', 'adminjuan@gmail.com', '9 de julio y san juan', '2024-06-12', 'Argentina', 'Angaco', '123', 1, 'Masculino', NULL, NULL, 'Activo'),
-(9, 'maxi', 'olmos', '0000-00-00', 0, NULL, 'm@gmail.com', NULL, NULL, NULL, NULL, '123', 3, NULL, NULL, NULL, 'Activo'),
-(13, 'Demi', 'Perez', '2014-06-20', 44231783, '26', 'demi@gmail.com', '9 de julio y san juan', '2024-06-12', 'Argentina', 'Angaco', '123', 1, 'Masculino', 2332423, 'Preceptor', 'Activo'),
-(14, 'dwe', 'ooo', '1998-10-02', 12555555, '7777777778', 'lucas@gmail.com', 'jf', '2024-10-16', 'Argentina', 'Jáchal', '123666', 2, 'Masculino', 1757, 'cer', 'Activo'),
-(15, 'ssss', 'gomez', '2000-10-17', 45476130, '2343242304', 'ssss23@gmail.com', '9 de julio y san juan', '2024-10-24', 'Argentina', 'Valle Fértil', NULL, 3, 'Masculino', NULL, NULL, 'Activo'),
-(16, 'Marcos', 'Gomez', '2000-01-31', 45356179, '2646773882', 'marcos45@gmail.com', '9 de julio', '2024-10-26', 'Argentina', 'Angaco', '123456', 2, 'Masculino', 98292, 'Lic.Sistema Operativo', 'Activo'),
-(17, 'maxi', 'olmos', '1993-12-22', 38015715, '2645037447', 'maxiolmos1993@gmail.com', 'brasil oeste157', '2024-11-25', 'Argentina', 'Rawson', '36363636', 1, 'Masculino', NULL, NULL, 'Activo');
+(26, 'carla', '', NULL, 0, NULL, 'carla@gmail.com', NULL, '2024-11-28', 'Argentina', NULL, 'online2024', 3, NULL, NULL, NULL, 'Activo');
 
 -- --------------------------------------------------------
 
@@ -451,15 +308,6 @@ CREATE TABLE `tribunal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `tribunal`
---
-
-INSERT INTO `tribunal` (`id_t`, `presidente`, `primer`, `segundo`, `fecha_1`, `fecha_2`, `observacion`) VALUES
-(6, 'Demi Perez', '', '', '2024-10-18', '2024-10-18', ''),
-(7, 'dwe ooo', '', '', '2024-10-21', '2024-10-21', ''),
-(8, 'Marcos Gomez', 'dwe ooo', 'dwe ooo', '2024-10-31', '2024-10-30', '--');
-
---
 -- Índices para tablas volcadas
 --
 
@@ -469,7 +317,8 @@ INSERT INTO `tribunal` (`id_t`, `presidente`, `primer`, `segundo`, `fecha_1`, `f
 ALTER TABLE `acta`
   ADD PRIMARY KEY (`id_acta`),
   ADD UNIQUE KEY `dni` (`dni`,`id_mesa`),
-  ADD UNIQUE KEY `dni_2` (`dni`,`id_mesa`);
+  ADD UNIQUE KEY `dni_2` (`dni`,`id_mesa`),
+  ADD KEY `acta_ibfk_1` (`id_mesa`);
 
 --
 -- Indices de la tabla `alumno_materia`
@@ -574,19 +423,19 @@ ALTER TABLE `tribunal`
 -- AUTO_INCREMENT de la tabla `acta`
 --
 ALTER TABLE `acta`
-  MODIFY `id_acta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=405;
+  MODIFY `id_acta` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `alumno_materia`
 --
 ALTER TABLE `alumno_materia`
-  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `Id_alumno` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `asignar`
 --
 ALTER TABLE `asignar`
-  MODIFY `id_asignar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_asignar` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `ciclo_lectivo`
@@ -598,7 +447,7 @@ ALTER TABLE `ciclo_lectivo`
 -- AUTO_INCREMENT de la tabla `correlativa`
 --
 ALTER TABLE `correlativa`
-  MODIFY `cod_correlativa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `cod_correlativa` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `examen`
@@ -610,31 +459,31 @@ ALTER TABLE `examen`
 -- AUTO_INCREMENT de la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `materia`
 --
 ALTER TABLE `materia`
-  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `mesa_examen`
 --
 ALTER TABLE `mesa_examen`
-  MODIFY `id_mesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_mesa` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `nota`
 --
 ALTER TABLE `nota`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -646,7 +495,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `tribunal`
 --
 ALTER TABLE `tribunal`
-  MODIFY `id_t` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_t` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
