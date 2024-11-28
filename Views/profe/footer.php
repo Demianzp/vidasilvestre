@@ -50,12 +50,9 @@
             </div>
             <div class="modal-body">
                 
-                <div id="contact-icons" class="text-left"> <!-- Alineación a la izquierda -->
+                <div id="contact-icons" class="text-left">
                     <p>
-                        <i class="fas fa-envelope"></i>isftangaco@gmail.com<br>
-                        <a href="https://wa.me/2644576616" target="_blank">
-                            <i class="fab fa-whatsapp"></i>2644576616
-                        </a><br>
+                        <i class="fas fa-envelope"></i>isftangaco@gmail.com<br>                        
                         <a href="https://instagram.com/angacoisft" target="_blank">
                             <i class="fab fa-instagram"></i>@angacoisft
                         </a><br>
