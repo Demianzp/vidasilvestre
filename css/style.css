@@ -1,9 +1,3 @@
-#salir a {
-    background-color: #98c343;
-  }
-  #salir a:hover {
-    background-color: #10801c;
-  }
 body {
   background: linear-gradient(135deg, #98c343, #10801c);
   position: relative;
@@ -74,4 +68,9 @@ input[type="number"] {
   -moz-appearance: textfield;
   appearance: none;
   margin: 0;
+}
+div{
+  display: grid;
+  min-height: 100dvh;
+  grid-template-rows: auto 1fr auto;
 }

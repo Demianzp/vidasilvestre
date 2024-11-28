@@ -73,21 +73,21 @@ if($_POST){
         <div class="row ">
             <div class="col">
                 <p><b>Administrador</b></p>
-                <p>m@gmail.com</p>
-                <p>123</p>
+                <p>carla@gmail.com</p>
+                <p></p>
             </div>
-            <div class="col">
+            <!-- <div class="col">
                 <p><b>Alumno</b></p>
                 <p>demi@gmail.com</p>
                 <p>123</p>
-                <a
+                 <a
                     name=""
                     id=""
                     class="btn btn-primary"
                     href="admin/carga_base_datos.php"
                     role="button"
                     >Carga Base Datos
-                </a>
+                </a> 
 
             </div>
             <div class="col">
@@ -95,7 +95,7 @@ if($_POST){
                 <p>marcos45@gmail.com</p>
                 <p>123456</p>            
 
-            </div>
+            </div> -->
 
         </div>
          
@@ -120,7 +120,7 @@ if($_POST){
                 </button>
             </div>
             <button type="submit" class="btn btn-primary text-white w-100 mt-4 fs-5 fw-semibold shadow-sm">Inicio</button>
-            <?php
+    <?php
     if (isset($_SESSION['message'])) {
         echo '<div class="error text-danger border border-danger w-100 justify-content-center text-center d-inline-block mt-2 rounded-3 p-1"  id="myAlert" style="background-color: #f5c2c7">' . $_SESSION['message'] . '</div>';
         unset($_SESSION['message']);
