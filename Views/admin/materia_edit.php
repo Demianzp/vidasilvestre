@@ -152,13 +152,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="text" class="form-control" required name="nombre" autocomplete="off" value="<?php echo htmlspecialchars($consulta_materias['Nombre']); ?>" maxlength="45">
 
                             <label for="descripcion">Descripción:</label>
-                            <input type="text" class="form-control" required name="descripcion" autocomplete="off" value="<?php echo htmlspecialchars($consulta_materias['descripcion']); ?>" maxlength="45">
+                            <input type="text" class="form-control"  name="descripcion" autocomplete="off" value="<?php echo htmlspecialchars($consulta_materias['descripcion']); ?>" maxlength="45">
 
                             <label for="horas">Horas de cursada:</label>
-                            <input type="text" class="form-control" required name="horas" id="horas" autocomplete="off" value="<?php echo htmlspecialchars($consulta_materias['horas']); ?>" maxlength="8">
+                            <input type="text" class="form-control"  name="horas" id="horas" autocomplete="off" value="<?php echo htmlspecialchars($consulta_materias['horas']); ?>" maxlength="8">
 
                             <label for="num_resolucion">Número de resolución:</label>
-                            <input type="text" class="form-control" required name="num_resolucion" id="num_resolucion" autocomplete="off" value="<?php echo htmlspecialchars($consulta_materias['num_resolucion']); ?>" maxlength="10">
+                            <input type="text" class="form-control"  name="num_resolucion" id="num_resolucion" autocomplete="off" value="<?php echo htmlspecialchars($consulta_materias['num_resolucion']); ?>" maxlength="10">
 
                             <label for="año">Año de Cursado:</label>
                             <select name="año" id="año" class="form-control" autocomplete="off" required>

@@ -13,51 +13,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ciudad = trim($_POST["ciudad"]);
     $genero = trim($_POST["genero"]);
     $pais = "Argentina";
-    $fecha_nacimiento = trim($_POST["fecha_nacimiento"]);
-    $passwordd = trim($_POST["passwordd"]);
+    $fecha_nacimiento = trim($_POST["fecha_nacimiento"]);    
+    // Modificación: Establecer contraseña como últimos 4 dígitos del DNI
+    $passwordd = substr($dni, -4);    
     $estado = "Activo"; // Valor predeterminado para estado
     $id_rol = "1"; // Valor predeterminado para alumno es 1.
-
     // Asignar automáticamente la fecha de ingreso
     $fecha_ingreso = date("Y-m-d H:i:s"); // Fecha y hora actual en el formato YYYY-MM-DD HH:MM:SS
-
     $error = "";
-
-    // Validación de la contraseña
-    if (strlen($passwordd) < 6) {
-        $error = "La contraseña debe tener al menos 6 caracteres.";
-    }
-
     // Validación de la mayoría de edad
     $fecha_actual = new DateTime();
     $fecha_nacimiento_dt = new DateTime($fecha_nacimiento);
     $edad = $fecha_actual->diff($fecha_nacimiento_dt)->y;
-
     if ($edad < 18) {
         $error = "Debe ser mayor de edad para registrarse.";
     }
-
     try {
         // Verificar si el correo electrónico ya existe
-        $sql_check_email = "SELECT COUNT(*) FROM persona WHERE email_correo = :email";
+        $sql_check_email = "SELECT COUNT(*) FROM persona WHERE email_correo = :email AND estado = 'Activo'";
         $stmt_check_email = $db->prepare($sql_check_email);
         $stmt_check_email->bindParam(':email', $email);
         $stmt_check_email->execute();
         $count_email = $stmt_check_email->fetchColumn();
 
         // Verificar si el DNI ya existe
-        $sql_check_dni = "SELECT COUNT(*) FROM persona WHERE DNI = :dni";
+        $sql_check_dni = "SELECT COUNT(*) FROM persona WHERE DNI = :dni AND estado = 'Activo'";
         $stmt_check_dni = $db->prepare($sql_check_dni);
         $stmt_check_dni->bindParam(':dni', $dni);
         $stmt_check_dni->execute();
         $count_dni = $stmt_check_dni->fetchColumn();
-
         if ($count_email > 0) {
             $error = "El correo electrónico ya está registrado. Por favor, use uno diferente.";
         } elseif ($count_dni > 0) {
             $error = "El DNI ya está registrado. Por favor, use uno diferente.";
         }
-
         if ($error) {
             $redirect_url = "alumno_crea.php?error=" . urlencode($error)
                 . "&nombre=" . urlencode($nombre)
@@ -136,7 +125,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $fecha_nacimiento = isset($_GET["fecha_nacimiento"]) ? $_GET["fecha_nacimiento"] : "";
             ?>
             <form id="formulario" action="" method="post" enctype="multipart/form-data">
-                <!-- Ajustamos el tamaño de las columnas para dispositivos móviles -->
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
@@ -198,7 +186,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <option value="Valle Fértil" <?php echo ($ciudad == "Valle Fértil") ? "selected" : ""; ?>>Valle Fértil</option>
                                 <option value="Zonda" <?php echo ($ciudad == "Zonda") ? "selected" : ""; ?>>Zonda</option>
                                 <option value="25 de Mayo" <?php echo ($ciudad == "25 de Mayo") ? "selected" : ""; ?>>25 de Mayo</option>
-                                <!-- Agrega otros departamentos de San Juan aquí -->
                             </select>
                         </div>
                     </div>
@@ -231,20 +218,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
-                            <label for="passwordd">Contraseña:</label>
+                            <label for="passwordd">Contraseña: (Últimos 4 dígitos del DNI por defecto)</label>
                             <div class="input-group">
-                                <input class="form-control bg-light" type="password" placeholder="Contraseña" name="passwordd" id="passwordd" autocomplete="off" required />
+                                <input class="form-control bg-light" type="text" placeholder="Contraseña generada automáticamente" name="passwordd" id="passwordd" value="" disabled />
                                 <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
                                     <i class="fas fa-eye p-1"></i>
                                 </button>
-                            </div>
+                                </div>
                         </div>
                     </div>
                 </div>
                 <!-- --------------------------------- -->
-                <!-- Agregamos un botón para guardar con un evento JavaScript -->
                 <button type="button" class="btn btn-primary float-right" id="guardarBtn" onclick="validarFormulario()">Guardar</button>
-                <!-- Agregamos un div para mostrar un mensaje de confirmación -->
                 <div id="confirmacion" style="display: none;">
                     <p>¿Estás seguro de que deseas guardar los datos?</p>
                     <button type="button" class="btn btn-success" id="confirmarBtn">Sí</button>
@@ -254,7 +239,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </div>
+<script>
+    // Este script se asegura de mostrar los últimos 4 dígitos del DNI como contraseña
+    document.addEventListener('DOMContentLoaded', function() {
+        const dniInput = document.getElementById('dni');
+        const passwordInput = document.getElementById('passwordd');
+        
+        dniInput.addEventListener('input', function() {
+            if (this.value.length >= 4) {
+                passwordInput.value = this.value.slice(-4);
+            }
+        });
+    });
+</script>
 <script src="../../js/contraseña.js"></script>
 <script src="../../js/validacion.js"></script>
 <script src="../../js/validacion2.js"></script>
 <?php require 'footer.php'; ?>
+</document_content>

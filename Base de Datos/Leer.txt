@@ -1,5 +1,1 @@
-BD name: vidasilvestre
-------------------------
-Usuario Alumno: 
-Contraseña:
-
+creado por Olmos,Lucero, Perez.

@@ -61,24 +61,32 @@ if ($alumno_id) {
                     icon: 'info',
                     title: 'Sin materias',
                     text: 'No se encontraron materias inscritas para este ciclo lectivo.',
-                    confirmButtonColor: '#6a1b9a', // Color lila pastel
+                    showCancelButton: true, // Mostrar botón de cancelar
+                    confirmButtonColor: '#6a1b9a',
                     confirmButtonText: 'Volver al ciclo definido',
+                    cancelButtonText: 'Ir a inicio',
+                    customClass: {
+                        cancelButton: 'btn btn-secondary ', 
+                        confirmButton: 'btn btn-primary mr-2'
+                    },
+                    buttonsStyling: false,
                     allowOutsideClick: false
                 }).then((result) => {
                     if (result.isConfirmed) {
                         window.location.href = 'ver_nota.php?id=$alumno_id&ciclo=$select_ciclo'; // Redirigir al ciclo
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        window.location.href = 'index.php'; // Redirigir al inicio
                     }
                 });
-              </script>";
+            </script>
+        ";
     }
      } else {
          echo "ID de alumno no especificado.";
          exit;
 }
-
 //--------------BARRA DE CICLO LECTIVO----------------------
 ?>
-
 <section class="content mt-3">
     <div class="row m-auto">
         <div class="col-sm">
@@ -123,8 +131,7 @@ if ($alumno_id) {
                                 <th>Nota4</th>
                                 <th>Calif. Regular</th>
                                 <th>Calif. 1º Ex. Final</th>
-                                <th>Calif. 2º Ex. Final</th>
-                                
+                                <th>Calif. 2º Ex. Final</th>                                
                                 <th>1º Per. Ev. Dic.</th>
                                 <th>2º Per. Ev. Dic.</th>
                                 <th>1º Per. Ev. Feb.</th>
@@ -147,7 +154,6 @@ if ($alumno_id) {
                                         for ($i = 1; $i <= 4; $i++) {
                                             echo '<td>' . (isset($nota["n$i"]) ? htmlspecialchars($nota["n$i"]) : '-') . '</td>';
                                         }
-
                                         // Imprimir calificaciones regulares y finales
                                         echo '<td>' . (isset($nota['n5']) ? htmlspecialchars($nota['n5']) : '-') . '</td>'; // Regular
                                         echo '<td>' . (isset($nota['n6']) ? htmlspecialchars($nota['n6']) : '-') . '</td>'; // 1º Ex. Final
