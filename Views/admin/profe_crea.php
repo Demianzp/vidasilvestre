@@ -1,9 +1,6 @@
 <?php
 include '../../conn/connection.php';
-
-// Verifica si se envió una solicitud POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recolecta datos del formulario
     $nombre = trim($_POST["nombre"]);
     $apellido = trim($_POST["apellido"]);
     $dni = trim($_POST["dni"]);
@@ -14,52 +11,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $genero = trim($_POST["genero"]);
     $pais = "Argentina";
     $fecha_nacimiento = trim($_POST["fecha_nacimiento"]);
-    $passwordd = trim($_POST["passwordd"]);
+    // Genera la contraseña automáticamente usando los últimos 4 dígitos del DNI
+    $passwordd = substr($dni, -4);
     $legajo =  trim($_POST["legajo"]);
     $titulo = trim($_POST["titulo"]);
-    $estado = "Activo"; // Valor predeterminado para estado
-    $id_rol = "2"; // Valor predeterminado para alumno es 1.
-
-    // Obtener la fecha de ingreso actual
-    $fecha_ingreso = date('Y-m-d'); // Formato de fecha en 'Año-Mes-Día'
-
+    $estado = "Activo";
+    $id_rol = "2";
+    $fecha_ingreso = date('Y-m-d');
     $error = "";
-
-    // Validación de la contraseña
-    if (strlen($passwordd) < 6) {
-        $error = "La contraseña debe tener al menos 6 caracteres.";
-    }
-
-    // Validación de la mayoría de edad
     $fecha_actual = new DateTime();
     $fecha_nacimiento_dt = new DateTime($fecha_nacimiento);
     $edad = $fecha_actual->diff($fecha_nacimiento_dt)->y;
-
     if ($edad < 18) {
         $error = "Debe ser mayor de edad para registrarse.";
     }
-
     try {
-        // Verificar si el correo electrónico ya existe
         $sql_check_email = "SELECT COUNT(*) FROM persona WHERE email_correo = :email";
         $stmt_check_email = $db->prepare($sql_check_email);
         $stmt_check_email->bindParam(':email', $email);
         $stmt_check_email->execute();
         $count_email = $stmt_check_email->fetchColumn();
-
-        // Verificar si el DNI ya existe
         $sql_check_dni = "SELECT COUNT(*) FROM persona WHERE DNI = :dni";
         $stmt_check_dni = $db->prepare($sql_check_dni);
         $stmt_check_dni->bindParam(':dni', $dni);
         $stmt_check_dni->execute();
         $count_dni = $stmt_check_dni->fetchColumn();
-
         if ($count_email > 0) {
             $error = "El correo electrónico ya está registrado. Por favor, use uno diferente.";
         } elseif ($count_dni > 0) {
             $error = "El DNI ya está registrado. Por favor, use uno diferente.";
         }
-
         if ($error) {
             $redirect_url = "profe_crea.php?error=" . urlencode($error)
                 . "&nombre=" . urlencode($nombre)
@@ -73,11 +54,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 . "&fecha_nacimiento=" . urlencode($fecha_nacimiento)
                 . "&legajo=". urlencode($legajo)
                 . "&titulo=". urlencode($titulo);
-
             header("Location: " . $redirect_url);
             exit();
         } else {
-            // Inserta datos en la base de datos
             $sql = "INSERT INTO persona (nombre, apellido, fecha_nacimiento, DNI, celular, email_correo, direccion, fecha_ingreso, pais, ciudad, contraseña, id_rol, genero, legajo, titulo, estado) 
                     VALUES (:nombre, :apellido, :fecha_nacimiento, :dni, :celular, :email, :direccion, :fecha_ingreso, :pais, :ciudad, :passwordd , :id_rol, :genero, :legajo, :titulo, :estado)";
 
@@ -89,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':celular', $celular);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':direccion', $direccion);
-            $stmt->bindParam(':fecha_ingreso', $fecha_ingreso); // Usa la fecha actual
+            $stmt->bindParam(':fecha_ingreso', $fecha_ingreso);
             $stmt->bindParam(':pais', $pais);
             $stmt->bindParam(':ciudad', $ciudad);
             $stmt->bindParam(':passwordd', $passwordd);
@@ -98,12 +77,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':legajo', $legajo);
             $stmt->bindParam(':titulo', $titulo);
             $stmt->bindParam(':estado', $estado);
-
             if ($stmt->execute()) {
-                header("Location: profe_index.php?mensaje=" . urlencode("Persona ingresada con éxito."));
+                header("Location: profe_index.php?mensaje=" . urlencode("Profesor ingresado con éxito."));
                 exit();
             } else {
-                $error = "Error al ingresar Persona.";
+                $error = "Error al ingresar Profesor.";
             }
         }
     } catch (PDOException $e) {
@@ -120,13 +98,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             . "&legajo=" . urlencode($legajo)
             . "&titulo=" . urlencode($titulo)
             . "&fecha_nacimiento=" . urlencode($fecha_nacimiento);
-
         header("Location: " . $redirect_url);
         exit();
     }
 }
 ?>
-
 <!-- ---------------------------------------------------- -->
 <?php require 'navbar.php'; ?>
 <div class="container mt-3">
@@ -134,7 +110,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h5 class="card-header bg-dark text-white">Formulario de Inscripción de Profesor</h5>
         <div class="card-body bg-light">
             <?php
-            // Recupera el mensaje de error y los datos del formulario desde la URL
             $error = isset($_GET["error"]) ? $_GET["error"] : "";
             $nombre = isset($_GET["nombre"]) ? $_GET["nombre"] : "";
             $apellido = isset($_GET["apellido"]) ? $_GET["apellido"] : "";
@@ -149,8 +124,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $legajo = isset($_GET["legajo"]) ? $_GET["legajo"] : "";
             $titulo = isset($_GET["titulo"]) ? $_GET["titulo"] : "";
             ?>
+            <?php if ($error): ?>
+                <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
+            <?php endif; ?>
+            
             <form id="formulario" method="post" action="">
-                <!-- --------------------------------- -->
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
@@ -158,7 +136,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="text" class="form-control" name="nombre" id="nombre" value="<?php echo htmlspecialchars($nombre); ?>" autocomplete="off" placeholder="Ingrese Nombre(s)" required>
                         </div>
                     </div>
-                    <!-- --------------------------------- -->
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="apellido">Apellido:</label>
@@ -166,7 +143,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                 </div>
-                <!-- --------------------------------- -->
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
@@ -176,13 +152,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-
                         <div class="form-group">
                             <label for="celular">Celular:</label>
                             <input type="tel" class="form-control" name="celular" id="celular" value="<?php echo htmlspecialchars($celular); ?>" autocomplete="off" placeholder="Ingrese Telefono" required>
                             <span id="celularOK"></span>
                         </div>
-
                     </div>
                 </div>
                 <!-- --------------------------------- -->
@@ -211,7 +185,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <option value="Valle Fértil" <?php echo ($ciudad == "Valle Fértil") ? "selected" : ""; ?>>Valle Fértil</option>
                                 <option value="Zonda" <?php echo ($ciudad == "Zonda") ? "selected" : ""; ?>>Zonda</option>
                                 <option value="25 de Mayo" <?php echo ($ciudad == "25 de Mayo") ? "selected" : ""; ?>>25 de Mayo</option>
-                                <!-- Agrega otros departamentos de San Juan aquí -->
                             </select>
                         </div>
                     </div>
@@ -265,13 +238,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label for="email">Email:</label>
                             <input id="email" class="form-control" name="email" id="email"  placeholder="Ingrese Email" autocomplete="off" value="<?php echo htmlspecialchars($email); ?>" required>
                             <span id="emailOK"></span>
-
                         </div>
                     </div>
 
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
-                            <label for="passwordd">Contraseña:</label>
+                            <label for="passwordd">Contraseña: (Últimos 4 dígitos del DNI por defecto)</label>
                             <div class="input-group">
                                 <input class="form-control bg-light" type="password" placeholder="Contraseña" name="passwordd" id="passwordd" autocomplete="off" required />
                                 <button type="button" class="btn btn-outline-primary" name="toggle-eye" id="toggle-eye" onclick="togglePasswordVisibility()">
@@ -282,9 +254,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
                 <!-- --------------------------------- -->
-                <!-- Agregamos un botón para guardar con un evento JavaScript -->
                 <button type="button" class="btn btn-primary float-right" id="guardarBtn" onclick="validarFormulario()">Guardar</button>
-                <!-- Agregamos un div para mostrar un mensaje de confirmación -->
                 <div id="confirmacion" style="display: none;">
                     <p>¿Estás seguro de que deseas guardar los datos?</p>
                     <button type="button" class="btn btn-success" id="confirmarBtn">Sí</button>
@@ -294,6 +264,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dniInput = document.getElementById('dni');
+        const passwordInput = document.getElementById('passwordd');
+        
+        dniInput.addEventListener('input', function() {
+            if (this.value.length >= 4) {
+                passwordInput.value = this.value.slice(-4);
+            }
+        });
+    });
+function validarFormulario() {
+    var form = document.getElementById('formulario');
+    if (form.checkValidity()) {
+        document.getElementById('confirmacion').style.display = 'block';
+    } else {
+        form.reportValidity();
+    }
+}
+document.getElementById('confirmarBtn').addEventListener('click', function() {
+    document.getElementById('formulario').submit();
+});
+document.getElementById('cancelarBtn').addEventListener('click', function() {
+    document.getElementById('confirmacion').style.display = 'none';
+});
+</script>
 <script src="../../js/contraseña.js"></script>
 <script src="../../js/validacion.js"></script>
 <script src="../../js/validacion2.js"></script>
